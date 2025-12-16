@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Nova Nest</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- ✅ CSS link -->
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ✅ Inline CSS just for images (you can move this into style.css) */
+    .product img {
+      width: 100%;
+      max-width: 220px; /* fixes huge images */
+      height: auto;
+      margin-bottom: 10px;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+
+<body>
+  <header class="header">
+    <nav class="navbar">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="#">Electronics</a></li>
+        <li><a href="#">Fashion</a></li>
+        <li><a href="#">Home & Kitchen</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#" id="cart-link">🛒 Cart (<span id="cart-count">0</span>)</a></li>
+      </ul>
+    </nav>
+    <div class="search-bar">
+      <input type="text" placeholder="Search products..." />
+      <button>Search</button>
+    </div>
+    <h1>Nova Nest</h1>
+    <p>Zambia’s marketplace for buyers and sellers</p>
+  </header>
+
+  <main class="grid">
+    <h2 class="category">Electronics</h2>
+    <div class="product">
+      <img src="images/product2.jpg.jpg" alt="iPhone 11" />
+      <h3>iPhone 11 128/256GB</h3>
+      <p class="price">Price: ZMW 350</p>
+      <p class="desc">Clear sound, long battery life.</p>
+      <a class="btn" href="https://wa.me/260966172411?text=Order%20iPhone%2011">Order via WhatsApp</a>
+      <button class="add-cart">Add to Cart</button>
+    </div>
+
+    <div class="product">
+      <img src="images/product4.jpg.jpg" alt="Dell Inspiron 14" />
+      <h3>Dell Inspiron 14</h3>
+      <p class="price">Price: ZMW 80</p>
+      <p class="desc">Shock‑proof, stylish design.</p>
+      <a class="btn" href="https://wa.me/260966172411?text=Order%20Dell%20Inspiron%2014">Order via WhatsApp</a>
+      <button class="add-cart">Add to Cart</button>
+    </div>
+
+    <h2 class="category">Fashion</h2>
+    <div class="product">
+      <img src="images/product1.jpg.jpg" alt="Arsenal Jersey" />
+      <h3>Arsenal Away Jersey 93/94</h3>
+      <p class="price">Price: ZMW 120</p>
+      <p class="desc">Comfort fit, multiple sizes.</p>
+      <a class="btn" href="https://wa.me/260966172411?text=Order%20Arsenal%20Jersey">Order via WhatsApp</a>
+      <button class="add-cart">Add to Cart</button>
+    </div>
+
+    <div class="product">
+      <img src="images/product3.jpg.jpg" alt="Man United Jacket" />
+      <h3>Man United Jacket</h3>
+      <p class="price">Price: ZMW 450</p>
+      <p class="desc">Lightweight, durable, trendy design.</p>
+      <a class="btn" href="https://wa.me/260966172411?text=Order%20Man%20United%20Jacket">Order via WhatsApp</a>
+      <button class="add-cart">Add to Cart</button>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>Payments: Mobile money (MTN/Airtel/Zamtel) or Bank Transfer</p>
+    <p>Contact: WhatsApp +260 966172411</p>
+    <p>&copy; 2025 Nova Nest</p>
+  </footer>
+
+  <!-- Cart Popup -->
+  <div id="cart-popup" class="cart-popup" style="display:none;">
+    <h2>Your Cart</h2>
+    <ul id="cart-items"></ul>
+    <button id="checkout-btn">Proceed to Checkout</button>
+    <button id="clear-cart">Clear Cart</button>
+    <button id="close-cart">Close</button>
+  </div>
+
+  <!-- Temporary popup message -->
+  <div id="cart-message" style="display:none; position:fixed; top:20px; right:20px; background:#22c55e; color:white; padding:10px 15px; border-radius:6px;">
+    Item added to cart!
+  </div>
+
+  <script>
+    // ✅ Search filter
+    const searchInput = document.querySelector('.search-bar input');
+    const searchButton = document.querySelector('.search-bar button');
+    const products = document.querySelectorAll('.product');
+
+    function filterProducts() {
+      const query = searchInput.value.toLowerCase();
+      products.forEach(product => {
+        const name = product.querySelector("h3").innerText.toLowerCase();
+        const desc = product.querySelector(".desc").innerText.toLowerCase();
+        if (name.includes(query) || desc.includes(query)) {
+          product.style.display = "";   // show normally
+        } else {
+          product.style.display = "none"; // hide
+        }
+      });
+    }
+
+    searchButton.addEventListener('click', filterProducts);
+    searchInput.addEventListener('keyup', filterProducts);
+
+    // ✅ Cart code
+    let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+    const cartCountSpan = document.getElementById("cart-count");
+    const addCartButtons = document.querySelectorAll(".add-cart");
+    const cartLink = document.getElementById("cart-link");
+    const cartPopup = document.getElementById("cart-popup");
+    const cartItemsList = document.getElementById("cart-items");
+    const closeCartButton = document.getElementById("close-cart");
+    const checkoutBtn = document.getElementById("checkout-btn");
+    const clearCartButton = document.getElementById("clear-cart");
+    const cartMessage = document.getElementById("cart-message");
+
+    function updateCartCount() {
+      cartCountSpan.textContent = cartItems.length;
+    }
+
+    function saveCart() {
+      localStorage.setItem("cartItems", JSON.stringify(cartItems));
+      updateCartCount();
+    }
+
+    function renderCart() {
+      cartItemsList.innerHTML = "";
+      cartItems.forEach((item, i) => {
+        const li = document.createElement("li");
+        li.textContent = `${item.name} - ZMW ${item.price}`;
+
+        const removeBtn = document.createElement("button");
+        removeBtn.textContent = "Remove";
+        removeBtn.style.marginLeft = "10px";
+        removeBtn.addEventListener("click", () => {
+          cartItems.splice(i, 1);
+          saveCart();
+          renderCart();
+        });
+
+        li.appendChild(removeBtn);
+        cartItemsList.appendChild(li);
+      });
+      updateCartCount();
+    }
+
+    // ✅ Load cart automatically on page load
+    renderCart();
+
+    // Add to cart
+    addCartButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        const product = button.closest(".product");
+        const productName = product.querySelector("h3").innerText;
+        const priceText = product.querySelector(".price").innerText;
+        const productPrice = parseFloat(priceText.replace("Price: ZMW ", ""));
+
+        const newItem = { name: productName, price: productPrice };
+        cartItems.push(newItem);
+        saveCart();
+        renderCart();
+
+        cartMessage.style.display = "block";
+        setTimeout(() => { cartMessage.style.display = "none"; }, 3000);
+      });
+    });
+
+    cartLink.addEventListener("click", e => {
+      e.preventDefault();
+      cartPopup.style.display = "block";
+    });
+
+    closeCartButton.addEventListener("click", () => {
+      cartPopup.style.display = "none";
+    });
+
+    checkoutBtn.addEventListener("click", () => {
+      window.location.href = "checkout.html";
+    });
+
+    clearCartButton.addEventListener("click", () => {
+      cartItems = [];
+      saveCart();
+      renderCart();
+      alert("Cart has been cleared!");
+    });
+  </script>
+</body>
+</html>

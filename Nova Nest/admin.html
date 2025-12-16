@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin - Nova Nest</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="header">
+    <h1>Admin Dashboard</h1>
+    <p>Manage customer orders</p>
+  </header>
+
+  <main>
+    <!-- Pending Orders -->
+    <h2>Pending Orders</h2>
+    <ul id="pending-orders"></ul>
+
+    <!-- Confirmed Orders -->
+    <h2>Confirmed Orders</h2>
+    <ul id="confirmed-orders"></ul>
+  </main>
+
+  <script>
+    // Load orders from localStorage
+    const pendingOrdersList = document.getElementById("pending-orders");
+    const confirmedOrdersList = document.getElementById("confirmed-orders");
+
+    let pendingOrders = JSON.parse(localStorage.getItem("pendingOrders")) || [];
+    let confirmedOrders = JSON.parse(localStorage.getItem("confirmedOrders")) || [];
+
+    function renderOrders() {
+      // Clear lists
+      pendingOrdersList.innerHTML = "";
+      confirmedOrdersList.innerHTML = "";
+
+      // Render pending orders
+      pendingOrders.forEach((order, index) => {
+        const li = document.createElement("li");
+        li.innerHTML = `
+          <strong>${order.name}</strong> (${order.phone})<br>
+          Address: ${order.address}<br>
+          Items: ${order.items}<br>
+          Total: ZMW ${order.total}<br>
+          Time: ${order.timestamp}<br>
+          <button class="confirm-btn" data-index="${index}">Confirm Payment</button>
+        `;
+        pendingOrdersList.appendChild(li);
+      });
+
+      // Render confirmed orders
+      confirmedOrders.forEach(order => {
+        const li = document.createElement("li");
+        li.innerHTML = `
+          <strong>${order.name}</strong> (${order.phone})<br>
+          Address: ${order.address}<br>
+          Items: ${order.items}<br>
+          Total: ZMW ${order.total}<br>
+          Time: ${order.timestamp}<br>
+          ✅ Payment Confirmed
+        `;
+        confirmedOrdersList.appendChild(li);
+      });
+
+      // Attach confirm buttons
+      document.querySelectorAll(".confirm-btn").forEach(btn => {
+        btn.addEventListener("click", e => {
+          const index = e.target.getAttribute("data-index");
+          const order = pendingOrders[index];
+
+          // Move order to confirmed
+          confirmedOrders.push(order);
+          localStorage.setItem("confirmedOrders", JSON.stringify(confirmedOrders));
+
+          // Remove from pending
+          pendingOrders.splice(index, 1);
+          localStorage.setItem("pendingOrders", JSON.stringify(pendingOrders));
+
+          renderOrders();
+        });
+      });
+    }
+
+    // Initial render
+    renderOrders();
+  </script>
+</body>
+</html>

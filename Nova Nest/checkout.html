@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Checkout - Nova Nest</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="header">
+    <h1>Checkout</h1>
+    <p>Complete your order below</p>
+  </header>
+
+  <main>
+    <div class="checkout-container">
+      <!-- Customer Details -->
+      <h2>Customer Details</h2>
+      <form id="checkout-form">
+        <label for="name">Full Name:</label>
+        <input type="text" id="name" required>
+
+        <label for="phone">Phone Number:</label>
+        <input type="text" id="phone" required>
+
+        <label for="address">Delivery Address:</label>
+        <textarea id="address" required></textarea>
+      </form>
+
+      <!-- Cart Items -->
+      <div class="cart-summary">
+        <h2>Your Cart</h2>
+        <ul id="checkout-items"></ul>
+      </div>
+
+      <!-- Payment Options -->
+      <h2>Payment Options</h2>
+
+      <!-- Bank Transfer -->
+      <div class="payment-option">
+        <h3>Bank Transfer (Preferred)</h3>
+        <p>Please transfer to:</p>
+        <p><strong>Bank:</strong> Absa Bank Zambia</p>
+        <p><strong>Account Name:</strong> Maurice Mwanza</p>
+        <p><strong>Account Number:</strong> 041111415</p>
+        <button id="bank-pay-btn" class="bank-btn">Pay via Bank Transfer</button>
+      </div>
+
+      <!-- MTN Mobile Money -->
+      <div class="payment-option">
+        <h3>MTN Mobile Money</h3>
+        <p>Pay using your MTN MoMo wallet.</p>
+        <button id="mtn-pay-btn" class="momo-btn">Pay via MTN Mobile Money</button>
+      </div>
+
+      <!-- Success / Pending message -->
+      <div id="order-success" style="display:none;">
+        ⏳ Payment Pending. Please complete your payment. We will confirm once received.
+        <br><br>
+        <a href="index.html">Back to Home</a>
+        <h2>Customer Service</h2>
+        <p>Need help with your order? Reach us on:</p>
+        <div class="customer-service">
+          <a href="https://wa.me/260966172411" target="_blank">WhatsApp</a>
+          <a href="https://facebook.com/dalisani2" target="_blank">Facebook</a>
+          <a href="https://instagram.com/allnova_nest" target="_blank">Instagram</a>
+          <a href="https://tiktok.com/@allnova_nest" target="_blank">TikTok</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2025 Nova Nest</p>
+  </footer>
+
+  <script>
+    // Load cart items from localStorage
+    const checkoutItemsList = document.getElementById("checkout-items");
+    let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+
+    function renderCheckout() {
+      checkoutItemsList.innerHTML = "";
+
+      cartItems.forEach((item, i) => {
+        const li = document.createElement("li");
+        li.textContent = `${item.name} - ZMW ${item.price}`;
+
+        // Add remove button
+        const removeBtn = document.createElement("button");
+        removeBtn.textContent = "Remove";
+        removeBtn.className = "remove-btn";
+        removeBtn.style.marginLeft = "10px";
+
+        removeBtn.addEventListener("click", () => {
+          cartItems.splice(i, 1); // remove item
+          localStorage.setItem("cartItems", JSON.stringify(cartItems));
+          renderCheckout(); // refresh list
+        });
+
+        li.appendChild(removeBtn);
+        checkoutItemsList.appendChild(li);
+      });
+
+      // Show total + Clear All
+      if (cartItems.length > 0) {
+        const total = cartItems.reduce((sum, i) => sum + i.price, 0);
+        const totalElement = document.createElement("p");
+        totalElement.className = "cart-total";
+        totalElement.textContent = `Total: ZMW ${total}`;
+        checkoutItemsList.appendChild(totalElement);
+
+        // Clear All button
+        const clearBtn = document.createElement("button");
+        clearBtn.textContent = "Clear All";
+        clearBtn.className = "clear-btn";
+        clearBtn.style.marginTop = "10px";
+
+        clearBtn.addEventListener("click", () => {
+          cartItems = [];
+          localStorage.setItem("cartItems", JSON.stringify(cartItems));
+          renderCheckout();
+        });
+
+        checkoutItemsList.appendChild(clearBtn);
+      } else {
+        const emptyMsg = document.createElement("p");
+        emptyMsg.textContent = "Your cart is empty.";
+        checkoutItemsList.appendChild(emptyMsg);
+      }
+    }
+    renderCheckout();
+
+    // Helper: Save order to pendingOrders with timestamp
+    function savePendingOrder(name, phone, address) {
+      const newOrder = {
+        name,
+        phone,
+        address,
+        items: cartItems.map(i => i.name).join(", "),
+        total: cartItems.reduce((sum, i) => sum + i.price, 0),
+        timestamp: new Date().toLocaleString()
+      };
+      const pendingOrders = JSON.parse(localStorage.getItem("pendingOrders")) || [];
+      pendingOrders.push(newOrder);
+      localStorage.setItem("pendingOrders", JSON.stringify(pendingOrders));
+    }
+
+    // Bank Transfer
+    document.getElementById("bank-pay-btn").addEventListener("click", () => {
+      const name = document.getElementById("name").value;
+      const phone = document.getElementById("phone").value;
+      const address = document.getElementById("address").value;
+
+      if (!name || !phone || !address) {
+        alert("Please fill in your customer details first.");
+        return;
+      }
+
+      savePendingOrder(name, phone, address);
+
+      alert("Please transfer to:\nBank: Absa Bank Zambia\nAccount Name: Maurice Mwanza.\nAccount Number: 041111415\n\nYour order will be marked as pending until payment is confirmed.");
+      document.getElementById("order-success").style.display = "block";
+      document.getElementById("checkout-form").style.display = "none";
+    });
+
+    // MTN Mobile Money
+    document.getElementById("mtn-pay-btn").addEventListener("click", () => {
+      const name = document.getElementById("name").value;
+      const phone = document.getElementById("phone").value;
+      const address = document.getElementById("address").value;
+
+      if (!name || !phone || !address) {
+        alert("Please fill in your customer details first.");
+        return;
+      }
+
+      savePendingOrder(name, phone, address);
+
+      alert("Please send payment to MTN MoMo number: 0966172411\n\nYour order will be marked as pending until payment is confirmed.");
+      document.getElementById("order-success").style.display = "block";
+      document.getElementById("checkout-form").style.display = "none";
+    });
+  </script>
+</body>
+</html>
