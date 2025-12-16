@@ -45,12 +45,13 @@
           Total: ZMW ${order.total}<br>
           Time: ${order.timestamp}<br>
           <button class="confirm-btn" data-index="${index}">Confirm Payment</button>
+          <button class="remove-pending-btn" data-index="${index}">Remove</button>
         `;
         pendingOrdersList.appendChild(li);
       });
 
       // Render confirmed orders
-      confirmedOrders.forEach(order => {
+      confirmedOrders.forEach((order, index) => {
         const li = document.createElement("li");
         li.innerHTML = `
           <strong>${order.name}</strong> (${order.phone})<br>
@@ -59,6 +60,8 @@
           Total: ZMW ${order.total}<br>
           Time: ${order.timestamp}<br>
           ✅ Payment Confirmed
+          <button class="remove-confirmed-btn" data-index="${index}">Remove</button>
+          <button class="restore-btn" data-index="${index}">Restore to Pending</button>
         `;
         confirmedOrdersList.appendChild(li);
       });
@@ -76,6 +79,44 @@
           // Remove from pending
           pendingOrders.splice(index, 1);
           localStorage.setItem("pendingOrders", JSON.stringify(pendingOrders));
+
+          renderOrders();
+        });
+      });
+
+      // Attach remove buttons for pending orders
+      document.querySelectorAll(".remove-pending-btn").forEach(btn => {
+        btn.addEventListener("click", e => {
+          const index = e.target.getAttribute("data-index");
+          pendingOrders.splice(index, 1);
+          localStorage.setItem("pendingOrders", JSON.stringify(pendingOrders));
+          renderOrders();
+        });
+      });
+
+      // Attach remove buttons for confirmed orders
+      document.querySelectorAll(".remove-confirmed-btn").forEach(btn => {
+        btn.addEventListener("click", e => {
+          const index = e.target.getAttribute("data-index");
+          confirmedOrders.splice(index, 1);
+          localStorage.setItem("confirmedOrders", JSON.stringify(confirmedOrders));
+          renderOrders();
+        });
+      });
+
+      // Attach restore buttons for confirmed orders
+      document.querySelectorAll(".restore-btn").forEach(btn => {
+        btn.addEventListener("click", e => {
+          const index = e.target.getAttribute("data-index");
+          const order = confirmedOrders[index];
+
+          // Move order back to pending
+          pendingOrders.push(order);
+          localStorage.setItem("pendingOrders", JSON.stringify(pendingOrders));
+
+          // Remove from confirmed
+          confirmedOrders.splice(index, 1);
+          localStorage.setItem("confirmedOrders", JSON.stringify(confirmedOrders));
 
           renderOrders();
         });
