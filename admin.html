@@ -2,28 +2,31 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Admin - Nova Nest</title>
+  <title>Admin Dashboard - Nova Nest</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header class="header">
     <h1>Admin Dashboard</h1>
-    <p>Manage customer orders</p>
+    <p>Manage pending and confirmed orders</p>
   </header>
 
   <main>
-    <!-- Pending Orders -->
-    <h2>Pending Orders</h2>
-    <ul id="pending-orders"></ul>
+    <div class="checkout-container">
+      <h2>Pending Orders</h2>
+      <ul id="pending-orders"></ul>
 
-    <!-- Confirmed Orders -->
-    <h2>Confirmed Orders</h2>
-    <ul id="confirmed-orders"></ul>
+      <h2>Confirmed Orders</h2>
+      <ul id="confirmed-orders"></ul>
+    </div>
   </main>
 
+  <footer class="footer">
+    <p>&copy; 2026 Nova Nest</p>
+  </footer>
+
   <script>
-    // Load orders from localStorage
     const pendingOrdersList = document.getElementById("pending-orders");
     const confirmedOrdersList = document.getElementById("confirmed-orders");
 
@@ -31,11 +34,10 @@
     let confirmedOrders = JSON.parse(localStorage.getItem("confirmedOrders")) || [];
 
     function renderOrders() {
-      // Clear lists
       pendingOrdersList.innerHTML = "";
       confirmedOrdersList.innerHTML = "";
 
-      // Render pending orders
+      // ✅ Show pending orders
       pendingOrders.forEach((order, index) => {
         const li = document.createElement("li");
         li.innerHTML = `
@@ -44,13 +46,58 @@
           Items: ${order.items}<br>
           Total: ZMW ${order.total}<br>
           Time: ${order.timestamp}<br>
-          <button class="confirm-btn" data-index="${index}">Confirm Payment</button>
-          <button class="remove-pending-btn" data-index="${index}">Remove</button>
         `;
+
+        // ✅ Show receipt inline, clickable + downloadable
+        if (order.receipt) {
+          const receiptLink = document.createElement("a");
+          receiptLink.href = order.receipt;
+          receiptLink.target = "_blank";
+          receiptLink.download = "receipt.png";
+
+          const receiptImg = document.createElement("img");
+          receiptImg.src = order.receipt;
+          receiptImg.style.maxWidth = "200px";
+          receiptImg.style.display = "block";
+          receiptImg.style.marginTop = "10px";
+
+          receiptLink.appendChild(receiptImg);
+          li.appendChild(receiptLink);
+        } else {
+          const noReceipt = document.createElement("p");
+          noReceipt.textContent = "No receipt uploaded yet.";
+          li.appendChild(noReceipt);
+        }
+
+        // Confirm button
+        const confirmBtn = document.createElement("button");
+        confirmBtn.textContent = "Confirm Order";
+        confirmBtn.className = "confirm-btn";
+        confirmBtn.addEventListener("click", () => {
+          confirmedOrders.push(order);
+          pendingOrders.splice(index, 1);
+          localStorage.setItem("pendingOrders", JSON.stringify(pendingOrders));
+          localStorage.setItem("confirmedOrders", JSON.stringify(confirmedOrders));
+          renderOrders();
+        });
+        li.appendChild(confirmBtn);
+
+        // ✅ Remove button
+        const removeBtn = document.createElement("button");
+        removeBtn.textContent = "Remove Order";
+        removeBtn.className = "remove-btn";
+        removeBtn.style.marginLeft = "10px";
+        removeBtn.addEventListener("click", () => {
+          pendingOrders.splice(index, 1);
+          localStorage.setItem("pendingOrders", JSON.stringify(pendingOrders));
+          renderOrders();
+        });
+        li.appendChild(removeBtn);
+
         pendingOrdersList.appendChild(li);
       });
 
-      // Render confirmed orders
+      // ✅ Show confirmed orders
       confirmedOrders.forEach((order, index) => {
         const li = document.createElement("li");
         li.innerHTML = `
@@ -59,71 +106,41 @@
           Items: ${order.items}<br>
           Total: ZMW ${order.total}<br>
           Time: ${order.timestamp}<br>
-          ✅ Payment Confirmed
-          <button class="remove-confirmed-btn" data-index="${index}">Remove</button>
-          <button class="restore-btn" data-index="${index}">Restore to Pending</button>
+          Status: Confirmed<br>
         `;
+
+        if (order.receipt) {
+          const receiptLink = document.createElement("a");
+          receiptLink.href = order.receipt;
+          receiptLink.target = "_blank";
+          receiptLink.download = "receipt.png";
+
+          const receiptImg = document.createElement("img");
+          receiptImg.src = order.receipt;
+          receiptImg.style.maxWidth = "200px";
+          receiptImg.style.display = "block";
+          receiptImg.style.marginTop = "10px";
+
+          receiptLink.appendChild(receiptImg);
+          li.appendChild(receiptLink);
+        }
+
+        // ✅ Remove button for confirmed orders
+        const removeBtn = document.createElement("button");
+        removeBtn.textContent = "Remove Order";
+        removeBtn.className = "remove-btn";
+        removeBtn.style.marginTop = "10px";
+        removeBtn.addEventListener("click", () => {
+          confirmedOrders.splice(index, 1);
+          localStorage.setItem("confirmedOrders", JSON.stringify(confirmedOrders));
+          renderOrders();
+        });
+        li.appendChild(removeBtn);
+
         confirmedOrdersList.appendChild(li);
-      });
-
-      // Attach confirm buttons
-      document.querySelectorAll(".confirm-btn").forEach(btn => {
-        btn.addEventListener("click", e => {
-          const index = e.target.getAttribute("data-index");
-          const order = pendingOrders[index];
-
-          // Move order to confirmed
-          confirmedOrders.push(order);
-          localStorage.setItem("confirmedOrders", JSON.stringify(confirmedOrders));
-
-          // Remove from pending
-          pendingOrders.splice(index, 1);
-          localStorage.setItem("pendingOrders", JSON.stringify(pendingOrders));
-
-          renderOrders();
-        });
-      });
-
-      // Attach remove buttons for pending orders
-      document.querySelectorAll(".remove-pending-btn").forEach(btn => {
-        btn.addEventListener("click", e => {
-          const index = e.target.getAttribute("data-index");
-          pendingOrders.splice(index, 1);
-          localStorage.setItem("pendingOrders", JSON.stringify(pendingOrders));
-          renderOrders();
-        });
-      });
-
-      // Attach remove buttons for confirmed orders
-      document.querySelectorAll(".remove-confirmed-btn").forEach(btn => {
-        btn.addEventListener("click", e => {
-          const index = e.target.getAttribute("data-index");
-          confirmedOrders.splice(index, 1);
-          localStorage.setItem("confirmedOrders", JSON.stringify(confirmedOrders));
-          renderOrders();
-        });
-      });
-
-      // Attach restore buttons for confirmed orders
-      document.querySelectorAll(".restore-btn").forEach(btn => {
-        btn.addEventListener("click", e => {
-          const index = e.target.getAttribute("data-index");
-          const order = confirmedOrders[index];
-
-          // Move order back to pending
-          pendingOrders.push(order);
-          localStorage.setItem("pendingOrders", JSON.stringify(pendingOrders));
-
-          // Remove from confirmed
-          confirmedOrders.splice(index, 1);
-          localStorage.setItem("confirmedOrders", JSON.stringify(confirmedOrders));
-
-          renderOrders();
-        });
       });
     }
 
-    // Initial render
     renderOrders();
   </script>
 </body>

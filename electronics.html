@@ -1,0 +1,1578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Electronics - Nova Nest</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="header">
+    <nav class="navbar">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="electronics.html">Electronics</a></li>
+        <li><a href="fashion.html">Fashion</a></li>
+        <li><a href="home-kitchen.html">Home & Kitchen</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="#" id="cart-link">🛒 Cart (<span id="cart-count">0</span>)</a></li>
+      </ul>
+    </nav>
+    <h1>Electronics</h1>
+  </header>
+
+  <main>
+    <div class="product-grid">
+
+      <!-- iPhone -->
+      <div class="product">
+        <h3>iPhone X Series</h3>
+        <img id="iphone-image" src="images/iphone-x.jpg" alt="iPhone X" width="220">
+
+        <label>Model:</label>
+        <select id="iphone-model">
+          <option value="X" data-img="images/iphone-x.jpg" data-price="3500">iPhone X</option>
+          <option value="XS" data-img="images/iphone-xs.jpg" data-price="4000">iPhone XS</option>
+          <option value="XS Max" data-img="images/iphone-xsmax.jpg" data-price="4500">iPhone XS Max</option>
+        </select>
+
+        <label>Storage:</label>
+        <select id="iphone-storage">
+          <option value="64GB" data-price="3500">64GB</option>
+          <option value="128GB" data-price="4000">128GB</option>
+          <option value="256GB" data-price="4500">256GB</option>
+        </select>
+
+        <label>Color:</label>
+        <select id="iphone-color">
+          <option>Black</option>
+          <option>Silver</option>
+          <option>Gold</option>
+        </select>
+
+        <p class="price">Price: ZMW <span id="iphone-price">3500</span></p>
+        <button class="add-cart" data-name="iPhone X Series">Add to Cart</button>
+      </div>
+	  
+	  <div class="product">
+  <img id="iphonexr-image" src="images/iphone-xr.jpg" alt="iPhone XR" width="220">
+  <h3>iPhone XR</h3>
+
+  <label for="iphonexr-storage">Storage:</label>
+  <select id="iphonexr-storage"></select>
+
+  <label for="iphonexr-color">Color:</label>
+  <select id="iphonexr-color"></select>
+
+  <p class="price">Price: ZMW <span id="iphonexr-price">0</span></p>
+  <button class="add-cart" data-name="iPhone XR">Add to Cart</button>
+</div>
+	  
+	  <div class="product">
+  <img id="iphone11-image" src="images/iphone-11.jpg" alt="iPhone 11" width="220">
+  <h3>iPhone 11 Series</h3>
+
+  <label for="iphone11-model">Model:</label>
+  <select id="iphone11-model">
+    <option value="11">iPhone 11</option>
+    <option value="11 Pro">iPhone 11 Pro</option>
+    <option value="11 Pro Max">iPhone 11 Pro Max</option>
+  </select>
+
+  <label for="iphone11-storage">Storage:</label>
+  <select id="iphone11-storage"></select> <!-- filled by JS -->
+
+  <label for="iphone11-color">Color:</label>
+  <select id="iphone11-color"></select> <!-- filled by JS -->
+
+  <p class="price">Price: ZMW <span id="iphone11-price">0</span></p>
+  <button class="add-cart" data-name="iPhone 11 Series">Add to Cart</button>
+</div>
+<div class="product">
+  <img id="iphone12-image" src="images/iphone12.jpg" alt="iPhone 12" width="220">
+  <h3>iPhone 12 Series</h3>
+
+  <label for="iphone12-model">Model:</label>
+  <select id="iphone12-model">
+    <option value="12">iPhone 12</option>
+    <option value="12 Pro">iPhone 12 Pro</option>
+    <option value="12 Pro Max">iPhone 12 Pro Max</option>
+  </select>
+
+  <label for="iphone12-storage">Storage:</label>
+  <select id="iphone12-storage"></select>
+
+  <label for="iphone12-color">Color:</label>
+  <select id="iphone12-color"></select>
+
+  <p class="price">Price: ZMW <span id="iphone12-price">0</span></p>
+  <button class="add-cart" data-name="iPhone 12 Series">Add to Cart</button>
+</div>
+
+<div class="product">
+  <img id="iphone13-image" src="images/iphone13.jpg" alt="iPhone 13" width="220">
+  <h3>iPhone 13 Series</h3>
+
+  <label for="iphone13-model">Model:</label>
+  <select id="iphone13-model">
+    <option value="13">iPhone 13</option>
+    <option value="13 Pro">iPhone 13 Pro</option>
+    <option value="13 Pro Max">iPhone 13 Pro Max</option>
+  </select>
+
+  <label for="iphone13-storage">Storage:</label>
+  <select id="iphone13-storage"></select>
+
+  <label for="iphone13-color">Color:</label>
+  <select id="iphone13-color"></select>
+
+  <p class="price">Price: ZMW <span id="iphone13-price">0</span></p>
+  <button class="add-cart" data-name="iPhone 13 Series">Add to Cart</button>
+</div>
+
+<div class="product">
+  <img id="iphone14-image" src="images/iphone14.jpg" alt="iPhone 14" width="220">
+  <h3>iPhone 14 Series</h3>
+
+  <label for="iphone14-model">Model:</label>
+  <select id="iphone14-model">
+    <option value="14">iPhone 14</option>
+    <option value="14 Plus">iPhone 14 Plus</option>
+    <option value="14 Pro">iPhone 14 Pro</option>
+    <option value="14 Pro Max">iPhone 14 Pro Max</option>
+  </select>
+
+  <label for="iphone14-storage">Storage:</label>
+  <select id="iphone14-storage"></select>
+
+  <label for="iphone14-color">Color:</label>
+  <select id="iphone14-color"></select>
+
+  <p class="price">Price: ZMW <span id="iphone14-price">0</span></p>
+  <button class="add-cart" data-name="iPhone 14 Series">Add to Cart</button>
+</div>
+
+<div class="product">
+  <img id="iphone15-image" src="images/iphone15.jpg" alt="iPhone 15" width="220">
+  <h3>iPhone 15 Series</h3>
+
+  <label for="iphone15-model">Model:</label>
+  <select id="iphone15-model">
+    <option value="15">iPhone 15</option>
+    <option value="15 Plus">iPhone 15 Plus</option>
+    <option value="15 Pro">iPhone 15 Pro</option>
+    <option value="15 Pro Max">iPhone 15 Pro Max</option>
+  </select>
+
+  <label for="iphone15-storage">Storage:</label>
+  <select id="iphone15-storage"></select>
+
+  <label for="iphone15-color">Color:</label>
+  <select id="iphone15-color"></select>
+
+  <p class="price">Price: ZMW <span id="iphone15-price">0</span></p>
+  <button class="add-cart" data-name="iPhone 15 Series">Add to Cart</button>
+</div>
+
+<div class="product">
+  <img id="iphone16-image" src="images/iphone16.jpg" alt="iPhone 16" width="220">
+  <h3>iPhone 16 Series</h3>
+
+  <label for="iphone16-model">Model:</label>
+  <select id="iphone16-model">
+    <option value="16">iPhone 16</option>
+    <option value="16 Plus">iPhone 16 Plus</option>
+    <option value="16 Pro">iPhone 16 Pro</option>
+    <option value="16 Pro Max">iPhone 16 Pro Max</option>
+  </select>
+
+  <label for="iphone16-storage">Storage:</label>
+  <select id="iphone16-storage"></select>
+
+  <label for="iphone16-color">Color:</label>
+  <select id="iphone16-color"></select>
+
+  <p class="price">Price: ZMW <span id="iphone16-price">0</span></p>
+  <button class="add-cart" data-name="iPhone 16 Series">Add to Cart</button>
+</div>
+
+<div class="product">
+  <img id="iphone17-image" src="images/iphone17.jpg" alt="iPhone 17" width="220">
+  <h3>iPhone 17 Series</h3>
+
+  <label for="iphone17-model">Model:</label>
+  <select id="iphone17-model">
+    <option value="17">iPhone 17</option>
+    <option value="17 Pro">iPhone 17 Pro</option>
+    <option value="17 Pro Max">iPhone 17 Pro Max</option>
+  </select>
+
+  <label for="iphone17-storage">Storage:</label>
+  <select id="iphone17-storage"></select>
+
+  <label for="iphone17-color">Color:</label>
+  <select id="iphone17-color"></select>
+
+  <p class="price">Price: ZMW <span id="iphone17-price">0</span></p>
+  <button class="add-cart" data-name="iPhone 17 Series">Add to Cart</button>
+</div>
+
+<div class="product">
+  <img id="galaxy10to20-image" src="images/galaxy-s10.jpg" alt="Samsung Galaxy S10–S20" width="220">
+  <h3>Samsung Galaxy Series (S10–S20)</h3>
+
+  <label for="galaxy10to20-model">Model:</label>
+  <select id="galaxy10to20-model">
+    <option value="S10">Galaxy S10</option>
+    <option value="S10 Plus">Galaxy S10 Plus</option>
+    <option value="S10e">Galaxy S10e</option>
+    <option value="S20">Galaxy S20</option>
+    <option value="S20 Plus">Galaxy S20 Plus</option>
+    <option value="S20 Ultra">Galaxy S20 Ultra</option>
+  </select>
+
+  <label for="galaxy10to20-storage">Storage:</label>
+  <select id="galaxy10to20-storage"></select>
+
+  <label for="galaxy10to20-color">Color:</label>
+  <select id="galaxy10to20-color"></select>
+
+  <p class="price">Price: ZMW <span id="galaxy10to20-price">0</span></p>
+  <button class="add-cart" data-name="Samsung Galaxy S10–S20">Add to Cart</button>
+</div>
+
+
+<div class="product">
+  <img id="galaxy-image" src="images/galaxy-s21.jpg" alt="Samsung Galaxy" width="220">
+  <h3>Samsung Galaxy Series</h3>
+
+  <label for="galaxy-model">Model:</label>
+  <select id="galaxy-model">
+    <option value="S21">Galaxy S21</option>
+    <option value="S21 Plus">Galaxy S21 Plus</option>
+    <option value="S21 Ultra">Galaxy S21 Ultra</option>
+    <option value="S22">Galaxy S22</option>
+    <option value="S22 Plus">Galaxy S22 Plus</option>
+    <option value="S22 Ultra">Galaxy S22 Ultra</option>
+    <option value="S23">Galaxy S23</option>
+    <option value="S23 Plus">Galaxy S23 Plus</option>
+    <option value="S23 Ultra">Galaxy S23 Ultra</option>
+  </select>
+
+  <label for="galaxy-storage">Storage:</label>
+  <select id="galaxy-storage"></select>
+
+  <label for="galaxy-color">Color:</label>
+  <select id="galaxy-color"></select>
+
+  <p class="price">Price: ZMW <span id="galaxy-price">0</span></p>
+  <button class="add-cart" data-name="Samsung Galaxy Series">Add to Cart</button>
+</div>
+<div class="product">
+  <img id="galaxy2425-image" src="images/galaxy-s24.jpg" alt="Samsung Galaxy S24–S25" width="220">
+  <h3>Samsung Galaxy Series (S24–S25)</h3>
+
+  <label for="galaxy2425-model">Model:</label>
+  <select id="galaxy2425-model">
+    <option value="S24">Galaxy S24</option>
+    <option value="S24 Plus">Galaxy S24 Plus</option>
+    <option value="S24 Ultra">Galaxy S24 Ultra</option>
+    <option value="S25">Galaxy S25</option>
+    <option value="S25 Plus">Galaxy S25 Plus</option>
+    <option value="S25 Ultra">Galaxy S25 Ultra</option>
+  </select>
+
+  <label for="galaxy2425-storage">Storage:</label>
+  <select id="galaxy2425-storage"></select>
+
+  <label for="galaxy2425-color">Color:</label>
+  <select id="galaxy2425-color"></select>
+
+  <p class="price">Price: ZMW <span id="galaxy2425-price">0</span></p>
+  <button class="add-cart" data-name="Samsung Galaxy S24–S25">Add to Cart</button>
+</div>
+
+<div class="product">
+  <img id="galaxy7to9-image" src="images/galaxy-s7.jpg" alt="Pre‑Owned Samsung Galaxy S7–S9" width="220">
+  <h3>Pre‑Owned Samsung Galaxy Series (S7–S9)</h3>
+
+  <label for="galaxy7to9-model">Model:</label>
+  <select id="galaxy7to9-model">
+    <option value="S7">Galaxy S7</option>
+    <option value="S7 Edge">Galaxy S7 Edge</option>
+    <option value="S8">Galaxy S8</option>
+    <option value="S8 Plus">Galaxy S8 Plus</option>
+    <option value="S9">Galaxy S9</option>
+    <option value="S9 Plus">Galaxy S9 Plus</option>
+  </select>
+
+  <label for="galaxy7to9-storage">Storage:</label>
+  <select id="galaxy7to9-storage"></select>
+
+  <label for="galaxy7to9-color">Color:</label>
+  <select id="galaxy7to9-color"></select>
+
+  <p class="price">Price: ZMW <span id="galaxy7to9-price">0</span></p>
+  <button class="add-cart" data-name="Pre‑Owned Samsung Galaxy S7–S9">Add to Cart</button>
+</div>
+
+<div class="product">
+  <img id="galaxyflip-image" src="images/galaxy-flip1.jpg" alt="Samsung Galaxy Z Flip Series" width="220">
+  <h3>Samsung Galaxy Z Flip Series (Flip 1–6)</h3>
+
+  <label for="galaxyflip-model">Model:</label>
+  <select id="galaxyflip-model">
+    <option value="Flip1">Galaxy Z Flip</option>
+    <option value="Flip2">Galaxy Z Flip 2</option>
+    <option value="Flip3">Galaxy Z Flip 3</option>
+    <option value="Flip4">Galaxy Z Flip 4</option>
+    <option value="Flip5">Galaxy Z Flip 5</option>
+    <option value="Flip6">Galaxy Z Flip 6</option>
+  </select>
+
+  <label for="galaxyflip-storage">Storage:</label>
+  <select id="galaxyflip-storage"></select>
+
+  <label for="galaxyflip-color">Color:</label>
+  <select id="galaxyflip-color"></select>
+
+  <p class="price">Price: ZMW <span id="galaxyflip-price">0</span></p>
+  <button class="add-cart" data-name="Samsung Galaxy Z Flip Series">Add to Cart</button>
+</div>
+
+<div class="product">
+  <img id="galaxyfold-image" src="images/galaxy-fold2.jpg" alt="Samsung Galaxy Z Fold Series" width="220">
+  <h3>Samsung Galaxy Z Fold Series (Fold 2–6)</h3>
+
+  <label for="galaxyfold-model">Model:</label>
+  <select id="galaxyfold-model">
+    <option value="Fold2">Galaxy Z Fold 2</option>
+    <option value="Fold3">Galaxy Z Fold 3</option>
+    <option value="Fold4">Galaxy Z Fold 4</option>
+    <option value="Fold5">Galaxy Z Fold 5</option>
+    <option value="Fold6">Galaxy Z Fold 6</option>
+  </select>
+
+  <label for="galaxyfold-storage">Storage:</label>
+  <select id="galaxyfold-storage"></select>
+
+  <label for="galaxyfold-color">Color:</label>
+  <select id="galaxyfold-color"></select>
+
+  <p class="price">Price: ZMW <span id="galaxyfold-price">0</span></p>
+  <button class="add-cart" data-name="Samsung Galaxy Z Fold Series">Add to Cart</button>
+</div>
+
+      <!-- Laptop -->
+      <div class="product">
+        <h3>Dell Inspiron 14</h3>
+        <img id="laptop-image" src="images/dell-inspiron14.jpg" alt="Laptop" width="220">
+
+        <label>RAM:</label>
+        <select id="laptop-ram">
+          <option value="8GB" data-price="8500">8GB</option>
+          <option value="16GB" data-price="9500">16GB</option>
+        </select>
+
+        <label>Storage:</label>
+        <select id="laptop-storage">
+          <option value="256GB SSD">256GB SSD</option>
+          <option value="512GB SSD">512GB SSD</option>
+        </select>
+
+        <p class="price">Price: ZMW <span id="laptop-price">8500</span></p>
+        <button class="add-cart" data-name="Dell Inspiron 14">Add to Cart</button>
+      </div>
+
+      <!-- Headphones -->
+      <div class="product">
+        <h3>JBL T520BT Wireless Bluetooth Headphones</h3>
+        <img id="headphones-image" src="images/headphones.jpg" alt="Headphones" width="220">
+
+        <label>Type:</label>
+        <select id="headphones-type">
+          <option value="Standard" data-img="images/headphones.jpg" data-price="1200">Standard</option>
+       
+        </select>
+
+        <label>Color:</label>
+        <select id="headphones-color">
+          <option>Black</option>
+          <option>White</option>
+          <option>Purple</option>
+		  <option>Blue</option>
+        </select>
+
+        <p class="price">Price: ZMW <span id="headphones-price">1200</span></p>
+        <button class="add-cart" data-name="Wireless Headphones">Add to Cart</button>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 Nova Nest</p>
+  </footer>
+
+  <!-- Cart Popup -->
+  <div id="cart-popup" class="cart-popup" style="display:none;">
+    <h2>Your Cart</h2>
+    <ul id="cart-items"></ul>
+    <button id="checkout-btn">Proceed to Checkout</button>
+    <button id="clear-cart">Clear Cart</button>
+    <button id="close-cart">Close</button>
+  </div>
+
+  <div id="cart-message" style="display:none; position:fixed; top:20px; right:20px; background:#22c55e; color:white; padding:10px 15px; border-radius:6px;">
+    Item added to cart!
+  </div>
+
+ <script>
+  // --- Cart System ---
+  let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+  const cartCountSpan = document.getElementById("cart-count");
+  const cartLink = document.getElementById("cart-link");
+  const cartPopup = document.getElementById("cart-popup");
+  const cartItemsList = document.getElementById("cart-items");
+  const closeCartButton = document.getElementById("close-cart");
+  const checkoutBtn = document.getElementById("checkout-btn");
+  const clearCartButton = document.getElementById("clear-cart");
+  const cartMessage = document.getElementById("cart-message");
+
+  function updateCartCount() { cartCountSpan.textContent = cartItems.length; }
+  function saveCart() { localStorage.setItem("cartItems", JSON.stringify(cartItems)); updateCartCount(); }
+  function renderCart() {
+    cartItemsList.innerHTML = "";
+    cartItems.forEach((item, i) => {
+      const li = document.createElement("li");
+      li.textContent = `${item.name} - ZMW ${item.price}`;
+      const removeBtn = document.createElement("button");
+      removeBtn.textContent = "Remove";
+      removeBtn.style.marginLeft = "10px";
+      removeBtn.addEventListener("click", () => { cartItems.splice(i, 1); saveCart(); renderCart(); });
+      li.appendChild(removeBtn);
+      cartItemsList.appendChild(li);
+    });
+    updateCartCount();
+  }
+  renderCart();
+
+  // --- Price Maps ---
+  const iphonePrices = {
+    "X": { "64GB": 3500, "128GB": 3700, "256GB": 3900 },
+    "XS": { "64GB": 4000, "128GB": 4200, "256GB": 4400 },
+    "XS Max": { "64GB": 4500, "128GB": 4700, "256GB": 4900 }
+  };
+
+  const laptopPrices = {
+    "8GB": { "256GB SSD": 8500, "512GB SSD": 9000 },
+    "16GB": { "256GB SSD": 9500, "512GB SSD": 10000 }
+  };
+
+  const headphonesPrices = {
+    "Standard": { "Black": 1200, "White": 1250, "Red": 1250 },
+    "Pro": { "Black": 1800, "White": 1850, "Red": 1850 }
+  };
+
+  // --- Update Functions (price + image) ---
+  function updateIphonePrice() {
+    const model = document.getElementById("iphone-model").value;
+    const storage = document.getElementById("iphone-storage").value;
+    const price = iphonePrices[model][storage];
+    document.getElementById("iphone-price").textContent = price;
+
+    const iphoneImage = document.getElementById("iphone-image");
+    if (model === "X") iphoneImage.src = "images/iphone-x.jpg";
+    if (model === "XS") iphoneImage.src = "images/iphone-xs.jpg";
+    if (model === "XS Max") iphoneImage.src = "images/iphone-xsmax.jpg";
+  }
+
+  function updateLaptopPrice() {
+    const ram = document.getElementById("laptop-ram").value;
+    const storage = document.getElementById("laptop-storage").value;
+    const price = laptopPrices[ram][storage];
+    document.getElementById("laptop-price").textContent = price;
+
+  }
+
+  function updateHeadphonesPrice() {
+    const type = document.getElementById("headphones-type").value;
+    const color = document.getElementById("headphones-color").value;
+    const price = headphonesPrices[type][color];
+    document.getElementById("headphones-price").textContent = price;
+
+    const headphonesImage = document.getElementById("headphones-image");
+    if (type === "Standard") headphonesImage.src = "images/headphones.jpg";
+    if (type === "Pro") headphonesImage.src = "images/headphones-pro.jpg";
+  }
+
+  // --- Event Listeners ---
+  document.getElementById("iphone-model").addEventListener("change", updateIphonePrice);
+  document.getElementById("iphone-storage").addEventListener("change", updateIphonePrice);
+
+  document.getElementById("laptop-ram").addEventListener("change", updateLaptopPrice);
+  document.getElementById("laptop-storage").addEventListener("change", updateLaptopPrice);
+
+  document.getElementById("headphones-type").addEventListener("change", updateHeadphonesPrice);
+  document.getElementById("headphones-color").addEventListener("change", updateHeadphonesPrice);
+
+  // --- Add to Cart (class-based) ---
+  document.querySelectorAll(".add-cart").forEach(button => {
+    button.addEventListener("click", () => {
+      const parent = button.closest(".product");
+      const productName = button.dataset.name || parent.querySelector("h3").textContent;
+      const priceEl = parent.querySelector(".price span");
+      const price = parseFloat(priceEl.textContent);
+
+      // Collect selected options
+      const selects = parent.querySelectorAll("select");
+      let descriptionParts = [];
+      selects.forEach(sel => {
+        descriptionParts.push(sel.value);
+      });
+
+      cartItems.push({ name: `${productName} - ${descriptionParts.join(" - ")}`, price });
+      saveCart(); renderCart();
+
+      cartMessage.style.display = "block";
+      setTimeout(() => { cartMessage.style.display = "none"; }, 3000);
+    });
+  });
+
+  // --- Cart Controls ---
+  cartLink.addEventListener("click", e => { e.preventDefault(); cartPopup.style.display = "block"; });
+  closeCartButton.addEventListener("click", () => { cartPopup.style.display = "none"; });
+  checkoutBtn.addEventListener("click", () => { window.location.href = "checkout.html"; });
+  clearCartButton.addEventListener("click", () => { cartItems = []; saveCart(); renderCart(); alert("Cart has been cleared!"); });
+  // --- iPhone 11 Series ---
+const iphone11Prices = {
+  "11": { "64GB": 5000, "128GB": 5200, "256GB": 5400 },
+  "11 Pro": { "64GB": 6000, "128GB": 6200, "256GB": 6400 },
+  "11 Pro Max": { "64GB": 7000, "128GB": 7200, "256GB": 7400 }
+};
+
+const iphone11Storage = {
+  "11": ["64GB", "128GB", "256GB"],
+  "11 Pro": ["64GB", "128GB", "256GB"],
+  "11 Pro Max": ["64GB", "128GB", "256GB"]
+};
+
+const iphone11Colors = {
+  "11": ["Purple", "Green", "Yellow", "Black", "White", "Red"],
+  "11 Pro": ["Midnight Green", "Space Gray", "Silver", "Gold"],
+  "11 Pro Max": ["Midnight Green", "Space Gray", "Silver", "Gold"]
+};
+
+function updateIphone11Options() {
+  const model = document.getElementById("iphone11-model").value;
+  const storageSelect = document.getElementById("iphone11-storage");
+  const colorSelect = document.getElementById("iphone11-color");
+
+  // Reset storage options
+  storageSelect.innerHTML = "";
+  iphone11Storage[model].forEach(storage => {
+    const opt = document.createElement("option");
+    opt.value = storage;
+    opt.textContent = storage;
+    storageSelect.appendChild(opt);
+  });
+
+  // Reset color options
+  colorSelect.innerHTML = "";
+  iphone11Colors[model].forEach(color => {
+    const opt = document.createElement("option");
+    opt.value = color;
+    opt.textContent = color;
+    colorSelect.appendChild(opt);
+  });
+
+  updateIphone11Price();
+}
+
+function updateIphone11Price() {
+  const model = document.getElementById("iphone11-model").value;
+  const storage = document.getElementById("iphone11-storage").value;
+  const price = iphone11Prices[model][storage];
+  document.getElementById("iphone11-price").textContent = price;
+
+  // ✅ Update image based only on model
+  const iphone11Image = document.getElementById("iphone11-image");
+  if (model === "11") iphone11Image.src = "images/iphone-11.jpg";
+  if (model === "11 Pro") iphone11Image.src = "images/iphone11-pro.jpg";
+  if (model === "11 Pro Max") iphone11Image.src = "images/iphone11-promax.jpg";
+}
+
+// --- iPhone 12 Series ---
+const iphone12Prices = {
+  "12": { "64GB": 5500, "128GB": 5700, "256GB": 5900 },
+  "12 Pro": { "128GB": 6500, "256GB": 6700, "512GB": 7000 },
+  "12 Pro Max": { "128GB": 7500, "256GB": 7700, "512GB": 8000 }
+};
+
+const iphone12Storage = {
+  "12": ["64GB", "128GB", "256GB"],
+  "12 Pro": ["128GB", "256GB", "512GB"],
+  "12 Pro Max": ["128GB", "256GB", "512GB"]
+};
+
+const iphone12Colors = {
+  "12": ["Blue", "Green", "Red", "White", "Black"],
+  "12 Pro": ["Pacific Blue", "Gold", "Graphite", "Silver"],
+  "12 Pro Max": ["Pacific Blue", "Gold", "Graphite", "Silver"]
+};
+
+function updateIphone12Options() {
+  const model = document.getElementById("iphone12-model").value;
+  const storageSelect = document.getElementById("iphone12-storage");
+  const colorSelect = document.getElementById("iphone12-color");
+
+  // Reset storage options
+  storageSelect.innerHTML = "";
+  iphone12Storage[model].forEach(storage => {
+    const opt = document.createElement("option");
+    opt.value = storage;
+    opt.textContent = storage;
+    storageSelect.appendChild(opt);
+  });
+
+  // Reset color options
+  colorSelect.innerHTML = "";
+  iphone12Colors[model].forEach(color => {
+    const opt = document.createElement("option");
+    opt.value = color;
+    opt.textContent = color;
+    colorSelect.appendChild(opt);
+  });
+
+  updateIphone12Price();
+}
+
+function updateIphone12Price() {
+  const model = document.getElementById("iphone12-model").value;
+  const storage = document.getElementById("iphone12-storage").value;
+  const price = iphone12Prices[model][storage];
+  document.getElementById("iphone12-price").textContent = price;
+
+  // ✅ Update image based only on model
+  const iphone12Image = document.getElementById("iphone12-image");
+  if (model === "12") iphone12Image.src = "images/iphone12.jpg";
+  if (model === "12 Pro") iphone12Image.src = "images/iphone12-pro.jpg";
+  if (model === "12 Pro Max") iphone12Image.src = "images/iphone12-promax.jpg";
+}
+// --- iPhone 13 Series ---
+const iphone13Prices = {
+  "13": { "128GB": 6000, "256GB": 6300, "512GB": 6600 },
+  "13 Pro": { "128GB": 7500, "256GB": 7800, "512GB": 8200, "1TB": 8600 },
+  "13 Pro Max": { "128GB": 8500, "256GB": 8800, "512GB": 9200, "1TB": 9600 }
+};
+
+const iphone13Storage = {
+  "13": ["128GB", "256GB", "512GB"],
+  "13 Pro": ["128GB", "256GB", "512GB", "1TB"],
+  "13 Pro Max": ["128GB", "256GB", "512GB", "1TB"]
+};
+
+const iphone13Colors = {
+  "13": ["Pink", "Blue", "Midnight", "Starlight", "Red"],
+  "13 Pro": ["Sierra Blue", "Gold", "Graphite", "Silver"],
+  "13 Pro Max": ["Sierra Blue", "Gold", "Graphite", "Silver"]
+};
+
+function updateIphone13Options() {
+  const model = document.getElementById("iphone13-model").value;
+  const storageSelect = document.getElementById("iphone13-storage");
+  const colorSelect = document.getElementById("iphone13-color");
+
+  // Reset storage options
+  storageSelect.innerHTML = "";
+  iphone13Storage[model].forEach(storage => {
+    const opt = document.createElement("option");
+    opt.value = storage;
+    opt.textContent = storage;
+    storageSelect.appendChild(opt);
+  });
+
+  // Reset color options
+  colorSelect.innerHTML = "";
+  iphone13Colors[model].forEach(color => {
+    const opt = document.createElement("option");
+    opt.value = color;
+    opt.textContent = color;
+    colorSelect.appendChild(opt);
+  });
+
+  updateIphone13Price();
+}
+
+function updateIphone13Price() {
+  const model = document.getElementById("iphone13-model").value;
+  const storage = document.getElementById("iphone13-storage").value;
+  const price = iphone13Prices[model][storage];
+  document.getElementById("iphone13-price").textContent = price;
+
+  // ✅ Update image based only on model
+  const iphone13Image = document.getElementById("iphone13-image");
+  if (model === "13") iphone13Image.src = "images/iphone13.jpg";
+  if (model === "13 Pro") iphone13Image.src = "images/iphone13-pro.jpg";
+  if (model === "13 Pro Max") iphone13Image.src = "images/iphone13-promax.jpg";
+}
+
+// --- iPhone 14 Series ---
+const iphone14Prices = {
+  "14": { "128GB": 6500, "256GB": 6800, "512GB": 7100 },
+  "14 Plus": { "128GB": 7000, "256GB": 7300, "512GB": 7600 },
+  "14 Pro": { "128GB": 8500, "256GB": 8800, "512GB": 9200, "1TB": 9600 },
+  "14 Pro Max": { "128GB": 9500, "256GB": 9800, "512GB": 10200, "1TB": 10600 }
+};
+
+const iphone14Storage = {
+  "14": ["128GB", "256GB", "512GB"],
+  "14 Plus": ["128GB", "256GB", "512GB"],
+  "14 Pro": ["128GB", "256GB", "512GB", "1TB"],
+  "14 Pro Max": ["128GB", "256GB", "512GB", "1TB"]
+};
+
+const iphone14Colors = {
+  "14": ["Blue", "Purple", "Midnight", "Starlight", "Red"],
+  "14 Plus": ["Blue", "Purple", "Midnight", "Starlight", "Red"],
+  "14 Pro": ["Deep Purple", "Gold", "Silver", "Space Black"],
+  "14 Pro Max": ["Deep Purple", "Gold", "Silver", "Space Black"]
+};
+
+function updateIphone14Options() {
+  const model = document.getElementById("iphone14-model").value;
+  const storageSelect = document.getElementById("iphone14-storage");
+  const colorSelect = document.getElementById("iphone14-color");
+
+  // Reset storage options
+  storageSelect.innerHTML = "";
+  iphone14Storage[model].forEach(storage => {
+    const opt = document.createElement("option");
+    opt.value = storage;
+    opt.textContent = storage;
+    storageSelect.appendChild(opt);
+  });
+
+  // Reset color options
+  colorSelect.innerHTML = "";
+  iphone14Colors[model].forEach(color => {
+    const opt = document.createElement("option");
+    opt.value = color;
+    opt.textContent = color;
+    colorSelect.appendChild(opt);
+  });
+
+  updateIphone14Price();
+}
+
+function updateIphone14Price() {
+  const model = document.getElementById("iphone14-model").value;
+  const storage = document.getElementById("iphone14-storage").value;
+  const price = iphone14Prices[model][storage];
+  document.getElementById("iphone14-price").textContent = price;
+
+  // ✅ Update image based only on model
+  const iphone14Image = document.getElementById("iphone14-image");
+  if (model === "14") iphone14Image.src = "images/iphone14.jpg";
+  if (model === "14 Plus") iphone14Image.src = "images/iphone14-plus.jpg";
+  if (model === "14 Pro") iphone14Image.src = "images/iphone14-pro.jpg";
+  if (model === "14 Pro Max") iphone14Image.src = "images/iphone14-promax.jpg";
+}
+// --- iPhone 15 Series ---
+const iphone15Prices = {
+  "15": { "128GB": 7000, "256GB": 7300, "512GB": 7600 },
+  "15 Plus": { "128GB": 7500, "256GB": 7800, "512GB": 8100 },
+  "15 Pro": { "128GB": 9000, "256GB": 9400, "512GB": 9800, "1TB": 10200 },
+  "15 Pro Max": { "128GB": 10000, "256GB": 10400, "512GB": 10800, "1TB": 11200 }
+};
+
+const iphone15Storage = {
+  "15": ["128GB", "256GB", "512GB"],
+  "15 Plus": ["128GB", "256GB", "512GB"],
+  "15 Pro": ["128GB", "256GB", "512GB", "1TB"],
+  "15 Pro Max": ["128GB", "256GB", "512GB", "1TB"]
+};
+
+const iphone15Colors = {
+  "15": ["Blue", "Pink", "Green", "Yellow", "Black"],
+  "15 Plus": ["Blue", "Pink", "Green", "Yellow", "Black"],
+  "15 Pro": ["Natural Titanium", "Blue Titanium", "White Titanium", "Black Titanium"],
+  "15 Pro Max": ["Natural Titanium", "Blue Titanium", "White Titanium", "Black Titanium"]
+};
+
+function updateIphone15Options() {
+  const model = document.getElementById("iphone15-model").value;
+  const storageSelect = document.getElementById("iphone15-storage");
+  const colorSelect = document.getElementById("iphone15-color");
+
+  // Reset storage options
+  storageSelect.innerHTML = "";
+  iphone15Storage[model].forEach(storage => {
+    const opt = document.createElement("option");
+    opt.value = storage;
+    opt.textContent = storage;
+    storageSelect.appendChild(opt);
+  });
+
+  // Reset color options
+  colorSelect.innerHTML = "";
+  iphone15Colors[model].forEach(color => {
+    const opt = document.createElement("option");
+    opt.value = color;
+    opt.textContent = color;
+    colorSelect.appendChild(opt);
+  });
+
+  updateIphone15Price();
+}
+
+function updateIphone15Price() {
+  const model = document.getElementById("iphone15-model").value;
+  const storage = document.getElementById("iphone15-storage").value;
+  const price = iphone15Prices[model][storage];
+  document.getElementById("iphone15-price").textContent = price;
+
+  // ✅ Update image based only on model
+  const iphone15Image = document.getElementById("iphone15-image");
+  if (model === "15") iphone15Image.src = "images/iphone15.jpg";
+  if (model === "15 Plus") iphone15Image.src = "images/iphone15-plus.jpg";
+  if (model === "15 Pro") iphone15Image.src = "images/iphone15-pro.jpg";
+  if (model === "15 Pro Max") iphone15Image.src = "images/iphone15-promax.jpg";
+}
+// --- iPhone 16 Series ---
+const iphone16Prices = {
+  "16": { "128GB": 7500, "256GB": 7800, "512GB": 8100 },
+  "16 Plus": { "128GB": 8000, "256GB": 8300, "512GB": 8600 },
+  "16 Pro": { "128GB": 9500, "256GB": 9900, "512GB": 10300, "1TB": 10700 },
+  "16 Pro Max": { "128GB": 10500, "256GB": 10900, "512GB": 11300, "1TB": 11700 }
+};
+
+const iphone16Storage = {
+  "16": ["128GB", "256GB", "512GB"],
+  "16 Plus": ["128GB", "256GB", "512GB"],
+  "16 Pro": ["128GB", "256GB", "512GB", "1TB"],
+  "16 Pro Max": ["128GB", "256GB", "512GB", "1TB"]
+};
+
+const iphone16Colors = {
+  "16": ["Blue", "Pink", "Green", "Yellow", "Black"],
+  "16 Plus": ["Blue", "Pink", "Green", "Yellow", "Black"],
+  "16 Pro": ["Natural Titanium", "Blue Titanium", "White Titanium", "Black Titanium"],
+  "16 Pro Max": ["Natural Titanium", "Blue Titanium", "White Titanium", "Black Titanium"]
+};
+
+function updateIphone16Options() {
+  const model = document.getElementById("iphone16-model").value;
+  const storageSelect = document.getElementById("iphone16-storage");
+  const colorSelect = document.getElementById("iphone16-color");
+
+  // Reset storage options
+  storageSelect.innerHTML = "";
+  iphone16Storage[model].forEach(storage => {
+    const opt = document.createElement("option");
+    opt.value = storage;
+    opt.textContent = storage;
+    storageSelect.appendChild(opt);
+  });
+
+  // Reset color options
+  colorSelect.innerHTML = "";
+  iphone16Colors[model].forEach(color => {
+    const opt = document.createElement("option");
+    opt.value = color;
+    opt.textContent = color;
+    colorSelect.appendChild(opt);
+  });
+
+  updateIphone16Price();
+}
+
+function updateIphone16Price() {
+  const model = document.getElementById("iphone16-model").value;
+  const storage = document.getElementById("iphone16-storage").value;
+  const price = iphone16Prices[model][storage];
+  document.getElementById("iphone16-price").textContent = price;
+
+  // ✅ Update image based only on model
+  const iphone16Image = document.getElementById("iphone16-image");
+  if (model === "16") iphone16Image.src = "images/iphone16.jpg";
+  if (model === "16 Plus") iphone16Image.src = "images/iphone16-plus.jpg";
+  if (model === "16 Pro") iphone16Image.src = "images/iphone16-pro.jpg";
+  if (model === "16 Pro Max") iphone16Image.src = "images/iphone16-promax.jpg";
+}
+// --- iPhone 17 Series ---
+const iphone17Prices = {
+  "17": { "128GB": 8000, "256GB": 8300, "512GB": 8600 },
+  "17 Pro": { "128GB": 10000, "256GB": 10400, "512GB": 10800, "1TB": 11200 },
+  "17 Pro Max": { "128GB": 11000, "256GB": 11400, "512GB": 11800, "1TB": 12200 }
+};
+
+const iphone17Storage = {
+  "17": ["128GB", "256GB", "512GB"],
+  "17 Pro": ["128GB", "256GB", "512GB", "1TB"],
+  "17 Pro Max": ["128GB", "256GB", "512GB", "1TB"]
+};
+
+const iphone17Colors = {
+  "17": ["Blue", "Pink", "Green", "Yellow", "Black"],
+  "17 Pro": ["Natural Titanium", "Blue Titanium", "White Titanium", "Black Titanium"],
+  "17 Pro Max": ["Natural Titanium", "Blue Titanium", "White Titanium", "Black Titanium"]
+};
+
+function updateIphone17Options() {
+  const model = document.getElementById("iphone17-model").value;
+  const storageSelect = document.getElementById("iphone17-storage");
+  const colorSelect = document.getElementById("iphone17-color");
+
+  // Reset storage options
+  storageSelect.innerHTML = "";
+  iphone17Storage[model].forEach(storage => {
+    const opt = document.createElement("option");
+    opt.value = storage;
+    opt.textContent = storage;
+    storageSelect.appendChild(opt);
+  });
+
+  // Reset color options
+  colorSelect.innerHTML = "";
+  iphone17Colors[model].forEach(color => {
+    const opt = document.createElement("option");
+    opt.value = color;
+    opt.textContent = color;
+    colorSelect.appendChild(opt);
+  });
+
+  updateIphone17Price();
+}
+
+function updateIphone17Price() {
+  const model = document.getElementById("iphone17-model").value;
+  const storage = document.getElementById("iphone17-storage").value;
+  const price = iphone17Prices[model][storage];
+  document.getElementById("iphone17-price").textContent = price;
+
+  // ✅ Update image based only on model
+  const iphone17Image = document.getElementById("iphone17-image");
+  if (model === "17") iphone17Image.src = "images/iphone17.jpg";
+  if (model === "17 Pro") iphone17Image.src = "images/iphone17-pro.jpg";
+  if (model === "17 Pro Max") iphone17Image.src = "images/iphone17-promax.jpg";
+}
+
+// --- Samsung Galaxy Series (S10–S20) ---
+const galaxy10to20Prices = {
+  "S10": { "128GB": 5000, "512GB": 5500 },
+  "S10 Plus": { "128GB": 5300, "512GB": 5800 },
+  "S10e": { "128GB": 4800 },
+
+  "S20": { "128GB": 6000, "256GB": 6300 },
+  "S20 Plus": { "128GB": 6500, "256GB": 6800 },
+  "S20 Ultra": { "128GB": 7500, "256GB": 7800, "512GB": 8200 }
+};
+
+const galaxy10to20Storage = {
+  "S10": ["128GB", "512GB"],
+  "S10 Plus": ["128GB", "512GB"],
+  "S10e": ["128GB"],
+
+  "S20": ["128GB", "256GB"],
+  "S20 Plus": ["128GB", "256GB"],
+  "S20 Ultra": ["128GB", "256GB", "512GB"]
+};
+
+const galaxy10to20Colors = {
+  "S10": ["Prism Black", "Prism White", "Prism Blue"],
+  "S10 Plus": ["Prism Black", "Prism White", "Prism Blue"],
+  "S10e": ["Prism Black", "Prism White", "Flamingo Pink"],
+
+  "S20": ["Cosmic Gray", "Cloud Blue", "Cloud Pink"],
+  "S20 Plus": ["Cosmic Black", "Cosmic Gray", "Cloud Blue"],
+  "S20 Ultra": ["Cosmic Black", "Cosmic Gray"]
+};
+
+function updateGalaxy10to20Options() {
+  const model = document.getElementById("galaxy10to20-model").value;
+  const storageSelect = document.getElementById("galaxy10to20-storage");
+  const colorSelect = document.getElementById("galaxy10to20-color");
+
+  // Reset storage options
+  storageSelect.innerHTML = "";
+  galaxy10to20Storage[model].forEach(storage => {
+    const opt = document.createElement("option");
+    opt.value = storage;
+    opt.textContent = storage;
+    storageSelect.appendChild(opt);
+  });
+
+  // Reset color options
+  colorSelect.innerHTML = "";
+  galaxy10to20Colors[model].forEach(color => {
+    const opt = document.createElement("option");
+    opt.value = color;
+    opt.textContent = color;
+    colorSelect.appendChild(opt);
+  });
+
+  updateGalaxy10to20Price();
+}
+
+function updateGalaxy10to20Price() {
+  const model = document.getElementById("galaxy10to20-model").value;
+  const storage = document.getElementById("galaxy10to20-storage").value;
+  const price = galaxy10to20Prices[model][storage];
+  document.getElementById("galaxy10to20-price").textContent = price;
+
+  // ✅ Update image based only on model
+  const galaxyImage = document.getElementById("galaxy10to20-image");
+  if (model === "S10") galaxyImage.src = "images/galaxy-s10.jpg";
+  if (model === "S10 Plus") galaxyImage.src = "images/galaxy-s10plus.jpg";
+  if (model === "S10e") galaxyImage.src = "images/galaxy-s10e.jpg";
+  if (model === "S20") galaxyImage.src = "images/galaxy-s20.jpg";
+  if (model === "S20 Plus") galaxyImage.src = "images/galaxy-s20plus.jpg";
+  if (model === "S20 Ultra") galaxyImage.src = "images/galaxy-s20-ultra.jpg";
+}
+
+// Event listeners
+document.getElementById("galaxy10to20-model").addEventListener("change", updateGalaxy10to20Options);
+document.getElementById("galaxy10to20-storage").addEventListener("change", updateGalaxy10to20Price);
+document.getElementById("galaxy10to20-color").addEventListener("change", updateGalaxy10to20Price);
+
+// Initialize on page load
+updateGalaxy10to20Options();
+
+// --- iPhone XR ---
+const iphoneXRPrices = {
+  "64GB": 4000,
+  "128GB": 4200,
+  "256GB": 4400
+};
+
+const iphoneXRStorage = ["64GB", "128GB", "256GB"];
+
+const iphoneXRColors = ["Blue", "White", "Black", "Yellow", "Coral", "Red"];
+
+function updateIphoneXROptions() {
+  const storageSelect = document.getElementById("iphonexr-storage");
+  const colorSelect = document.getElementById("iphonexr-color");
+
+  // Reset storage options
+  storageSelect.innerHTML = "";
+  iphoneXRStorage.forEach(storage => {
+    const opt = document.createElement("option");
+    opt.value = storage;
+    opt.textContent = storage;
+    storageSelect.appendChild(opt);
+  });
+
+  // Reset color options
+  colorSelect.innerHTML = "";
+  iphoneXRColors.forEach(color => {
+    const opt = document.createElement("option");
+    opt.value = color;
+    opt.textContent = color;
+    colorSelect.appendChild(opt);
+  });
+
+  updateIphoneXRPrice();
+}
+
+function updateIphoneXRPrice() {
+  const storage = document.getElementById("iphonexr-storage").value;
+  const price = iphoneXRPrices[storage];
+  document.getElementById("iphonexr-price").textContent = price;
+
+  // ✅ Image stays the same (single model)
+  const iphoneXRImage = document.getElementById("iphonexr-image");
+  iphoneXRImage.src = "images/iphone-xr.jpg";
+}
+
+// --- Samsung Galaxy Series ---
+const galaxyPrices = {
+  "S21": { "128GB": 6000, "256GB": 6300 },
+  "S21 Plus": { "128GB": 6500, "256GB": 6800 },
+  "S21 Ultra": { "256GB": 7500, "512GB": 7800 },
+
+  "S22": { "128GB": 6500, "256GB": 6800 },
+  "S22 Plus": { "128GB": 7000, "256GB": 7300 },
+  "S22 Ultra": { "256GB": 8000, "512GB": 8400 },
+
+  "S23": { "128GB": 7000, "256GB": 7400 },
+  "S23 Plus": { "128GB": 7500, "256GB": 7800 },
+  "S23 Ultra": { "256GB": 9000, "512GB": 9400, "1TB": 9800 }
+};
+
+const galaxyStorage = {
+  "S21": ["128GB", "256GB"],
+  "S21 Plus": ["128GB", "256GB"],
+  "S21 Ultra": ["256GB", "512GB"],
+
+  "S22": ["128GB", "256GB"],
+  "S22 Plus": ["128GB", "256GB"],
+  "S22 Ultra": ["256GB", "512GB"],
+
+  "S23": ["128GB", "256GB"],
+  "S23 Plus": ["128GB", "256GB"],
+  "S23 Ultra": ["256GB", "512GB", "1TB"]
+};
+
+const galaxyColors = {
+  "S21": ["Phantom Gray", "Phantom White", "Phantom Violet"],
+  "S21 Plus": ["Phantom Black", "Phantom Silver", "Phantom Violet"],
+  "S21 Ultra": ["Phantom Black", "Phantom Silver"],
+
+  "S22": ["Phantom Black", "Phantom White", "Green", "Pink Gold"],
+  "S22 Plus": ["Phantom Black", "Phantom White", "Green", "Pink Gold"],
+  "S22 Ultra": ["Phantom Black", "Phantom White", "Burgundy", "Green"],
+
+  "S23": ["Phantom Black", "Cream", "Green", "Lavender"],
+  "S23 Plus": ["Phantom Black", "Cream", "Green", "Lavender"],
+  "S23 Ultra": ["Phantom Black", "Cream", "Green", "Lavender"]
+};
+
+function updateGalaxyOptions() {
+  const model = document.getElementById("galaxy-model").value;
+  const storageSelect = document.getElementById("galaxy-storage");
+  const colorSelect = document.getElementById("galaxy-color");
+
+  // Reset storage options
+  storageSelect.innerHTML = "";
+  galaxyStorage[model].forEach(storage => {
+    const opt = document.createElement("option");
+    opt.value = storage;
+    opt.textContent = storage;
+    storageSelect.appendChild(opt);
+  });
+
+  // Reset color options
+  colorSelect.innerHTML = "";
+  galaxyColors[model].forEach(color => {
+    const opt = document.createElement("option");
+    opt.value = color;
+    opt.textContent = color;
+    colorSelect.appendChild(opt);
+  });
+
+  updateGalaxyPrice();
+}
+
+function updateGalaxyPrice() {
+  const model = document.getElementById("galaxy-model").value;
+  const storage = document.getElementById("galaxy-storage").value;
+  const price = galaxyPrices[model][storage];
+  document.getElementById("galaxy-price").textContent = price;
+
+  // ✅ Update image based only on model
+  const galaxyImage = document.getElementById("galaxy-image");
+  if (model === "S21") galaxyImage.src = "images/galaxy-s21.jpg";
+  if (model === "S21 Plus") galaxyImage.src = "images/galaxy-s21plus.jpg";
+  if (model === "S21 Ultra") galaxyImage.src = "images/galaxy-s21-ultra.jpg";
+
+  if (model === "S22") galaxyImage.src = "images/galaxy-s22.jpg";
+  if (model === "S22 Plus") galaxyImage.src = "images/galaxy-s22plus.jpg";
+  if (model === "S22 Ultra") galaxyImage.src = "images/galaxy-s22-ultra.jpg";
+
+  if (model === "S23") galaxyImage.src = "images/galaxy-s23.jpg";
+  if (model === "S23 Plus") galaxyImage.src = "images/galaxy-s23plus.jpg";
+  if (model === "S23 Ultra") galaxyImage.src = "images/galaxy-s23-ultra.jpg";
+}
+// --- Samsung Galaxy Series (S24–S25) ---
+// Unique names to avoid collisions with S21–S23
+const galaxy2425Prices = {
+  "S24": { "128GB": 7500, "256GB": 7800 },
+  "S24 Plus": { "128GB": 8000, "256GB": 8300 },
+  "S24 Ultra": { "256GB": 9500, "512GB": 9900, "1TB": 10300 },
+
+  "S25": { "128GB": 8000, "256GB": 8400 },
+  "S25 Plus": { "128GB": 8500, "256GB": 8900 },
+  "S25 Ultra": { "256GB": 10000, "512GB": 10400, "1TB": 10800 }
+};
+
+const galaxy2425Storage = {
+  "S24": ["128GB", "256GB"],
+  "S24 Plus": ["128GB", "256GB"],
+  "S24 Ultra": ["256GB", "512GB", "1TB"],
+
+  "S25": ["128GB", "256GB"],
+  "S25 Plus": ["128GB", "256GB"],
+  "S25 Ultra": ["256GB", "512GB", "1TB"]
+};
+
+const galaxy2425Colors = {
+  "S24": ["Phantom Black", "Cream", "Green", "Lavender"],
+  "S24 Plus": ["Phantom Black", "Cream", "Green", "Lavender"],
+  "S24 Ultra": ["Phantom Black", "Cream", "Green", "Lavender"],
+
+  "S25": ["Phantom Black", "Silver", "Blue", "Pink"],
+  "S25 Plus": ["Phantom Black", "Silver", "Blue", "Pink"],
+  "S25 Ultra": ["Phantom Black", "Silver", "Blue", "Pink"]
+};
+
+function updateGalaxy2425Options() {
+  const modelEl = document.getElementById("galaxy2425-model");
+  const storageEl = document.getElementById("galaxy2425-storage");
+  const colorEl = document.getElementById("galaxy2425-color");
+  if (!modelEl || !storageEl || !colorEl) return; // null-safe
+
+  const model = modelEl.value;
+
+  // Reset storage options
+  storageEl.innerHTML = "";
+  galaxy2425Storage[model].forEach(storage => {
+    const opt = document.createElement("option");
+    opt.value = storage;
+    opt.textContent = storage;
+    storageEl.appendChild(opt);
+  });
+
+  // Reset color options
+  colorEl.innerHTML = "";
+  galaxy2425Colors[model].forEach(color => {
+    const opt = document.createElement("option");
+    opt.value = color;
+    opt.textContent = color;
+    colorEl.appendChild(opt);
+  });
+
+  updateGalaxy2425Price();
+}
+
+function updateGalaxy2425Price() {
+  const modelEl = document.getElementById("galaxy2425-model");
+  const storageEl = document.getElementById("galaxy2425-storage");
+  const priceEl = document.getElementById("galaxy2425-price");
+  const imageEl = document.getElementById("galaxy2425-image");
+  if (!modelEl || !storageEl || !priceEl || !imageEl) return; // null-safe
+
+  const model = modelEl.value;
+  const storage = storageEl.value;
+  const price = galaxy2425Prices[model][storage];
+  priceEl.textContent = price;
+
+  // Update image based only on model
+  if (model === "S24") imageEl.src = "images/galaxy-s24.jpg";
+  if (model === "S24 Plus") imageEl.src = "images/galaxy-s24plus.jpg";
+  if (model === "S24 Ultra") imageEl.src = "images/galaxy-s24-ultra.jpg";
+
+  if (model === "S25") imageEl.src = "images/galaxy-s25.jpg";
+  if (model === "S25 Plus") imageEl.src = "images/galaxy-s25plus.jpg";
+  if (model === "S25 Ultra") imageEl.src = "images/galaxy-s25-ultra.jpg";
+}
+// --- Pre‑Owned Samsung Galaxy Series (S7–S9) ---
+const galaxy7to9Prices = {
+  "S7": { "32GB": 2500, "64GB": 2700 },
+  "S7 Edge": { "32GB": 2800, "64GB": 3000 },
+  "S8": { "64GB": 3500, "128GB": 3700 },
+  "S8 Plus": { "64GB": 3800, "128GB": 4000 },
+  "S9": { "64GB": 4200, "128GB": 4400 },
+  "S9 Plus": { "64GB": 4500, "128GB": 4700 }
+};
+
+const galaxy7to9Storage = {
+  "S7": ["32GB", "64GB"],
+  "S7 Edge": ["32GB", "64GB"],
+  "S8": ["64GB", "128GB"],
+  "S8 Plus": ["64GB", "128GB"],
+  "S9": ["64GB", "128GB"],
+  "S9 Plus": ["64GB", "128GB"]
+};
+
+const galaxy7to9Colors = {
+  "S7": ["Black", "Gold", "Silver"],
+  "S7 Edge": ["Black", "Gold", "Silver"],
+  "S8": ["Midnight Black", "Orchid Gray", "Arctic Silver"],
+  "S8 Plus": ["Midnight Black", "Orchid Gray", "Arctic Silver"],
+  "S9": ["Midnight Black", "Lilac Purple", "Coral Blue"],
+  "S9 Plus": ["Midnight Black", "Lilac Purple", "Coral Blue"]
+};
+
+function updateGalaxy7to9Options() {
+  const model = document.getElementById("galaxy7to9-model").value;
+  const storageSelect = document.getElementById("galaxy7to9-storage");
+  const colorSelect = document.getElementById("galaxy7to9-color");
+
+  // Reset storage options
+  storageSelect.innerHTML = "";
+  galaxy7to9Storage[model].forEach(storage => {
+    const opt = document.createElement("option");
+    opt.value = storage;
+    opt.textContent = storage;
+    storageSelect.appendChild(opt);
+  });
+
+  // Reset color options
+  colorSelect.innerHTML = "";
+  galaxy7to9Colors[model].forEach(color => {
+    const opt = document.createElement("option");
+    opt.value = color;
+    opt.textContent = color;
+    colorSelect.appendChild(opt);
+  });
+
+  updateGalaxy7to9Price();
+}
+
+function updateGalaxy7to9Price() {
+  const model = document.getElementById("galaxy7to9-model").value;
+  const storage = document.getElementById("galaxy7to9-storage").value;
+  const price = galaxy7to9Prices[model][storage];
+  document.getElementById("galaxy7to9-price").textContent = price;
+
+  // ✅ Update image based only on model
+  const galaxyImage = document.getElementById("galaxy7to9-image");
+  if (model === "S7") galaxyImage.src = "images/galaxy-s7.jpg";
+  if (model === "S7 Edge") galaxyImage.src = "images/galaxy-s7edge.jpg";
+  if (model === "S8") galaxyImage.src = "images/galaxy-s8.jpg";
+  if (model === "S8 Plus") galaxyImage.src = "images/galaxy-s8plus.jpg";
+  if (model === "S9") galaxyImage.src = "images/galaxy-s9.jpg";
+  if (model === "S9 Plus") galaxyImage.src = "images/galaxy-s9plus.jpg";
+}
+
+// --- Samsung Galaxy Z Flip Series (Flip 1–6) ---
+const galaxyFlipPrices = {
+  "Flip1": { "256GB": 9500 },
+  "Flip2": { "256GB": 9800 },
+  "Flip3": { "128GB": 10000, "256GB": 10500 },
+  "Flip4": { "128GB": 11000, "256GB": 11500, "512GB": 12000 },
+  "Flip5": { "256GB": 12500, "512GB": 13000 },
+  "Flip6": { "256GB": 13500, "512GB": 14000, "1TB": 15000 }
+};
+
+const galaxyFlipStorage = {
+  "Flip1": ["256GB"],
+  "Flip2": ["256GB"],
+  "Flip3": ["128GB", "256GB"],
+  "Flip4": ["128GB", "256GB", "512GB"],
+  "Flip5": ["256GB", "512GB"],
+  "Flip6": ["256GB", "512GB", "1TB"]
+};
+
+const galaxyFlipColors = {
+  "Flip1": ["Mirror Black", "Mirror Purple", "Mirror Gold"],
+  "Flip2": ["Mystic Bronze", "Mystic Gray", "Mystic White"],
+  "Flip3": ["Phantom Black", "Green", "Lavender", "Cream"],
+  "Flip4": ["Graphite", "Pink Gold", "Blue", "Bora Purple"],
+  "Flip5": ["Graphite", "Lavender", "Mint", "Cream"],
+  "Flip6": ["Graphite", "Silver", "Blue", "Yellow"]
+};
+
+function updateGalaxyFlipOptions() {
+  const model = document.getElementById("galaxyflip-model").value;
+  const storageSelect = document.getElementById("galaxyflip-storage");
+  const colorSelect = document.getElementById("galaxyflip-color");
+
+  // Reset storage options
+  storageSelect.innerHTML = "";
+  galaxyFlipStorage[model].forEach(storage => {
+    const opt = document.createElement("option");
+    opt.value = storage;
+    opt.textContent = storage;
+    storageSelect.appendChild(opt);
+  });
+
+  // Reset color options
+  colorSelect.innerHTML = "";
+  galaxyFlipColors[model].forEach(color => {
+    const opt = document.createElement("option");
+    opt.value = color;
+    opt.textContent = color;
+    colorSelect.appendChild(opt);
+  });
+
+  updateGalaxyFlipPrice();
+}
+
+function updateGalaxyFlipPrice() {
+  const model = document.getElementById("galaxyflip-model").value;
+  const storage = document.getElementById("galaxyflip-storage").value;
+  const price = galaxyFlipPrices[model][storage];
+  document.getElementById("galaxyflip-price").textContent = price;
+
+  // ✅ Update image based only on model
+  const galaxyImage = document.getElementById("galaxyflip-image");
+  if (model === "Flip1") galaxyImage.src = "images/galaxy-flip1.jpg";
+  if (model === "Flip2") galaxyImage.src = "images/galaxy-flip2.jpg";
+  if (model === "Flip3") galaxyImage.src = "images/galaxy-flip3.jpg";
+  if (model === "Flip4") galaxyImage.src = "images/galaxy-flip4.jpg";
+  if (model === "Flip5") galaxyImage.src = "images/galaxy-flip5.jpg";
+  if (model === "Flip6") galaxyImage.src = "images/galaxy-flip6.jpg";
+}
+
+// --- Samsung Galaxy Z Fold Series (Fold 2–6) ---
+const galaxyFoldPrices = {
+  "Fold2": { "256GB": 16500 },
+  "Fold3": { "256GB": 17500, "512GB": 18500 },
+  "Fold4": { "256GB": 19000, "512GB": 20000 },
+  "Fold5": { "256GB": 21000, "512GB": 22000, "1TB": 23000 },
+  "Fold6": { "256GB": 23000, "512GB": 24000, "1TB": 25000 }
+};
+
+const galaxyFoldStorage = {
+  "Fold2": ["256GB"],
+  "Fold3": ["256GB", "512GB"],
+  "Fold4": ["256GB", "512GB"],
+  "Fold5": ["256GB", "512GB", "1TB"],
+  "Fold6": ["256GB", "512GB", "1TB"]
+};
+
+const galaxyFoldColors = {
+  "Fold2": ["Mystic Bronze", "Mystic Black"],
+  "Fold3": ["Phantom Black", "Phantom Green", "Silver"],
+  "Fold4": ["Graygreen", "Beige", "Phantom Black"],
+  "Fold5": ["Phantom Black", "Cream", "Blue"],
+  "Fold6": ["Phantom Black", "Silver", "Blue", "Mint"]
+};
+
+function updateGalaxyFoldOptions() {
+  const model = document.getElementById("galaxyfold-model").value;
+  const storageSelect = document.getElementById("galaxyfold-storage");
+  const colorSelect = document.getElementById("galaxyfold-color");
+
+  // Reset storage options
+  storageSelect.innerHTML = "";
+  galaxyFoldStorage[model].forEach(storage => {
+    const opt = document.createElement("option");
+    opt.value = storage;
+    opt.textContent = storage;
+    storageSelect.appendChild(opt);
+  });
+
+  // Reset color options
+  colorSelect.innerHTML = "";
+  galaxyFoldColors[model].forEach(color => {
+    const opt = document.createElement("option");
+    opt.value = color;
+    opt.textContent = color;
+    colorSelect.appendChild(opt);
+  });
+
+  updateGalaxyFoldPrice();
+}
+
+function updateGalaxyFoldPrice() {
+  const model = document.getElementById("galaxyfold-model").value;
+  const storage = document.getElementById("galaxyfold-storage").value;
+  const price = galaxyFoldPrices[model][storage];
+  document.getElementById("galaxyfold-price").textContent = price;
+
+  // ✅ Update image based only on model
+  const galaxyImage = document.getElementById("galaxyfold-image");
+  if (model === "Fold2") galaxyImage.src = "images/galaxy-fold2.jpg";
+  if (model === "Fold3") galaxyImage.src = "images/galaxy-fold3.jpg";
+  if (model === "Fold4") galaxyImage.src = "images/galaxy-fold4.jpg";
+  if (model === "Fold5") galaxyImage.src = "images/galaxy-fold5.jpg";
+  if (model === "Fold6") galaxyImage.src = "images/galaxy-fold6.jpg";
+}
+
+// Event listeners
+document.getElementById("galaxyfold-model").addEventListener("change", updateGalaxyFoldOptions);
+document.getElementById("galaxyfold-storage").addEventListener("change", updateGalaxyFoldPrice);
+document.getElementById("galaxyfold-color").addEventListener("change", updateGalaxyFoldPrice);
+
+// Initialize on page load
+updateGalaxyFoldOptions();
+
+// Event listeners
+document.getElementById("galaxyflip-model").addEventListener("change", updateGalaxyFlipOptions);
+document.getElementById("galaxyflip-storage").addEventListener("change", updateGalaxyFlipPrice);
+document.getElementById("galaxyflip-color").addEventListener("change", updateGalaxyFlipPrice);
+
+// Initialize on page load
+updateGalaxyFlipOptions();
+
+// Event listeners
+document.getElementById("galaxy7to9-model").addEventListener("change", updateGalaxy7to9Options);
+document.getElementById("galaxy7to9-storage").addEventListener("change", updateGalaxy7to9Price);
+document.getElementById("galaxy7to9-color").addEventListener("change", updateGalaxy7to9Price);
+
+// Initialize on page load
+updateGalaxy7to9Options();
+
+
+// Event listeners (guarded)
+const galaxy2425ModelEl = document.getElementById("galaxy2425-model");
+const galaxy2425StorageEl = document.getElementById("galaxy2425-storage");
+const galaxy2425ColorEl = document.getElementById("galaxy2425-color");
+
+if (galaxy2425ModelEl) galaxy2425ModelEl.addEventListener("change", updateGalaxy2425Options);
+if (galaxy2425StorageEl) galaxy2425StorageEl.addEventListener("change", updateGalaxy2425Price);
+if (galaxy2425ColorEl) galaxy2425ColorEl.addEventListener("change", updateGalaxy2425Price);
+
+// Initialize on page load
+updateGalaxy2425Options();
+
+// Event listeners
+document.getElementById("galaxy-model").addEventListener("change", updateGalaxyOptions);
+document.getElementById("galaxy-storage").addEventListener("change", updateGalaxyPrice);
+document.getElementById("galaxy-color").addEventListener("change", updateGalaxyPrice);
+
+// Initialize on page load
+updateGalaxyOptions();
+
+// Event listeners
+document.getElementById("iphonexr-storage").addEventListener("change", updateIphoneXRPrice);
+document.getElementById("iphonexr-color").addEventListener("change", updateIphoneXRPrice);
+
+// Initialize on page load
+updateIphoneXROptions();
+
+// Event listeners
+document.getElementById("iphone17-model").addEventListener("change", updateIphone17Options);
+document.getElementById("iphone17-storage").addEventListener("change", updateIphone17Price);
+document.getElementById("iphone17-color").addEventListener("change", updateIphone17Price);
+
+// Initialize on page load
+updateIphone17Options();
+
+
+// Event listeners
+document.getElementById("iphone16-model").addEventListener("change", updateIphone16Options);
+document.getElementById("iphone16-storage").addEventListener("change", updateIphone16Price);
+document.getElementById("iphone16-color").addEventListener("change", updateIphone16Price);
+
+// Initialize on page load
+updateIphone16Options();
+
+
+// Event listeners
+document.getElementById("iphone15-model").addEventListener("change", updateIphone15Options);
+document.getElementById("iphone15-storage").addEventListener("change", updateIphone15Price);
+document.getElementById("iphone15-color").addEventListener("change", updateIphone15Price);
+
+// Initialize on page load
+updateIphone15Options();
+
+// Event listeners
+document.getElementById("iphone14-model").addEventListener("change", updateIphone14Options);
+document.getElementById("iphone14-storage").addEventListener("change", updateIphone14Price);
+document.getElementById("iphone14-color").addEventListener("change", updateIphone14Price);
+
+// Initialize on page load
+updateIphone14Options();
+
+
+// Event listeners
+document.getElementById("iphone13-model").addEventListener("change", updateIphone13Options);
+document.getElementById("iphone13-storage").addEventListener("change", updateIphone13Price);
+document.getElementById("iphone13-color").addEventListener("change", updateIphone13Price);
+
+// Initialize on page load
+updateIphone13Options();
+
+// Event listeners
+document.getElementById("iphone12-model").addEventListener("change", updateIphone12Options);
+document.getElementById("iphone12-storage").addEventListener("change", updateIphone12Price);
+document.getElementById("iphone12-color").addEventListener("change", updateIphone12Price);
+
+// Initialize on page load
+updateIphone12Options();
+
+
+// Event listeners
+document.getElementById("iphone11-model").addEventListener("change", updateIphone11Options);
+document.getElementById("iphone11-storage").addEventListener("change", updateIphone11Price);
+document.getElementById("iphone11-color").addEventListener("change", updateIphone11Price);
+
+// Initialize on page load
+updateIphone11Options();
+</script>
+</body>
+</html>

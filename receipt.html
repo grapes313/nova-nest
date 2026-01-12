@@ -13,8 +13,8 @@
   </header>
 
   <main>
+    <!-- ✅ Checkout Section -->
     <div class="checkout-container" id="checkout-section">
-      <!-- Customer Details -->
       <h2>Customer Details</h2>
       <form id="checkout-form">
         <label for="name">Full Name:</label>
@@ -27,15 +27,12 @@
         <textarea id="address" required></textarea>
       </form>
 
-      <!-- Cart Items -->
       <div class="cart-summary">
         <h2>Your Cart</h2>
         <ul id="checkout-items"></ul>
       </div>
 
-      <!-- Payment Options -->
       <h2>Payment Options</h2>
-
       <div class="payment-option">
         <h3>Bank Transfer (Preferred)</h3>
         <p><strong>Bank:</strong> Absa Bank Zambia</p>
@@ -51,7 +48,7 @@
       </div>
     </div>
 
-    <!-- ✅ Upload Receipt Section (hidden until after payment) -->
+    <!-- ✅ Upload Section -->
     <div class="checkout-container" id="upload-section" style="display:none;">
       <h2>Upload Receipt</h2>
       <form id="receipt-form">
@@ -63,6 +60,22 @@
 
         <button type="submit">Submit Receipt</button>
       </form>
+
+      <!-- ✅ Success message after upload -->
+      <div id="upload-success" style="display:none; margin-top:20px;">
+        <h2>Receipt Submitted</h2>
+        <p>Your receipt has been uploaded successfully. Our team will verify and confirm your order.</p>
+        <br>
+        <a href="index.html" class="home-btn">Back to Home</a>
+        <h2>Customer Service</h2>
+        <p>Need help with your order? Reach us on:</p>
+        <div class="customer-service">
+          <a href="https://wa.me/260966172411" target="_blank">WhatsApp</a>
+          <a href="https://facebook.com/dalisani2" target="_blank">Facebook</a>
+          <a href="https://instagram.com/allnova_nest" target="_blank">Instagram</a>
+          <a href="https://tiktok.com/@allnova_nest" target="_blank">TikTok</a>
+        </div>
+      </div>
     </div>
   </main>
 
@@ -106,7 +119,7 @@
     }
     renderCheckout();
 
-    // Save order (pending, no receipt yet)
+    // Save order
     function savePendingOrder(name, phone, address) {
       const newOrder = {
         name,
@@ -123,7 +136,7 @@
       localStorage.setItem("pendingOrders", JSON.stringify(pendingOrders));
     }
 
-    // Payment buttons → redirect to upload section
+    // Payment buttons → show upload section
     function handlePayment(message) {
       const name = document.getElementById("name").value;
       const phone = document.getElementById("phone").value;
@@ -134,10 +147,8 @@
       }
       savePendingOrder(name, phone, address);
       alert(message);
-      // ✅ Hide checkout, show upload
       document.getElementById("checkout-section").style.display = "none";
       document.getElementById("upload-section").style.display = "block";
-      // Pre-fill reference
       document.getElementById("order-ref").value = phone;
     }
 
@@ -165,8 +176,9 @@
         if (order) {
           order.receipt = evt.target.result;
           localStorage.setItem("pendingOrders", JSON.stringify(pendingOrders));
-          alert("Receipt uploaded successfully! We will verify and confirm your order.");
-          window.location.href = "index.html";
+          // ✅ Show success message
+          document.getElementById("receipt-form").style.display = "none";
+          document.getElementById("upload-success").style.display = "block";
         } else {
           alert("Order not found. Please check your reference.");
         }
