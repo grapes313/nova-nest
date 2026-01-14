@@ -37,28 +37,96 @@
     <p>Zambia’s marketplace for buyers and sellers</p>
   </header>
 
-  <main class="grid">
-    <!-- Homepage Featured Products -->
+  <main class="homepage">
+
+  <!-- Best Sellers Section -->
+  <section id="best-sellers">
     <h2>🔥 Best Sellers</h2>
-    <div class="product">
-      <img src="images/iPhone11.jpg" alt="iPhone 11" />
-      <h3>iPhone 11</h3>
-      <p class="price">ZMW 3500</p>
-      <p class="desc">Top-selling phone with great reviews.</p>
-      <button class="add-cart">Add to Cart</button>
-    </div>
+    <div class="product-grid">
+      <div class="product">
+        <img src="images/iphone-11.jpg" alt="iPhone 11 Series" width="220">
+        <h3>iPhone 11 Series</h3>
+        <button onclick="window.location.href='electronics.html#iphone11'">Open</button>
+      </div>
 
-    <div class="product">
-      <img src="images/blender.jpg" alt="Blender" />
-      <h3>Electric Blender</h3>
-      <p class="price"><s>ZMW 1200</s> ZMW 950</p>
-      <p class="desc">Special discount this week!</p>
-      <button class="add-cart">Add to Cart</button>
+      <div class="product">
+        <img src="images/blender.jpg" alt="Blender" />
+        <h3>Electric Blender</h3>
+		<p class="price">ZMW 1200</p>
+        <p class="desc">Special discount this week!</p>
+        <button class="add-cart">Add to Cart</button>
+      </div>
     </div>
+  </section>
 
-    <!-- Hidden container for fetched category products -->
-    <section id="all-products" class="hidden"></section>
-  </main>
+  <!-- Featured Products Section -->
+  <section id="featured-products">
+    <h2>⭐ Featured Products</h2>
+    <div class="product-grid">
+      <div class="product">
+  <!-- Main image -->
+  <img id="shoe-main" src="images/shoes1.jpg" alt="Casual Shoes" width="220">
+
+  <!-- Thumbnails -->
+  <div class="thumbs">
+    <img src="images/shoes2.jpg" alt="Casual Shoes" onclick="document.getElementById('shoe-main').src=this.src">
+    <img src="images/shoes3.jpg" alt="Casual Shoes" onclick="document.getElementById('shoe-main').src=this.src">
+    <img src="images/shoes4.jpg" alt="Casual Shoes" onclick="document.getElementById('shoe-main').src=this.src">
+  </div>
+        <h3>Adidas Runfalcon 5 TR</h3>
+		<p class="price">ZMW 1190</p>
+        <p class="desc">Comfortable Sports Training Running Shoes.</p>
+        <button class="add-cart">Add to Cart</button>
+      </div>
+
+<div class="product thumbnail-card">
+  <!-- Main image -->
+  <img id="watch-main" src="images/watch1.jpg" alt="Naviforce Wrist Watch" width="150">
+
+  <h3>Naviforce Wrist Watch</h3>
+
+  <!-- Thumbnails -->
+  <div class="thumbs">
+    <img src="images/watch1.jpg" alt="Wrist Watch" onclick="document.getElementById('watch-main').src=this.src">
+    <img src="images/watch2.jpg" alt="Wrist Watch" onclick="document.getElementById('watch-main').src=this.src">
+    <img src="images/watch3.jpg" alt="Wrist Watch" onclick="document.getElementById('watch-main').src=this.src">
+    <img src="images/watch4.jpg" alt="Wrist Watch" onclick="document.getElementById('watch-main').src=this.src">
+  </div>
+
+  <!-- Price + description -->
+  <p class="price">ZMW 799</p>
+  <p class="desc">Stylish and durable.</p>
+
+  <button class="add-cart" data-name="Wrist Watch">Add to Cart</button>
+</div>
+
+	  <div class="product">
+  <!-- Main image -->
+  <img id="tracksuit-main" src="images/tracksuit1.jpg" alt="Arsenal Tracksuit">
+
+  <!-- Thumbnails -->
+  <div class="thumbs">
+    <img src="images/tracksuit2.jpg" alt="Arsenal Tracksuit" onclick="document.getElementById('tracksuit-main').src=this.src">
+    <img src="images/tracksuit3.jpg" alt="Arsenal Tracksuit" onclick="document.getElementById('tracksuit-main').src=this.src">
+    <img src="images/tracksuit4.jpg" alt="Arsenal Tracksuit" onclick="document.getElementById('tracksuit-main').src=this.src">
+    <img src="images/tracksuit5.jpg" alt="Arsenal Tracksuit" onclick="document.getElementById('tracksuit-main').src=this.src">
+  </div>
+
+  <!-- Product details -->
+  <h3>Arsenal Tracksuit (All Sizes)</h3>
+  <p class="price">ZMW 600</p>
+  <p class="desc">Official Arsenal tracksuit — stylish, comfortable, and perfect for training or casual wear.</p>
+  <button class="add-cart">Add to Cart</button>
+</div>
+
+    </div>
+  </section>
+
+  <!-- Hidden container for fetched category products -->
+  <section id="all-products" class="hidden"></section>
+
+</main>
+
 
   <footer class="footer">
     <p>Payments: Mobile money (MTN/Airtel/Zamtel) or Bank Transfer</p>
@@ -80,147 +148,156 @@
     Item added to cart!
   </div>
 
- <script>
-  // --- Global state ---
-  let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
-  const cartCountSpan = document.getElementById("cart-count");
-  const cartLink = document.getElementById("cart-link");
-  const cartPopup = document.getElementById("cart-popup");
-  const cartItemsList = document.getElementById("cart-items");
-  const closeCartButton = document.getElementById("close-cart");
-  const checkoutBtn = document.getElementById("checkout-btn");
-  const clearCartButton = document.getElementById("clear-cart");
-  const cartMessage = document.getElementById("cart-message");
+  <script>
+    // --- Global state ---
+    let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+    const cartCountSpan = document.getElementById("cart-count");
+    const cartLink = document.getElementById("cart-link");
+    const cartPopup = document.getElementById("cart-popup");
+    const cartItemsList = document.getElementById("cart-items");
+    const closeCartButton = document.getElementById("close-cart");
+    const checkoutBtn = document.getElementById("checkout-btn");
+    const clearCartButton = document.getElementById("clear-cart");
+    const cartMessage = document.getElementById("cart-message");
 
-  const searchInput = document.getElementById('search-input');
-  const searchButton = document.getElementById('search-btn');
-  const fetchedContainer = document.getElementById("all-products");
+    const searchInput = document.getElementById('search-input');
+    const searchButton = document.getElementById('search-btn');
+    const fetchedContainer = document.getElementById("all-products");
 
-  // --- Utilities ---
-  function show(el) { el.classList.remove('hidden'); }
-  function hide(el) { el.classList.add('hidden'); }
+    // --- Utilities ---
+    function show(el) { el.classList.remove('hidden'); }
+    function hide(el) { el.classList.add('hidden'); }
 
-  function updateCartCount() {
-    cartCountSpan.textContent = cartItems.length;
-  }
-
-  function saveCart() {
-    localStorage.setItem("cartItems", JSON.stringify(cartItems));
-    updateCartCount();
-  }
-
-  function renderCart() {
-    cartItemsList.innerHTML = "";
-    cartItems.forEach((item, i) => {
-      const li = document.createElement("li");
-      li.textContent = `${item.name} - ZMW ${item.price}`;
-      const removeBtn = document.createElement("button");
-      removeBtn.textContent = "Remove";
-      removeBtn.style.marginLeft = "10px";
-      removeBtn.addEventListener("click", () => {
-        cartItems.splice(i, 1);
-        saveCart();
-        renderCart();
-      });
-      li.appendChild(removeBtn);
-      cartItemsList.appendChild(li);
-    });
-    updateCartCount();
-  }
-
-  // --- Robust price extraction ---
-  function extractPrice(productEl) {
-    const raw = productEl.querySelector(".price")?.textContent || "";
-    const matches = raw.match(/(\d+(\.\d+)?)/g);
-    return matches ? parseFloat(matches[matches.length - 1]) : 0;
-  }
-
-  // --- Event delegation for Add to Cart ---
-  document.addEventListener("click", (e) => {
-    const btn = e.target.closest(".add-cart");
-    if (!btn) return;
-    const product = btn.closest(".product");
-    const productName = product.querySelector("h3")?.innerText || "Item";
-    const productPrice = extractPrice(product);
-
-    cartItems.push({ name: productName, price: productPrice });
-    saveCart();
-    renderCart();
-
-    show(cartMessage);
-    setTimeout(() => { hide(cartMessage); }, 2000);
-  });
-
-  // --- Global search: fetch products from category pages ---
-  async function loadCategoryProducts(url) {
-    try {
-      const response = await fetch(url);
-      const text = await response.text();
-      const tempDiv = document.createElement("div");
-      tempDiv.innerHTML = text;
-      const fetchedProducts = tempDiv.querySelectorAll(".product");
-      fetchedProducts.forEach(p => fetchedContainer.appendChild(p));
-    } catch (err) {
-      console.error("Error loading products from", url, err);
+    function updateCartCount() {
+      cartCountSpan.textContent = cartItems.length;
     }
-  }
 
-  // Load categories dynamically
-  Promise.all([
-    loadCategoryProducts("electronics.html"),
-    loadCategoryProducts("fashion.html"),
-    loadCategoryProducts("home-kitchen.html")
-  ]);
+    function saveCart() {
+      localStorage.setItem("cartItems", JSON.stringify(cartItems));
+      updateCartCount();
+    }
 
-  // --- Search filter (updated to include dropdowns) ---
-  function filterProducts() {
-    const query = (searchInput.value || "").toLowerCase();
-    const allProducts = document.querySelectorAll('.product');
-    let anyMatch = false;
-
-    allProducts.forEach(product => {
-      const name = (product.querySelector("h3")?.innerText || "").toLowerCase();
-      const desc = (product.querySelector(".desc")?.innerText || "").toLowerCase();
-
-      // Include dropdown values
-      let dropdownText = "";
-      product.querySelectorAll("select option").forEach(opt => {
-        dropdownText += " " + opt.textContent.toLowerCase();
+    function renderCart() {
+      cartItemsList.innerHTML = "";
+      cartItems.forEach((item, i) => {
+        const li = document.createElement("li");
+        li.textContent = `${item.name} - ZMW ${item.price}`;
+        const removeBtn = document.createElement("button");
+        removeBtn.textContent = "Remove";
+        removeBtn.style.marginLeft = "10px";
+        removeBtn.addEventListener("click", () => {
+          cartItems.splice(i, 1);
+          saveCart();
+          renderCart();
+        });
+        li.appendChild(removeBtn);
+        cartItemsList.appendChild(li);
       });
+      updateCartCount();
+    }
 
-      const matches =
-        name.includes(query) ||
-        desc.includes(query) ||
-        dropdownText.includes(query);
+    // --- Robust price extraction ---
+    function extractPrice(productEl) {
+      const raw = productEl.querySelector(".price")?.textContent || "";
+      const matches = raw.match(/(\d+(\.\d+)?)/g);
+      return matches ? parseFloat(matches[matches.length - 1]) : 0;
+    }
 
-      product.style.display = matches ? "" : "none";
-      if (matches) anyMatch = true;
+    // --- Event delegation for Add to Cart ---
+    document.addEventListener("click", (e) => {
+      const btn = e.target.closest(".add-cart");
+      if (!btn) return;
+      const product = btn.closest(".product");
+      const productName = product.querySelector("h3")?.innerText || "Item";
+      const productPrice = extractPrice(product);
+
+      cartItems.push({ name: productName, price: productPrice });
+      saveCart();
+      renderCart();
+
+      show(cartMessage);
+      setTimeout(() => { hide(cartMessage); }, 2000);
     });
 
-    if (anyMatch) {
-      fetchedContainer.classList.remove("hidden");
-    } else {
-      fetchedContainer.classList.add("hidden");
+    // --- Global search: fetch products from category pages ---
+    async function loadCategoryProducts(url) {
+      try {
+        const response = await fetch(url);
+        const text = await response.text();
+        const tempDiv = document.createElement("div");
+        tempDiv.innerHTML = text;
+        const fetchedProducts = tempDiv.querySelectorAll(".product");
+
+        fetchedProducts.forEach(p => {
+          const name = p.querySelector("h3")?.innerText || "Product";
+          const img = p.querySelector("img")?.src || "";
+          const price = p.querySelector(".price")?.innerText || "Starting price";
+          const id = p.id || name.toLowerCase().replace(/\s+/g, "");
+          const categoryPage = url;
+
+          // Build simplified card
+          const simpleCard = document.createElement("div");
+          simpleCard.className = "product";
+          simpleCard.innerHTML = `
+            <img src="${img}" alt="${name}" width="220">
+            <h3>${name}</h3>
+            <button onclick="window.location.href='${categoryPage}#${id}'">Open</button>
+          `;
+
+          fetchedContainer.appendChild(simpleCard);
+        });
+      } catch (err) {
+        console.error("Error loading products from", url, err);
+      }
     }
-  }
-  searchButton.addEventListener('click', filterProducts);
-  searchInput.addEventListener('keyup', filterProducts);
 
-  // --- Cart UI controls ---
-  cartLink.addEventListener("click", e => {
-    e.preventDefault();
-    show(cartPopup);
-  });
-  closeCartButton.addEventListener("click", () => hide(cartPopup));
-  checkoutBtn.addEventListener("click", () => window.location.href = "checkout.html");
-  clearCartButton.addEventListener("click", () => {
-    cartItems = [];
-    saveCart();
+    // Load categories
+    Promise.all([
+      loadCategoryProducts("electronics.html"),
+      loadCategoryProducts("fashion.html"),
+      loadCategoryProducts("home-kitchen.html")
+    ]);
+
+    // --- Search filter ---
+    function filterProducts() {
+      const query = (searchInput.value || "").toLowerCase();
+      const allProducts = document.querySelectorAll('.product');
+      let anyMatch = false;
+
+      allProducts.forEach(product => {
+        const name = (product.querySelector("h3")?.innerText || "").toLowerCase();
+        const desc = (product.querySelector(".desc")?.innerText || "").toLowerCase();
+        const matches = name.includes(query) || desc.includes(query);
+        product.style.display = matches ? "" : "none";
+        if (matches) anyMatch = true;
+      });
+
+      if (anyMatch) {
+        fetchedContainer.classList.remove("hidden");
+      } else {
+        fetchedContainer.classList.add("hidden");
+      }
+    }
+    searchButton.addEventListener('click', filterProducts);
+    searchInput.addEventListener('keyup', filterProducts);
+
+    // --- Cart UI controls ---
+    cartLink.addEventListener("click", e => {
+      e.preventDefault();
+      show(cartPopup);
+    });
+    closeCartButton.addEventListener("click", () => hide(cartPopup));
+    checkoutBtn.addEventListener("click", () => window.location.href = "checkout.html");
+    clearCartButton.addEventListener("click", () => {
+      cartItems = [];
+      saveCart();
+      renderCart();
+      alert("Cart has been cleared!");
+    });
+
+    // --- Init ---
     renderCart();
-    alert("Cart has been cleared!");
-  });
-
-  // --- Init ---
-  renderCart();
-  updateCartCount();
+    updateCartCount();
 </script>
+</body>
+</html>

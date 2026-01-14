@@ -22,75 +22,116 @@
   </header>
 
   <main>
-    <div class="product-grid">
-      <!-- Summer Dress -->
-      <div class="product">
-        <h3>Summer Dress</h3>
-        <img id="dress-image" src="images/dress.jpg" alt="Summer Dress" width="220">
+    <!-- Fur & Leather One-Piece Jacket -->
+<div class="product thumbnail-card">
+  <h3>Fur & Leather One-Piece Jacket</h3>
+  <img id="furjacket-image" src="images/furjacket.jpg" alt="Fur & Leather Jacket" width="220">
 
-        <label>Size:</label>
-        <select id="dress-size">
-          <option value="Small" data-img="images/dress.jpg" data-price="450">Small</option>
-          <option value="Medium" data-img="images/dress-medium.jpg" data-price="500">Medium</option>
-          <option value="Large" data-img="images/dress-large.jpg" data-price="550">Large</option>
-        </select>
+  <!-- Thumbnails -->
+  <div class="thumbs">
+    <img src="images/furjacket.jpg" alt="Default" onclick="document.getElementById('furjacket-image').src=this.src">
+    <img src="images/furjacket-lightbrown.jpg" alt="Light Brown" onclick="document.getElementById('furjacket-image').src=this.src">
+    <img src="images/furjacket-coffeebrown.jpg" alt="Coffee Brown" onclick="document.getElementById('furjacket-image').src=this.src">
+  </div>
 
-        <label>Color:</label>
-        <select id="dress-color">
-          <option>Red</option>
-          <option>Blue</option>
-          <option>Green</option>
-        </select>
+  <!-- Size dropdown (Medium–3XL) -->
+  <label>Size:</label>
+  <select id="furjacket-size">
+    <option value="Medium" data-img="images/furjacket.jpg" data-price="1300">Medium</option>
+    <option value="Large" data-img="images/furjacket.jpg" data-price="1350">Large</option>
+    <option value="XL" data-img="images/furjacket.jpg" data-price="1400">XL</option>
+    <option value="2XL" data-img="images/furjacket.jpg" data-price="1450">2XL</option>
+    <option value="3XL" data-img="images/furjacket.jpg" data-price="1500">3XL</option>
+  </select>
 
-        <p class="price">Price: ZMW <span id="dress-price">450</span></p>
-        <button id="add-dress-cart" class="add-cart">Add to Cart</button>
-      </div>
+  <!-- Color dropdown -->
+  <label>Color:</label>
+  <select id="furjacket-color">
+    <option value="Light Brown">Light Brown</option>
+    <option value="Coffee Brown">Coffee Brown</option>
+  </select>
 
-      <!-- Running Shoes -->
-      <div class="product">
-        <h3>Running Shoes</h3>
-        <img id="shoes-image" src="images/shoes.jpg" alt="Running Shoes" width="220">
+  <!-- Price -->
+  <p class="price">Price: ZMW <span id="furjacket-price">1300</span></p>
 
-        <label>Size:</label>
-        <select id="shoes-size">
-          <option value="UK 7" data-img="images/shoes.jpg" data-price="800">UK 7</option>
-          <option value="UK 8" data-img="images/shoes-uk8.jpg" data-price="850">UK 8</option>
-          <option value="UK 9" data-img="images/shoes-uk9.jpg" data-price="900">UK 9</option>
-        </select>
+  <!-- Cart button -->
+  <button id="add-furjacket-cart" class="add-cart">Add to Cart</button>
+</div>
 
-        <label>Color:</label>
-        <select id="shoes-color">
-          <option>Black</option>
-          <option>White</option>
-          <option>Blue</option>
-        </select>
 
-        <p class="price">Price: ZMW <span id="shoes-price">800</span></p>
-        <button id="add-shoes-cart" class="add-cart">Add to Cart</button>
-      </div>
+     <!-- Running Shoes -->
+<div class="product thumbnail-card">
+  <h3>UniSex Huili Warrior Shoes</h3>
+  <img id="shoes-image" src="images/shoes.jpg" alt="Running Shoes" width="220">
 
-      <!-- Leather Jacket -->
-      <div class="product">
-        <h3>Man UTD Leather Jacket</h3>
-        <img id="jacket-image" src="images/manutd-leatherjacket.jpg.jpg" alt="Leather Jacket" width="220">
+  <!-- Thumbnails -->
+  <div class="thumbs">
+    <img src="images/shoes.jpg" alt="Default" onclick="document.getElementById('shoes-image').src=this.src">
+    <img src="images/shoes-black.jpg" alt="Black" onclick="document.getElementById('shoes-image').src=this.src">
+    <img src="images/shoes-white.jpg" alt="White" onclick="document.getElementById('shoes-image').src=this.src">
+    <img src="images/shoes-red.jpg" alt="Red" onclick="document.getElementById('shoes-image').src=this.src">
+  </div>
 
-        <label>Size:</label>
-        <select id="jacket-size">
-          <option value="Small" data-img="images/jacket.jpg" data-price="1500">Small</option>
-          <option value="Medium" data-img="images/jacket-medium.jpg" data-price="1600">Medium</option>
-          <option value="Large" data-img="images/jacket-large.jpg" data-price="1700">Large</option>
-        </select>
+  <label>Size:</label>
+  <select id="shoes-size">
+    <option value="35" data-img="images/shoes.jpg" data-price="700">35</option>
+    <option value="36" data-img="images/shoes.jpg" data-price="720">36</option>
+    <option value="37" data-img="images/shoes.jpg" data-price="740">37</option>
+    <option value="38" data-img="images/shoes.jpg" data-price="760">38</option>
+    <option value="39" data-img="images/shoes.jpg" data-price="780">39</option>
+    <option value="40" data-img="images/shoes.jpg" data-price="800">40</option>
+    <option value="41" data-img="images/shoes.jpg" data-price="820">41</option>
+    <option value="42" data-img="images/shoes.jpg" data-price="840">42</option>
+    <option value="43" data-img="images/shoes.jpg" data-price="860">43</option>
+    <option value="44" data-img="images/shoes.jpg" data-price="880">44</option>
+  </select>
 
-        <label>Color:</label>
-        <select id="jacket-color">
-          <option>Black</option>
-          <option>Brown</option>
-        </select>
+  <label>Color:</label>
+  <select id="shoes-color">
+    <option value="Black">Black</option>
+    <option value="White">White</option>
+    <option value="Red">Red</option>
+  </select>
 
-        <p class="price">Price: ZMW <span id="jacket-price">1500</span></p>
-        <button id="add-jacket-cart" class="add-cart">Add to Cart</button>
-      </div>
-    </div>
+  <p class="price">Price: ZMW <span id="shoes-price">700</span></p>
+  <button id="add-shoes-cart" class="add-cart">Add to Cart</button>
+</div>
+
+
+     <!-- Leather Jacket -->
+<div class="product thumbnail-card">
+  <h3>Leather Jacket</h3>
+  <img id="jacket-image" src="images/jacket.jpg" alt="Leather Jacket" width="220">
+
+  <!-- Thumbnails -->
+  <div class="thumbs">
+    <img src="images/jacket.jpg" alt="Default" onclick="document.getElementById('jacket-image').src=this.src">
+    <img src="images/jacket-black.jpg" alt="Black" onclick="document.getElementById('jacket-image').src=this.src">
+  </div>
+
+  <!-- Size dropdown (Small–3XL) -->
+  <label>Size:</label>
+  <select id="jacket-size">
+    <option value="Small" data-img="images/jacket.jpg" data-price="1500">Small</option>
+    <option value="Medium" data-img="images/jacket.jpg" data-price="1600">Medium</option>
+    <option value="Large" data-img="images/jacket.jpg" data-price="1700">Large</option>
+    <option value="XL" data-img="images/jacket.jpg" data-price="1800">XL</option>
+    <option value="2XL" data-img="images/jacket.jpg" data-price="1900">2XL</option>
+    <option value="3XL" data-img="images/jacket.jpg" data-price="2000">3XL</option>
+  </select>
+
+  <!-- Color dropdown (only Black) -->
+  <label>Color:</label>
+  <select id="jacket-color">
+    <option value="Black">Black</option>
+  </select>
+
+  <!-- Price -->
+  <p class="price">Price: ZMW <span id="jacket-price">800</span></p>
+
+  <!-- Cart button (same integration as your other products) -->
+  <button id="add-jacket-cart" class="add-cart">Add to Cart</button>
+</div>
   </main>
 
   <footer class="footer">
@@ -144,65 +185,75 @@
     }
     renderCart();
 
-    // --- Summer Dress ---
-    const dressSize = document.getElementById("dress-size");
-    const dressImage = document.getElementById("dress-image");
-    const dressPrice = document.getElementById("dress-price");
-    document.getElementById("add-dress-cart").addEventListener("click", () => {
-      const opt = dressSize.options[dressSize.selectedIndex];
-      dressImage.src = opt.dataset.img;
-      dressPrice.textContent = opt.dataset.price;
-      const color = document.getElementById("dress-color").value;
-      const price = parseFloat(opt.dataset.price);
-      cartItems.push({ name: `Summer Dress - ${opt.value} - ${color}`, price });
-      saveCart(); renderCart();
-      cartMessage.style.display = "block"; setTimeout(() => { cartMessage.style.display = "none"; }, 3000);
-    });
-    dressSize.addEventListener("change", () => {
-      const opt = dressSize.options[dressSize.selectedIndex];
-      dressImage.src = opt.dataset.img;
-      dressPrice.textContent = opt.dataset.price;
-    });
+   // --- Fur & Leather One-Piece Jacket ---
+const furJacketSize = document.getElementById("furjacket-size");
+const furJacketImage = document.getElementById("furjacket-image");
+const furJacketPrice = document.getElementById("furjacket-price");
 
-    // --- Running Shoes ---
-    const shoesSize = document.getElementById("shoes-size");
-    const shoesImage = document.getElementById("shoes-image");
-    const shoesPrice = document.getElementById("shoes-price");
-    document.getElementById("add-shoes-cart").addEventListener("click", () => {
-      const opt = shoesSize.options[shoesSize.selectedIndex];
-      shoesImage.src = opt.dataset.img;
-      shoesPrice.textContent = opt.dataset.price;
-      const color = document.getElementById("shoes-color").value;
-      const price = parseFloat(opt.dataset.price);
-      cartItems.push({ name: `Running Shoes - ${opt.value} - ${color}`, price });
-      saveCart(); renderCart();
-      cartMessage.style.display = "block"; setTimeout(() => { cartMessage.style.display = "none"; }, 3000);
-    });
-    shoesSize.addEventListener("change", () => {
-      const opt = shoesSize.options[shoesSize.selectedIndex];
-      shoesImage.src = opt.dataset.img;
-      shoesPrice.textContent = opt.dataset.price;
-    });
+document.getElementById("add-furjacket-cart").addEventListener("click", () => {
+  const opt = furJacketSize.options[furJacketSize.selectedIndex];
+  furJacketImage.src = opt.dataset.img;
+  furJacketPrice.textContent = opt.dataset.price;
+  const color = document.getElementById("furjacket-color").value;
+  const price = parseFloat(opt.dataset.price);
+  cartItems.push({ name: `Fur & Leather Jacket - ${opt.value} - ${color}`, price });
+  saveCart(); renderCart();
+  cartMessage.style.display = "block";
+  setTimeout(() => { cartMessage.style.display = "none"; }, 3000);
+});
 
-    // --- Leather Jacket ---
-    const jacketSize = document.getElementById("jacket-size");
-    const jacketImage = document.getElementById("jacket-image");
-    const jacketPrice = document.getElementById("jacket-price");
-    document.getElementById("add-jacket-cart").addEventListener("click", () => {
-      const opt = jacketSize.options[jacketSize.selectedIndex];
-      jacketImage.src = opt.dataset.img;
-      jacketPrice.textContent = opt.dataset.price;
-      const color = document.getElementById("jacket-color").value;
-      const price = parseFloat(opt.dataset.price);
-      cartItems.push({ name: `Leather Jacket - ${opt.value} - ${color}`, price });
-      saveCart(); renderCart();
-      cartMessage.style.display = "block"; setTimeout(() => { cartMessage.style.display = "none"; }, 3000);
-    });
-    jacketSize.addEventListener("change", () => {
-      const opt = jacketSize.options[jacketSize.selectedIndex];
-      jacketImage.src = opt.dataset.img;
-      jacketPrice.textContent = opt.dataset.price;
-    });
+furJacketSize.addEventListener("change", () => {
+  const opt = furJacketSize.options[furJacketSize.selectedIndex];
+  furJacketImage.src = opt.dataset.img;
+  furJacketPrice.textContent = opt.dataset.price;
+});
+
+// --- Running Shoes ---
+const shoesSize = document.getElementById("shoes-size");
+const shoesImage = document.getElementById("shoes-image");
+const shoesPrice = document.getElementById("shoes-price");
+
+document.getElementById("add-shoes-cart").addEventListener("click", () => {
+  const opt = shoesSize.options[shoesSize.selectedIndex];
+  shoesImage.src = opt.dataset.img;
+  shoesPrice.textContent = opt.dataset.price;
+  const color = document.getElementById("shoes-color").value;
+  const price = parseFloat(opt.dataset.price);
+  cartItems.push({ name: `Running Shoes - ${opt.value} - ${color}`, price });
+  saveCart(); renderCart();
+  cartMessage.style.display = "block";
+  setTimeout(() => { cartMessage.style.display = "none"; }, 3000);
+});
+
+shoesSize.addEventListener("change", () => {
+  const opt = shoesSize.options[shoesSize.selectedIndex];
+  shoesImage.src = opt.dataset.img;
+  shoesPrice.textContent = opt.dataset.price;
+});
+
+  // --- Leather Jacket ---
+const jacketSize = document.getElementById("jacket-size");
+const jacketImage = document.getElementById("jacket-image");
+const jacketPrice = document.getElementById("jacket-price");
+
+document.getElementById("add-jacket-cart").addEventListener("click", () => {
+  const opt = jacketSize.options[jacketSize.selectedIndex];
+  jacketImage.src = opt.dataset.img;
+  jacketPrice.textContent = opt.dataset.price;
+  const color = document.getElementById("jacket-color").value;
+  const price = parseFloat(opt.dataset.price);
+  cartItems.push({ name: `Leather Jacket - ${opt.value} - ${color}`, price });
+  saveCart(); renderCart();
+  cartMessage.style.display = "block";
+  setTimeout(() => { cartMessage.style.display = "none"; }, 3000);
+});
+
+jacketSize.addEventListener("change", () => {
+  const opt = jacketSize.options[jacketSize.selectedIndex];
+  jacketImage.src = opt.dataset.img;
+  jacketPrice.textContent = opt.dataset.price;
+});
+
 
     // Cart controls
     cartLink.addEventListener("click", e => {

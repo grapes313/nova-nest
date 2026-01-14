@@ -68,26 +68,33 @@
   <button class="add-cart" data-name="iPhone XR">Add to Cart</button>
 </div>
 	  
-	  <div class="product">
+<div class="product" id="iphone11">
+  <!-- full variation markup here -->
   <img id="iphone11-image" src="images/iphone-11.jpg" alt="iPhone 11" width="220">
   <h3>iPhone 11 Series</h3>
 
   <label for="iphone11-model">Model:</label>
   <select id="iphone11-model">
-    <option value="11">iPhone 11</option>
-    <option value="11 Pro">iPhone 11 Pro</option>
-    <option value="11 Pro Max">iPhone 11 Pro Max</option>
-  </select>
+  <option value="11" data-img="images/iphone-11.jpg" data-price="3500">iPhone 11</option>
+  <option value="11 Pro" data-img="images/iphone-11pro.jpg" data-price="4000">iPhone 11 Pro</option>
+  <option value="11 Pro Max" data-img="images/iphone-11promax.jpg" data-price="4500">iPhone 11 Pro Max</option>
+</select>
 
-  <label for="iphone11-storage">Storage:</label>
-  <select id="iphone11-storage"></select> <!-- filled by JS -->
+<select id="iphone11-storage">
+  <option value="64GB" data-price="0">64GB</option>
+  <option value="128GB" data-price="500">128GB (+ZMW 500)</option>
+  <option value="256GB" data-price="1000">256GB (+ZMW 1000)</option>
+</select>
 
-  <label for="iphone11-color">Color:</label>
-  <select id="iphone11-color"></select> <!-- filled by JS -->
-
-  <p class="price">Price: ZMW <span id="iphone11-price">0</span></p>
+<select id="iphone11-color">
+  <option value="Black" data-img="images/iphone11-black.jpg">Black</option>
+  <option value="Silver" data-img="images/iphone11-silver.jpg">Silver</option>
+  <option value="Red" data-img="images/iphone11-red.jpg">Red</option>
+</select>
+  <p class="price">Price: ZMW <span id="iphone11-price">3500</span></p>
   <button class="add-cart" data-name="iPhone 11 Series">Add to Cart</button>
 </div>
+
 <div class="product">
   <img id="iphone12-image" src="images/iphone12.jpg" alt="iPhone 12" width="220">
   <h3>iPhone 12 Series</h3>
@@ -202,7 +209,7 @@
 
   <label for="iphone17-model">Model:</label>
   <select id="iphone17-model">
-    <option value="17">iPhone 17</option>
+    <option value="17">iPhone 17</option>	
     <option value="17 Pro">iPhone 17 Pro</option>
     <option value="17 Pro Max">iPhone 17 Pro Max</option>
   </select>
@@ -216,6 +223,35 @@
   <p class="price">Price: ZMW <span id="iphone17-price">0</span></p>
   <button class="add-cart" data-name="iPhone 17 Series">Add to Cart</button>
 </div>
+
+<div class="product">
+  <!-- Main product image -->
+  <img id="iphone17air-image" src="images/iphone17-air.jpg" alt="iPhone 17 Air" width="220">
+
+  <!-- Product title -->
+  <h3>iPhone 17 Air</h3>
+
+  <!-- Model dropdown -->
+  <label for="iphone17air-model">Model:</label>
+  <select id="iphone17air-model">
+    <option value="17 Air">iPhone 17 Air</option>
+  </select>
+
+  <!-- Storage dropdown -->
+  <label for="iphone17air-storage">Storage:</label>
+  <select id="iphone17air-storage"></select>
+
+  <!-- Color dropdown -->
+  <label for="iphone17air-color">Color:</label>
+  <select id="iphone17air-color"></select>
+
+  <!-- Price -->
+  <p class="price">Price: ZMW <span id="iphone17air-price">0</span></p>
+
+  <!-- Add to cart -->
+  <button class="add-cart" data-name="iPhone 17 Air">Add to Cart</button>
+</div>
+
 
 <div class="product">
   <img id="galaxy10to20-image" src="images/galaxy-s10.jpg" alt="Samsung Galaxy S10–S20" width="220">
@@ -244,7 +280,7 @@
 
 <div class="product">
   <img id="galaxy-image" src="images/galaxy-s21.jpg" alt="Samsung Galaxy" width="220">
-  <h3>Samsung Galaxy Series</h3>
+  <h3>Samsung Galaxy Series (S21–S23)</h3>
 
   <label for="galaxy-model">Model:</label>
   <select id="galaxy-model">
@@ -363,26 +399,24 @@
   <button class="add-cart" data-name="Samsung Galaxy Z Fold Series">Add to Cart</button>
 </div>
 
-      <!-- Laptop -->
-      <div class="product">
-        <h3>Dell Inspiron 14</h3>
-        <img id="laptop-image" src="images/dell-inspiron14.jpg" alt="Laptop" width="220">
+<div class="product">
+  <h3>Dell Inspiron 14</h3>
+  <img id="laptop-image" src="images/dell-inspiron14.jpg" alt="Laptop" width="220">
 
-        <label>RAM:</label>
-        <select id="laptop-ram">
-          <option value="8GB" data-price="8500">8GB</option>
-          <option value="16GB" data-price="9500">16GB</option>
-        </select>
+  <label>RAM:</label>
+  <select id="laptop-ram">
+    <option value="16GB">16GB</option>
+  </select>
 
-        <label>Storage:</label>
-        <select id="laptop-storage">
-          <option value="256GB SSD">256GB SSD</option>
-          <option value="512GB SSD">512GB SSD</option>
-        </select>
+  <label>Storage:</label>
+  <select id="laptop-storage">
+    <option value="512GB SSD">512GB SSD</option>
+    <option value="1TB SSD">1TB SSD</option>
+  </select>
 
-        <p class="price">Price: ZMW <span id="laptop-price">8500</span></p>
-        <button class="add-cart" data-name="Dell Inspiron 14">Add to Cart</button>
-      </div>
+  <p class="price">Price: ZMW <span id="laptop-price">10000</span></p>
+  <button class="add-cart" data-name="Dell Inspiron 14">Add to Cart</button>
+</div>
 
       <!-- Headphones -->
       <div class="product">
@@ -403,7 +437,7 @@
 		  <option>Blue</option>
         </select>
 
-        <p class="price">Price: ZMW <span id="headphones-price">1200</span></p>
+        <p class="price">Price: ZMW <span id="headphones-price">850</span></p>
         <button class="add-cart" data-name="Wireless Headphones">Add to Cart</button>
       </div>
 
@@ -459,15 +493,22 @@
 
   // --- Price Maps ---
   const iphonePrices = {
-    "X": { "64GB": 3500, "128GB": 3700, "256GB": 3900 },
-    "XS": { "64GB": 4000, "128GB": 4200, "256GB": 4400 },
-    "XS Max": { "64GB": 4500, "128GB": 4700, "256GB": 4900 }
+    "X": { "64GB": 4250, "256GB": 4450 },
+    "XS": { "64GB": 4780,"256GB": 5150 },
+    "XS Max": { "64GB": 5480, "128GB": 5790, "256GB": 6100 }
   };
 
   const laptopPrices = {
     "8GB": { "256GB SSD": 8500, "512GB SSD": 9000 },
     "16GB": { "256GB SSD": 9500, "512GB SSD": 10000 }
   };
+  // Storage options per model
+const iphoneStorageOptions = {
+  "X": ["64GB", "256GB"],
+  "XS": ["64GB", "256GB"],
+  "XS Max": ["64GB", "128GB", "256GB"]
+};
+
 
   const headphonesPrices = {
     "Standard": { "Black": 1200, "White": 1250, "Red": 1250 },
@@ -544,11 +585,11 @@
   closeCartButton.addEventListener("click", () => { cartPopup.style.display = "none"; });
   checkoutBtn.addEventListener("click", () => { window.location.href = "checkout.html"; });
   clearCartButton.addEventListener("click", () => { cartItems = []; saveCart(); renderCart(); alert("Cart has been cleared!"); });
-  // --- iPhone 11 Series ---
+// --- iPhone 11 Series ---
 const iphone11Prices = {
-  "11": { "64GB": 5000, "128GB": 5200, "256GB": 5400 },
-  "11 Pro": { "64GB": 6000, "128GB": 6200, "256GB": 6400 },
-  "11 Pro Max": { "64GB": 7000, "128GB": 7200, "256GB": 7400 }
+  "11": { "64GB": 4900, "128GB": 5000, "256GB": 5100 },
+  "11 Pro": { "64GB": 5880, "128GB": 6180, "256GB": 6480 },
+  "11 Pro Max": { "64GB": 6350, "128GB": 6650, "256GB": 6950 }
 };
 
 const iphone11Storage = {
@@ -564,27 +605,37 @@ const iphone11Colors = {
 };
 
 function updateIphone11Options() {
-  const model = document.getElementById("iphone11-model").value;
+  const modelSelect = document.getElementById("iphone11-model");
   const storageSelect = document.getElementById("iphone11-storage");
   const colorSelect = document.getElementById("iphone11-color");
+  const imgEl = document.getElementById("iphone11-image");
 
-  // Reset storage options
+  const model = modelSelect.value;
+
+  // Reset storage options and select first by default
   storageSelect.innerHTML = "";
-  iphone11Storage[model].forEach(storage => {
+  iphone11Storage[model].forEach((storage, idx) => {
     const opt = document.createElement("option");
     opt.value = storage;
     opt.textContent = storage;
+    if (idx === 0) opt.selected = true;
     storageSelect.appendChild(opt);
   });
 
-  // Reset color options
+  // Reset color options and select first by default
   colorSelect.innerHTML = "";
-  iphone11Colors[model].forEach(color => {
+  iphone11Colors[model].forEach((color, idx) => {
     const opt = document.createElement("option");
     opt.value = color;
     opt.textContent = color;
+    if (idx === 0) opt.selected = true;
     colorSelect.appendChild(opt);
   });
+
+  // Update image based on model
+  if (model === "11") imgEl.src = "images/iphone-11.jpg";
+  if (model === "11 Pro") imgEl.src = "images/iphone11-pro.jpg";
+  if (model === "11 Pro Max") imgEl.src = "images/iphone11-promax.jpg";
 
   updateIphone11Price();
 }
@@ -592,21 +643,30 @@ function updateIphone11Options() {
 function updateIphone11Price() {
   const model = document.getElementById("iphone11-model").value;
   const storage = document.getElementById("iphone11-storage").value;
-  const price = iphone11Prices[model][storage];
-  document.getElementById("iphone11-price").textContent = price;
+  const priceEl = document.getElementById("iphone11-price");
 
-  // ✅ Update image based only on model
-  const iphone11Image = document.getElementById("iphone11-image");
-  if (model === "11") iphone11Image.src = "images/iphone-11.jpg";
-  if (model === "11 Pro") iphone11Image.src = "images/iphone11-pro.jpg";
-  if (model === "11 Pro Max") iphone11Image.src = "images/iphone11-promax.jpg";
+  if (!model || !storage) return;
+
+  const price = iphone11Prices[model][storage];
+  priceEl.textContent = price;
 }
+
+// --- Initialization + event bindings (AFTER DOM is ready) ---
+document.addEventListener("DOMContentLoaded", () => {
+  // Populate selects and set initial price/image
+  updateIphone11Options();
+
+  // Bind events after options exist
+  document.getElementById("iphone11-model").addEventListener("change", updateIphone11Options);
+  document.getElementById("iphone11-storage").addEventListener("change", updateIphone11Price);
+  document.getElementById("iphone11-color").addEventListener("change", updateIphone11Price);
+});
 
 // --- iPhone 12 Series ---
 const iphone12Prices = {
-  "12": { "64GB": 5500, "128GB": 5700, "256GB": 5900 },
-  "12 Pro": { "128GB": 6500, "256GB": 6700, "512GB": 7000 },
-  "12 Pro Max": { "128GB": 7500, "256GB": 7700, "512GB": 8000 }
+  "12": { "64GB": 5750, "128GB": 5850, "256GB": 6050 },
+  "12 Pro": { "128GB": 6800, "256GB": 7280, "512GB": 7780 },
+  "12 Pro Max": { "128GB": 7650, "256GB": 8200, "512GB": 8780 }
 };
 
 const iphone12Storage = {
@@ -661,9 +721,9 @@ function updateIphone12Price() {
 }
 // --- iPhone 13 Series ---
 const iphone13Prices = {
-  "13": { "128GB": 6000, "256GB": 6300, "512GB": 6600 },
-  "13 Pro": { "128GB": 7500, "256GB": 7800, "512GB": 8200, "1TB": 8600 },
-  "13 Pro Max": { "128GB": 8500, "256GB": 8800, "512GB": 9200, "1TB": 9600 }
+  "13": { "128GB": 8370, "256GB": 8670, "512GB": 12050 },
+  "13 Pro": { "128GB": 9750, "256GB": 10300, "512GB": 14000, "1TB": 17650 },
+  "13 Pro Max": { "128GB": 10500, "256GB": 14480, "512GB": 18450, "1TB": 22400 }
 };
 
 const iphone13Storage = {
@@ -719,10 +779,10 @@ function updateIphone13Price() {
 
 // --- iPhone 14 Series ---
 const iphone14Prices = {
-  "14": { "128GB": 6500, "256GB": 6800, "512GB": 7100 },
-  "14 Plus": { "128GB": 7000, "256GB": 7300, "512GB": 7600 },
-  "14 Pro": { "128GB": 8500, "256GB": 8800, "512GB": 9200, "1TB": 9600 },
-  "14 Pro Max": { "128GB": 9500, "256GB": 9800, "512GB": 10200, "1TB": 10600 }
+  "14": { "128GB": 8800, "256GB": 12700, "512GB": 16700 },
+  "14 Plus": { "128GB": 8880, "256GB": 12980, "512GB": 17080 },
+  "14 Pro": { "128GB": 10480, "256GB": 14180, "512GB": 17880, "1TB": 21580 },
+  "14 Pro Max": { "128GB": 11550, "256GB": 15300, "512GB": 19100, "1TB": 22880 }
 };
 
 const iphone14Storage = {
@@ -780,17 +840,17 @@ function updateIphone14Price() {
 }
 // --- iPhone 15 Series ---
 const iphone15Prices = {
-  "15": { "128GB": 7000, "256GB": 7300, "512GB": 7600 },
-  "15 Plus": { "128GB": 7500, "256GB": 7800, "512GB": 8100 },
-  "15 Pro": { "128GB": 9000, "256GB": 9400, "512GB": 9800, "1TB": 10200 },
-  "15 Pro Max": { "128GB": 10000, "256GB": 10400, "512GB": 10800, "1TB": 11200 }
+  "15": { "128GB": 10900, "256GB": 11900, "512GB": 16200 },
+  "15 Plus": { "128GB": 11300, "256GB": 12750, "512GB": 14150 },
+  "15 Pro": { "128GB": 13150, "256GB": 16700, "512GB": 17650, "1TB": 21600 },
+  "15 Pro Max": { "256GB": 15380, "512GB": 15800, "1TB": 20150 }
 };
 
 const iphone15Storage = {
   "15": ["128GB", "256GB", "512GB"],
   "15 Plus": ["128GB", "256GB", "512GB"],
   "15 Pro": ["128GB", "256GB", "512GB", "1TB"],
-  "15 Pro Max": ["128GB", "256GB", "512GB", "1TB"]
+  "15 Pro Max": ["256GB", "512GB", "1TB"]
 };
 
 const iphone15Colors = {
@@ -841,17 +901,17 @@ function updateIphone15Price() {
 }
 // --- iPhone 16 Series ---
 const iphone16Prices = {
-  "16": { "128GB": 7500, "256GB": 7800, "512GB": 8100 },
-  "16 Plus": { "128GB": 8000, "256GB": 8300, "512GB": 8600 },
-  "16 Pro": { "128GB": 9500, "256GB": 9900, "512GB": 10300, "1TB": 10700 },
-  "16 Pro Max": { "128GB": 10500, "256GB": 10900, "512GB": 11300, "1TB": 11700 }
+  "16": { "128GB": 14880, "256GB": 16280, "512GB": 21850 },
+  "16 Plus": { "128GB": 16550, "256GB": 18500, "512GB": 19600 },
+  "16 Pro": { "128GB": 17050, "256GB": 18550, "512GB": 19750, "1TB": 25400 },
+  "16 Pro Max": { "256GB": 20080, "512GB": 21650, "1TB": 27350 }
 };
 
 const iphone16Storage = {
   "16": ["128GB", "256GB", "512GB"],
   "16 Plus": ["128GB", "256GB", "512GB"],
   "16 Pro": ["128GB", "256GB", "512GB", "1TB"],
-  "16 Pro Max": ["128GB", "256GB", "512GB", "1TB"]
+  "16 Pro Max": ["256GB", "512GB", "1TB"]
 };
 
 const iphone16Colors = {
@@ -902,21 +962,21 @@ function updateIphone16Price() {
 }
 // --- iPhone 17 Series ---
 const iphone17Prices = {
-  "17": { "128GB": 8000, "256GB": 8300, "512GB": 8600 },
-  "17 Pro": { "128GB": 10000, "256GB": 10400, "512GB": 10800, "1TB": 11200 },
-  "17 Pro Max": { "128GB": 11000, "256GB": 11400, "512GB": 11800, "1TB": 12200 }
+  "17": { "256GB": 20390, "512GB": 23250 },
+  "17 Pro": { "256GB": 27180, "512GB": 29450, "1TB": 31700 },
+  "17 Pro Max": { "256GB": 30300, "512GB": 38780, "2TB": 40780 }
 };
 
 const iphone17Storage = {
-  "17": ["128GB", "256GB", "512GB"],
-  "17 Pro": ["128GB", "256GB", "512GB", "1TB"],
-  "17 Pro Max": ["128GB", "256GB", "512GB", "1TB"]
+  "17": ["256GB", "512GB"],
+  "17 Pro": ["256GB", "512GB", "1TB"],
+  "17 Pro Max": ["256GB", "512GB", "2TB"]
 };
 
 const iphone17Colors = {
-  "17": ["Blue", "Pink", "Green", "Yellow", "Black"],
-  "17 Pro": ["Natural Titanium", "Blue Titanium", "White Titanium", "Black Titanium"],
-  "17 Pro Max": ["Natural Titanium", "Blue Titanium", "White Titanium", "Black Titanium"]
+  "17": ["Mist Blue", "Lavender", "Green", "White", "Black"],
+  "17 Pro": ["Cosmic Orange", "Deep Blue", "Silver"],
+  "17 Pro Max": ["Cosmic Orange", "Deep Blue", "Silver"]
 };
 
 function updateIphone17Options() {
@@ -958,25 +1018,79 @@ function updateIphone17Price() {
   if (model === "17 Pro Max") iphone17Image.src = "images/iphone17-promax.jpg";
 }
 
+  const iphone17AirPrices = {
+    "17 Air": { "256GB": 27780, "512GB": 27600 }
+  };
+
+  const iphone17AirStorage = {
+    "17 Air": ["256GB", "512GB"]
+  };
+
+  const iphone17AirColors = {
+    "17 Air": ["Cloud White", "Space Black", "Light Gold","Sky Blue"]
+  };
+
+  function updateIphone17AirOptions() {
+    const model = document.getElementById("iphone17air-model").value;
+    const storageSelect = document.getElementById("iphone17air-storage");
+    const colorSelect = document.getElementById("iphone17air-color");
+
+    // Reset storage options
+    storageSelect.innerHTML = "";
+    iphone17AirStorage[model].forEach(storage => {
+      const opt = document.createElement("option");
+      opt.value = storage;
+      opt.textContent = storage;
+      storageSelect.appendChild(opt);
+    });
+
+    // Reset color options
+    colorSelect.innerHTML = "";
+    iphone17AirColors[model].forEach(color => {
+      const opt = document.createElement("option");
+      opt.value = color;
+      opt.textContent = color;
+      colorSelect.appendChild(opt);
+    });
+
+    updateIphone17AirPrice();
+  }
+
+  function updateIphone17AirPrice() {
+    const model = document.getElementById("iphone17air-model").value;
+    const storage = document.getElementById("iphone17air-storage").value;
+    const price = iphone17AirPrices[model][storage];
+    document.getElementById("iphone17air-price").textContent = price;
+
+    // ✅ Update image based only on model
+    const iphone17AirImage = document.getElementById("iphone17air-image");
+    if (model === "17 Air") iphone17AirImage.src = "images/iphone17-air.jpg";
+  }
+
+  // Initialize defaults
+  updateIphone17AirOptions();
+  document.getElementById("iphone17air-storage").addEventListener("change", updateIphone17AirPrice);
+
+
 // --- Samsung Galaxy Series (S10–S20) ---
 const galaxy10to20Prices = {
-  "S10": { "128GB": 5000, "512GB": 5500 },
-  "S10 Plus": { "128GB": 5300, "512GB": 5800 },
-  "S10e": { "128GB": 4800 },
+  "S10": { "128GB": 3880 },
+  "S10 Plus": { "128GB": 5080},
+  "S10e": { "128GB": 3480 },
 
-  "S20": { "128GB": 6000, "256GB": 6300 },
-  "S20 Plus": { "128GB": 6500, "256GB": 6800 },
-  "S20 Ultra": { "128GB": 7500, "256GB": 7800, "512GB": 8200 }
+  "S20": { "128GB": 4650 },
+  "S20 Plus": { "128GB": 4780 },
+  "S20 Ultra": { "128GB": 5900 }
 };
 
 const galaxy10to20Storage = {
-  "S10": ["128GB", "512GB"],
-  "S10 Plus": ["128GB", "512GB"],
+  "S10": ["128GB"],
+  "S10 Plus": ["128GB"],
   "S10e": ["128GB"],
 
-  "S20": ["128GB", "256GB"],
-  "S20 Plus": ["128GB", "256GB"],
-  "S20 Ultra": ["128GB", "256GB", "512GB"]
+  "S20": ["128GB"],
+  "S20 Plus": ["128GB"],
+  "S20 Ultra": ["128GB"]
 };
 
 const galaxy10to20Colors = {
@@ -1041,9 +1155,9 @@ updateGalaxy10to20Options();
 
 // --- iPhone XR ---
 const iphoneXRPrices = {
-  "64GB": 4000,
-  "128GB": 4200,
-  "256GB": 4400
+  "64GB": 4380,
+  "128GB": 4480,
+  "256GB": 4580
 };
 
 const iphoneXRStorage = ["64GB", "128GB", "256GB"];
@@ -1087,31 +1201,31 @@ function updateIphoneXRPrice() {
 
 // --- Samsung Galaxy Series ---
 const galaxyPrices = {
-  "S21": { "128GB": 6000, "256GB": 6300 },
-  "S21 Plus": { "128GB": 6500, "256GB": 6800 },
-  "S21 Ultra": { "256GB": 7500, "512GB": 7800 },
+  "S21": { "128GB": 5160 },
+  "S21 Plus": { "128GB": 5390 },
+  "S21 Ultra": { "128GB": 6890, "256GB": 7950 },
 
-  "S22": { "128GB": 6500, "256GB": 6800 },
-  "S22 Plus": { "128GB": 7000, "256GB": 7300 },
-  "S22 Ultra": { "256GB": 8000, "512GB": 8400 },
+  "S22": { "128GB": 6580 },
+  "S22 Plus": { "256GB": 6950 },
+  "S22 Ultra": { "128GB": 8850, "256GB": 9590 },
 
-  "S23": { "128GB": 7000, "256GB": 7400 },
-  "S23 Plus": { "128GB": 7500, "256GB": 7800 },
-  "S23 Ultra": { "256GB": 9000, "512GB": 9400, "1TB": 9800 }
+  "S23": { "128GB": 8500 },
+  "S23 Plus": { "128GB": 7500, "256GB": 9500 },
+  "S23 Ultra": { "256GB": 11900 }
 };
 
 const galaxyStorage = {
-  "S21": ["128GB", "256GB"],
-  "S21 Plus": ["128GB", "256GB"],
-  "S21 Ultra": ["256GB", "512GB"],
+  "S21": ["128GB"],
+  "S21 Plus": ["128GB"],
+  "S21 Ultra": ["128GB", "256GB"],
 
-  "S22": ["128GB", "256GB"],
-  "S22 Plus": ["128GB", "256GB"],
-  "S22 Ultra": ["256GB", "512GB"],
+  "S22": ["128GB"],
+  "S22 Plus": ["256GB"],
+  "S22 Ultra": ["128GB", "256GB"],
 
-  "S23": ["128GB", "256GB"],
+  "S23": ["128GB"],
   "S23 Plus": ["128GB", "256GB"],
-  "S23 Ultra": ["256GB", "512GB", "1TB"]
+  "S23 Ultra": ["256GB"]
 };
 
 const galaxyColors = {
@@ -1177,23 +1291,23 @@ function updateGalaxyPrice() {
 // --- Samsung Galaxy Series (S24–S25) ---
 // Unique names to avoid collisions with S21–S23
 const galaxy2425Prices = {
-  "S24": { "128GB": 7500, "256GB": 7800 },
-  "S24 Plus": { "128GB": 8000, "256GB": 8300 },
-  "S24 Ultra": { "256GB": 9500, "512GB": 9900, "1TB": 10300 },
+  "S24": { "256GB": 10180 },
+  "S24 Plus": { "256GB": 10890 },
+  "S24 Ultra": { "256GB": 15450, "512GB": 16300 },
 
-  "S25": { "128GB": 8000, "256GB": 8400 },
-  "S25 Plus": { "128GB": 8500, "256GB": 8900 },
-  "S25 Ultra": { "256GB": 10000, "512GB": 10400, "1TB": 10800 }
+  "S25": { "128GB": 12400, "256GB": 13200 },
+  "S25 Plus": { "128GB": 14900, "256GB": 15600 },
+  "S25 Ultra": { "256GB": 19100, "512GB": 20880 }
 };
 
 const galaxy2425Storage = {
-  "S24": ["128GB", "256GB"],
-  "S24 Plus": ["128GB", "256GB"],
-  "S24 Ultra": ["256GB", "512GB", "1TB"],
+  "S24": ["256GB"],
+  "S24 Plus": ["256GB"],
+  "S24 Ultra": ["256GB", "512GB"],
 
   "S25": ["128GB", "256GB"],
   "S25 Plus": ["128GB", "256GB"],
-  "S25 Ultra": ["256GB", "512GB", "1TB"]
+  "S25 Ultra": ["256GB", "512GB"]
 };
 
 const galaxy2425Colors = {
@@ -1258,21 +1372,21 @@ function updateGalaxy2425Price() {
 }
 // --- Pre‑Owned Samsung Galaxy Series (S7–S9) ---
 const galaxy7to9Prices = {
-  "S7": { "32GB": 2500, "64GB": 2700 },
-  "S7 Edge": { "32GB": 2800, "64GB": 3000 },
-  "S8": { "64GB": 3500, "128GB": 3700 },
-  "S8 Plus": { "64GB": 3800, "128GB": 4000 },
-  "S9": { "64GB": 4200, "128GB": 4400 },
-  "S9 Plus": { "64GB": 4500, "128GB": 4700 }
+  "S7": { "32GB": 2350 },
+  "S7 Edge": { "32GB": 2400 },
+  "S8": { "64GB": 2890 },
+  "S8 Plus": { "64GB": 3550 },
+  "S9": { "64GB": 3350 },
+  "S9 Plus": { "128GB": 3680 }
 };
 
 const galaxy7to9Storage = {
-  "S7": ["32GB", "64GB"],
-  "S7 Edge": ["32GB", "64GB"],
-  "S8": ["64GB", "128GB"],
+  "S7": ["32GB"],
+  "S7 Edge": ["32GB"],
+  "S8": ["64GB"],
   "S8 Plus": ["64GB", "128GB"],
-  "S9": ["64GB", "128GB"],
-  "S9 Plus": ["64GB", "128GB"]
+  "S9": ["64GB"],
+  "S9 Plus": ["128GB"]
 };
 
 const galaxy7to9Colors = {
@@ -1328,18 +1442,18 @@ function updateGalaxy7to9Price() {
 
 // --- Samsung Galaxy Z Flip Series (Flip 1–6) ---
 const galaxyFlipPrices = {
-  "Flip1": { "256GB": 9500 },
-  "Flip2": { "256GB": 9800 },
-  "Flip3": { "128GB": 10000, "256GB": 10500 },
-  "Flip4": { "128GB": 11000, "256GB": 11500, "512GB": 12000 },
-  "Flip5": { "256GB": 12500, "512GB": 13000 },
-  "Flip6": { "256GB": 13500, "512GB": 14000, "1TB": 15000 }
+  "Flip1": { "256GB": 4320 },
+  "Flip2": { "256GB": 4390 },
+  "Flip3": { "128GB": 4680 },
+  "Flip4": { "256GB": 5150 },
+  "Flip5": { "256GB": 9080, "512GB": 9900 },
+  "Flip6": { "256GB": 11600, "512GB": 12180 }
 };
 
 const galaxyFlipStorage = {
   "Flip1": ["256GB"],
   "Flip2": ["256GB"],
-  "Flip3": ["128GB", "256GB"],
+  "Flip3": ["128GB"],
   "Flip4": ["128GB", "256GB", "512GB"],
   "Flip5": ["256GB", "512GB"],
   "Flip6": ["256GB", "512GB", "1TB"]
@@ -1398,19 +1512,19 @@ function updateGalaxyFlipPrice() {
 
 // --- Samsung Galaxy Z Fold Series (Fold 2–6) ---
 const galaxyFoldPrices = {
-  "Fold2": { "256GB": 16500 },
-  "Fold3": { "256GB": 17500, "512GB": 18500 },
-  "Fold4": { "256GB": 19000, "512GB": 20000 },
-  "Fold5": { "256GB": 21000, "512GB": 22000, "1TB": 23000 },
-  "Fold6": { "256GB": 23000, "512GB": 24000, "1TB": 25000 }
+  "Fold2": { "256GB": 7980 },
+  "Fold3": { "256GB": 8780 },
+  "Fold4": { "256GB": 9480, "512GB": 10080 },
+  "Fold5": { "256GB": 11080, "512GB": 11680 },
+  "Fold6": { "256GB": 16480, "512GB": 16980 }
 };
 
 const galaxyFoldStorage = {
   "Fold2": ["256GB"],
   "Fold3": ["256GB", "512GB"],
   "Fold4": ["256GB", "512GB"],
-  "Fold5": ["256GB", "512GB", "1TB"],
-  "Fold6": ["256GB", "512GB", "1TB"]
+  "Fold5": ["256GB", "512GB"],
+  "Fold6": ["256GB", "512GB"]
 };
 
 const galaxyFoldColors = {
@@ -1461,6 +1575,39 @@ function updateGalaxyFoldPrice() {
   if (model === "Fold5") galaxyImage.src = "images/galaxy-fold5.jpg";
   if (model === "Fold6") galaxyImage.src = "images/galaxy-fold6.jpg";
 }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const ramSelect = document.getElementById("laptop-ram");
+    const storageSelect = document.getElementById("laptop-storage");
+    const priceSpan = document.getElementById("laptop-price");
+
+    // ✅ Only run if elements exist
+    if (!ramSelect || !storageSelect || !priceSpan) return;
+
+    // Price map: only 16GB RAM with 512GB & 1TB
+    const laptopPrices = {
+      "16GB": { "512GB SSD": 11180, "1TB SSD": 11780 }
+    };
+
+    function updatePrice() {
+      const ram = ramSelect.value;
+      const storage = storageSelect.value;
+
+      if (laptopPrices[ram] && laptopPrices[ram][storage]) {
+        priceSpan.textContent = laptopPrices[ram][storage];
+      } else {
+        priceSpan.textContent = "N/A"; // ✅ safe fallback
+      }
+    }
+
+    // Initialize + listeners
+    updatePrice();
+    ramSelect.addEventListener("change", updatePrice);
+    storageSelect.addEventListener("change", updatePrice);
+  });
+
+
+
 
 // Event listeners
 document.getElementById("galaxyfold-model").addEventListener("change", updateGalaxyFoldOptions);
