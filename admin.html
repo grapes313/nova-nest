@@ -30,15 +30,22 @@
     const pendingOrdersList = document.getElementById("pending-orders");
     const confirmedOrdersList = document.getElementById("confirmed-orders");
 
-    let pendingOrders = JSON.parse(localStorage.getItem("pendingOrders")) || [];
-    let confirmedOrders = JSON.parse(localStorage.getItem("confirmedOrders")) || [];
+    // ✅ Fetch orders from backend
+    async function fetchOrders() {
+      const res = await fetch("http://localhost:3000/api/orders");
+      return await res.json();
+    }
 
-    function renderOrders() {
+    async function renderOrders() {
+      const allOrders = await fetchOrders();
+      const pendingOrders = allOrders.filter(o => o.status === "pending");
+      const confirmedOrders = allOrders.filter(o => o.status === "confirmed");
+
       pendingOrdersList.innerHTML = "";
       confirmedOrdersList.innerHTML = "";
 
       // ✅ Show pending orders
-      pendingOrders.forEach((order, index) => {
+      pendingOrders.forEach(order => {
         const li = document.createElement("li");
         li.innerHTML = `
           <strong>${order.name}</strong> (${order.phone})<br>
@@ -48,7 +55,7 @@
           Time: ${order.timestamp}<br>
         `;
 
-        // ✅ Show receipt inline, clickable + downloadable
+        // ✅ Show receipt inline
         if (order.receipt) {
           const receiptLink = document.createElement("a");
           receiptLink.href = order.receipt;
@@ -69,27 +76,29 @@
           li.appendChild(noReceipt);
         }
 
-        // Confirm button
+        // ✅ Confirm button → update backend
         const confirmBtn = document.createElement("button");
         confirmBtn.textContent = "Confirm Order";
         confirmBtn.className = "confirm-btn";
-        confirmBtn.addEventListener("click", () => {
-          confirmedOrders.push(order);
-          pendingOrders.splice(index, 1);
-          localStorage.setItem("pendingOrders", JSON.stringify(pendingOrders));
-          localStorage.setItem("confirmedOrders", JSON.stringify(confirmedOrders));
+        confirmBtn.addEventListener("click", async () => {
+          await fetch(`http://localhost:3000/api/orders/${order.id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ ...order, status: "confirmed" })
+          });
           renderOrders();
         });
         li.appendChild(confirmBtn);
 
-        // ✅ Remove button
+        // ✅ Remove button → delete from backend
         const removeBtn = document.createElement("button");
         removeBtn.textContent = "Remove Order";
         removeBtn.className = "remove-btn";
         removeBtn.style.marginLeft = "10px";
-        removeBtn.addEventListener("click", () => {
-          pendingOrders.splice(index, 1);
-          localStorage.setItem("pendingOrders", JSON.stringify(pendingOrders));
+        removeBtn.addEventListener("click", async () => {
+          await fetch(`http://localhost:3000/api/orders/${order.id}`, {
+            method: "DELETE"
+          });
           renderOrders();
         });
         li.appendChild(removeBtn);
@@ -98,7 +107,7 @@
       });
 
       // ✅ Show confirmed orders
-      confirmedOrders.forEach((order, index) => {
+      confirmedOrders.forEach(order => {
         const li = document.createElement("li");
         li.innerHTML = `
           <strong>${order.name}</strong> (${order.phone})<br>
@@ -125,14 +134,15 @@
           li.appendChild(receiptLink);
         }
 
-        // ✅ Remove button for confirmed orders
+        // ✅ Remove button → delete from backend
         const removeBtn = document.createElement("button");
         removeBtn.textContent = "Remove Order";
         removeBtn.className = "remove-btn";
         removeBtn.style.marginTop = "10px";
-        removeBtn.addEventListener("click", () => {
-          confirmedOrders.splice(index, 1);
-          localStorage.setItem("confirmedOrders", JSON.stringify(confirmedOrders));
+        removeBtn.addEventListener("click", async () => {
+          await fetch(`http://localhost:3000/api/orders/${order.id}`, {
+            method: "DELETE"
+          });
           renderOrders();
         });
         li.appendChild(removeBtn);
@@ -141,6 +151,7 @@
       });
     }
 
+    // Initial render
     renderOrders();
   </script>
 </body>
