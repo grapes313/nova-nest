@@ -106,8 +106,8 @@
     }
     renderCheckout();
 
-    // ✅ Save order to backend
-    async function savePendingOrder(name, phone, address) {
+    // Save order (pending, no receipt yet)
+    function savePendingOrder(name, phone, address) {
       const newOrder = {
         name,
         phone,
@@ -118,16 +118,9 @@
         receipt: null,
         status: "pending"
       };
-
-      await fetch("http://localhost:3000/api/orders", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newOrder)
-      });
-
-      // Clear cart after saving
-      cartItems = [];
-      localStorage.setItem("cartItems", JSON.stringify(cartItems));
+      const pendingOrders = JSON.parse(localStorage.getItem("pendingOrders")) || [];
+      pendingOrders.push(newOrder);
+      localStorage.setItem("pendingOrders", JSON.stringify(pendingOrders));
     }
 
     // Payment buttons → redirect to upload section
@@ -156,8 +149,8 @@
       handlePayment("Please send payment to MTN MoMo number: 0966172411.\nAfter payment, upload your receipt to complete your order.");
     });
 
-    // ✅ Upload receipt → update backend order
-    document.getElementById("receipt-form").addEventListener("submit", async e => {
+    // Upload receipt
+    document.getElementById("receipt-form").addEventListener("submit", e => {
       e.preventDefault();
       const orderRef = document.getElementById("order-ref").value;
       const receiptFile = document.getElementById("receipt-file").files[0];
@@ -165,20 +158,13 @@
         alert("Please enter your order reference and upload a receipt.");
         return;
       }
-
       const reader = new FileReader();
-      reader.onload = async function(evt) {
-        // Get all orders from backend
-        const res = await fetch("http://localhost:3000/api/orders");
-        const allOrders = await res.json();
-        const order = allOrders.find(o => o.phone === orderRef || o.name === orderRef);
-
+      reader.onload = function(evt) {
+        let pendingOrders = JSON.parse(localStorage.getItem("pendingOrders")) || [];
+        const order = pendingOrders.find(o => o.phone === orderRef || o.name === orderRef);
         if (order) {
-          await fetch(`http://localhost:3000/api/orders/${order.id}`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ ...order, receipt: evt.target.result })
-          });
+          order.receipt = evt.target.result;
+          localStorage.setItem("pendingOrders", JSON.stringify(pendingOrders));
           alert("Receipt uploaded successfully! We will verify and confirm your order.");
           window.location.href = "index.html";
         } else {
