@@ -51,18 +51,13 @@
       </div>
     </div>
 
-    <!-- ✅ Upload Receipt Section (hidden until after payment) -->
-    <div class="checkout-container" id="upload-section" style="display:none;">
-      <h2>Upload Receipt</h2>
-      <form id="receipt-form">
-        <label for="order-ref">Order Reference (Name or Phone):</label>
-        <input type="text" id="order-ref" required />
-
-        <label for="receipt-file">Upload Receipt:</label>
-        <input type="file" id="receipt-file" accept="image/*,.pdf" required />
-
-        <button type="submit">Submit Receipt</button>
-      </form>
+    <!-- ✅ Final Step: WhatsApp Receipt -->
+    <div class="checkout-container" id="upload-section" style="display:none; text-align:center;">
+      <h2>Send Your Receipt</h2>
+      <p>After completing payment, please send your receipt via WhatsApp to us for confirmation.</p>
+      <a id="whatsapp-btn" target="_blank" class="whatsapp-btn">
+        📲 Send Receipt on WhatsApp
+      </a>
     </div>
   </main>
 
@@ -123,7 +118,7 @@
       localStorage.setItem("pendingOrders", JSON.stringify(pendingOrders));
     }
 
-    // Payment buttons → redirect to upload section
+    // Payment buttons → redirect to WhatsApp section
     function handlePayment(message) {
       const name = document.getElementById("name").value;
       const phone = document.getElementById("phone").value;
@@ -134,44 +129,29 @@
       }
       savePendingOrder(name, phone, address);
       alert(message);
-      // ✅ Hide checkout, show upload
+
+      // ✅ Hide checkout, show WhatsApp instruction
       document.getElementById("checkout-section").style.display = "none";
       document.getElementById("upload-section").style.display = "block";
-      // Pre-fill reference
-      document.getElementById("order-ref").value = phone;
+
+      // Build WhatsApp link with full order details
+      const items = cartItems.map(i => i.name).join(", ");
+      const total = cartItems.reduce((sum, i) => sum + i.price, 0);
+      const whatsappMessage =
+        `Hello Nova Nest, I (${name} - ${phone}) have completed payment for my order.\n` +
+        `Items: ${items}\n` +
+        `Total: ZMW ${total}\n` +
+        `Delivery Address: ${address}`;
+      const whatsappLink = `https://wa.me/260966172411?text=${encodeURIComponent(whatsappMessage)}`;
+      document.getElementById("whatsapp-btn").setAttribute("href", whatsappLink);
     }
 
     document.getElementById("bank-pay-btn").addEventListener("click", () => {
-      handlePayment("Please transfer to Absa Bank Zambia.\nAfter payment, upload your receipt to complete your order.");
+      handlePayment("Please transfer to Absa Bank Zambia.\nAfter payment, send your receipt via WhatsApp.");
     });
 
     document.getElementById("mtn-pay-btn").addEventListener("click", () => {
-      handlePayment("Please send payment to MTN MoMo number: 0966172411.\nAfter payment, upload your receipt to complete your order.");
-    });
-
-    // Upload receipt
-    document.getElementById("receipt-form").addEventListener("submit", e => {
-      e.preventDefault();
-      const orderRef = document.getElementById("order-ref").value;
-      const receiptFile = document.getElementById("receipt-file").files[0];
-      if (!orderRef || !receiptFile) {
-        alert("Please enter your order reference and upload a receipt.");
-        return;
-      }
-      const reader = new FileReader();
-      reader.onload = function(evt) {
-        let pendingOrders = JSON.parse(localStorage.getItem("pendingOrders")) || [];
-        const order = pendingOrders.find(o => o.phone === orderRef || o.name === orderRef);
-        if (order) {
-          order.receipt = evt.target.result;
-          localStorage.setItem("pendingOrders", JSON.stringify(pendingOrders));
-          alert("Receipt uploaded successfully! We will verify and confirm your order.");
-          window.location.href = "index.html";
-        } else {
-          alert("Order not found. Please check your reference.");
-        }
-      };
-      reader.readAsDataURL(receiptFile);
+      handlePayment("Please send payment to MTN MoMo number: 0966172411.\nAfter payment, send your receipt via WhatsApp.");
     });
   </script>
 </body>
