@@ -5,6 +5,26 @@
   <title>Checkout - Nova Nest</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ✅ WhatsApp button styling */
+    .whatsapp-btn {
+      display: inline-block;
+      margin: 12px;
+      padding: 14px 22px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 18px;
+      color: #fff;
+      background-color: #25D366; /* WhatsApp green */
+      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+    .whatsapp-btn:hover {
+      opacity: 0.9;
+      transform: scale(1.05);
+    }
+  </style>
 </head>
 <body>
   <header class="header">
@@ -51,10 +71,12 @@
       </div>
     </div>
 
-    <!-- ✅ Final Step: WhatsApp Receipt -->
+    <!-- ✅ Final Step: Receipt Upload -->
     <div class="checkout-container" id="upload-section" style="display:none; text-align:center;">
       <h2>Send Your Receipt</h2>
       <p>After completing payment, please send your receipt via WhatsApp to us for confirmation.</p>
+
+      <!-- Main WhatsApp button only -->
       <a id="whatsapp-btn" target="_blank" class="whatsapp-btn">
         📲 Send Receipt on WhatsApp
       </a>
@@ -118,7 +140,7 @@
       localStorage.setItem("pendingOrders", JSON.stringify(pendingOrders));
     }
 
-    // Payment buttons → redirect to WhatsApp section
+    // Payment buttons → redirect to receipt section
     function handlePayment(message) {
       const name = document.getElementById("name").value;
       const phone = document.getElementById("phone").value;
@@ -130,20 +152,24 @@
       savePendingOrder(name, phone, address);
       alert(message);
 
-      // ✅ Hide checkout, show WhatsApp instruction
+      // ✅ Hide checkout, show upload section
       document.getElementById("checkout-section").style.display = "none";
       document.getElementById("upload-section").style.display = "block";
 
-      // Build WhatsApp link with full order details
+      // Build receipt message
       const items = cartItems.map(i => i.name).join(", ");
       const total = cartItems.reduce((sum, i) => sum + i.price, 0);
-      const whatsappMessage =
+      const receiptMessage =
         `Hello Nova Nest, I (${name} - ${phone}) have completed payment for my order.\n` +
         `Items: ${items}\n` +
         `Total: ZMW ${total}\n` +
         `Delivery Address: ${address}`;
-      const whatsappLink = `https://wa.me/260966172411?text=${encodeURIComponent(whatsappMessage)}`;
-      document.getElementById("whatsapp-btn").setAttribute("href", whatsappLink);
+
+      // ✅ WhatsApp only
+      document.getElementById("whatsapp-btn").setAttribute(
+        "href",
+        `https://wa.me/260966172411?text=${encodeURIComponent(receiptMessage)}`
+      );
     }
 
     document.getElementById("bank-pay-btn").addEventListener("click", () => {
