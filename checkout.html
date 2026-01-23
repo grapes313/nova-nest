@@ -24,6 +24,22 @@
       opacity: 0.9;
       transform: scale(1.05);
     }
+
+    /* Referral banner animation */
+    #referral-banner {
+      background:#e0ffe0;
+      padding:15px;
+      margin-top:20px;
+      font-size:16px;
+      font-weight:bold;
+      border-radius:6px;
+      opacity:0;
+      animation: fadeIn 2s forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
   </style>
 </head>
 <body>
@@ -76,10 +92,20 @@
       <h2>Send Your Receipt</h2>
       <p>After completing payment, please send your receipt via WhatsApp to us for confirmation.</p>
 
-      <!-- Main WhatsApp button only -->
+      <!-- Main WhatsApp button -->
       <a id="whatsapp-btn" target="_blank" class="whatsapp-btn">
         📲 Send Receipt on WhatsApp
       </a>
+
+      <!-- 🎉 Referral Banner -->
+      <div id="referral-banner">
+        🤝 Invite friends and earn 2% off your next purchase!
+        <br>
+        <a href="https://wa.me/?text=Check%20out%20Nova%20Nest!%20Get%202%%20off%20when%20you%20invite%20friends%20to%20shop%20too." 
+           target="_blank" class="whatsapp-btn" style="margin-top:10px;">
+           📢 Share on WhatsApp
+        </a>
+      </div>
     </div>
   </main>
 

@@ -14,6 +14,30 @@
     .product img { width:100%; max-width:220px; border-radius:6px; }
     .hidden { display:none; }
     .cart-popup { position:fixed; top:50px; right:20px; background:white; border:1px solid #ccc; padding:15px; width:300px; }
+
+    /* Promo banner styles */
+    #promo-banner {
+      background: linear-gradient(90deg, #ffe0e0, #e0ffe0);
+      padding: 15px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      animation: slideDown 1s ease-out;
+    }
+    @keyframes slideDown {
+      from { transform: translateY(-100%); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    #promo-message {
+      display: inline-block;
+      animation: fadeMessage 4s infinite;
+    }
+    @keyframes fadeMessage {
+      0% { opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { opacity: 0; }
+    }
   </style>
 
   <!-- Google tag (GA4) -->
@@ -46,9 +70,60 @@
     <p>Zambia’s marketplace for buyers and sellers</p>
   </header>
 
+  <!-- ✅ Animated Promo Banner -->
+  <div id="promo-banner">
+    <span id="promo-message">🎉 Get 5% off your first order!</span>
+  </div>
+
   <main class="homepage">
 
-  <!-- Best Sellers Section -->
+  <!-- Featured Products Section -->
+  <section id="featured-products">
+    <h2>⭐ Featured Products</h2>
+    <div class="product-grid">
+      <div class="product">
+        <img id="shoe-main" src="images/shoes1.jpg" alt="Casual Shoes" width="220">
+        <div class="thumbs">
+          <img src="images/shoes2.jpg" alt="Casual Shoes" onclick="document.getElementById('shoe-main').src=this.src">
+          <img src="images/shoes3.jpg" alt="Casual Shoes" onclick="document.getElementById('shoe-main').src=this.src">
+          <img src="images/shoes4.jpg" alt="Casual Shoes" onclick="document.getElementById('shoe-main').src=this.src">
+        </div>
+        <h3>Adidas Runfalcon 5 TR</h3>
+        <p class="price">ZMW 1190</p>
+        <p class="desc">Comfortable Sports Training Running Shoes.</p>
+        <button class="add-cart">Add to Cart</button>
+      </div>
+
+      <div class="product thumbnail-card">
+        <img id="watch-main" src="images/watch1.jpg" alt="Naviforce Wrist Watch" width="150">
+        <h3>Naviforce Wrist Watch</h3>
+        <div class="thumbs">
+          <img src="images/watch1.jpg" alt="Wrist Watch" onclick="document.getElementById('watch-main').src=this.src">
+          <img src="images/watch2.jpg" alt="Wrist Watch" onclick="document.getElementById('watch-main').src=this.src">
+          <img src="images/watch3.jpg" alt="Wrist Watch" onclick="document.getElementById('watch-main').src=this.src">
+          <img src="images/watch4.jpg" alt="Wrist Watch" onclick="document.getElementById('watch-main').src=this.src">
+        </div>
+        <p class="price">ZMW 799</p>
+        <p class="desc">Stylish and durable.</p>
+        <button class="add-cart" data-name="Wrist Watch">Add to Cart</button>
+      </div>
+
+      <div class="product">
+        <img id="tracksuit-main" src="images/tracksuit1.jpg" alt="Arsenal Tracksuit">
+        <div class="thumbs">
+          <img src="images/tracksuit2.jpg" alt="Arsenal Tracksuit" onclick="document.getElementById('tracksuit-main').src=this.src">
+          <img src="images/tracksuit3.jpg" alt="Arsenal Tracksuit" onclick="document.getElementById('tracksuit-main').src=this.src">
+          <img src="images/tracksuit4.jpg" alt="Arsenal Tracksuit" onclick="document.getElementById('tracksuit-main').src=this.src">
+          <img src="images/tracksuit5.jpg" alt="Arsenal Tracksuit" onclick="document.getElementById('tracksuit-main').src=this.src">
+        </div>
+        <h3>Arsenal Tracksuit (All Sizes)</h3>
+        <p class="price">ZMW 600</p>
+        <p class="desc">Official Arsenal tracksuit — stylish, comfortable, and perfect for training or casual wear.</p>
+        <button class="add-cart">Add to Cart</button>
+      </div>
+    </div>
+  </section>
+
   <section id="best-sellers">
     <h2>🔥 Best Sellers</h2>
     <div class="product-grid">
@@ -57,7 +132,6 @@
         <h3>iPhone 11 Series</h3>
         <button onclick="window.location.href='electronics.html#iphone11'">Open</button>
       </div>
-
       <div class="product">
         <img src="images/blender.jpg" alt="Blender" />
         <h3>Electric Blender</h3>
@@ -68,74 +142,8 @@
     </div>
   </section>
 
-  <!-- Featured Products Section -->
-  <section id="featured-products">
-    <h2>⭐ Featured Products</h2>
-    <div class="product-grid">
-      <div class="product">
-  <!-- Main image -->
-  <img id="shoe-main" src="images/shoes1.jpg" alt="Casual Shoes" width="220">
-
-  <!-- Thumbnails -->
-  <div class="thumbs">
-    <img src="images/shoes2.jpg" alt="Casual Shoes" onclick="document.getElementById('shoe-main').src=this.src">
-    <img src="images/shoes3.jpg" alt="Casual Shoes" onclick="document.getElementById('shoe-main').src=this.src">
-    <img src="images/shoes4.jpg" alt="Casual Shoes" onclick="document.getElementById('shoe-main').src=this.src">
-  </div>
-        <h3>Adidas Runfalcon 5 TR</h3>
-		<p class="price">ZMW 1190</p>
-        <p class="desc">Comfortable Sports Training Running Shoes.</p>
-        <button class="add-cart">Add to Cart</button>
-      </div>
-
-<div class="product thumbnail-card">
-  <!-- Main image -->
-  <img id="watch-main" src="images/watch1.jpg" alt="Naviforce Wrist Watch" width="150">
-
-  <h3>Naviforce Wrist Watch</h3>
-
-  <!-- Thumbnails -->
-  <div class="thumbs">
-    <img src="images/watch1.jpg" alt="Wrist Watch" onclick="document.getElementById('watch-main').src=this.src">
-    <img src="images/watch2.jpg" alt="Wrist Watch" onclick="document.getElementById('watch-main').src=this.src">
-    <img src="images/watch3.jpg" alt="Wrist Watch" onclick="document.getElementById('watch-main').src=this.src">
-    <img src="images/watch4.jpg" alt="Wrist Watch" onclick="document.getElementById('watch-main').src=this.src">
-  </div>
-
-  <!-- Price + description -->
-  <p class="price">ZMW 799</p>
-  <p class="desc">Stylish and durable.</p>
-
-  <button class="add-cart" data-name="Wrist Watch">Add to Cart</button>
-</div>
-
-	  <div class="product">
-  <!-- Main image -->
-  <img id="tracksuit-main" src="images/tracksuit1.jpg" alt="Arsenal Tracksuit">
-
-  <!-- Thumbnails -->
-  <div class="thumbs">
-    <img src="images/tracksuit2.jpg" alt="Arsenal Tracksuit" onclick="document.getElementById('tracksuit-main').src=this.src">
-    <img src="images/tracksuit3.jpg" alt="Arsenal Tracksuit" onclick="document.getElementById('tracksuit-main').src=this.src">
-    <img src="images/tracksuit4.jpg" alt="Arsenal Tracksuit" onclick="document.getElementById('tracksuit-main').src=this.src">
-    <img src="images/tracksuit5.jpg" alt="Arsenal Tracksuit" onclick="document.getElementById('tracksuit-main').src=this.src">
-  </div>
-
-  <!-- Product details -->
-  <h3>Arsenal Tracksuit (All Sizes)</h3>
-  <p class="price">ZMW 600</p>
-  <p class="desc">Official Arsenal tracksuit — stylish, comfortable, and perfect for training or casual wear.</p>
-  <button class="add-cart">Add to Cart</button>
-</div>
-
-    </div>
-  </section>
-
-  <!-- Hidden container for fetched category products -->
   <section id="all-products" class="hidden"></section>
-
-</main>
-
+  </main>
 
   <footer class="footer">
     <p>Payments: Mobile money (MTN/Airtel/Zamtel) or Bank Transfer</p>
@@ -143,7 +151,6 @@
     <p>&copy; 2026 Nova Nest</p>
   </footer>
 
-  <!-- Cart Popup -->
   <div id="cart-popup" class="cart-popup hidden">
     <h2>Your Cart</h2>
     <ul id="cart-items"></ul>
@@ -152,12 +159,12 @@
     <button id="close-cart">Close</button>
   </div>
 
-  <!-- Temporary popup message -->
   <div id="cart-message" class="hidden" style="position:fixed; top:20px; right:20px; background:#22c55e; color:white; padding:10px 15px; border-radius:6px;">
     Item added to cart!
   </div>
 
   <script>
+  document.addEventListener("DOMContentLoaded", () => {
     // --- Global state ---
     let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
     const cartCountSpan = document.getElementById("cart-count");
@@ -240,11 +247,9 @@
         fetchedProducts.forEach(p => {
           const name = p.querySelector("h3")?.innerText || "Product";
           const img = p.querySelector("img")?.src || "";
-          const price = p.querySelector(".price")?.innerText || "Starting price";
           const id = p.id || name.toLowerCase().replace(/\s+/g, "");
           const categoryPage = url;
 
-          // Build simplified card
           const simpleCard = document.createElement("div");
           simpleCard.className = "product";
           simpleCard.innerHTML = `
@@ -307,6 +312,21 @@
     // --- Init ---
     renderCart();
     updateCartCount();
+
+    // --- Promo banner rotation ---
+    const messages = [
+      "🎉 Get 5% off your first order!",
+    ];
+    let index = 0;
+    function rotateMessage() {
+      const promoEl = document.getElementById("promo-message");
+      if (promoEl) {
+        promoEl.textContent = messages[index];
+        index = (index + 1) % messages.length;
+      }
+    }
+    setInterval(rotateMessage, 4000);
+  });
 </script>
 </body>
 </html>
