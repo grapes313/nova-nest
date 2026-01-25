@@ -40,9 +40,50 @@
       from { opacity: 0; }
       to { opacity: 1; }
     }
+
+    /* ✅ Navbar styling */
+    .navbar ul { 
+      list-style:none; 
+      display:flex; 
+      gap:15px; 
+      padding:10px; 
+      background:#1E3A8A; 
+      margin:0; 
+    }
+    .navbar a { 
+      color:white; 
+      text-decoration:none; 
+    }
+    .header { 
+      background:#1E3A8A; 
+      color:white; 
+      padding:20px; 
+      text-align:center; 
+    }
+    footer { 
+      background:#1E3A8A; 
+      color:white; 
+      text-align:center; 
+      padding:15px; 
+      margin-top:30px; 
+    }
   </style>
 </head>
 <body>
+  <!-- ✅ Global Navbar -->
+  <nav class="navbar">
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="electronics.html">Electronics</a></li>
+      <li><a href="fashion.html">Fashion</a></li>
+      <li><a href="home-kitchen.html">Home & Kitchen</a></li>
+      <li><a href="wholesale.html">Wholesale</a></li>
+      <li><a href="contact.html">Contact</a></li>
+	  <li><a href="about.html">About Us</a></li>
+      <li><a href="cart.html">🛒 Cart</a></li>
+    </ul>
+  </nav>
+
   <header class="header">
     <h1>Checkout</h1>
     <p>Complete your order below</p>
@@ -113,98 +154,204 @@
     <p>&copy; 2026 Nova Nest</p>
   </footer>
 
-  <script>
-    // Cart rendering
-    const checkoutItemsList = document.getElementById("checkout-items");
-    let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+<script>
+  // ✅ Thumbnail functions (for product pages with video/image toggle)
+  function showImage(imgId, videoId, src) {
+    const img = document.getElementById(imgId);
+    const video = document.getElementById(videoId);
+    img.src = src;
+    img.classList.remove("hidden");
+    video.classList.add("hidden");
+    video.pause();
+  }
 
-    function renderCheckout() {
-      checkoutItemsList.innerHTML = "";
+  function showVideo(imgId, videoId) {
+    const img = document.getElementById(imgId);
+    const video = document.getElementById(videoId);
+    img.classList.add("hidden");
+    video.classList.remove("hidden");
+    video.play();
+  }
+
+  // ✅ Cart Logic (shared across product and checkout pages)
+  document.addEventListener("DOMContentLoaded", () => {
+    let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+    const cartCountSpan = document.getElementById("cart-count");
+    const cartLink = document.getElementById("cart-link");
+    const cartPopup = document.getElementById("cart-popup");
+    const cartItemsList = document.getElementById("cart-items");
+    const closeCartButton = document.getElementById("close-cart");
+    const checkoutBtn = document.getElementById("checkout-btn");
+    const clearCartButton = document.getElementById("clear-cart");
+    const cartMessage = document.getElementById("cart-message");
+
+    function show(el) { if(el) el.classList.remove("hidden"); }
+    function hide(el) { if(el) el.classList.add("hidden"); }
+
+    function updateCartCount() {
+      if(cartCountSpan) cartCountSpan.textContent = cartItems.length;
+    }
+    function saveCart() {
+      localStorage.setItem("cartItems", JSON.stringify(cartItems));
+      updateCartCount();
+    }
+    function renderCart() {
+      if(!cartItemsList) return;
+      cartItemsList.innerHTML = "";
       cartItems.forEach((item, i) => {
         const li = document.createElement("li");
         li.textContent = `${item.name} - ZMW ${item.price}`;
         const removeBtn = document.createElement("button");
         removeBtn.textContent = "Remove";
-        removeBtn.className = "remove-btn";
         removeBtn.style.marginLeft = "10px";
         removeBtn.addEventListener("click", () => {
           cartItems.splice(i, 1);
-          localStorage.setItem("cartItems", JSON.stringify(cartItems));
-          renderCheckout();
+          saveCart();
+          renderCart();
+          renderCheckout(); // keep checkout synced
         });
         li.appendChild(removeBtn);
-        checkoutItemsList.appendChild(li);
+        cartItemsList.appendChild(li);
       });
+
       if (cartItems.length > 0) {
         const total = cartItems.reduce((sum, i) => sum + i.price, 0);
         const totalElement = document.createElement("p");
         totalElement.className = "cart-total";
         totalElement.textContent = `Total: ZMW ${total}`;
-        checkoutItemsList.appendChild(totalElement);
-      } else {
-        const emptyMsg = document.createElement("p");
-        emptyMsg.textContent = "Your cart is empty.";
-        checkoutItemsList.appendChild(emptyMsg);
+        cartItemsList.appendChild(totalElement);
       }
+      updateCartCount();
     }
+
+    // Add to Cart (works on product pages)
+    document.addEventListener("click", (e) => {
+      const btn = e.target.closest(".add-cart");
+      if (!btn) return;
+      const product = btn.closest(".product");
+      const productName = product.querySelector("h3")?.innerText || "Item";
+      const productPriceElement = product.querySelector(".price");
+      const productPrice = parseFloat(productPriceElement?.getAttribute("data-value")) || 0;
+
+      cartItems.push({ name: productName, price: productPrice });
+      saveCart();
+      renderCart();
+      renderCheckout(); // keep checkout synced
+
+      if(cartMessage){
+        show(cartMessage);
+        setTimeout(() => { hide(cartMessage); }, 2000);
+      }
+    });
+
+    // Cart controls
+    if(cartLink) cartLink.addEventListener("click", e => { e.preventDefault(); show(cartPopup); });
+    if(closeCartButton) closeCartButton.addEventListener("click", () => hide(cartPopup));
+    if(checkoutBtn) checkoutBtn.addEventListener("click", () => window.location.href = "checkout.html");
+    if(clearCartButton) clearCartButton.addEventListener("click", () => {
+      cartItems = [];
+      saveCart();
+      renderCart();
+      renderCheckout();
+      alert("Cart has been cleared!");
+    });
+
+    // Initialize cart on page load
+    renderCart();
+    updateCartCount();
     renderCheckout();
+  });
 
-    // Save order (pending, no receipt yet)
-    function savePendingOrder(name, phone, address) {
-      const newOrder = {
-        name,
-        phone,
-        address,
-        items: cartItems.map(i => i.name).join(", "),
-        total: cartItems.reduce((sum, i) => sum + i.price, 0),
-        timestamp: new Date().toLocaleString(),
-        receipt: null,
-        status: "pending"
-      };
-      const pendingOrders = JSON.parse(localStorage.getItem("pendingOrders")) || [];
-      pendingOrders.push(newOrder);
-      localStorage.setItem("pendingOrders", JSON.stringify(pendingOrders));
-    }
+  // ✅ Checkout rendering
+  const checkoutItemsList = document.getElementById("checkout-items");
+  let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
 
-    // Payment buttons → redirect to receipt section
-    function handlePayment(message) {
-      const name = document.getElementById("name").value;
-      const phone = document.getElementById("phone").value;
-      const address = document.getElementById("address").value;
-      if (!name || !phone || !address) {
-        alert("Please fill in your customer details first.");
-        return;
-      }
-      savePendingOrder(name, phone, address);
-      alert(message);
-
-      // ✅ Hide checkout, show upload section
-      document.getElementById("checkout-section").style.display = "none";
-      document.getElementById("upload-section").style.display = "block";
-
-      // Build receipt message
-      const items = cartItems.map(i => i.name).join(", ");
+  function renderCheckout() {
+    if(!checkoutItemsList) return;
+    checkoutItemsList.innerHTML = "";
+    cartItems.forEach((item, i) => {
+      const li = document.createElement("li");
+      li.textContent = `${item.name} - ZMW ${item.price}`;
+      const removeBtn = document.createElement("button");
+      removeBtn.textContent = "Remove";
+      removeBtn.className = "remove-btn";
+      removeBtn.style.marginLeft = "10px";
+      removeBtn.addEventListener("click", () => {
+        cartItems.splice(i, 1);
+        localStorage.setItem("cartItems", JSON.stringify(cartItems));
+        renderCheckout();
+      });
+      li.appendChild(removeBtn);
+      checkoutItemsList.appendChild(li);
+    });
+    if (cartItems.length > 0) {
       const total = cartItems.reduce((sum, i) => sum + i.price, 0);
-      const receiptMessage =
-        `Hello Nova Nest, I (${name} - ${phone}) have completed payment for my order.\n` +
-        `Items: ${items}\n` +
-        `Total: ZMW ${total}\n` +
-        `Delivery Address: ${address}`;
-
-      // ✅ WhatsApp only
-      document.getElementById("whatsapp-btn").setAttribute(
-        "href",
-        `https://wa.me/260966172411?text=${encodeURIComponent(receiptMessage)}`
-      );
+      const totalElement = document.createElement("p");
+      totalElement.className = "cart-total";
+      totalElement.textContent = `Total: ZMW ${total}`;
+      checkoutItemsList.appendChild(totalElement);
+    } else {
+      const emptyMsg = document.createElement("p");
+      emptyMsg.textContent = "Your cart is empty.";
+      checkoutItemsList.appendChild(emptyMsg);
     }
+  }
 
-    document.getElementById("bank-pay-btn").addEventListener("click", () => {
-      handlePayment("Please transfer to Absa Bank Zambia.\nAfter payment, send your receipt via WhatsApp.");
-    });
+  // ✅ Save order (pending, no receipt yet)
+  function savePendingOrder(name, phone, address) {
+    const newOrder = {
+      name,
+      phone,
+      address,
+      items: cartItems.map(i => i.name).join(", "),
+      total: cartItems.reduce((sum, i) => sum + i.price, 0),
+      timestamp: new Date().toLocaleString(),
+      receipt: null,
+      status: "pending"
+    };
+    const pendingOrders = JSON.parse(localStorage.getItem("pendingOrders")) || [];
+    pendingOrders.push(newOrder);
+    localStorage.setItem("pendingOrders", JSON.stringify(pendingOrders));
+  }
 
-    document.getElementById("mtn-pay-btn").addEventListener("click", () => {
-      handlePayment("Please send payment to MTN MoMo number: 0966172411.\nAfter payment, send your receipt via WhatsApp.");
-    });
-  </script>
+  // ✅ Payment buttons → redirect to receipt section
+  function handlePayment(message) {
+    const name = document.getElementById("name").value;
+    const phone = document.getElementById("phone").value;
+    const address = document.getElementById("address").value;
+    if (!name || !phone || !address) {
+      alert("Please fill in your customer details first.");
+      return;
+    }
+    savePendingOrder(name, phone, address);
+    alert(message);
+
+    // Hide checkout, show upload section
+    document.getElementById("checkout-section").style.display = "none";
+    document.getElementById("upload-section").style.display = "block";
+
+    // Build receipt message
+    const items = cartItems.map(i => i.name).join(", ");
+    const total = cartItems.reduce((sum, i) => sum + i.price, 0);
+    const receiptMessage =
+      `Hello Nova Nest, I (${name} - ${phone}) have completed payment for my order.\n` +
+      `Items: ${items}\n` +
+      `Total: ZMW ${total}\n` +
+      `Delivery Address: ${address}`;
+
+    document.getElementById("whatsapp-btn").setAttribute(
+      "href",
+      `https://wa.me/260966172411?text=${encodeURIComponent(receiptMessage)}`
+    );
+  }
+
+  document.getElementById("bank-pay-btn")?.addEventListener("click", () => {
+    handlePayment("Please transfer to Absa Bank Zambia.\nAfter payment, send your receipt via WhatsApp.");
+  });
+
+  document.getElementById("mtn-pay-btn")?.addEventListener("click", () => {
+    handlePayment("Please send payment to MTN MoMo number: 0966172411.\nAfter payment, send your receipt via WhatsApp.");
+  });
+</script>
 </body>
 </html>
