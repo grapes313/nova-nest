@@ -826,4 +826,15 @@ section h2 {
   text-align: center;
   padding: 15px;
 }
+.products {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.product {
+  flex: 1 1 220px;
+  max-width: 250px;
+  box-sizing: border-box;
+}
 

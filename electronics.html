@@ -443,7 +443,119 @@
         <button class="add-cart" data-name="Wireless Headphones">Add to Cart</button>
       </div>
 
-    </div>
+ <div class="product">
+  <img id="pixel10-image" src="images/pixel10.jpg" alt="Google Pixel 10 Series" width="220">
+  <h3>Google Pixel 10 Series</h3>
+
+  <label for="pixel10-model">Model:</label>
+  <select id="pixel10-model">
+    <option value="10">Pixel 10</option>
+    <option value="10 Pro">Pixel 10 Pro</option>
+    <option value="10 Pro XL">Pixel 10 Pro XL</option>
+  </select>
+
+  <label for="pixel10-storage">Storage:</label>
+  <select id="pixel10-storage"></select>
+
+  <label for="pixel10-sim">SIM Type:</label>
+  <select id="pixel10-sim"></select>
+
+  <p class="price">Price: ZMW <span id="pixel10-price">0</span></p>
+  <button class="add-cart" data-name="Google Pixel 10 Series">Add to Cart</button>
+</div>
+
+
+<div class="product">
+  <img id="pixel9-image" src="images/pixel9.jpg" alt="Google Pixel 9 Series" width="220">
+  <h3>Google Pixel 9 Series</h3>
+
+  <label for="pixel9-model">Model:</label>
+  <select id="pixel9-model">
+    <option value="9">Pixel 9</option>
+    <option value="9 Pro">Pixel 9 Pro</option>
+    <option value="9 Pro XL">Pixel 9 Pro XL</option>
+    <option value="9 Pro Fold">Pixel 9 Pro Fold</option>
+  </select>
+
+  <label for="pixel9-storage">Storage:</label>
+  <select id="pixel9-storage"></select>
+
+  <p class="price">Price: ZMW <span id="pixel9-price">0</span></p>
+  <button class="add-cart" data-name="Google Pixel 9 Series">Add to Cart</button>
+</div>
+<div class="product">
+  <img id="pixel8-image" src="images/pixel8.jpg" alt="Google Pixel 8 Series" width="220">
+  <h3>Google Pixel 8 Series</h3>
+
+  <label for="pixel8-model">Model:</label>
+  <select id="pixel8-model">
+    <option value="8">Pixel 8</option>
+    <option value="8A">Pixel 8A</option>
+    <option value="8 Pro">Pixel 8 Pro</option>
+  </select>
+
+  <label for="pixel8-storage">Storage:</label>
+  <select id="pixel8-storage"></select>
+
+  <p class="price">Price: ZMW <span id="pixel8-price">0</span></p>
+  <button class="add-cart" data-name="Google Pixel 8 Series">Add to Cart</button>
+</div>
+
+<div class="product">
+  <img id="pixel7-image" src="images/pixel7.jpg" alt="Google Pixel 7 Series" width="220">
+  <h3>Google Pixel 7 Series</h3>
+
+  <label for="pixel7-model">Model:</label>
+  <select id="pixel7-model">
+    <option value="7">Pixel 7</option>
+    <option value="7A">Pixel 7A</option>
+    <option value="7 Pro">Pixel 7 Pro</option>
+  </select>
+
+  <label for="pixel7-storage">Storage:</label>
+  <select id="pixel7-storage"></select>
+
+  <p class="price">Price: ZMW <span id="pixel7-price">0</span></p>
+  <button class="add-cart" data-name="Google Pixel 7 Series">Add to Cart</button>
+</div>
+
+<div class="product">
+  <img id="pixel6-image" src="images/pixel6.jpg" alt="Google Pixel 6 Series" width="220">
+  <h3>Google Pixel 6 Series</h3>
+
+  <label for="pixel6-model">Model:</label>
+  <select id="pixel6-model">
+    <option value="6A">Pixel 6A</option>
+    <option value="6">Pixel 6</option>
+    <option value="6 Pro">Pixel 6 Pro</option>
+  </select>
+
+  <label for="pixel6-storage">Storage:</label>
+  <select id="pixel6-storage"></select>
+
+  <p class="price">Price: ZMW <span id="pixel6-price">0</span></p>
+  <button class="add-cart" data-name="Google Pixel 6 Series">Add to Cart</button>
+</div>
+
+<div class="product">
+  <img id="pixel3-5-image" src="images/pixel3.jpg" alt="Google Pixel 3–5 Series" width="220">
+  <h3>Google Pixel 3–5 Series</h3>
+
+  <label for="pixel3-5-model">Model:</label>
+  <select id="pixel3-5-model">
+    <option value="3A">Pixel 3A</option>
+    <option value="4 XL">Pixel 4 XL</option>
+    <option value="5A">Pixel 5A</option>
+    <option value="5">Pixel 5</option>
+  </select>
+
+  <label for="pixel3-5-storage">Storage:</label>
+  <select id="pixel3-5-storage"></select>
+
+  <p class="price">Price: ZMW <span id="pixel3-5-price">0</span></p>
+  <button class="add-cart" data-name="Google Pixel 3–5 Series">Add to Cart</button>
+</div>
+
   </main>
 
   <footer class="footer">
@@ -1644,6 +1756,356 @@ const galaxy2425ColorEl = document.getElementById("galaxy2425-color");
 if (galaxy2425ModelEl) galaxy2425ModelEl.addEventListener("change", updateGalaxy2425Options);
 if (galaxy2425StorageEl) galaxy2425StorageEl.addEventListener("change", updateGalaxy2425Price);
 if (galaxy2425ColorEl) galaxy2425ColorEl.addEventListener("change", updateGalaxy2425Price);
+
+// --- Google Pixel 10 Series ---
+const pixel10Prices = {
+  "10": { "128GB eSIM": 12900 },
+  "10 Pro": { "256GB SIM": 20000 },
+  "10 Pro XL": { 
+    "256GB SIM": 21000,
+    "256GB eSIM": 18200,
+    "512GB eSIM": 19300
+  }
+};
+
+const pixel10Storage = {
+  "10": ["128GB"],
+  "10 Pro": ["256GB"],
+  "10 Pro XL": ["256GB", "512GB"]
+};
+
+const pixel10Sim = {
+  "10": ["eSIM"],
+  "10 Pro": ["SIM"],
+  "10 Pro XL": ["SIM", "eSIM"]
+};
+
+function updatePixel10Options() {
+  const model = document.getElementById("pixel10-model").value;
+  const storageSelect = document.getElementById("pixel10-storage");
+  const simSelect = document.getElementById("pixel10-sim");
+
+  // Reset storage options
+  storageSelect.innerHTML = "";
+  pixel10Storage[model].forEach(storage => {
+    const opt = document.createElement("option");
+    opt.value = storage;
+    opt.textContent = storage;
+    storageSelect.appendChild(opt);
+  });
+
+  // Reset SIM options
+  simSelect.innerHTML = "";
+  pixel10Sim[model].forEach(sim => {
+    const opt = document.createElement("option");
+    opt.value = sim;
+    opt.textContent = sim;
+    simSelect.appendChild(opt);
+  });
+
+  updatePixel10Price();
+}
+
+function updatePixel10Price() {
+  const model = document.getElementById("pixel10-model").value;
+  const storage = document.getElementById("pixel10-storage").value;
+  const sim = document.getElementById("pixel10-sim").value;
+  const key = `${storage} ${sim}`;
+  const price = pixel10Prices[model][key];
+  document.getElementById("pixel10-price").textContent = price;
+
+  // ✅ Update image based on model
+  const pixel10Image = document.getElementById("pixel10-image");
+  if (model === "10") pixel10Image.src = "images/pixel10.webp";
+  if (model === "10 Pro") pixel10Image.src = "images/pixel10-pro.webp";
+  if (model === "10 Pro XL") pixel10Image.src = "images/pixel10-proxl.webp";
+}
+// --- Google Pixel 9 Series ---
+const pixel9Prices = {
+  "9": { "128GB": 10500, "256GB": 12500 },
+  "9 Pro": { "128GB": 12300, "256GB": 13700, "512GB": 14700 },
+  "9 Pro XL": { "128GB": 12800, "256GB": 13900, "512GB": 15100 },
+  "9 Pro Fold": { "256GB": 15200, "512GB": 17300 }
+};
+
+const pixel9Storage = {
+  "9": ["128GB", "256GB"],
+  "9 Pro": ["128GB", "256GB", "512GB"],
+  "9 Pro XL": ["128GB", "256GB", "512GB"],
+  "9 Pro Fold": ["256GB", "512GB"]
+};
+
+function updatePixel9Options() {
+  const model = document.getElementById("pixel9-model").value;
+  const storageSelect = document.getElementById("pixel9-storage");
+
+  // Reset storage options
+  storageSelect.innerHTML = "";
+  pixel9Storage[model].forEach(storage => {
+    const opt = document.createElement("option");
+    opt.value = storage;
+    opt.textContent = storage;
+    storageSelect.appendChild(opt);
+  });
+
+  updatePixel9Price();
+}
+
+function updatePixel9Price() {
+  const model = document.getElementById("pixel9-model").value;
+  const storage = document.getElementById("pixel9-storage").value;
+  const price = pixel9Prices[model][storage];
+  document.getElementById("pixel9-price").textContent = price;
+
+  // ✅ Update image based on model
+  const pixel9Image = document.getElementById("pixel9-image");
+  if (model === "9") pixel9Image.src = "images/pixel9.webp";
+  if (model === "9 Pro") pixel9Image.src = "images/pixel9-pro.webp";
+  if (model === "9 Pro XL") pixel9Image.src = "images/pixel9-proxl.webp";
+  if (model === "9 Pro Fold") pixel9Image.src = "images/pixel9-fold.webp";
+}
+// --- Google Pixel 8 Series ---
+const pixel8Prices = {
+  "8": { "128GB": 6700, "256GB": 7700 },
+  "8A": { "128GB": 6100 },
+  "8 Pro": { "128GB": 9000, "256GB": 10000, "512GB": 10400 }
+};
+
+const pixel8Storage = {
+  "8": ["128GB", "256GB"],
+  "8A": ["128GB"],
+  "8 Pro": ["128GB", "256GB", "512GB"]
+};
+
+function updatePixel8Options() {
+  const model = document.getElementById("pixel8-model").value;
+  const storageSelect = document.getElementById("pixel8-storage");
+
+  // Reset storage options
+  storageSelect.innerHTML = "";
+  pixel8Storage[model].forEach(storage => {
+    const opt = document.createElement("option");
+    opt.value = storage;
+    opt.textContent = storage;
+    storageSelect.appendChild(opt);
+  });
+
+  updatePixel8Price();
+}
+
+function updatePixel8Price() {
+  const model = document.getElementById("pixel8-model").value;
+  const storage = document.getElementById("pixel8-storage").value;
+  const price = pixel8Prices[model][storage];
+  document.getElementById("pixel8-price").textContent = price;
+
+  // ✅ Update image based on model
+  const pixel8Image = document.getElementById("pixel8-image");
+  if (model === "8") pixel8Image.src = "images/pixel8.webp";
+  if (model === "8A") pixel8Image.src = "images/pixel8a.webp";
+  if (model === "8 Pro") pixel8Image.src = "images/pixel8-pro.webp";
+}
+// --- Google Pixel 7 Series ---
+const pixel7Prices = {
+  "7": { "128GB": 4900, "256GB": 5600 },
+  "7A": { "128GB": 4800 },
+  "7 Pro": { "128GB": 6200, "256GB": 6600, "512GB": 6900 }
+};
+
+const pixel7Storage = {
+  "7": ["128GB", "256GB"],
+  "7A": ["128GB"],
+  "7 Pro": ["128GB", "256GB", "512GB"]
+};
+
+function updatePixel7Options() {
+  const model = document.getElementById("pixel7-model").value;
+  const storageSelect = document.getElementById("pixel7-storage");
+
+  // Reset storage options
+  storageSelect.innerHTML = "";
+  pixel7Storage[model].forEach(storage => {
+    const opt = document.createElement("option");
+    opt.value = storage;
+    opt.textContent = storage;
+    storageSelect.appendChild(opt);
+  });
+
+  updatePixel7Price();
+}
+
+function updatePixel7Price() {
+  const model = document.getElementById("pixel7-model").value;
+  const storage = document.getElementById("pixel7-storage").value;
+  const price = pixel7Prices[model][storage];
+  document.getElementById("pixel7-price").textContent = price;
+
+  // ✅ Update image based on model
+  const pixel7Image = document.getElementById("pixel7-image");
+  if (model === "7") pixel7Image.src = "images/pixel7.webp";
+  if (model === "7A") pixel7Image.src = "images/pixel7a.webp";
+  if (model === "7 Pro") pixel7Image.src = "images/pixel7-pro.webp";
+}
+// --- Google Pixel 6 Series ---
+const pixel6Prices = {
+  "6A": { "128GB": 4000 },
+  "6": { "128GB": 4200, "256GB": 4700 },
+  "6 Pro": { "128GB": 5300, "256GB": 5700, "512GB": 6100 }
+};
+
+const pixel6Storage = {
+  "6A": ["128GB"],
+  "6": ["128GB", "256GB"],
+  "6 Pro": ["128GB", "256GB", "512GB"]
+};
+
+function updatePixel6Options() {
+  const model = document.getElementById("pixel6-model").value;
+  const storageSelect = document.getElementById("pixel6-storage");
+
+  // Reset storage options
+  storageSelect.innerHTML = "";
+  pixel6Storage[model].forEach(storage => {
+    const opt = document.createElement("option");
+    opt.value = storage;
+    opt.textContent = storage;
+    storageSelect.appendChild(opt);
+  });
+
+  updatePixel6Price();
+}
+
+function updatePixel6Price() {
+  const model = document.getElementById("pixel6-model").value;
+  const storage = document.getElementById("pixel6-storage").value;
+  const price = pixel6Prices[model][storage];
+  document.getElementById("pixel6-price").textContent = price;
+
+  // ✅ Update image based on model
+  const pixel6Image = document.getElementById("pixel6-image");
+  if (model === "6A") pixel6Image.src = "images/pixel6a.webp";
+  if (model === "6") pixel6Image.src = "images/pixel6.webp";
+  if (model === "6 Pro") pixel6Image.src = "images/pixel6-pro.webp";
+}
+// --- Google Pixel 3–5 Series ---
+const pixel3to5Prices = {
+  "3A": { "64GB": 3200 },
+  "4 XL": { "64GB": 3950 },
+  "5A": { "128GB": 3600 },
+  "5": { "128GB": 4200 }
+};
+
+const pixel3to5Storage = {
+  "3A": ["64GB"],
+  "4 XL": ["64GB"],
+  "5A": ["128GB"],
+  "5": ["128GB"]
+};
+
+function updatePixel3to5Options() {
+  const model = document.getElementById("pixel3-5-model").value;
+  const storageSelect = document.getElementById("pixel3-5-storage");
+
+  // Reset storage options
+  storageSelect.innerHTML = "";
+  pixel3to5Storage[model].forEach(storage => {
+    const opt = document.createElement("option");
+    opt.value = storage;
+    opt.textContent = storage;
+    storageSelect.appendChild(opt);
+  });
+
+  updatePixel3to5Price();
+}
+
+function updatePixel3to5Price() {
+  const model = document.getElementById("pixel3-5-model").value;
+  const storage = document.getElementById("pixel3-5-storage").value;
+  const price = pixel3to5Prices[model][storage];
+  document.getElementById("pixel3-5-price").textContent = price;
+
+  // ✅ Update image based on model
+  const pixelImage = document.getElementById("pixel3-5-image");
+  if (model === "3A") pixelImage.src = "images/pixel3a.webp";
+  if (model === "4 XL") pixelImage.src = "images/pixel4xl.webp";
+  if (model === "5A") pixelImage.src = "images/pixel5a.webp";
+  if (model === "5") pixelImage.src = "images/pixel5.webp";
+}
+
+// --- Event Listeners ---
+document.addEventListener("DOMContentLoaded", () => {
+  // Initialize options on page load
+  updatePixel3to5Options();
+
+  // Update options when model changes
+  document.getElementById("pixel3-5-model").addEventListener("change", updatePixel3to5Options);
+
+  // Update price when storage changes
+  document.getElementById("pixel3-5-storage").addEventListener("change", updatePixel3to5Price);
+});
+
+// --- Event Listeners ---
+document.addEventListener("DOMContentLoaded", () => {
+  // Initialize options on page load
+  updatePixel6Options();
+
+  // Update options when model changes
+  document.getElementById("pixel6-model").addEventListener("change", updatePixel6Options);
+
+  // Update price when storage changes
+  document.getElementById("pixel6-storage").addEventListener("change", updatePixel6Price);
+});
+
+// --- Event Listeners ---
+document.addEventListener("DOMContentLoaded", () => {
+  // Initialize options on page load
+  updatePixel7Options();
+
+  // Update options when model changes
+  document.getElementById("pixel7-model").addEventListener("change", updatePixel7Options);
+
+  // Update price when storage changes
+  document.getElementById("pixel7-storage").addEventListener("change", updatePixel7Price);
+});
+
+// --- Event Listeners ---
+document.addEventListener("DOMContentLoaded", () => {
+  // Initialize options on page load
+  updatePixel8Options();
+
+  // Update options when model changes
+  document.getElementById("pixel8-model").addEventListener("change", updatePixel8Options);
+
+  // Update price when storage changes
+  document.getElementById("pixel8-storage").addEventListener("change", updatePixel8Price);
+});
+
+// --- Event Listeners ---
+document.addEventListener("DOMContentLoaded", () => {
+  // Initialize options on page load
+  updatePixel9Options();
+
+  // Update options when model changes
+  document.getElementById("pixel9-model").addEventListener("change", updatePixel9Options);
+
+  // Update price when storage changes
+  document.getElementById("pixel9-storage").addEventListener("change", updatePixel9Price);
+});
+
+
+// --- Event Listeners ---
+document.addEventListener("DOMContentLoaded", () => {
+  // Initialize options on page load
+  updatePixel10Options();
+
+  // Update options when model changes
+  document.getElementById("pixel10-model").addEventListener("change", updatePixel10Options);
+
+  // Update price when storage or SIM changes
+  document.getElementById("pixel10-storage").addEventListener("change", updatePixel10Price);
+  document.getElementById("pixel10-sim").addEventListener("change", updatePixel10Price);
+});
+
 
 // Initialize on page load
 updateGalaxy2425Options();
