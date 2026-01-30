@@ -154,40 +154,63 @@
   </div>
 
   <script>
-    // Cart system
-    let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
-    const cartCountSpan = document.getElementById("cart-count");
-    const cartLink = document.getElementById("cart-link");
-    const cartPopup = document.getElementById("cart-popup");
-    const cartItemsList = document.getElementById("cart-items");
-    const closeCartButton = document.getElementById("close-cart");
-    const checkoutBtn = document.getElementById("checkout-btn");
-    const clearCartButton = document.getElementById("clear-cart");
-    const cartMessage = document.getElementById("cart-message");
+ // --- Cart Setup ---
+let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+const cartCountSpan   = document.getElementById("cart-count");
+const cartLink        = document.getElementById("cart-link");
+const cartPopup       = document.getElementById("cart-popup");
+const cartItemsList   = document.getElementById("cart-items");
+const closeCartButton = document.getElementById("close-cart");
+const checkoutBtn     = document.getElementById("checkout-btn");
+const clearCartButton = document.getElementById("clear-cart");
+const cartMessage     = document.getElementById("cart-message");
 
-    function updateCartCount() { cartCountSpan.textContent = cartItems.length; }
-    function saveCart() { localStorage.setItem("cartItems", JSON.stringify(cartItems)); updateCartCount(); }
-    function renderCart() {
-      cartItemsList.innerHTML = "";
-      cartItems.forEach((item, i) => {
-        const li = document.createElement("li");
-        li.textContent = `${item.name} - ZMW ${item.price}`;
-        const removeBtn = document.createElement("button");
-        removeBtn.textContent = "Remove";
-        removeBtn.style.marginLeft = "10px";
-        removeBtn.addEventListener("click", () => {
-          cartItems.splice(i, 1);
-          saveCart();
-          renderCart();
-        });
-        li.appendChild(removeBtn);
-        cartItemsList.appendChild(li);
-      });
-      updateCartCount();
-    }
-    renderCart();
+// --- Cart Functions ---
+function updateCartCount() {
+  cartCountSpan.textContent = cartItems.length;
+}
 
-   // --- Fur & Leather One-Piece Jacket ---
+function saveCart() {
+  localStorage.setItem("cartItems", JSON.stringify(cartItems));
+  updateCartCount();
+}
+
+function renderCart() {
+  cartItemsList.innerHTML = "";
+  cartItems.forEach((item, i) => {
+    const li = document.createElement("li");
+
+    // ✅ Show ZMW + USD
+    const usdPrice = (item.price * 0.0503).toFixed(2);
+    li.textContent = `${item.name} - ZMW ${item.price} (≈ $${usdPrice})`;
+
+    const removeBtn = document.createElement("button");
+    removeBtn.textContent = "Remove";
+    removeBtn.style.marginLeft = "10px";
+    removeBtn.addEventListener("click", () => {
+      cartItems.splice(i, 1);
+      saveCart();
+      renderCart();
+    });
+
+    li.appendChild(removeBtn);
+    cartItemsList.appendChild(li);
+  });
+  updateCartCount();
+}
+
+// --- Initialize Cart ---
+renderCart();
+
+// --- Update product price display ---
+function updateProductPrice(priceElement, price) {
+  if (!priceElement) return;
+  priceElement.setAttribute("data-value", price);
+  const usdPrice = (price * 0.0503).toFixed(2);
+  priceElement.textContent = `ZMW ${price} (≈ $${usdPrice})`;
+}
+
+// --- Fur & Leather One-Piece Jacket ---
 const furJacketSize = document.getElementById("furjacket-size");
 const furJacketImage = document.getElementById("furjacket-image");
 const furJacketPrice = document.getElementById("furjacket-price");
@@ -195,7 +218,7 @@ const furJacketPrice = document.getElementById("furjacket-price");
 document.getElementById("add-furjacket-cart").addEventListener("click", () => {
   const opt = furJacketSize.options[furJacketSize.selectedIndex];
   furJacketImage.src = opt.dataset.img;
-  furJacketPrice.textContent = opt.dataset.price;
+  updateProductPrice(furJacketPrice, parseFloat(opt.dataset.price));
   const color = document.getElementById("furjacket-color").value;
   const price = parseFloat(opt.dataset.price);
   cartItems.push({ name: `Fur & Leather Jacket - ${opt.value} - ${color}`, price });
@@ -207,7 +230,7 @@ document.getElementById("add-furjacket-cart").addEventListener("click", () => {
 furJacketSize.addEventListener("change", () => {
   const opt = furJacketSize.options[furJacketSize.selectedIndex];
   furJacketImage.src = opt.dataset.img;
-  furJacketPrice.textContent = opt.dataset.price;
+  updateProductPrice(furJacketPrice, parseFloat(opt.dataset.price));
 });
 
 // --- Running Shoes ---
@@ -218,7 +241,7 @@ const shoesPrice = document.getElementById("shoes-price");
 document.getElementById("add-shoes-cart").addEventListener("click", () => {
   const opt = shoesSize.options[shoesSize.selectedIndex];
   shoesImage.src = opt.dataset.img;
-  shoesPrice.textContent = opt.dataset.price;
+  updateProductPrice(shoesPrice, parseFloat(opt.dataset.price));
   const color = document.getElementById("shoes-color").value;
   const price = parseFloat(opt.dataset.price);
   cartItems.push({ name: `Running Shoes - ${opt.value} - ${color}`, price });
@@ -230,10 +253,10 @@ document.getElementById("add-shoes-cart").addEventListener("click", () => {
 shoesSize.addEventListener("change", () => {
   const opt = shoesSize.options[shoesSize.selectedIndex];
   shoesImage.src = opt.dataset.img;
-  shoesPrice.textContent = opt.dataset.price;
+  updateProductPrice(shoesPrice, parseFloat(opt.dataset.price));
 });
 
-  // --- Leather Jacket ---
+// --- Leather Jacket ---
 const jacketSize = document.getElementById("jacket-size");
 const jacketImage = document.getElementById("jacket-image");
 const jacketPrice = document.getElementById("jacket-price");
@@ -241,7 +264,7 @@ const jacketPrice = document.getElementById("jacket-price");
 document.getElementById("add-jacket-cart").addEventListener("click", () => {
   const opt = jacketSize.options[jacketSize.selectedIndex];
   jacketImage.src = opt.dataset.img;
-  jacketPrice.textContent = opt.dataset.price;
+  updateProductPrice(jacketPrice, parseFloat(opt.dataset.price));
   const color = document.getElementById("jacket-color").value;
   const price = parseFloat(opt.dataset.price);
   cartItems.push({ name: `Leather Jacket - ${opt.value} - ${color}`, price });
@@ -253,27 +276,32 @@ document.getElementById("add-jacket-cart").addEventListener("click", () => {
 jacketSize.addEventListener("change", () => {
   const opt = jacketSize.options[jacketSize.selectedIndex];
   jacketImage.src = opt.dataset.img;
-  jacketPrice.textContent = opt.dataset.price;
+  updateProductPrice(jacketPrice, parseFloat(opt.dataset.price));
 });
 
+// --- Cart controls ---
+cartLink.addEventListener("click", e => {
+  e.preventDefault();
+  cartPopup.style.display = "block";
+});
+closeCartButton.addEventListener("click", () => {
+  cartPopup.style.display = "none";
+});
+checkoutBtn.addEventListener("click", () => {
+  window.location.href = "checkout.html";
+});
+clearCartButton.addEventListener("click", () => {
+  cartItems = [];
+  saveCart();
+  renderCart();
+  alert("Cart has been cleared!");
+});
 
-    // Cart controls
-    cartLink.addEventListener("click", e => {
-      e.preventDefault();
-      cartPopup.style.display = "block";
-    });
-    closeCartButton.addEventListener("click", () => {
-      cartPopup.style.display = "none";
-    });
-    checkoutBtn.addEventListener("click", () => {
-      window.location.href = "checkout.html";
-    });
-    clearCartButton.addEventListener("click", () => {
-      cartItems = [];
-      saveCart();
-      renderCart();
-      alert("Cart has been cleared!");
-    });
+// --- Initialize product prices on page load ---
+updateProductPrice(furJacketPrice, parseFloat(furJacketSize.options[furJacketSize.selectedIndex].dataset.price));
+updateProductPrice(shoesPrice, parseFloat(shoesSize.options[shoesSize.selectedIndex].dataset.price));
+updateProductPrice(jacketPrice, parseFloat(jacketSize.options[jacketSize.selectedIndex].dataset.price));
+
   </script>
 </body>
 </html>

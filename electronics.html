@@ -23,6 +23,7 @@
     <h1>Electronics</h1>
   </header>
 
+
   <main>
     <div class="product-grid">
 
@@ -576,34 +577,51 @@
   </div>
 
  <script>
-  // --- Cart System ---
-  let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
-  const cartCountSpan = document.getElementById("cart-count");
-  const cartLink = document.getElementById("cart-link");
-  const cartPopup = document.getElementById("cart-popup");
-  const cartItemsList = document.getElementById("cart-items");
-  const closeCartButton = document.getElementById("close-cart");
-  const checkoutBtn = document.getElementById("checkout-btn");
-  const clearCartButton = document.getElementById("clear-cart");
-  const cartMessage = document.getElementById("cart-message");
+let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+const cartCountSpan = document.getElementById("cart-count");
+const cartLink = document.getElementById("cart-link");
+const cartPopup = document.getElementById("cart-popup");
+const cartItemsList = document.getElementById("cart-items");
+const closeCartButton = document.getElementById("close-cart");
+const checkoutBtn = document.getElementById("checkout-btn");
+const clearCartButton = document.getElementById("clear-cart");
+const cartMessage = document.getElementById("cart-message");
 
-  function updateCartCount() { cartCountSpan.textContent = cartItems.length; }
-  function saveCart() { localStorage.setItem("cartItems", JSON.stringify(cartItems)); updateCartCount(); }
-  function renderCart() {
-    cartItemsList.innerHTML = "";
-    cartItems.forEach((item, i) => {
-      const li = document.createElement("li");
-      li.textContent = `${item.name} - ZMW ${item.price}`;
-      const removeBtn = document.createElement("button");
-      removeBtn.textContent = "Remove";
-      removeBtn.style.marginLeft = "10px";
-      removeBtn.addEventListener("click", () => { cartItems.splice(i, 1); saveCart(); renderCart(); });
-      li.appendChild(removeBtn);
-      cartItemsList.appendChild(li);
+function updateCartCount() { 
+  cartCountSpan.textContent = cartItems.length; 
+}
+
+function saveCart() { 
+  localStorage.setItem("cartItems", JSON.stringify(cartItems)); 
+  updateCartCount(); 
+}
+
+function renderCart() {
+  cartItemsList.innerHTML = "";
+  cartItems.forEach((item, i) => {
+    const li = document.createElement("li");
+
+    // ✅ Show ZMW + USD
+    const usdPrice = (item.price * 0.0503).toFixed(2); // exchange rate
+    li.textContent = `${item.name} - ZMW ${item.price} (≈ $${usdPrice})`;
+
+    const removeBtn = document.createElement("button");
+    removeBtn.textContent = "Remove";
+    removeBtn.style.marginLeft = "10px";
+    removeBtn.addEventListener("click", () => { 
+      cartItems.splice(i, 1); 
+      saveCart(); 
+      renderCart(); 
     });
-    updateCartCount();
-  }
-  renderCart();
+
+    li.appendChild(removeBtn);
+    cartItemsList.appendChild(li);
+  });
+  updateCartCount();
+}
+
+renderCart();
+
 
   // --- Price Maps ---
   const iphonePrices = {
@@ -1855,7 +1873,7 @@ function updatePixel9Price() {
   const model = document.getElementById("pixel9-model").value;
   const storage = document.getElementById("pixel9-storage").value;
   const price = pixel9Prices[model][storage];
-  document.getElementById("pixel9-price").textContent = price;
+document.getElementById("pixel9-price").textContent = price;
 
   // ✅ Update image based on model
   const pixel9Image = document.getElementById("pixel9-image");
@@ -2031,6 +2049,13 @@ function updatePixel3to5Price() {
   if (model === "5A") pixelImage.src = "images/pixel5a.webp";
   if (model === "5") pixelImage.src = "images/pixel5.webp";
 }
+const exchangeRate = 0.0503; // 1 ZMW = 0.0503 USD
+
+function formatPrice(zmwPrice) {
+  const usdPrice = (zmwPrice * exchangeRate).toFixed(2);
+  return `ZMW ${zmwPrice} (≈ $${usdPrice})`;
+}
+
 
 // --- Event Listeners ---
 document.addEventListener("DOMContentLoaded", () => {

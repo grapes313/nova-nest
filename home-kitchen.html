@@ -53,7 +53,7 @@
 
         <label>Size:</label>
         <select id="cookware-size">
-          <option value="5pcs" data-img="images/cookware.jpg" data-price="1800">5pcs</option>
+          <option value="5pcs" data-img="images/cookware.webp" data-price="1800">5pcs</option>
           <option value="10pcs" data-img="images/cookware-large.webp" data-price="2400">7pcs</option>
         </select>
 
@@ -96,114 +96,137 @@
   </div>
 
   <script>
-    // --- Shared Cart System ---
-    let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
-    const cartCountSpan = document.getElementById("cart-count");
-    const cartLink = document.getElementById("cart-link");
-    const cartPopup = document.getElementById("cart-popup");
-    const cartItemsList = document.getElementById("cart-items");
-    const closeCartButton = document.getElementById("close-cart");
-    const checkoutBtn = document.getElementById("checkout-btn");
-    const clearCartButton = document.getElementById("clear-cart");
-    const cartMessage = document.getElementById("cart-message");
+  // --- Shared Cart System ---
+let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+const cartCountSpan = document.getElementById("cart-count");
+const cartLink = document.getElementById("cart-link");
+const cartPopup = document.getElementById("cart-popup");
+const cartItemsList = document.getElementById("cart-items");
+const closeCartButton = document.getElementById("close-cart");
+const checkoutBtn = document.getElementById("checkout-btn");
+const clearCartButton = document.getElementById("clear-cart");
+const cartMessage = document.getElementById("cart-message");
 
-    function updateCartCount() { cartCountSpan.textContent = cartItems.length; }
-    function saveCart() { localStorage.setItem("cartItems", JSON.stringify(cartItems)); updateCartCount(); }
-    function renderCart() {
-      cartItemsList.innerHTML = "";
-      cartItems.forEach((item, i) => {
-        const li = document.createElement("li");
-        li.textContent = `${item.name} - ZMW ${item.price}`;
-        const removeBtn = document.createElement("button");
-        removeBtn.textContent = "Remove";
-        removeBtn.style.marginLeft = "10px";
-        removeBtn.addEventListener("click", () => {
-          cartItems.splice(i, 1);
-          saveCart();
-          renderCart();
-        });
-        li.appendChild(removeBtn);
-        cartItemsList.appendChild(li);
-      });
-      updateCartCount();
-    }
-    renderCart();
+function updateCartCount() { cartCountSpan.textContent = cartItems.length; }
+function saveCart() { localStorage.setItem("cartItems", JSON.stringify(cartItems)); updateCartCount(); }
 
-    // --- Blender ---
-    const blenderModel = document.getElementById("blender-model");
-    const blenderImage = document.getElementById("blender-image");
-    const blenderPrice = document.getElementById("blender-price");
-    document.getElementById("add-blender-cart").addEventListener("click", () => {
-      const opt = blenderModel.options[blenderModel.selectedIndex];
-      blenderImage.src = opt.dataset.img;
-      blenderPrice.textContent = opt.dataset.price;
-      const color = document.getElementById("blender-color").value;
-      const price = parseFloat(opt.dataset.price);
-      cartItems.push({ name: `Blender - ${opt.value} - ${color}`, price });
-      saveCart(); renderCart();
-      cartMessage.style.display = "block"; setTimeout(() => { cartMessage.style.display = "none"; }, 3000);
-    });
-    blenderModel.addEventListener("change", () => {
-      const opt = blenderModel.options[blenderModel.selectedIndex];
-      blenderImage.src = opt.dataset.img;
-      blenderPrice.textContent = opt.dataset.price;
-    });
+function renderCart() {
+  cartItemsList.innerHTML = "";
+  cartItems.forEach((item, i) => {
+    const li = document.createElement("li");
 
-    // --- Cookware ---
-    const cookwareSize = document.getElementById("cookware-size");
-    const cookwareImage = document.getElementById("cookware-image");
-    const cookwarePrice = document.getElementById("cookware-price");
-    document.getElementById("add-cookware-cart").addEventListener("click", () => {
-      const opt = cookwareSize.options[cookwareSize.selectedIndex];
-      cookwareImage.src = opt.dataset.img;
-      cookwarePrice.textContent = opt.dataset.price;
-      const price = parseFloat(opt.dataset.price);
-      cartItems.push({ name: `Cookware Set - ${opt.value}`, price });
-      saveCart(); renderCart();
-      cartMessage.style.display = "block"; setTimeout(() => { cartMessage.style.display = "none"; }, 3000);
-    });
-    cookwareSize.addEventListener("change", () => {
-      const opt = cookwareSize.options[cookwareSize.selectedIndex];
-      cookwareImage.src = opt.dataset.img;
-      cookwarePrice.textContent = opt.dataset.price;
-    });
+    // ✅ Show ZMW + USD
+    const usdPrice = (item.price * 0.0503).toFixed(2);
+    li.textContent = `${item.name} - ZMW ${item.price} (≈ $${usdPrice})`;
 
-    // --- Microwave ---
-    const microwaveCapacity = document.getElementById("microwave-capacity");
-    const microwaveImage = document.getElementById("microwave-image");
-    const microwavePrice = document.getElementById("microwave-price");
-    document.getElementById("add-microwave-cart").addEventListener("click", () => {
-      const opt = microwaveCapacity.options[microwaveCapacity.selectedIndex];
-      microwaveImage.src = opt.dataset.img;
-      microwavePrice.textContent = opt.dataset.price;
-      const price = parseFloat(opt.dataset.price);
-      cartItems.push({ name: `Microwave Oven - ${opt.value}`, price });
-      saveCart(); renderCart();
-      cartMessage.style.display = "block"; setTimeout(() => { cartMessage.style.display = "none"; }, 3000);
-    });
-    microwaveCapacity.addEventListener("change", () => {
-      const opt = microwaveCapacity.options[microwaveCapacity.selectedIndex];
-      microwaveImage.src = opt.dataset.img;
-      microwavePrice.textContent = opt.dataset.price;
-    });
-
-    // --- Cart Controls ---
-    cartLink.addEventListener("click", e => {
-      e.preventDefault();
-      cartPopup.style.display = "block";
-    });
-    closeCartButton.addEventListener("click", () => {
-      cartPopup.style.display = "none";
-    });
-    checkoutBtn.addEventListener("click", () => {
-      window.location.href = "checkout.html";
-    });
-    clearCartButton.addEventListener("click", () => {
-      cartItems = [];
+    const removeBtn = document.createElement("button");
+    removeBtn.textContent = "Remove";
+    removeBtn.style.marginLeft = "10px";
+    removeBtn.addEventListener("click", () => {
+      cartItems.splice(i, 1);
       saveCart();
       renderCart();
-      alert("Cart has been cleared!");
     });
+
+    li.appendChild(removeBtn);
+    cartItemsList.appendChild(li);
+  });
+  updateCartCount();
+}
+renderCart();
+
+// --- Update product price display ---
+function updateProductPrice(priceElement, price) {
+  if (!priceElement) return;
+  priceElement.setAttribute("data-value", price);
+  const usdPrice = (price * 0.0503).toFixed(2);
+  priceElement.textContent = `ZMW ${price} (≈ $${usdPrice})`;
+}
+
+// --- Blender ---
+const blenderModel = document.getElementById("blender-model");
+const blenderImage = document.getElementById("blender-image");
+const blenderPrice = document.getElementById("blender-price");
+
+document.getElementById("add-blender-cart").addEventListener("click", () => {
+  const opt = blenderModel.options[blenderModel.selectedIndex];
+  blenderImage.src = opt.dataset.img;
+  updateProductPrice(blenderPrice, parseFloat(opt.dataset.price));
+  const color = document.getElementById("blender-color").value;
+  const price = parseFloat(opt.dataset.price);
+  cartItems.push({ name: `Blender - ${opt.value} - ${color}`, price });
+  saveCart(); renderCart();
+  cartMessage.style.display = "block"; setTimeout(() => { cartMessage.style.display = "none"; }, 3000);
+});
+blenderModel.addEventListener("change", () => {
+  const opt = blenderModel.options[blenderModel.selectedIndex];
+  blenderImage.src = opt.dataset.img;
+  updateProductPrice(blenderPrice, parseFloat(opt.dataset.price));
+});
+
+// --- Cookware ---
+const cookwareSize = document.getElementById("cookware-size");
+const cookwareImage = document.getElementById("cookware-image");
+const cookwarePrice = document.getElementById("cookware-price");
+
+document.getElementById("add-cookware-cart").addEventListener("click", () => {
+  const opt = cookwareSize.options[cookwareSize.selectedIndex];
+  cookwareImage.src = opt.dataset.img;
+  updateProductPrice(cookwarePrice, parseFloat(opt.dataset.price));
+  const price = parseFloat(opt.dataset.price);
+  cartItems.push({ name: `Cookware Set - ${opt.value}`, price });
+  saveCart(); renderCart();
+  cartMessage.style.display = "block"; setTimeout(() => { cartMessage.style.display = "none"; }, 3000);
+});
+cookwareSize.addEventListener("change", () => {
+  const opt = cookwareSize.options[cookwareSize.selectedIndex];
+  cookwareImage.src = opt.dataset.img;
+  updateProductPrice(cookwarePrice, parseFloat(opt.dataset.price));
+});
+
+// --- Microwave ---
+const microwaveCapacity = document.getElementById("microwave-capacity");
+const microwaveImage = document.getElementById("microwave-image");
+const microwavePrice = document.getElementById("microwave-price");
+
+document.getElementById("add-microwave-cart").addEventListener("click", () => {
+  const opt = microwaveCapacity.options[microwaveCapacity.selectedIndex];
+  microwaveImage.src = opt.dataset.img;
+  updateProductPrice(microwavePrice, parseFloat(opt.dataset.price));
+  const price = parseFloat(opt.dataset.price);
+  cartItems.push({ name: `Microwave Oven - ${opt.value}`, price });
+  saveCart(); renderCart();
+  cartMessage.style.display = "block"; setTimeout(() => { cartMessage.style.display = "none"; }, 3000);
+});
+microwaveCapacity.addEventListener("change", () => {
+  const opt = microwaveCapacity.options[microwaveCapacity.selectedIndex];
+  microwaveImage.src = opt.dataset.img;
+  updateProductPrice(microwavePrice, parseFloat(opt.dataset.price));
+});
+
+// --- Cart Controls ---
+cartLink.addEventListener("click", e => {
+  e.preventDefault();
+  cartPopup.style.display = "block";
+});
+closeCartButton.addEventListener("click", () => {
+  cartPopup.style.display = "none";
+});
+checkoutBtn.addEventListener("click", () => {
+  window.location.href = "checkout.html";
+});
+clearCartButton.addEventListener("click", () => {
+  cartItems = [];
+  saveCart();
+  renderCart();
+  alert("Cart has been cleared!");
+});
+
+// --- Initialize product prices on page load ---
+updateProductPrice(blenderPrice, parseFloat(blenderModel.options[blenderModel.selectedIndex].dataset.price));
+updateProductPrice(cookwarePrice, parseFloat(cookwareSize.options[cookwareSize.selectedIndex].dataset.price));
+updateProductPrice(microwavePrice, parseFloat(microwaveCapacity.options[microwaveCapacity.selectedIndex].dataset.price));
+
   </script>
 </body>
 </html>

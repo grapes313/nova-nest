@@ -72,10 +72,15 @@
     <p>Zambia’s marketplace for buyers and sellers</p>
   </header>
 
-  <!-- ✅ Animated Promo Banner -->
-  <div id="promo-banner">
-    <span id="promo-message">🎉 Get 5% off your first order!</span>
-  </div>
+<!-- ✅ Animated Promo Banner -->
+<div id="promo-banner">
+  <span id="promo-message">
+    💕 Celebrate Love with Savings 💕  
+    10% OFF Electronics (Jan 30 – Feb 20)  
+    First‑time Buyers enjoy 5% OFF across all other categories!
+  </span>
+</div>
+
 
   <main class="homepage">
 
@@ -166,169 +171,127 @@
   </div>
 
   <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    // --- Global state ---
-    let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
-    const cartCountSpan = document.getElementById("cart-count");
-    const cartLink = document.getElementById("cart-link");
-    const cartPopup = document.getElementById("cart-popup");
-    const cartItemsList = document.getElementById("cart-items");
-    const closeCartButton = document.getElementById("close-cart");
-    const checkoutBtn = document.getElementById("checkout-btn");
-    const clearCartButton = document.getElementById("clear-cart");
-    const cartMessage = document.getElementById("cart-message");
+document.addEventListener("DOMContentLoaded", () => {
+  // --- Cart Setup ---
+  let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+  const cartCountSpan   = document.getElementById("cart-count");
+  const cartLink        = document.getElementById("cart-link");
+  const cartPopup       = document.getElementById("cart-popup");
+  const cartItemsList   = document.getElementById("cart-items");
+  const closeCartButton = document.getElementById("close-cart");
+  const checkoutBtn     = document.getElementById("checkout-btn");
+  const clearCartButton = document.getElementById("clear-cart");
+  const cartMessage     = document.getElementById("cart-message");
 
-    const searchInput = document.getElementById('search-input');
-    const searchButton = document.getElementById('search-btn');
-    const fetchedContainer = document.getElementById("all-products");
+  const searchInput      = document.getElementById("search-input");
+  const searchButton     = document.getElementById("search-btn");
+  const fetchedContainer = document.getElementById("all-products");
 
-    // --- Utilities ---
-    function show(el) { el.classList.remove('hidden'); }
-    function hide(el) { el.classList.add('hidden'); }
+  // --- Utilities ---
+  const show = el => el.classList.remove("hidden");
+  const hide = el => el.classList.add("hidden");
 
-    function updateCartCount() {
-      cartCountSpan.textContent = cartItems.length;
-    }
+  function updateCartCount() {
+    cartCountSpan.textContent = cartItems.length;
+  }
 
-    function saveCart() {
-      localStorage.setItem("cartItems", JSON.stringify(cartItems));
-      updateCartCount();
-    }
-
-    function renderCart() {
-      cartItemsList.innerHTML = "";
-      cartItems.forEach((item, i) => {
-        const li = document.createElement("li");
-        li.textContent = `${item.name} - ZMW ${item.price}`;
-        const removeBtn = document.createElement("button");
-        removeBtn.textContent = "Remove";
-        removeBtn.style.marginLeft = "10px";
-        removeBtn.addEventListener("click", () => {
-          cartItems.splice(i, 1);
-          saveCart();
-          renderCart();
-        });
-        li.appendChild(removeBtn);
-        cartItemsList.appendChild(li);
-      });
-      updateCartCount();
-    }
-
-    // --- Robust price extraction ---
-    function extractPrice(productEl) {
-      const raw = productEl.querySelector(".price")?.textContent || "";
-      const matches = raw.match(/(\d+(\.\d+)?)/g);
-      return matches ? parseFloat(matches[matches.length - 1]) : 0;
-    }
-
-    // --- Event delegation for Add to Cart ---
-    document.addEventListener("click", (e) => {
-      const btn = e.target.closest(".add-cart");
-      if (!btn) return;
-      const product = btn.closest(".product");
-      const productName = product.querySelector("h3")?.innerText || "Item";
-      const productPrice = extractPrice(product);
-
-      cartItems.push({ name: productName, price: productPrice });
-      saveCart();
-      renderCart();
-
-      show(cartMessage);
-      setTimeout(() => { hide(cartMessage); }, 2000);
-    });
-
-    // --- Global search: fetch products from category pages ---
-    async function loadCategoryProducts(url) {
-      try {
-        const response = await fetch(url);
-        const text = await response.text();
-        const tempDiv = document.createElement("div");
-        tempDiv.innerHTML = text;
-        const fetchedProducts = tempDiv.querySelectorAll(".product");
-
-        fetchedProducts.forEach(p => {
-          const name = p.querySelector("h3")?.innerText || "Product";
-          const img = p.querySelector("img")?.src || "";
-          const id = p.id || name.toLowerCase().replace(/\s+/g, "");
-          const categoryPage = url;
-
-          const simpleCard = document.createElement("div");
-          simpleCard.className = "product";
-          simpleCard.innerHTML = `
-            <img src="${img}" alt="${name}" width="220">
-            <h3>${name}</h3>
-            <button onclick="window.location.href='${categoryPage}#${id}'">Open</button>
-          `;
-
-          fetchedContainer.appendChild(simpleCard);
-        });
-      } catch (err) {
-        console.error("Error loading products from", url, err);
-      }
-    }
-
-    // Load categories
-    Promise.all([
-      loadCategoryProducts("electronics.html"),
-      loadCategoryProducts("fashion.html"),
-      loadCategoryProducts("home-kitchen.html")
-    ]);
-
-    // --- Search filter ---
-    function filterProducts() {
-      const query = (searchInput.value || "").toLowerCase();
-      const allProducts = document.querySelectorAll('.product');
-      let anyMatch = false;
-
-      allProducts.forEach(product => {
-        const name = (product.querySelector("h3")?.innerText || "").toLowerCase();
-        const desc = (product.querySelector(".desc")?.innerText || "").toLowerCase();
-        const matches = name.includes(query) || desc.includes(query);
-        product.style.display = matches ? "" : "none";
-        if (matches) anyMatch = true;
-      });
-
-      if (anyMatch) {
-        fetchedContainer.classList.remove("hidden");
-      } else {
-        fetchedContainer.classList.add("hidden");
-      }
-    }
-    searchButton.addEventListener('click', filterProducts);
-    searchInput.addEventListener('keyup', filterProducts);
-
-    // --- Cart UI controls ---
-    cartLink.addEventListener("click", e => {
-      e.preventDefault();
-      show(cartPopup);
-    });
-    closeCartButton.addEventListener("click", () => hide(cartPopup));
-    checkoutBtn.addEventListener("click", () => window.location.href = "checkout.html");
-    clearCartButton.addEventListener("click", () => {
-      cartItems = [];
-      saveCart();
-      renderCart();
-      alert("Cart has been cleared!");
-    });
-
-    // --- Init ---
-    renderCart();
+  function saveCart() {
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
     updateCartCount();
+  }
 
-    // --- Promo banner rotation ---
-    const messages = [
-      "🎉 Get 5% off your first order!",
-    ];
-    let index = 0;
-    function rotateMessage() {
-      const promoEl = document.getElementById("promo-message");
-      if (promoEl) {
-        promoEl.textContent = messages[index];
-        index = (index + 1) % messages.length;
-      }
-    }
-    setInterval(rotateMessage, 4000);
+  function renderCart() {
+    cartItemsList.innerHTML = "";
+    cartItems.forEach((item, i) => {
+      const li = document.createElement("li");
+      const usdPrice = (item.price * 0.0503).toFixed(2);
+
+      li.textContent = `${item.name} - ZMW ${item.price} (≈ $${usdPrice})`;
+
+      const removeBtn = document.createElement("button");
+      removeBtn.textContent = "Remove";
+      removeBtn.style.marginLeft = "10px";
+      removeBtn.onclick = () => {
+        cartItems.splice(i, 1);
+        saveCart();
+        renderCart();
+      };
+
+      li.appendChild(removeBtn);
+      cartItemsList.appendChild(li);
+    });
+    updateCartCount();
+  }
+
+  // ✅ SAFE price reader — ZMW ONLY
+  function extractPrice(productEl) {
+    const priceEl = productEl.querySelector(".price");
+    return priceEl ? parseFloat(priceEl.dataset.value) || 0 : 0;
+  }
+
+  // --- Price display (ZMW base, USD display only) ---
+  function updateProductPrice(productEl, price) {
+    const priceEl = productEl.querySelector(".price");
+    if (!priceEl) return;
+
+    priceEl.dataset.value = price;
+    const usdPrice = (price * 0.0503).toFixed(2);
+    priceEl.textContent = `ZMW ${price} (≈ $${usdPrice})`;
+  }
+
+  // --- Add to Cart ---
+  document.addEventListener("click", e => {
+    const btn = e.target.closest(".add-cart");
+    if (!btn) return;
+
+    const product = btn.closest(".product");
+    const name = product.querySelector("h3")?.innerText || "Item";
+    const price = extractPrice(product);
+
+    cartItems.push({ name, price });
+    saveCart();
+    renderCart();
+
+    show(cartMessage);
+    setTimeout(() => hide(cartMessage), 2000);
   });
+
+  // --- Cart controls ---
+  cartLink.onclick = e => { e.preventDefault(); show(cartPopup); };
+  closeCartButton.onclick = () => hide(cartPopup);
+  checkoutBtn.onclick = () => window.location.href = "checkout.html";
+  clearCartButton.onclick = () => {
+    cartItems = [];
+    saveCart();
+    renderCart();
+    alert("Cart cleared");
+  };
+
+  // --- Init ---
+  renderCart();
+  updateCartCount();
+
+  // --- Initialize all product prices ---
+  document.querySelectorAll(".product").forEach(product => {
+    const raw = product.querySelector(".price")?.textContent;
+    if (!raw) return;
+    const zmw = parseFloat(raw.replace(/[^\d.]/g, ""));
+    if (zmw > 0) updateProductPrice(product, zmw);
+  });
+
+  // --- Promo rotation ---
+  const messages = [
+    "💕 Celebrate Love with Savings 💕",
+    "10% OFF Electronics (Jan 30 – Feb 20)",
+    "First-time buyers get 5% OFF!"
+  ];
+  let i = 0;
+  setInterval(() => {
+    const el = document.getElementById("promo-message");
+    if (el) el.textContent = messages[i++ % messages.length];
+  }, 4000);
+});
+
 </script>
 </body>
 </html>
