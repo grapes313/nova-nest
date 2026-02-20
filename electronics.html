@@ -7,12 +7,12 @@
   <meta name="description" content="Discover the latest electronics at Nova Nest. iPhones, Samsung Galaxy, Google Pixel, laptops, and accessories with fast delivery across Zambia." />
   
   <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com " />
+  <link rel="preconnect" href="https://fonts.gstatic.com " crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300 ;400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet" />
   
   <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.tailwindcss.com "></script>
   <script>
     tailwind.config = {
       theme: {
@@ -33,7 +33,7 @@
   </script>
   
   <!-- Lucide Icons -->
-  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://unpkg.com/lucide@latest "></script>
   
   <style>
     ::-webkit-scrollbar { width: 8px; }
@@ -56,7 +56,7 @@
     .thumb-img.active { border-color: #1E3A8A; }
     
     select {
-      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg ' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
       background-position: right 0.5rem center;
       background-repeat: no-repeat;
       background-size: 1.5em 1.5em;
@@ -136,7 +136,7 @@
 
   <!-- Hero Section -->
   <section class="relative bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 text-white overflow-hidden">
-    <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.05\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20"></div>
+    <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg \'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.05\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20"></div>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 relative">
       <div class="max-w-2xl">
         <h1 class="font-display text-4xl md:text-6xl font-bold mb-6 leading-tight">
@@ -1281,8 +1281,8 @@
         id: 'dell-inspiron',
         name: 'Dell Inspiron 14',
         basePrice: 11180,
-        image: 'images/dell-inspiron14.jpg',
-        thumbs: [{ src: 'images/dell-inspiron14.jpg', label: 'Inspiron' }],
+        image: 'images/dell-inspiron14.webp',
+        thumbs: [{ src: 'images/dell-inspiron14.webp', label: 'Inspiron' }],
         options: [
           {
             id: 'dell-ram',
@@ -1389,7 +1389,7 @@
         // Build thumbnails
         let thumbsHtml = '';
         product.thumbs.forEach((thumb, tIndex) => {
-          thumbsHtml += `<img src="${thumb.src}" class="thumb-img ${tIndex === 0 ? 'active' : ''}" onclick="updateImage('${product.id}', '${thumb.src}', this)" alt="${thumb.label}">`;
+          thumbsHtml += `<img src="${thumb.src}" class="thumb-img ${tIndex === 0 ? 'active' : ''}" onclick="updateImage('${product.id}', '${thumb.src}', this)" alt="${thumb.label}" loading="lazy">`;
         });
         
         // Build options
@@ -1426,7 +1426,7 @@
         html += `
           <article class="product-card bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden group" data-product="${product.id}">
             <div class="relative aspect-[4/5] bg-gray-100 overflow-hidden">
-              <img id="${product.id}-image" src="${product.image}" alt="${product.name}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+              <img id="${product.id}-image" src="${product.image}" alt="${product.name}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
             </div>
 
             <div class="p-2 border-b border-gray-100">

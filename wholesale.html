@@ -6,9 +6,13 @@
   <title>Wholesale Deals - Nova Nest</title>
   <meta name="description" content="Bulk discounts for resellers and businesses. Wholesale electronics, fashion, and home goods in Zambia." />
   
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- Preconnect for Speed -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://unpkg.com">
+  <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+  
+  <!-- Fonts with Display Swap -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet" />
   
   <!-- Tailwind CSS -->
@@ -33,14 +37,30 @@
   </script>
   
   <!-- Lucide Icons -->
-  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://unpkg.com/lucide@latest" defer></script>
   
   <style>
+    /* Font Display Swap for Performance */
+    @font-face {
+      font-family: 'Inter';
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Outfit';
+      font-display: swap;
+    }
+    
+    /* Optimized Scrollbar */
     ::-webkit-scrollbar { width: 8px; }
     ::-webkit-scrollbar-track { background: #f1f1f1; }
     ::-webkit-scrollbar-thumb { background: #888; border-radius: 4px; }
     
-    .product-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+    /* Performance: Content Visibility for Product Cards */
+    .product-card { 
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      content-visibility: auto;
+      contain-intrinsic-size: 0 500px;
+    }
     .product-card:hover { transform: translateY(-4px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); }
     
     .video-thumb {
@@ -68,6 +88,11 @@
     }
     .thumb-img:hover { border-color: #1E3A8A; transform: scale(1.05); }
     .thumb-img.active { border-color: #1E3A8A; }
+    
+    /* Critical CSS Inline for Above-the-Fold */
+    .hero-bg {
+      background: linear-gradient(135deg, #1E3A8A 0%, #1e40af 50%, #1e3a8a 100%);
+    }
   </style>
 </head>
 
@@ -147,8 +172,8 @@
   </div>
 
   <!-- Hero Section -->
-  <section class="relative bg-gradient-to-br from-primary via-blue-800 to-blue-900 text-white overflow-hidden">
-    <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.05\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20"></div>
+  <section class="relative hero-bg text-white overflow-hidden">
+    <div class="absolute inset-0 opacity-20" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.05\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 relative">
       <div class="max-w-2xl">
         <span class="inline-block px-3 py-1 bg-accent/20 text-accent text-sm font-semibold rounded-full mb-4 backdrop-blur-sm">
@@ -219,8 +244,18 @@
       <article class="product-card bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden group" id="wholesale-iphone-covers">
         <!-- Main Display -->
         <div class="relative aspect-square bg-gray-100 overflow-hidden">
-          <img id="iphone-main" src="images/iphone-cover1.webp" alt="iPhone Covers Wholesale" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-          <video id="iphone-video" class="w-full h-full object-cover hidden" controls muted>
+          <!-- Optimized Image with Lazy Loading -->
+          <img 
+            id="iphone-main" 
+            src="images/iphone-cover1.webp" 
+            alt="iPhone Covers Wholesale" 
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            loading="lazy"
+            width="600"
+            height="600"
+            decoding="async"
+          >
+          <video id="iphone-video" class="w-full h-full object-cover hidden" controls muted preload="none" poster="images/iphone-cover1.webp">
             <source src="videos/iphone-covers.mp4" type="video/mp4">
             <source src="videos/iphone-covers.webm" type="video/webm">
           </video>
@@ -235,9 +270,36 @@
         <!-- Thumbnails -->
         <div class="p-4 border-b border-gray-100">
           <div class="flex items-center justify-center gap-3">
-            <img src="images/iphone-cover1.webp" class="thumb-img active" onclick="showImage('iphone-main','iphone-video',this)" alt="View 1">
-            <img src="images/iphone-cover2.webp" class="thumb-img" onclick="showImage('iphone-main','iphone-video',this)" alt="View 2">
-            <img src="images/iphone-cover3.webp" class="thumb-img" onclick="showImage('iphone-main','iphone-video',this)" alt="View 3">
+            <img 
+              src="images/iphone-cover1.webp" 
+              class="thumb-img active" 
+              onclick="showImage('iphone-main','iphone-video',this)" 
+              alt="View 1"
+              loading="lazy"
+              width="48"
+              height="48"
+              decoding="async"
+            >
+            <img 
+              src="images/iphone-cover2.webp" 
+              class="thumb-img" 
+              onclick="showImage('iphone-main','iphone-video',this)" 
+              alt="View 2"
+              loading="lazy"
+              width="48"
+              height="48"
+              decoding="async"
+            >
+            <img 
+              src="images/iphone-cover3.webp" 
+              class="thumb-img" 
+              onclick="showImage('iphone-main','iphone-video',this)" 
+              alt="View 3"
+              loading="lazy"
+              width="48"
+              height="48"
+              decoding="async"
+            >
             <div class="video-thumb" onclick="showVideo('iphone-main','iphone-video',this)">
               <i data-lucide="play" class="w-4 h-4 ml-0.5"></i>
             </div>
@@ -403,35 +465,70 @@
   </div>
 
   <script>
-    // Initialize Lucide icons
-    lucide.createIcons();
+    // Initialize Lucide icons when DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initApp);
+    } else {
+      initApp();
+    }
+    
+    function initApp() {
+      lucide.createIcons();
+      initMobileMenu();
+      initCart();
+      initIntersectionObserver();
+    }
     
     // Mobile menu toggle
-    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-    const mobileMenu = document.getElementById('mobile-menu');
-    const mobileMenuPanel = document.getElementById('mobile-menu-panel');
-    const closeMobileMenu = document.getElementById('close-mobile-menu');
-    const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
-    
-    function openMobileMenu() {
-      mobileMenu.classList.remove('hidden');
-      setTimeout(() => mobileMenuPanel.classList.remove('translate-x-full'), 10);
+    function initMobileMenu() {
+      const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const mobileMenuPanel = document.getElementById('mobile-menu-panel');
+      const closeMobileMenu = document.getElementById('close-mobile-menu');
+      const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+      
+      function openMobileMenu() {
+        mobileMenu.classList.remove('hidden');
+        requestAnimationFrame(() => mobileMenuPanel.classList.remove('translate-x-full'));
+      }
+      
+      function closeMobileMenuFn() {
+        mobileMenuPanel.classList.add('translate-x-full');
+        setTimeout(() => mobileMenu.classList.add('hidden'), 300);
+      }
+      
+      mobileMenuBtn?.addEventListener('click', openMobileMenu);
+      closeMobileMenu?.addEventListener('click', closeMobileMenuFn);
+      mobileMenuOverlay?.addEventListener('click', closeMobileMenuFn);
     }
     
-    function closeMobileMenuFn() {
-      mobileMenuPanel.classList.add('translate-x-full');
-      setTimeout(() => mobileMenu.classList.add('hidden'), 300);
+    // Intersection Observer for Lazy Loading Heavy Elements
+    function initIntersectionObserver() {
+      const imageObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const img = entry.target;
+            img.src = img.dataset.src || img.src;
+            observer.unobserve(img);
+          }
+        });
+      }, {
+        rootMargin: '50px 0px',
+        threshold: 0.01
+      });
+      
+      // Observe all lazy images
+      document.querySelectorAll('img[loading="lazy"]').forEach(img => {
+        imageObserver.observe(img);
+      });
     }
-    
-    mobileMenuBtn?.addEventListener('click', openMobileMenu);
-    closeMobileMenu?.addEventListener('click', closeMobileMenuFn);
-    mobileMenuOverlay?.addEventListener('click', closeMobileMenuFn);
     
     // Image/Video toggle functions
     function showImage(imgId, videoId, thumb) {
       document.getElementById(imgId).classList.remove('hidden');
-      document.getElementById(videoId).classList.add('hidden');
-      document.getElementById(videoId).pause();
+      const video = document.getElementById(videoId);
+      video.classList.add('hidden');
+      video.pause();
       
       // Update active thumbnail
       document.querySelectorAll('.thumb-img').forEach(t => t.classList.remove('active'));
@@ -525,36 +622,38 @@
     }
     
     // Cart drawer controls
-    const cartLink = document.getElementById('cart-link');
-    const cartDrawer = document.getElementById('cart-drawer');
-    const cartPanel = document.getElementById('cart-panel');
-    const closeCartBtn = document.getElementById('close-cart');
-    const cartOverlay = document.getElementById('cart-overlay');
-    
-    function openCart() {
-      cartDrawer.classList.remove('hidden');
-      setTimeout(() => cartPanel.classList.remove('translate-x-full'), 10);
-      updateCartUI();
-    }
-    
-    function closeCart() {
-      cartPanel.classList.add('translate-x-full');
-      setTimeout(() => cartDrawer.classList.add('hidden'), 300);
-    }
-    
-    cartLink?.addEventListener('click', (e) => { e.preventDefault(); openCart(); });
-    closeCartBtn?.addEventListener('click', closeCart);
-    cartOverlay?.addEventListener('click', closeCart);
-    document.getElementById('clear-cart')?.addEventListener('click', clearCart);
-    
-    // Add to cart buttons - SIMPLE VERSION
-    document.querySelectorAll('.add-cart').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const name = btn.dataset.name;
-        const price = parseInt(btn.dataset.price);
-        addToCart(name, price);
+    function initCart() {
+      const cartLink = document.getElementById('cart-link');
+      const cartDrawer = document.getElementById('cart-drawer');
+      const cartPanel = document.getElementById('cart-panel');
+      const closeCartBtn = document.getElementById('close-cart');
+      const cartOverlay = document.getElementById('cart-overlay');
+      
+      window.openCart = function() {
+        cartDrawer.classList.remove('hidden');
+        requestAnimationFrame(() => cartPanel.classList.remove('translate-x-full'));
+        updateCartUI();
+      }
+      
+      window.closeCart = function() {
+        cartPanel.classList.add('translate-x-full');
+        setTimeout(() => cartDrawer.classList.add('hidden'), 300);
+      }
+      
+      cartLink?.addEventListener('click', (e) => { e.preventDefault(); window.openCart(); });
+      closeCartBtn?.addEventListener('click', window.closeCart);
+      cartOverlay?.addEventListener('click', window.closeCart);
+      document.getElementById('clear-cart')?.addEventListener('click', clearCart);
+      
+      // Add to cart buttons - SIMPLE VERSION
+      document.querySelectorAll('.add-cart').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const name = btn.dataset.name;
+          const price = parseInt(btn.dataset.price);
+          addToCart(name, price);
+        });
       });
-    });
+    }
     
     // Toast notification
     function showToast(productName) {
@@ -564,7 +663,7 @@
       setTimeout(() => toast.classList.add('translate-x-full'), 3000);
     }
     
-    // Initialize
+    // Initialize cart UI on load
     updateCartUI();
   </script>
 </body>
