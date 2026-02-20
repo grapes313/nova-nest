@@ -1,224 +1,571 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
-  <title>Wholesale - Nova Nest</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <title>Wholesale Deals - Nova Nest</title>
+  <meta name="description" content="Bulk discounts for resellers and businesses. Wholesale electronics, fashion, and home goods in Zambia." />
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet" />
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Outfit', 'sans-serif'],
+          },
+          colors: {
+            primary: '#1E3A8A',
+            secondary: '#3B82F6',
+            accent: '#F59E0B',
+            dark: '#0F172A',
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
   <style>
-    body { font-family: Arial, sans-serif; margin:0; padding:0; }
-    .header { background:#1E3A8A; color:white; padding:20px; text-align:center; }
-    .navbar ul { list-style:none; display:flex; gap:15px; padding:10px; background:#1E3A8A; margin:0; }
-    .navbar a { color:white; text-decoration:none; }
-    .product-grid { display:flex; flex-wrap:wrap; gap:20px; justify-content:center; margin:20px; }
-    .product { border:1px solid #ddd; padding:15px; width:240px; border-radius:8px; text-align:center; background:#fafafa; }
-    .product img, .product video { border-radius:6px; max-width:100%; max-height:200px; }
-    .thumbs { margin-top:10px; display:flex; justify-content:center; flex-wrap:wrap; }
-    .thumbs img { width:40px; height:40px; margin:4px; cursor:pointer; border-radius:4px; border:1px solid #ccc; }
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #f1f1f1; }
+    ::-webkit-scrollbar-thumb { background: #888; border-radius: 4px; }
+    
+    .product-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+    .product-card:hover { transform: translateY(-4px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); }
+    
     .video-thumb {
-      width: 40px;
-      height: 40px;
+      width: 48px;
+      height: 48px;
       display: flex;
       align-items: center;
       justify-content: center;
       background: #1E3A8A;
       color: white;
-      font-size: 20px;
       border-radius: 50%;
       cursor: pointer;
-      margin: 4px;
-      transition: background 0.3s ease;
+      transition: all 0.3s ease;
     }
-    .video-thumb:hover { background: #3749a3; }
-    .price { font-weight:bold; color:#1E3A8A; margin:8px 0; }
-    .desc { font-size:14px; color:#555; }
-    .add-cart { background:#1E3A8A; color:white; border:none; padding:8px 12px; border-radius:6px; cursor:pointer; }
-    .add-cart:hover { background:#3749a3; }
-    .hidden { display:none; }
-    footer { background:#1E3A8A; color:white; text-align:center; padding:15px; margin-top:30px; }
-    .cart-popup { position:fixed; top:50px; right:20px; background:white; border:1px solid #ccc; padding:15px; width:300px; }
-    .cart-total { font-weight:bold; margin-top:10px; }
+    .video-thumb:hover { background: #3749a3; transform: scale(1.1); }
+    
+    .thumb-img {
+      width: 48px;
+      height: 48px;
+      object-fit: cover;
+      border-radius: 8px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all 0.2s ease;
+    }
+    .thumb-img:hover { border-color: #1E3A8A; transform: scale(1.05); }
+    .thumb-img.active { border-color: #1E3A8A; }
   </style>
 </head>
-<body>
-  <!-- ✅ Global Navbar -->
-  <nav class="navbar">
-    <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="electronics.html">Electronics</a></li>
-      <li><a href="fashion.html">Fashion</a></li>
-      <li><a href="home-kitchen.html">Home & Kitchen</a></li>
-      <li><a href="wholesale.html">Wholesale</a></li>
-      <li><a href="contact.html">Contact</a></li>
-	  <li><a href="about.html">About Us</a></li>
-      <li><a href="#" id="cart-link">🛒 Cart (<span id="cart-count">0</span>)</a></li>
-    </ul>
+
+<body class="bg-gray-50 text-gray-900 antialiased">
+
+  <!-- Promo Banner -->
+  <div class="bg-gradient-to-r from-violet-600 to-indigo-600 text-white px-4 py-3 text-center text-sm font-semibold relative z-50">
+    <div class="max-w-7xl mx-auto flex items-center justify-center gap-2">
+      <i data-lucide="package" class="w-4 h-4"></i>
+      <span>🏷️ Bulk Discounts Available — Minimum Order 500 Units</span>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 gap-4">
+        
+        <!-- Logo -->
+        <a href="index.html" class="flex items-center gap-2 flex-shrink-0">
+          <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+            <i data-lucide="shopping-bag" class="w-5 h-5 text-white"></i>
+          </div>
+          <span class="font-display font-bold text-xl text-primary">Nova Nest</span>
+        </a>
+
+        <!-- Desktop Nav -->
+        <div class="hidden lg:flex items-center gap-8 text-sm font-medium text-gray-600">
+          <a href="index.html" class="hover:text-primary transition-colors">Home</a>
+          <a href="electronics.html" class="hover:text-primary transition-colors">Electronics</a>
+          <a href="fashion.html" class="hover:text-primary transition-colors">Fashion</a>
+          <a href="home-kitchen.html" class="hover:text-primary transition-colors">Home & Kitchen</a>
+          <a href="wholesale.html" class="text-primary font-semibold">Wholesale</a>
+          <a href="about.html" class="hover:text-primary transition-colors">About Us</a>
+          <a href="contact.html" class="hover:text-primary transition-colors">Contact</a>
+        </div>
+
+        <!-- Right Actions -->
+        <div class="flex items-center gap-4">
+          <button id="cart-link" class="relative p-2 hover:bg-gray-100 rounded-full transition-colors">
+            <i data-lucide="shopping-cart" class="w-6 h-6 text-gray-700"></i>
+            <span id="cart-count" class="absolute -top-1 -right-1 bg-accent text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center transform scale-0 transition-transform duration-200">0</span>
+          </button>
+          
+          <!-- Mobile Menu Button -->
+          <button class="lg:hidden p-2 hover:bg-gray-100 rounded-full" id="mobile-menu-btn">
+            <i data-lucide="menu" class="w-6 h-6 text-gray-700"></i>
+          </button>
+        </div>
+      </div>
+    </div>
   </nav>
 
-  <header class="header">
-    <h1>Wholesale Deals</h1>
-    <p>Bulk discounts for resellers and businesses</p>
-  </header>
+  <!-- Mobile Menu Overlay -->
+  <div id="mobile-menu" class="fixed inset-0 z-50 hidden">
+    <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" id="mobile-menu-overlay"></div>
+    <div class="absolute right-0 top-0 h-full w-80 bg-white shadow-2xl transform transition-transform duration-300 translate-x-full" id="mobile-menu-panel">
+      <div class="p-6">
+        <div class="flex items-center justify-between mb-8">
+          <span class="font-display font-bold text-xl">Menu</span>
+          <button id="close-mobile-menu" class="p-2 hover:bg-gray-100 rounded-full">
+            <i data-lucide="x" class="w-6 h-6"></i>
+          </button>
+        </div>
+        <nav class="flex flex-col gap-4">
+          <a href="index.html" class="text-lg font-medium text-gray-700">Home</a>
+          <a href="electronics.html" class="text-lg font-medium text-gray-700">Electronics</a>
+          <a href="fashion.html" class="text-lg font-medium text-gray-700">Fashion</a>
+          <a href="home-kitchen.html" class="text-lg font-medium text-gray-700">Home & Kitchen</a>
+          <a href="wholesale.html" class="text-lg font-medium text-primary">Wholesale</a>
+          <hr class="my-4">
+          <a href="about.html" class="text-lg font-medium text-gray-700">About Us</a>
+          <a href="contact.html" class="text-lg font-medium text-gray-700">Contact</a>
+        </nav>
+      </div>
+    </div>
+  </div>
 
-  <main>
-    <section class="product-grid">
-      <!-- 📦 iPhone Covers Wholesale Product -->
-      <div class="product" id="wholesale-iphone-covers">
-        <!-- Main display: start with image -->
-        <div class="main-display">
-          <img id="iphone-main" src="images/iphone-cover1.webp" alt="iPhone Covers Wholesale" width="220">
-          <video id="iphone-video" width="220" controls muted class="hidden">
+  <!-- Hero Section -->
+  <section class="relative bg-gradient-to-br from-primary via-blue-800 to-blue-900 text-white overflow-hidden">
+    <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.05\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 relative">
+      <div class="max-w-2xl">
+        <span class="inline-block px-3 py-1 bg-accent/20 text-accent text-sm font-semibold rounded-full mb-4 backdrop-blur-sm">
+          B2B Marketplace
+        </span>
+        <h1 class="font-display text-4xl md:text-6xl font-bold mb-6 leading-tight">
+          Wholesale <span class="text-accent">Deals</span>
+        </h1>
+        <p class="text-lg md:text-xl text-blue-100 mb-8 leading-relaxed">
+          Bulk discounts for resellers and businesses. Minimum order quantities with competitive pricing across electronics, fashion, and home goods.
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <a href="#products" class="inline-flex items-center gap-2 bg-accent hover:bg-amber-500 text-white px-8 py-4 rounded-full font-semibold transition-all transform hover:scale-105 shadow-lg">
+            Browse Products
+            <i data-lucide="arrow-down" class="w-5 h-5"></i>
+          </a>
+          <a href="contact.html" class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white px-8 py-4 rounded-full font-semibold backdrop-blur-sm transition-all">
+            Contact Sales
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trust Badges -->
+  <section class="bg-white border-b border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center text-sm">
+        <div class="flex items-center justify-center gap-2 text-gray-600">
+          <i data-lucide="package" class="w-5 h-5 text-primary"></i>
+          <span class="font-medium">MOQ 500 Units</span>
+        </div>
+        <div class="flex items-center justify-center gap-2 text-gray-600">
+          <i data-lucide="percent" class="w-5 h-5 text-primary"></i>
+          <span class="font-medium">Up to 40% Off</span>
+        </div>
+        <div class="flex items-center justify-center gap-2 text-gray-600">
+          <i data-lucide="truck" class="w-5 h-5 text-primary"></i>
+          <span class="font-medium">Bulk Shipping</span>
+        </div>
+        <div class="flex items-center justify-center gap-2 text-gray-600">
+          <i data-lucide="shield-check" class="w-5 h-5 text-primary"></i>
+          <span class="font-medium">Verified Suppliers</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Products Section -->
+  <main id="products" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    
+    <!-- Section Header -->
+    <div class="flex items-center justify-between mb-8">
+      <div>
+        <h2 class="font-display text-3xl font-bold text-gray-900">Wholesale Products</h2>
+        <p class="text-gray-500 mt-1">Bulk orders for resellers and businesses</p>
+      </div>
+      <div class="hidden sm:flex items-center gap-2 text-sm text-gray-500">
+        <i data-lucide="info" class="w-4 h-4"></i>
+        <span>Prices shown per box/unit</span>
+      </div>
+    </div>
+
+    <!-- Product Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      
+      <!-- iPhone Covers Wholesale -->
+      <article class="product-card bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden group" id="wholesale-iphone-covers">
+        <!-- Main Display -->
+        <div class="relative aspect-square bg-gray-100 overflow-hidden">
+          <img id="iphone-main" src="images/iphone-cover1.webp" alt="iPhone Covers Wholesale" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+          <video id="iphone-video" class="w-full h-full object-cover hidden" controls muted>
             <source src="videos/iphone-covers.mp4" type="video/mp4">
             <source src="videos/iphone-covers.webm" type="video/webm">
-            Your browser does not support the video tag.
           </video>
+          
+          <!-- Badges -->
+          <div class="absolute top-3 left-3 flex flex-col gap-2">
+            <span class="bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full">HOT</span>
+            <span class="bg-amber-500 text-white text-xs font-bold px-3 py-1 rounded-full">LIMITED</span>
+          </div>
         </div>
 
         <!-- Thumbnails -->
-        <div class="thumbs">
-          <img src="images/iphone-cover1.webp" alt="iPhone Cover" onclick="showImage('iphone-main','iphone-video',this.src)">
-          <img src="images/iphone-cover2.webp" alt="iPhone Cover" onclick="showImage('iphone-main','iphone-video',this.src)">
-          <img src="images/iphone-cover3.webp" alt="iPhone Cover" onclick="showImage('iphone-main','iphone-video',this.src)">
-          <!-- ✅ Styled Play Button Thumbnail -->
-          <div class="video-thumb" onclick="showVideo('iphone-main','iphone-video')">▶</div>
+        <div class="p-4 border-b border-gray-100">
+          <div class="flex items-center justify-center gap-3">
+            <img src="images/iphone-cover1.webp" class="thumb-img active" onclick="showImage('iphone-main','iphone-video',this)" alt="View 1">
+            <img src="images/iphone-cover2.webp" class="thumb-img" onclick="showImage('iphone-main','iphone-video',this)" alt="View 2">
+            <img src="images/iphone-cover3.webp" class="thumb-img" onclick="showImage('iphone-main','iphone-video',this)" alt="View 3">
+            <div class="video-thumb" onclick="showVideo('iphone-main','iphone-video',this)">
+              <i data-lucide="play" class="w-4 h-4 ml-0.5"></i>
+            </div>
+          </div>
         </div>
 
-        <!-- Product details -->
-        <h3>iPhone Covers (Mix Models)</h3>
-        <p class="price" data-value="2900">ZMK 2900 / Box (500 pcs)</p>
-        <p class="desc">Wholesale mixed models — one box contains about 500 pieces. Welcome to order! [Limited Stock!]</p>
-        <button class="add-cart">Add to Cart</button>
-      </div>
-    </section>
+        <!-- Content -->
+        <div class="p-5">
+          <div class="flex items-start justify-between gap-2 mb-2">
+            <h3 class="font-semibold text-lg text-gray-900">iPhone Covers (Mix Models)</h3>
+            <span class="flex items-center gap-1 text-sm font-medium text-amber-500">
+              <i data-lucide="star" class="w-4 h-4 fill-current"></i> 4.9
+            </span>
+          </div>
+          
+          <p class="text-gray-500 text-sm mb-4 line-clamp-2">Wholesale mixed models — one box contains approximately 500 pieces. Perfect for resellers and phone shops.</p>
+          
+          <!-- Price -->
+          <div class="mb-4">
+            <div class="flex items-baseline gap-2">
+              <span class="text-2xl font-bold text-gray-900">ZMW 2,900</span>
+              <span class="text-sm text-gray-400">/ box</span>
+            </div>
+            <p class="text-xs text-gray-500 mt-1">≈ $145.87 • 500 pieces per box</p>
+          </div>
+
+          <!-- Features -->
+          <div class="flex flex-wrap gap-2 mb-4">
+            <span class="text-xs bg-blue-50 text-blue-700 px-2 py-1 rounded">Mixed Models</span>
+            <span class="text-xs bg-green-50 text-green-700 px-2 py-1 rounded">Retail Ready</span>
+          </div>
+
+          <!-- Add to Cart -->
+          <button class="add-cart w-full bg-primary hover:bg-blue-800 text-white py-3 rounded-xl font-semibold transition-colors shadow-lg shadow-primary/30 flex items-center justify-center gap-2" 
+                  data-name="iPhone Covers Wholesale (500pcs)" 
+                  data-price="2900">
+            <i data-lucide="plus" class="w-5 h-5"></i>
+            Add to Cart
+          </button>
+        </div>
+      </article>
+
+      <!-- Add more wholesale products here following the same pattern -->
+
+    </div>
+
+    <!-- Contact CTA -->
+    <div class="mt-12 bg-gradient-to-r from-gray-900 to-gray-800 rounded-2xl p-8 text-center text-white">
+      <h3 class="font-display text-2xl font-bold mb-2">Need Custom Quantities?</h3>
+      <p class="text-gray-300 mb-6">Contact our wholesale team for special pricing on larger orders</p>
+      <a href="contact.html" class="inline-flex items-center gap-2 bg-accent hover:bg-amber-500 text-white px-6 py-3 rounded-full font-semibold transition-colors">
+        <i data-lucide="message-circle" class="w-5 h-5"></i>
+        Get Quote
+      </a>
+    </div>
+
   </main>
 
-  <footer class="footer">
-    <p>&copy; 2026 Nova Nest</p>
+  <!-- Footer -->
+  <footer class="bg-dark text-gray-300 pt-16 pb-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+        <div>
+          <div class="flex items-center gap-2 mb-4">
+            <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+              <i data-lucide="shopping-bag" class="w-5 h-5 text-white"></i>
+            </div>
+            <span class="font-display font-bold text-xl text-white">Nova Nest</span>
+          </div>
+          <p class="text-sm leading-relaxed mb-4">Zambia's trusted marketplace connecting buyers with quality sellers. Fast delivery, secure payments.</p>
+        </div>
+        
+        <div>
+          <h4 class="text-white font-semibold mb-4">Quick Links</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="electronics.html" class="hover:text-white transition-colors">Electronics</a></li>
+            <li><a href="fashion.html" class="hover:text-white transition-colors">Fashion</a></li>
+            <li><a href="home-kitchen.html" class="hover:text-white transition-colors">Home & Kitchen</a></li>
+            <li><a href="wholesale.html" class="hover:text-white transition-colors">Wholesale</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="text-white font-semibold mb-4">Customer Service</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="#" class="hover:text-white transition-colors">Track Order</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Returns & Refunds</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">FAQ</a></li>
+            <li><a href="contact.html" class="hover:text-white transition-colors">Contact Us</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="text-white font-semibold mb-4">Contact</h4>
+          <ul class="space-y-3 text-sm">
+            <li class="flex items-center gap-2">
+              <i data-lucide="phone" class="w-4 h-4 text-primary"></i>
+              <span>WhatsApp: +260 966172411</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <i data-lucide="mail" class="w-4 h-4 text-primary"></i>
+              <span>support@novanest.zm</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <i data-lucide="map-pin" class="w-4 h-4 text-primary"></i>
+              <span>Lusaka, Zambia</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-400">
+        <p>&copy; 2026 Nova Nest. All rights reserved.</p>
+        <div class="flex gap-6">
+          <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+          <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
+        </div>
+      </div>
+    </div>
   </footer>
 
-  <!-- ✅ Cart Popup -->
-  <div id="cart-popup" class="cart-popup hidden">
-    <h2>Your Cart</h2>
-    <ul id="cart-items"></ul>
-    <button id="checkout-btn">Proceed to Checkout</button>
-    <button id="clear-cart">Clear Cart</button>
-    <button id="close-cart">Close</button>
+  <!-- Cart Drawer (Slide-out) -->
+  <div id="cart-drawer" class="fixed inset-0 z-50 hidden">
+    <div class="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity" id="cart-overlay"></div>
+    <div class="absolute right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl transform transition-transform duration-300 translate-x-full flex flex-col" id="cart-panel">
+      <div class="p-6 border-b border-gray-100 flex items-center justify-between">
+        <h2 class="font-display text-xl font-bold">Your Cart</h2>
+        <button id="close-cart" class="p-2 hover:bg-gray-100 rounded-full transition-colors">
+          <i data-lucide="x" class="w-6 h-6"></i>
+        </button>
+      </div>
+      
+      <div class="flex-1 overflow-y-auto p-6" id="cart-items-container">
+        <div class="text-center text-gray-500 py-12">
+          <i data-lucide="shopping-cart" class="w-16 h-16 mx-auto mb-4 text-gray-300"></i>
+          <p>Your cart is empty</p>
+          <button onclick="closeCart()" class="mt-4 text-primary font-medium hover:underline">Continue Shopping</button>
+        </div>
+      </div>
+      
+      <div class="border-t border-gray-100 p-6 space-y-4 bg-gray-50">
+        <div class="flex justify-between text-lg font-bold">
+          <span>Total</span>
+          <span id="cart-total">ZMW 0</span>
+        </div>
+        <button onclick="window.location.href='checkout.html'" class="w-full bg-primary hover:bg-blue-800 text-white py-4 rounded-xl font-semibold shadow-lg shadow-primary/30 transition-all transform active:scale-95">
+          Proceed to Checkout
+        </button>
+        <button id="clear-cart" class="w-full bg-white border border-gray-300 text-gray-700 py-3 rounded-xl font-medium hover:bg-gray-50 transition-colors">
+          Clear Cart
+        </button>
+      </div>
+    </div>
   </div>
 
-  <div id="cart-message" class="hidden" style="position:fixed; top:20px; right:20px; background:#22c55e; color:white; padding:10px 15px; border-radius:6px;">
-    Item added to cart!
+  <!-- Toast Notification -->
+  <div id="toast" class="fixed top-24 right-4 bg-green-500 text-white px-6 py-4 rounded-xl shadow-2xl transform translate-x-full transition-transform duration-300 z-50 flex items-center gap-3">
+    <i data-lucide="check-circle" class="w-6 h-6"></i>
+    <div>
+      <p class="font-semibold">Added to cart!</p>
+      <p class="text-sm text-green-100" id="toast-message">Product Name</p>
+    </div>
   </div>
 
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
-  const cartCountSpan   = document.getElementById("cart-count");
-  const cartLink        = document.getElementById("cart-link");
-  const cartPopup       = document.getElementById("cart-popup");
-  const cartItemsList   = document.getElementById("cart-items");
-  const closeCartButton = document.getElementById("close-cart");
-  const checkoutBtn     = document.getElementById("checkout-btn");
-  const clearCartButton = document.getElementById("clear-cart");
-  const cartMessage     = document.getElementById("cart-message");
-
-  function show(el) { el.classList.remove("hidden"); }
-  function hide(el) { el.classList.add("hidden"); }
-
-  function updateCartCount() {
-    cartCountSpan.textContent = cartItems.length;
-  }
-
-  function saveCart() {
-    localStorage.setItem("cartItems", JSON.stringify(cartItems));
-    updateCartCount();
-  }
-
-  function renderCart() {
-    cartItemsList.innerHTML = "";
-    cartItems.forEach((item, i) => {
-      const li = document.createElement("li");
-
-      // ✅ Show ZMW + USD
-      const usdPrice = (item.price * 0.0503).toFixed(2);
-      li.textContent = `${item.name} - ZMW ${item.price} (≈ $${usdPrice})`;
-
-      const removeBtn = document.createElement("button");
-      removeBtn.textContent = "Remove";
-      removeBtn.style.marginLeft = "10px";
-      removeBtn.addEventListener("click", () => {
-        cartItems.splice(i, 1);
-        saveCart();
-        renderCart();
+  <script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+    
+    // Mobile menu toggle
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileMenuPanel = document.getElementById('mobile-menu-panel');
+    const closeMobileMenu = document.getElementById('close-mobile-menu');
+    const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+    
+    function openMobileMenu() {
+      mobileMenu.classList.remove('hidden');
+      setTimeout(() => mobileMenuPanel.classList.remove('translate-x-full'), 10);
+    }
+    
+    function closeMobileMenuFn() {
+      mobileMenuPanel.classList.add('translate-x-full');
+      setTimeout(() => mobileMenu.classList.add('hidden'), 300);
+    }
+    
+    mobileMenuBtn?.addEventListener('click', openMobileMenu);
+    closeMobileMenu?.addEventListener('click', closeMobileMenuFn);
+    mobileMenuOverlay?.addEventListener('click', closeMobileMenuFn);
+    
+    // Image/Video toggle functions
+    function showImage(imgId, videoId, thumb) {
+      document.getElementById(imgId).classList.remove('hidden');
+      document.getElementById(videoId).classList.add('hidden');
+      document.getElementById(videoId).pause();
+      
+      // Update active thumbnail
+      document.querySelectorAll('.thumb-img').forEach(t => t.classList.remove('active'));
+      thumb.classList.add('active');
+    }
+    
+    function showVideo(imgId, videoId, thumb) {
+      document.getElementById(imgId).classList.add('hidden');
+      const video = document.getElementById(videoId);
+      video.classList.remove('hidden');
+      video.play();
+      
+      // Update active thumbnail
+      document.querySelectorAll('.thumb-img').forEach(t => t.classList.remove('active'));
+      if(thumb) thumb.classList.add('active');
+    }
+    
+    // ==========================================
+    // CART FUNCTIONALITY - WITH ADJUSTABLE USD RATE
+    // ==========================================
+    
+    // 🔧 ADJUST THIS RATE AS NEEDED (change this value to adjust USD display)
+    const USD_RATE = 0.0527;
+    
+    let cart = JSON.parse(localStorage.getItem('novanest_cart')) || [];
+    
+    function updateCartUI() {
+      const count = cart.length;
+      const countBadge = document.getElementById('cart-count');
+      countBadge.textContent = count;
+      countBadge.classList.toggle('scale-0', count === 0);
+      
+      // Update cart drawer - TEXT ONLY WITH USD CONVERSION
+      const container = document.getElementById('cart-items-container');
+      const totalEl = document.getElementById('cart-total');
+      
+      if (cart.length === 0) {
+        container.innerHTML = `
+          <div class="text-center text-gray-500 py-12">
+            <i data-lucide="shopping-cart" class="w-16 h-16 mx-auto mb-4 text-gray-300"></i>
+            <p>Your cart is empty</p>
+            <button onclick="closeCart()" class="mt-4 text-primary font-medium hover:underline">Continue Shopping</button>
+          </div>
+        `;
+        totalEl.textContent = 'ZMW 0';
+      } else {
+        let total = 0;
+        container.innerHTML = cart.map((item, idx) => {
+          total += item.price;
+          const itemUsd = (item.price * USD_RATE).toFixed(2);
+          return `
+            <div class="flex items-center justify-between mb-4 bg-gray-50 p-4 rounded-xl">
+              <div class="flex-1">
+                <h4 class="font-semibold text-gray-900">${item.name}</h4>
+                <p class="text-primary font-bold mt-1">ZMW ${item.price.toLocaleString()}</p>
+                <p class="text-xs text-gray-500">≈ $${itemUsd}</p>
+              </div>
+              <button onclick="removeFromCart(${idx})" class="text-red-500 text-sm hover:underline ml-4">Remove</button>
+            </div>
+          `;
+        }).join('');
+        
+        const totalUsd = (total * USD_RATE).toFixed(2);
+        totalEl.innerHTML = `ZMW ${total.toLocaleString()} <span class="text-sm text-gray-500 font-normal block text-right">(≈ $${totalUsd})</span>`;
+      }
+      lucide.createIcons();
+    }
+    
+    // ADD TO CART - SIMPLE, NO IMAGES
+    function addToCart(name, price) {
+      cart.push({ 
+        name, 
+        price,
+        id: Date.now() 
       });
-
-      li.appendChild(removeBtn);
-      cartItemsList.appendChild(li);
+      localStorage.setItem('novanest_cart', JSON.stringify(cart));
+      updateCartUI();
+      showToast(name);
+    }
+    
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      localStorage.setItem('novanest_cart', JSON.stringify(cart));
+      updateCartUI();
+    }
+    
+    function clearCart() {
+      cart = [];
+      localStorage.setItem('novanest_cart', JSON.stringify(cart));
+      updateCartUI();
+    }
+    
+    // Cart drawer controls
+    const cartLink = document.getElementById('cart-link');
+    const cartDrawer = document.getElementById('cart-drawer');
+    const cartPanel = document.getElementById('cart-panel');
+    const closeCartBtn = document.getElementById('close-cart');
+    const cartOverlay = document.getElementById('cart-overlay');
+    
+    function openCart() {
+      cartDrawer.classList.remove('hidden');
+      setTimeout(() => cartPanel.classList.remove('translate-x-full'), 10);
+      updateCartUI();
+    }
+    
+    function closeCart() {
+      cartPanel.classList.add('translate-x-full');
+      setTimeout(() => cartDrawer.classList.add('hidden'), 300);
+    }
+    
+    cartLink?.addEventListener('click', (e) => { e.preventDefault(); openCart(); });
+    closeCartBtn?.addEventListener('click', closeCart);
+    cartOverlay?.addEventListener('click', closeCart);
+    document.getElementById('clear-cart')?.addEventListener('click', clearCart);
+    
+    // Add to cart buttons - SIMPLE VERSION
+    document.querySelectorAll('.add-cart').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const name = btn.dataset.name;
+        const price = parseInt(btn.dataset.price);
+        addToCart(name, price);
+      });
     });
-
-    if (cartItems.length > 0) {
-      const total = cartItems.reduce((sum, i) => sum + i.price, 0);
-      const usdTotal = (total * 0.0503).toFixed(2);
-
-      const totalElement = document.createElement("p");
-      totalElement.className = "cart-total";
-      totalElement.textContent = `Total: ZMW ${total} (≈ $${usdTotal})`;
-      cartItemsList.appendChild(totalElement);
+    
+    // Toast notification
+    function showToast(productName) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toast-message').textContent = productName;
+      toast.classList.remove('translate-x-full');
+      setTimeout(() => toast.classList.add('translate-x-full'), 3000);
     }
-
-    updateCartCount();
-  }
-
-  // --- Update product price display ---
-  function updateProductPrice(priceElement, price) {
-    if (!priceElement) return;
-    priceElement.setAttribute("data-value", price); // always store raw ZMW
-    const usdPrice = (price * 0.0503).toFixed(2);
-    priceElement.textContent = `ZMW ${price} (≈ $${usdPrice})`;
-  }
-
-  // Add to Cart
-  document.addEventListener("click", (e) => {
-    const btn = e.target.closest(".add-cart");
-    if (!btn) return;
-    const product = btn.closest(".product");
-    const productName = product.querySelector("h3")?.innerText || "Item";
-    const productPriceElement = product.querySelector(".price");
-    const productPrice = parseFloat(productPriceElement?.getAttribute("data-value")) || 0;
-
-    cartItems.push({ name: productName, price: productPrice });
-    saveCart();
-    renderCart();
-
-    show(cartMessage);
-    setTimeout(() => { hide(cartMessage); }, 2000);
-  });
-
-  // Cart controls
-  cartLink.addEventListener("click", e => { e.preventDefault(); show(cartPopup); });
-  closeCartButton.addEventListener("click", () => hide(cartPopup));
-  checkoutBtn.addEventListener("click", () => window.location.href = "checkout.html");
-  clearCartButton.addEventListener("click", () => {
-    cartItems = [];
-    saveCart();
-    renderCart();
-    alert("Cart has been cleared!");
-  });
-
-  // Initialize cart on page load
-  renderCart();
-  updateCartCount();
-
-  // --- Initialize product prices on page load ---
-  document.querySelectorAll(".product .price").forEach(priceEl => {
-    const rawPrice = parseFloat(priceEl.getAttribute("data-value")) 
-                     || parseFloat(priceEl.textContent.replace(/[^\d.]/g, ""));
-    if (rawPrice > 0) {
-      updateProductPrice(priceEl, rawPrice);
-    }
-  });
-});
-
-
-</script>
+    
+    // Initialize
+    updateCartUI();
+  </script>
 </body>
 </html>

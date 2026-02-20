@@ -1,43 +1,424 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
-  <title>Contact - Nova Nest</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <title>Contact Us - Nova Nest</title>
+  <meta name="description" content="Contact Nova Nest for support, inquiries, or wholesale orders. Reach us via WhatsApp, Facebook, Instagram, or TikTok." />
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet" />
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Outfit', 'sans-serif'],
+          },
+          colors: {
+            primary: '#1E3A8A',
+            secondary: '#3B82F6',
+            accent: '#F59E0B',
+            dark: '#0F172A',
+            whatsapp: '#25D366',
+            facebook: '#1877F2',
+            instagram: '#E4405F',
+            tiktok: '#000000',
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
 </head>
-<body>
-  <header class="header">
-  <nav class="navbar">
-  <ul>
-    <li><a href="index.html">Home</a></li>
-    <li><a href="electronics.html">Electronics</a></li>
-    <li><a href="fashion.html">Fashion</a></li>
-    <li><a href="home-kitchen.html">Home & Kitchen</a></li>
-    <li><a href="wholesale.html">Wholesale</a></li>
-    <li><a href="contact.html">Contact</a></li>
-	<li><a href="about.html">About Us</a></li>
-    <li><a href="cart.html">🛒 Cart</a></li>
-  </ul>
-</nav>
-    <h1>Contact Us</h1>
-  </header>
 
-  <main>
-    <div class="contact-container">
-      <h2>Customer Service</h2>
-      <p>Need help with your order? Reach us on:</p>
-      <div class="customer-service">
-        <a href="https://wa.me/260966172411" target="_blank" class="btn whatsapp">WhatsApp</a>
-        <a href="https://facebook.com/dalisani2" target="_blank" class="btn facebook">Facebook</a>
-        <a href="https://instagram.com/allnova_nest" target="_blank" class="btn instagram">Instagram</a>
-        <a href="https://tiktok.com/@allnova_nest" target="_blank" class="btn tiktok">TikTok</a>
+<body class="bg-gray-50 text-gray-900 antialiased">
+
+  <!-- Navigation -->
+  <nav class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 gap-4">
+        
+        <!-- Logo -->
+        <a href="index.html" class="flex items-center gap-2 flex-shrink-0">
+          <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+            <i data-lucide="shopping-bag" class="w-5 h-5 text-white"></i>
+          </div>
+          <span class="font-display font-bold text-xl text-primary">Nova Nest</span>
+        </a>
+
+        <!-- Desktop Nav -->
+        <div class="hidden lg:flex items-center gap-8 text-sm font-medium text-gray-600">
+          <a href="index.html" class="hover:text-primary transition-colors">Home</a>
+          <a href="electronics.html" class="hover:text-primary transition-colors">Electronics</a>
+          <a href="fashion.html" class="hover:text-primary transition-colors">Fashion</a>
+          <a href="home-kitchen.html" class="hover:text-primary transition-colors">Home & Kitchen</a>
+          <a href="wholesale.html" class="hover:text-primary transition-colors text-accent">Wholesale</a>
+          <a href="about.html" class="hover:text-primary transition-colors">About Us</a>
+          <a href="contact.html" class="text-primary font-semibold">Contact</a>
+        </div>
+
+        <!-- Right Actions -->
+        <div class="flex items-center gap-4">
+          <button id="cart-link" class="relative p-2 hover:bg-gray-100 rounded-full transition-colors">
+            <i data-lucide="shopping-cart" class="w-6 h-6 text-gray-700"></i>
+            <span id="cart-count" class="absolute -top-1 -right-1 bg-accent text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center transform scale-0 transition-transform duration-200">0</span>
+          </button>
+          
+          <!-- Mobile Menu Button -->
+          <button class="lg:hidden p-2 hover:bg-gray-100 rounded-full" id="mobile-menu-btn">
+            <i data-lucide="menu" class="w-6 h-6 text-gray-700"></i>
+          </button>
+        </div>
       </div>
     </div>
+  </nav>
+
+  <!-- Mobile Menu Overlay -->
+  <div id="mobile-menu" class="fixed inset-0 z-50 hidden">
+    <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" id="mobile-menu-overlay"></div>
+    <div class="absolute right-0 top-0 h-full w-80 bg-white shadow-2xl transform transition-transform duration-300 translate-x-full" id="mobile-menu-panel">
+      <div class="p-6">
+        <div class="flex items-center justify-between mb-8">
+          <span class="font-display font-bold text-xl">Menu</span>
+          <button id="close-mobile-menu" class="p-2 hover:bg-gray-100 rounded-full">
+            <i data-lucide="x" class="w-6 h-6"></i>
+          </button>
+        </div>
+        <nav class="flex flex-col gap-4">
+          <a href="index.html" class="text-lg font-medium text-gray-700">Home</a>
+          <a href="electronics.html" class="text-lg font-medium text-gray-700">Electronics</a>
+          <a href="fashion.html" class="text-lg font-medium text-gray-700">Fashion</a>
+          <a href="home-kitchen.html" class="text-lg font-medium text-gray-700">Home & Kitchen</a>
+          <a href="wholesale.html" class="text-lg font-medium text-accent">Wholesale</a>
+          <hr class="my-4">
+          <a href="about.html" class="text-lg font-medium text-gray-700">About Us</a>
+          <a href="contact.html" class="text-lg font-medium text-primary">Contact</a>
+        </nav>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="relative bg-gradient-to-br from-primary via-blue-800 to-indigo-900 text-white overflow-hidden">
+    <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.05\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 relative text-center">
+      <h1 class="font-display text-4xl md:text-6xl font-bold mb-6">Contact Us</h1>
+      <p class="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto">
+        We're here to help. Reach out through any of our channels below.
+      </p>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    
+    <!-- Customer Service Card -->
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 md:p-12 text-center">
+      <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+        <i data-lucide="headphones" class="w-8 h-8 text-primary"></i>
+      </div>
+      
+      <h2 class="font-display text-2xl md:text-3xl font-bold text-gray-900 mb-4">Customer Service</h2>
+      <p class="text-gray-600 text-lg mb-8 max-w-xl mx-auto">
+        Need help with your order? Have questions about a product? Our team is ready to assist you.
+      </p>
+
+      <!-- Contact Buttons -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <!-- WhatsApp -->
+        <a href="https://wa.me/260966172411" target="_blank" 
+           class="group flex flex-col items-center gap-3 p-6 rounded-xl bg-green-50 hover:bg-green-100 transition-colors border border-green-200">
+          <div class="w-14 h-14 bg-whatsapp rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+            <i data-lucide="message-circle" class="w-7 h-7 text-white"></i>
+          </div>
+          <span class="font-semibold text-gray-900">WhatsApp</span>
+          <span class="text-xs text-gray-500">+260 966172411</span>
+        </a>
+
+        <!-- Facebook -->
+        <a href="https://facebook.com/dalisani2" target="_blank" 
+           class="group flex flex-col items-center gap-3 p-6 rounded-xl bg-blue-50 hover:bg-blue-100 transition-colors border border-blue-200">
+          <div class="w-14 h-14 bg-facebook rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+            <i data-lucide="facebook" class="w-7 h-7 text-white"></i>
+          </div>
+          <span class="font-semibold text-gray-900">Facebook</span>
+          <span class="text-xs text-gray-500">@dalisani2</span>
+        </a>
+
+        <!-- Instagram -->
+        <a href="https://instagram.com/allnova_nest" target="_blank" 
+           class="group flex flex-col items-center gap-3 p-6 rounded-xl bg-pink-50 hover:bg-pink-100 transition-colors border border-pink-200">
+          <div class="w-14 h-14 bg-gradient-to-br from-purple-500 via-pink-500 to-orange-400 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+            <i data-lucide="instagram" class="w-7 h-7 text-white"></i>
+          </div>
+          <span class="font-semibold text-gray-900">Instagram</span>
+          <span class="text-xs text-gray-500">@allnova_nest</span>
+        </a>
+
+        <!-- TikTok -->
+        <a href="https://tiktok.com/@allnova_nest" target="_blank" 
+           class="group flex flex-col items-center gap-3 p-6 rounded-xl bg-gray-100 hover:bg-gray-200 transition-colors border border-gray-300">
+          <div class="w-14 h-14 bg-tiktok rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+            <svg class="w-7 h-7 text-white" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+            </svg>
+          </div>
+          <span class="font-semibold text-gray-900">TikTok</span>
+          <span class="text-xs text-gray-500">@allnova_nest</span>
+        </a>
+      </div>
+
+      <!-- Additional Info -->
+      <div class="mt-12 pt-8 border-t border-gray-100">
+        <div class="flex flex-col md:flex-row items-center justify-center gap-6 text-sm text-gray-600">
+          <div class="flex items-center gap-2">
+            <i data-lucide="mail" class="w-5 h-5 text-primary"></i>
+            <span>allnovanest@outlook.com</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <i data-lucide="map-pin" class="w-5 h-5 text-primary"></i>
+            <span>Lusaka, Zambia</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <i data-lucide="clock" class="w-5 h-5 text-primary"></i>
+            <span>Mon-Sat: 8AM - 6PM</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Help -->
+    <div class="mt-8 grid md:grid-cols-2 gap-4">
+      <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 text-center">
+        <i data-lucide="package" class="w-8 h-8 text-primary mx-auto mb-3"></i>
+        <h3 class="font-semibold text-gray-900 mb-1">Track Order</h3>
+        <p class="text-sm text-gray-500">Check your order status via WhatsApp</p>
+      </div>
+      <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 text-center">
+        <i data-lucide="help-circle" class="w-8 h-8 text-primary mx-auto mb-3"></i>
+        <h3 class="font-semibold text-gray-900 mb-1">FAQ</h3>
+        <p class="text-sm text-gray-500">Common questions answered</p>
+      </div>
+    </div>
+
   </main>
 
-  <footer class="footer">
-    <p>&copy; 2026 Nova Nest</p>
+  <!-- Footer -->
+  <footer class="bg-dark text-gray-300 pt-16 pb-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+        <div>
+          <div class="flex items-center gap-2 mb-4">
+            <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+              <i data-lucide="shopping-bag" class="w-5 h-5 text-white"></i>
+            </div>
+            <span class="font-display font-bold text-xl text-white">Nova Nest</span>
+          </div>
+          <p class="text-sm leading-relaxed mb-4">Zambia's trusted marketplace connecting buyers with quality sellers. Fast delivery, secure payments.</p>
+        </div>
+        
+        <div>
+          <h4 class="text-white font-semibold mb-4">Quick Links</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="electronics.html" class="hover:text-white transition-colors">Electronics</a></li>
+            <li><a href="fashion.html" class="hover:text-white transition-colors">Fashion</a></li>
+            <li><a href="home-kitchen.html" class="hover:text-white transition-colors">Home & Kitchen</a></li>
+            <li><a href="wholesale.html" class="hover:text-white transition-colors">Wholesale</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="text-white font-semibold mb-4">Customer Service</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="#" class="hover:text-white transition-colors">Track Order</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">FAQ</a></li>
+            <li><a href="contact.html" class="hover:text-white transition-colors">Contact Us</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="text-white font-semibold mb-4">Contact</h4>
+          <ul class="space-y-3 text-sm">
+            <li class="flex items-center gap-2">
+              <i data-lucide="phone" class="w-4 h-4 text-primary"></i>
+              <span>WhatsApp: +260 966172411</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <i data-lucide="mail" class="w-4 h-4 text-primary"></i>
+              <span>allnovanest@outlook.com</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <i data-lucide="map-pin" class="w-4 h-4 text-primary"></i>
+              <span>Lusaka, Zambia</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-400">
+        <p>&copy; 2026 Nova Nest. All rights reserved.</p>
+        <div class="flex gap-6">
+          <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+          <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
+        </div>
+      </div>
+    </div>
   </footer>
+
+  <!-- Cart Drawer (Slide-out) -->
+  <div id="cart-drawer" class="fixed inset-0 z-50 hidden">
+    <div class="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity" id="cart-overlay"></div>
+    <div class="absolute right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl transform transition-transform duration-300 translate-x-full flex flex-col" id="cart-panel">
+      <div class="p-6 border-b border-gray-100 flex items-center justify-between">
+        <h2 class="font-display text-xl font-bold">Your Cart</h2>
+        <button id="close-cart" class="p-2 hover:bg-gray-100 rounded-full transition-colors">
+          <i data-lucide="x" class="w-6 h-6"></i>
+        </button>
+      </div>
+      
+      <div class="flex-1 overflow-y-auto p-6" id="cart-items-container">
+        <div class="text-center text-gray-500 py-12">
+          <i data-lucide="shopping-cart" class="w-16 h-16 mx-auto mb-4 text-gray-300"></i>
+          <p>Your cart is empty</p>
+          <button onclick="closeCart()" class="mt-4 text-primary font-medium hover:underline">Continue Shopping</button>
+        </div>
+      </div>
+      
+      <div class="border-t border-gray-100 p-6 space-y-4 bg-gray-50">
+        <div class="flex justify-between text-lg font-bold">
+          <span>Total</span>
+          <span id="cart-total">ZMW 0</span>
+        </div>
+        <button onclick="window.location.href='checkout.html'" class="w-full bg-primary hover:bg-blue-800 text-white py-4 rounded-xl font-semibold shadow-lg shadow-primary/30 transition-all transform active:scale-95">
+          Proceed to Checkout
+        </button>
+        <button id="clear-cart" class="w-full bg-white border border-gray-300 text-gray-700 py-3 rounded-xl font-medium hover:bg-gray-50 transition-colors">
+          Clear Cart
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+    
+    // Mobile menu toggle
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileMenuPanel = document.getElementById('mobile-menu-panel');
+    const closeMobileMenu = document.getElementById('close-mobile-menu');
+    const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+    
+    function openMobileMenu() {
+      mobileMenu.classList.remove('hidden');
+      setTimeout(() => mobileMenuPanel.classList.remove('translate-x-full'), 10);
+    }
+    
+    function closeMobileMenuFn() {
+      mobileMenuPanel.classList.add('translate-x-full');
+      setTimeout(() => mobileMenu.classList.add('hidden'), 300);
+    }
+    
+    mobileMenuBtn?.addEventListener('click', openMobileMenu);
+    closeMobileMenu?.addEventListener('click', closeMobileMenuFn);
+    mobileMenuOverlay?.addEventListener('click', closeMobileMenuFn);
+    
+    // ==========================================
+    // CART FUNCTIONALITY - WITH ADJUSTABLE USD RATE
+    // ==========================================
+    
+    // 🔧 ADJUST THIS RATE AS NEEDED (change this value to adjust USD display)
+    const USD_RATE = 0.0503;
+    
+    let cart = JSON.parse(localStorage.getItem('novanest_cart')) || [];
+    
+    function updateCartUI() {
+      const count = cart.length;
+      const countBadge = document.getElementById('cart-count');
+      countBadge.textContent = count;
+      countBadge.classList.toggle('scale-0', count === 0);
+      
+      // Update cart drawer - TEXT ONLY WITH USD CONVERSION
+      const container = document.getElementById('cart-items-container');
+      const totalEl = document.getElementById('cart-total');
+      
+      if (cart.length === 0) {
+        container.innerHTML = `
+          <div class="text-center text-gray-500 py-12">
+            <i data-lucide="shopping-cart" class="w-16 h-16 mx-auto mb-4 text-gray-300"></i>
+            <p>Your cart is empty</p>
+            <button onclick="closeCart()" class="mt-4 text-primary font-medium hover:underline">Continue Shopping</button>
+          </div>
+        `;
+        totalEl.textContent = 'ZMW 0';
+      } else {
+        let total = 0;
+        container.innerHTML = cart.map((item, idx) => {
+          total += item.price;
+          const itemUsd = (item.price * USD_RATE).toFixed(2);
+          return `
+            <div class="flex items-center justify-between mb-4 bg-gray-50 p-4 rounded-xl">
+              <div class="flex-1">
+                <h4 class="font-semibold text-gray-900">${item.name}</h4>
+                <p class="text-primary font-bold mt-1">ZMW ${item.price.toLocaleString()}</p>
+                <p class="text-xs text-gray-500">≈ $${itemUsd}</p>
+              </div>
+              <button onclick="removeFromCart(${idx})" class="text-red-500 text-sm hover:underline ml-4">Remove</button>
+            </div>
+          `;
+        }).join('');
+        
+        const totalUsd = (total * USD_RATE).toFixed(2);
+        totalEl.innerHTML = `ZMW ${total.toLocaleString()} <span class="text-sm text-gray-500 font-normal block text-right">(≈ $${totalUsd})</span>`;
+      }
+      lucide.createIcons();
+    }
+    
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      localStorage.setItem('novanest_cart', JSON.stringify(cart));
+      updateCartUI();
+    }
+    
+    // Cart drawer controls
+    const cartLink = document.getElementById('cart-link');
+    const cartDrawer = document.getElementById('cart-drawer');
+    const cartPanel = document.getElementById('cart-panel');
+    const closeCartBtn = document.getElementById('close-cart');
+    const cartOverlay = document.getElementById('cart-overlay');
+    
+    function openCart() {
+      cartDrawer.classList.remove('hidden');
+      setTimeout(() => cartPanel.classList.remove('translate-x-full'), 10);
+      updateCartUI();
+    }
+    
+    function closeCart() {
+      cartPanel.classList.add('translate-x-full');
+      setTimeout(() => cartDrawer.classList.add('hidden'), 300);
+    }
+    
+    cartLink?.addEventListener('click', (e) => { e.preventDefault(); openCart(); });
+    closeCartBtn?.addEventListener('click', closeCart);
+    cartOverlay?.addEventListener('click', closeCart);
+    document.getElementById('clear-cart')?.addEventListener('click', () => {
+      cart = [];
+      localStorage.setItem('novanest_cart', JSON.stringify(cart));
+      updateCartUI();
+    });
+    
+    // Initialize
+    updateCartUI();
+  </script>
 </body>
 </html>
