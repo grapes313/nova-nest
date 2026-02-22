@@ -99,7 +99,7 @@
   <div class="promo-banner bg-gradient-to-r from-violet-600 to-indigo-600 text-white px-4 py-3 text-center text-sm font-semibold relative z-50">
     <div class="max-w-7xl mx-auto flex items-center justify-center gap-2">
       <i data-lucide="heart" class="w-4 h-4"></i>
-      <span id="promo-message">💕 Celebrate Love with Savings — 10% OFF Electronics + 5% OFF First Order</span>
+      <span id="promo-message">🎉 First-time buyers get 5% OFF</span>
     </div>
   </div>
 
@@ -808,7 +808,7 @@
     // ==========================================
     
     // 🔧 ADJUST THIS RATE AS NEEDED (change this value to adjust USD display)
-    const USD_RATE = 0.0527;
+    const USD_RATE = 0.0528;
     
     let cart = JSON.parse(localStorage.getItem('novanest_cart')) || [];
     
@@ -938,9 +938,7 @@
     
     // Promo rotation
     const messages = [
-      "💕 Celebrate Love with Savings — 10% OFF Electronics",
-      "🎉 First-time buyers get 5% OFF everything!",
-      "🚚 Free delivery in Lusaka on orders over ZMW 500"
+      "🎉 First-time buyers get 5% OFF",
     ];
     let msgIdx = 0;
     setInterval(() => {
