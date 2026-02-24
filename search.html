@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Search - Nova Nest</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet" />
+  
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Outfit', 'sans-serif'],
+          },
+          colors: {
+            primary: '#1E3A8A',
+            secondary: '#3B82F6',
+            accent: '#F59E0B',
+            dark: '#0F172A',
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <style>
+    .product-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+    .product-card:hover { transform: translateY(-4px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); }
+  </style>
+</head>
+
+<body class="bg-gray-50 text-gray-900 antialiased">
+
+  <!-- Navigation - NO SEARCH BAR HERE (uses your existing search bars on other pages) -->
+  <nav class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 gap-4">
+        
+        <!-- Logo -->
+        <a href="index.html" class="flex items-center gap-2 flex-shrink-0">
+          <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+            <i data-lucide="shopping-bag" class="w-5 h-5 text-white"></i>
+          </div>
+          <span class="font-display font-bold text-xl text-primary">Nova Nest</span>
+        </a>
+
+        <!-- Desktop Nav -->
+        <div class="hidden lg:flex items-center gap-8 text-sm font-medium text-gray-600">
+          <a href="index.html" class="hover:text-primary transition-colors">Home</a>
+          <a href="electronics.html" class="hover:text-primary transition-colors">Electronics</a>
+          <a href="fashion.html" class="hover:text-primary transition-colors">Fashion</a>
+          <a href="home-kitchen.html" class="hover:text-primary transition-colors">Home & Kitchen</a>
+          <a href="wholesale.html" class="hover:text-primary transition-colors text-accent">Wholesale</a>
+        </div>
+
+        <!-- Right Actions -->
+        <div class="flex items-center gap-4">
+          <button id="cart-link" class="relative p-2 hover:bg-gray-100 rounded-full transition-colors">
+            <i data-lucide="shopping-cart" class="w-6 h-6 text-gray-700"></i>
+            <span id="cart-count" class="absolute -top-1 -right-1 bg-accent text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center transform scale-0 transition-transform duration-200">0</span>
+          </button>
+          
+          <button class="lg:hidden p-2 hover:bg-gray-100 rounded-full" id="mobile-menu-btn">
+            <i data-lucide="menu" class="w-6 h-6 text-gray-700"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="fixed inset-0 z-50 hidden">
+    <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" id="mobile-menu-overlay"></div>
+    <div class="absolute right-0 top-0 h-full w-80 bg-white shadow-2xl transform transition-transform duration-300 translate-x-full" id="mobile-menu-panel">
+      <div class="p-6">
+        <div class="flex items-center justify-between mb-8">
+          <span class="font-display font-bold text-xl">Menu</span>
+          <button id="close-mobile-menu" class="p-2 hover:bg-gray-100 rounded-full">
+            <i data-lucide="x" class="w-6 h-6"></i>
+          </button>
+        </div>
+        <nav class="flex flex-col gap-4">
+          <a href="index.html" class="text-lg font-medium text-gray-700">Home</a>
+          <a href="electronics.html" class="text-lg font-medium text-gray-700">Electronics</a>
+          <a href="fashion.html" class="text-lg font-medium text-gray-700">Fashion</a>
+          <a href="home-kitchen.html" class="text-lg font-medium text-gray-700">Home & Kitchen</a>
+          <a href="wholesale.html" class="text-lg font-medium text-accent">Wholesale</a>
+        </nav>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- Search Header -->
+    <div class="mb-6">
+      <h1 class="font-display text-2xl font-bold text-gray-900">
+        Search Results <span id="result-count" class="text-gray-500 text-lg font-normal"></span>
+      </h1>
+      <p id="search-term" class="text-gray-500 mt-1"></p>
+    </div>
+
+    <!-- Filters -->
+    <div class="flex flex-wrap gap-2 mb-6">
+      <button onclick="filterByCategory('all')" class="filter-btn active px-4 py-2 rounded-full text-sm font-medium bg-primary text-white transition-colors" data-category="all">All</button>
+      <button onclick="filterByCategory('electronics')" class="filter-btn px-4 py-2 rounded-full text-sm font-medium bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors" data-category="electronics">Electronics</button>
+      <button onclick="filterByCategory('fashion')" class="filter-btn px-4 py-2 rounded-full text-sm font-medium bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors" data-category="fashion">Fashion</button>
+      <button onclick="filterByCategory('home-kitchen')" class="filter-btn px-4 py-2 rounded-full text-sm font-medium bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors" data-category="home-kitchen">Home & Kitchen</button>
+      <button onclick="filterByCategory('wholesale')" class="filter-btn px-4 py-2 rounded-full text-sm font-medium bg-accent text-white hover:bg-amber-600 transition-colors" data-category="wholesale">Wholesale</button>
+      
+      <select id="sort-select" onchange="sortResults()" class="ml-auto px-4 py-2 bg-white border border-gray-200 rounded-full text-sm focus:ring-2 focus:ring-primary">
+        <option value="relevance">Sort: Relevance</option>
+        <option value="price-low">Price: Low to High</option>
+        <option value="price-high">Price: High to Low</option>
+      </select>
+    </div>
+
+    <!-- Results Grid -->
+    <div id="results-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <!-- Results injected here -->
+    </div>
+
+    <!-- No Results -->
+    <div id="no-results" class="hidden text-center py-16">
+      <i data-lucide="search-x" class="w-16 h-16 mx-auto mb-4 text-gray-300"></i>
+      <h3 class="text-xl font-semibold text-gray-900 mb-2">No products found</h3>
+      <p class="text-gray-500">Try different keywords or browse categories</p>
+      <div class="mt-6 flex justify-center gap-4">
+        <a href="index.html" class="text-primary font-medium hover:underline">Browse all products</a>
+        <a href="electronics.html" class="text-primary font-medium hover:underline">Electronics</a>
+        <a href="fashion.html" class="text-primary font-medium hover:underline">Fashion</a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-gray-300 pt-12 pb-8 mt-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+        <div>
+          <div class="flex items-center gap-2 mb-4">
+            <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+              <i data-lucide="shopping-bag" class="w-5 h-5 text-white"></i>
+            </div>
+            <span class="font-display font-bold text-xl text-white">Nova Nest</span>
+          </div>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-4">Quick Links</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="electronics.html" class="hover:text-white">Electronics</a></li>
+            <li><a href="fashion.html" class="hover:text-white">Fashion</a></li>
+            <li><a href="home-kitchen.html" class="hover:text-white">Home & Kitchen</a></li>
+            <li><a href="wholesale.html" class="hover:text-white">Wholesale</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-white/10 pt-8 text-center text-sm text-gray-400">
+        <p>&copy; 2026 Nova Nest. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Cart Drawer -->
+  <div id="cart-drawer" class="fixed inset-0 z-50 hidden">
+    <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" id="cart-overlay"></div>
+    <div class="absolute right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl transform transition-transform duration-300 translate-x-full flex flex-col" id="cart-panel">
+      <div class="p-6 border-b border-gray-100 flex items-center justify-between">
+        <h2 class="font-display text-xl font-bold">Your Cart</h2>
+        <button id="close-cart" class="p-2 hover:bg-gray-100 rounded-full">
+          <i data-lucide="x" class="w-6 h-6"></i>
+        </button>
+      </div>
+      <div class="flex-1 overflow-y-auto p-6" id="cart-items-container"></div>
+      <div class="border-t border-gray-100 p-6 bg-gray-50">
+        <div class="flex justify-between text-lg font-bold mb-4">
+          <span>Total</span>
+          <span id="cart-total">ZMW 0</span>
+        </div>
+        <button onclick="window.location.href='checkout.html'" class="w-full bg-primary text-white py-4 rounded-xl font-semibold">
+          Proceed to Checkout
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="fixed top-24 right-4 bg-green-500 text-white px-6 py-4 rounded-xl shadow-2xl transform translate-x-full transition-transform duration-300 z-50 flex items-center gap-3">
+    <i data-lucide="check-circle" class="w-6 h-6"></i>
+    <div>
+      <p class="font-semibold">Added to cart!</p>
+      <p class="text-sm text-green-100" id="toast-message"></p>
+    </div>
+  </div>
+
+  <script>
+    // ==========================================
+    // CONFIG - ADJUST USD RATE HERE
+    // ==========================================
+    const USD_RATE = 0.0528;
+
+    // ==========================================
+    // ALL PRODUCTS FROM ALL PAGES
+    // ==========================================
+    const allProducts = [
+      // ========== ELECTRONICS (23 products) ==========
+      { id: 'iphone-x', name: 'iPhone X Series', price: 4250, category: 'electronics', image: 'images/iphone-x.webp' },
+      { id: 'iphone-xr', name: 'iPhone XR', price: 4380, category: 'electronics', image: 'images/iphone-xr.webp' },
+      { id: 'iphone-11', name: 'iPhone 11 Series', price: 4900, category: 'electronics', image: 'images/iphone-11.webp' },
+      { id: 'iphone-12', name: 'iPhone 12 Series', price: 5750, category: 'electronics', image: 'images/iphone12.webp' },
+      { id: 'iphone-13', name: 'iPhone 13 Series', price: 8370, category: 'electronics', image: 'images/iphone13.webp' },
+      { id: 'iphone-14', name: 'iPhone 14 Series', price: 8800, category: 'electronics', image: 'images/iphone14.webp' },
+      { id: 'iphone-15', name: 'iPhone 15 Series', price: 10900, category: 'electronics', image: 'images/iphone15.webp' },
+      { id: 'iphone-16', name: 'iPhone 16 Series', price: 14880, category: 'electronics', image: 'images/iphone16.webp' },
+      { id: 'iphone-17', name: 'iPhone 17 Series', price: 20390, category: 'electronics', image: 'images/iphone17.webp' },
+      { id: 'iphone-17-air', name: 'iPhone 17 Air', price: 27780, category: 'electronics', image: 'images/iphone17-air.webp' },
+      { id: 'galaxy-s10-s20', name: 'Samsung Galaxy S10–S20', price: 3880, category: 'electronics', image: 'images/galaxy-s10.webp' },
+      { id: 'galaxy-s21-s23', name: 'Samsung Galaxy S21–S23', price: 5160, category: 'electronics', image: 'images/galaxy-s21.webp' },
+      { id: 'galaxy-s24-s25', name: 'Samsung Galaxy S24–S25', price: 10180, category: 'electronics', image: 'images/galaxy-s24.webp' },
+      { id: 'galaxy-s7-s9', name: 'Pre‑Owned Galaxy S7–S9', price: 2350, category: 'electronics', image: 'images/galaxy-s7.webp' },
+      { id: 'galaxy-flip', name: 'Galaxy Z Flip Series', price: 4320, category: 'electronics', image: 'images/galaxy-flip1.webp' },
+      { id: 'galaxy-fold', name: 'Galaxy Z Fold Series', price: 7980, category: 'electronics', image: 'images/galaxy-fold2.webp' },
+      { id: 'pixel-10', name: 'Google Pixel 10 Series', price: 12900, category: 'electronics', image: 'images/pixel10.webp' },
+      { id: 'pixel-9', name: 'Google Pixel 9 Series', price: 10500, category: 'electronics', image: 'images/pixel9.webp' },
+      { id: 'pixel-8', name: 'Google Pixel 8 Series', price: 6700, category: 'electronics', image: 'images/pixel8.webp' },
+      { id: 'pixel-7', name: 'Google Pixel 7 Series', price: 4900, category: 'electronics', image: 'images/pixel7.webp' },
+      { id: 'pixel-6', name: 'Google Pixel 6 Series', price: 4000, category: 'electronics', image: 'images/pixel6a.webp' },
+      { id: 'pixel-3-5', name: 'Google Pixel 3–5 Series', price: 3200, category: 'electronics', image: 'images/pixel3a.webp' },
+      { id: 'dell-inspiron', name: 'Dell Inspiron 14', price: 11180, category: 'electronics', image: 'images/dell-inspiron14.webp' },
+      { id: 'jbl-headphones', name: 'JBL T520BT Wireless', price: 1200, category: 'electronics', image: 'images/headphones.webp' },
+
+      // ========== FASHION (5 products) ==========
+      { id: 'fur-jacket', name: 'Fur & Leather Jacket', price: 1300, category: 'fashion', image: 'images/furjacket.webp' },
+      { id: 'warrior-shoes', name: 'Warrior Shoes', price: 700, category: 'fashion', image: 'images/shoes.webp' },
+      { id: 'leather-jacket', name: 'Leather Jacket', price: 1500, category: 'fashion', image: 'images/jacket.webp' },
+      { id: 'vintage-sweater', name: 'Vintage Sweater', price: 500, category: 'fashion', image: 'images/sweater.webp' },
+      { id: 'mountain-jacket', name: 'Fur Collar Mountain Jacket', price: 1200, category: 'fashion', image: 'images/mountain-jacket-black.webp' },
+
+      // ========== HOME & KITCHEN (3 products) ==========
+      { id: 'blender', name: 'Electric Blender', price: 950, category: 'home-kitchen', image: 'images/blender.webp' },
+      { id: 'cookware', name: 'Cookware Set', price: 1800, category: 'home-kitchen', image: 'images/cookware.webp' },
+      { id: 'microwave', name: 'Microwave Oven', price: 1600, category: 'home-kitchen', image: 'images/microwave.webp' },
+
+      // ========== WHOLESALE (1 product) ==========
+      { id: 'iphone-covers', name: 'iPhone Covers Wholesale (500pcs)', price: 2900, category: 'wholesale', image: 'images/iphone-cover1.webp' },
+    ];
+
+    // ==========================================
+    // SEARCH STATE
+    // ==========================================
+    let currentResults = [];
+    let currentQuery = '';
+
+    // ==========================================
+    // UTILITY FUNCTIONS
+    // ==========================================
+    
+    function formatPrice(zmw) {
+      return {
+        zmw: zmw.toLocaleString(),
+        usd: (zmw * USD_RATE).toFixed(2)
+      };
+    }
+
+    // ==========================================
+    // SEARCH FUNCTIONS
+    // ==========================================
+    
+    function performSearch() {
+      const query = document.getElementById('search-input')?.value.toLowerCase().trim();
+      if (!query) {
+        // Show all products if no query
+        currentResults = [...allProducts];
+        document.getElementById('search-term').textContent = 'All products';
+        displayResults(currentResults);
+        return;
+      }
+      
+      currentQuery = query;
+      document.getElementById('search-term').textContent = `for "${query}"`;
+      
+      // Search by name, category, or keywords
+      currentResults = allProducts.filter(product => {
+        const nameMatch = product.name.toLowerCase().includes(query);
+        const categoryMatch = product.category.toLowerCase().includes(query);
+        
+        // Smart keyword matching
+        const keywordMap = {
+          'phone': ['iphone', 'galaxy', 'pixel'],
+          'mobile': ['iphone', 'galaxy', 'pixel'],
+          'samsung': ['galaxy'],
+          'google': ['pixel'],
+          'apple': ['iphone'],
+          'computer': ['dell', 'laptop'],
+          'laptop': ['dell', 'inspiron'],
+          'audio': ['jbl', 'headphones'],
+          'sound': ['jbl', 'headphones'],
+          'wear': ['jacket', 'shoes', 'sweater'],
+          'clothing': ['jacket', 'shoes', 'sweater', 'fur'],
+          'kitchen': ['blender', 'cookware', 'microwave'],
+          'appliance': ['blender', 'microwave'],
+          'bulk': ['wholesale', 'covers'],
+          'reseller': ['wholesale', 'covers']
+        };
+        
+        let keywordMatch = false;
+        if (keywordMap[query]) {
+          keywordMatch = keywordMap[query].some(keyword => 
+            product.name.toLowerCase().includes(keyword)
+          );
+        }
+        
+        return nameMatch || categoryMatch || keywordMatch;
+      });
+      
+      displayResults(currentResults);
+    }
+
+    function displayResults(results) {
+      const grid = document.getElementById('results-grid');
+      const noResults = document.getElementById('no-results');
+      const countEl = document.getElementById('result-count');
+      
+      if (!grid) return;
+      
+      // Update count
+      countEl.textContent = results.length > 0 ? `(${results.length} found)` : '';
+      
+      // Show/hide no results
+      if (results.length === 0) {
+        grid.innerHTML = '';
+        noResults?.classList.remove('hidden');
+        return;
+      }
+      
+      noResults?.classList.add('hidden');
+      
+      // Render products
+      grid.innerHTML = results.map(product => {
+        const prices = formatPrice(product.price);
+        const categoryColors = {
+          'electronics': 'bg-blue-100 text-blue-700',
+          'fashion': 'bg-pink-100 text-pink-700',
+          'home-kitchen': 'bg-emerald-100 text-emerald-700',
+          'wholesale': 'bg-amber-100 text-amber-700'
+        };
+        const badgeClass = categoryColors[product.category] || 'bg-gray-100 text-gray-700';
+        
+        return `
+          <article class="product-card bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden group">
+            <div class="relative aspect-[4/5] bg-gray-100 overflow-hidden">
+              <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+              <span class="absolute top-2 left-2 ${badgeClass} px-2 py-1 rounded text-xs font-medium uppercase">
+                ${product.category.replace('-', ' ')}
+              </span>
+            </div>
+            <div class="p-3">
+              <h3 class="font-semibold text-sm text-gray-900 mb-1 line-clamp-2">${product.name}</h3>
+              <p class="text-lg font-bold text-gray-900">ZMW ${prices.zmw}</p>
+              <p class="text-xs text-gray-500 mb-3">≈ $${prices.usd}</p>
+              <button onclick="addToCart('${product.name}', ${product.price})" class="w-full bg-primary hover:bg-blue-800 text-white py-2 rounded-lg font-medium text-sm transition-colors shadow-md flex items-center justify-center gap-1">
+                <i data-lucide="plus" class="w-4 h-4"></i>
+                Add
+              </button>
+            </div>
+          </article>
+        `;
+      }).join('');
+      
+      lucide.createIcons();
+    }
+
+    function filterByCategory(category) {
+      // Update button states
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        if (btn.dataset.category === category) {
+          btn.classList.remove('bg-gray-200', 'text-gray-700');
+          btn.classList.add('bg-primary', 'text-white');
+        } else {
+          btn.classList.remove('bg-primary', 'text-white');
+          btn.classList.add('bg-gray-200', 'text-gray-700');
+        }
+      });
+      
+      // Filter results
+      if (category === 'all') {
+        displayResults(currentResults);
+      } else {
+        const filtered = currentResults.filter(p => p.category === category);
+        displayResults(filtered);
+      }
+    }
+
+    function sortResults() {
+      const sort = document.getElementById('sort-select')?.value;
+      if (!sort || sort === 'relevance') {
+        displayResults(currentResults);
+        return;
+      }
+      
+      let sorted = [...currentResults];
+      if (sort === 'price-low') {
+        sorted.sort((a, b) => a.price - b.price);
+      } else if (sort === 'price-high') {
+        sorted.sort((a, b) => b.price - a.price);
+      }
+      
+      displayResults(sorted);
+    }
+
+    // ==========================================
+    // CART FUNCTIONS (Shared across all pages)
+    // ==========================================
+    
+    let cart = JSON.parse(localStorage.getItem('novanest_cart')) || [];
+    
+    function updateCartUI() {
+      const count = cart.length;
+      const countBadge = document.getElementById('cart-count');
+      if (countBadge) {
+        countBadge.textContent = count;
+        countBadge.classList.toggle('scale-0', count === 0);
+      }
+      
+      const container = document.getElementById('cart-items-container');
+      const totalEl = document.getElementById('cart-total');
+      
+      if (!container || !totalEl) return;
+      
+      if (cart.length === 0) {
+        container.innerHTML = `
+          <div class="text-center text-gray-500 py-12">
+            <i data-lucide="shopping-cart" class="w-16 h-16 mx-auto mb-4 text-gray-300"></i>
+            <p>Your cart is empty</p>
+          </div>
+        `;
+        totalEl.textContent = 'ZMW 0';
+      } else {
+        let total = 0;
+        container.innerHTML = cart.map((item, idx) => {
+          total += item.price;
+          const itemUsd = (item.price * USD_RATE).toFixed(2);
+          return `
+            <div class="flex items-center justify-between mb-4 bg-gray-50 p-4 rounded-xl">
+              <div class="flex-1">
+                <h4 class="font-semibold text-gray-900 text-sm">${item.name}</h4>
+                <p class="text-primary font-bold mt-1">ZMW ${item.price.toLocaleString()}</p>
+                <p class="text-xs text-gray-500">≈ $${itemUsd}</p>
+              </div>
+              <button onclick="removeFromCart(${idx})" class="text-red-500 text-sm hover:underline ml-4">Remove</button>
+            </div>
+          `;
+        }).join('');
+        
+        const totalUsd = (total * USD_RATE).toFixed(2);
+        totalEl.innerHTML = `ZMW ${total.toLocaleString()} <span class="text-sm text-gray-500 font-normal block text-right">(≈ $${totalUsd})</span>`;
+      }
+      
+      lucide.createIcons();
+    }
+
+    window.addToCart = function(name, price) {
+      cart.push({ name, price, id: Date.now() });
+      localStorage.setItem('novanest_cart', JSON.stringify(cart));
+      updateCartUI();
+      
+      const toast = document.getElementById('toast');
+      const toastMessage = document.getElementById('toast-message');
+      if (toast && toastMessage) {
+        toastMessage.textContent = name;
+        toast.classList.remove('translate-x-full');
+        setTimeout(() => toast.classList.add('translate-x-full'), 3000);
+      }
+    };
+
+    window.removeFromCart = function(index) {
+      cart.splice(index, 1);
+      localStorage.setItem('novanest_cart', JSON.stringify(cart));
+      updateCartUI();
+    };
+
+    window.clearCart = function() {
+      cart = [];
+      localStorage.setItem('novanest_cart', JSON.stringify(cart));
+      updateCartUI();
+    };
+
+    window.closeCart = function() {
+      const cartPanel = document.getElementById('cart-panel');
+      const cartDrawer = document.getElementById('cart-drawer');
+      if (cartPanel) cartPanel.classList.add('translate-x-full');
+      setTimeout(() => {
+        if (cartDrawer) cartDrawer.classList.add('hidden');
+      }, 300);
+    };
+
+    // ==========================================
+    // INITIALIZATION
+    // ==========================================
+    
+    document.addEventListener('DOMContentLoaded', function() {
+      lucide.createIcons();
+      
+      // Check for search param from other pages
+      const params = new URLSearchParams(window.location.search);
+      const query = params.get('q');
+      
+      if (query) {
+        // Create search input if not exists (for direct URL access)
+        if (!document.getElementById('search-input')) {
+          const header = document.querySelector('main');
+          const searchDiv = document.createElement('div');
+          searchDiv.className = 'mb-6';
+          searchDiv.innerHTML = `
+            <div class="relative max-w-2xl">
+              <input type="text" id="search-input" value="${query}" placeholder="Search products..." 
+                class="w-full pl-10 pr-4 py-3 bg-gray-100 border-0 rounded-full focus:ring-2 focus:ring-primary text-base" />
+              <i data-lucide="search" class="absolute left-3.5 top-3.5 w-5 h-5 text-gray-400"></i>
+              <button onclick="performSearch()" class="absolute right-2 top-2 bg-primary text-white px-6 py-1.5 rounded-full text-sm font-medium hover:bg-blue-800">
+                Search
+              </button>
+            </div>
+          `;
+          header.insertBefore(searchDiv, header.firstChild);
+          lucide.createIcons();
+          
+          // Add enter key listener
+          document.getElementById('search-input')?.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') performSearch();
+          });
+        } else {
+          document.getElementById('search-input').value = query;
+        }
+        
+        performSearch();
+      } else {
+        // Show all products by default
+        currentResults = [...allProducts];
+        document.getElementById('search-term').textContent = 'All products';
+        displayResults(currentResults);
+      }
+      
+      // Mobile menu
+      const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const mobileMenuPanel = document.getElementById('mobile-menu-panel');
+      const closeMobileMenu = document.getElementById('close-mobile-menu');
+      const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+      
+      if (mobileMenuBtn) {
+        mobileMenuBtn.addEventListener('click', () => {
+          mobileMenu.classList.remove('hidden');
+          setTimeout(() => mobileMenuPanel.classList.remove('translate-x-full'), 10);
+        });
+      }
+      
+      if (closeMobileMenu) {
+        closeMobileMenu.addEventListener('click', () => {
+          mobileMenuPanel.classList.add('translate-x-full');
+          setTimeout(() => mobileMenu.classList.add('hidden'), 300);
+        });
+      }
+      
+      if (mobileMenuOverlay) {
+        mobileMenuOverlay.addEventListener('click', () => {
+          mobileMenuPanel.classList.add('translate-x-full');
+          setTimeout(() => mobileMenu.classList.add('hidden'), 300);
+        });
+      }
+      
+      // Cart drawer
+      const cartLink = document.getElementById('cart-link');
+      const cartDrawer = document.getElementById('cart-drawer');
+      const cartPanel = document.getElementById('cart-panel');
+      const closeCartBtn = document.getElementById('close-cart');
+      const cartOverlay = document.getElementById('cart-overlay');
+      
+      if (cartLink) {
+        cartLink.addEventListener('click', (e) => {
+          e.preventDefault();
+          cartDrawer.classList.remove('hidden');
+          setTimeout(() => cartPanel.classList.remove('translate-x-full'), 10);
+          updateCartUI();
+        });
+      }
+      
+      if (closeCartBtn) {
+        closeCartBtn.addEventListener('click', window.closeCart);
+      }
+      
+      if (cartOverlay) {
+        cartOverlay.addEventListener('click', window.closeCart);
+      }
+      
+      updateCartUI();
+    });
+  </script>
+</body>
+</html>
