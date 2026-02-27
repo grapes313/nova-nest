@@ -93,10 +93,80 @@
     .hero-bg {
       background: linear-gradient(135deg, #1E3A8A 0%, #1e40af 50%, #1e3a8a 100%);
     }
+    
+    /* Lightbox Styles */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: rgba(0, 0, 0, 0.95);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+    .lightbox.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    .lightbox img {
+      max-width: 90%;
+      max-height: 90%;
+      object-fit: contain;
+      transform: scale(0.9);
+      transition: transform 0.3s ease;
+    }
+    .lightbox.active img {
+      transform: scale(1);
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      color: white;
+      cursor: pointer;
+      padding: 10px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 50%;
+      transition: background 0.3s;
+    }
+    .lightbox-close:hover {
+      background: rgba(255,255,255,0.2);
+    }
+    .clickable-image {
+      cursor: zoom-in;
+    }
+    
+    /* Product Selector Styles */
+    .product-selector {
+      position: relative;
+    }
+    .product-selector input[type="radio"] {
+      display: none;
+    }
+    .product-selector label {
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .product-selector input[type="radio"]:checked + label {
+      background: #1E3A8A;
+      color: white;
+      border-color: #1E3A8A;
+    }
   </style>
 </head>
 
 <body class="bg-gray-50 text-gray-900 antialiased">
+
+  <!-- Lightbox Modal -->
+  <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+    <button class="lightbox-close" onclick="event.stopPropagation(); closeLightbox()">
+      <i data-lucide="x" class="w-8 h-8"></i>
+    </button>
+    <img id="lightbox-img" src="" alt="Full size view" onclick="event.stopPropagation()">
+  </div>
 
   <!-- Promo Banner -->
   <div class="bg-gradient-to-r from-violet-600 to-indigo-600 text-white px-4 py-3 text-center text-sm font-semibold relative z-50">
@@ -244,16 +314,17 @@
       <article class="product-card bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden group" id="wholesale-iphone-covers">
         <!-- Main Display -->
         <div class="relative aspect-square bg-gray-100 overflow-hidden">
-          <!-- Optimized Image with Lazy Loading -->
+          <!-- Optimized Image with Lazy Loading and Click to View -->
           <img 
             id="iphone-main" 
             src="images/iphone-cover1.webp" 
             alt="iPhone Covers Wholesale" 
-            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 clickable-image"
             loading="lazy"
             width="600"
             height="600"
             decoding="async"
+            onclick="openLightbox(this.src)"
           >
           <video id="iphone-video" class="w-full h-full object-cover hidden" controls muted preload="none" poster="images/iphone-cover1.webp">
             <source src="videos/iphone-covers.mp4" type="video/mp4">
@@ -262,8 +333,13 @@
           
           <!-- Badges -->
           <div class="absolute top-3 left-3 flex flex-col gap-2">
-            <span class="bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full">HOT</span>
-            <span class="bg-amber-500 text-white text-xs font-bold px-3 py-1 rounded-full">LIMITED</span>
+            <span class="bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full animate-pulse">LIMITED STOCK</span>
+            <span class="bg-amber-500 text-white text-xs font-bold px-3 py-1 rounded-full">HOT</span>
+          </div>
+          
+          <!-- Click hint -->
+          <div class="absolute bottom-3 left-3 bg-black/50 text-white text-xs px-2 py-1 rounded backdrop-blur-sm pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity">
+            <i data-lucide="zoom-in" class="w-3 h-3 inline mr-1"></i> Click to view
           </div>
         </div>
 
@@ -273,7 +349,7 @@
             <img 
               src="images/iphone-cover1.webp" 
               class="thumb-img active" 
-              onclick="showImage('iphone-main','iphone-video',this)" 
+              onclick="showImage('iphone-main','iphone-video',this); openLightbox(this.src)" 
               alt="View 1"
               loading="lazy"
               width="48"
@@ -283,7 +359,7 @@
             <img 
               src="images/iphone-cover2.webp" 
               class="thumb-img" 
-              onclick="showImage('iphone-main','iphone-video',this)" 
+              onclick="showImage('iphone-main','iphone-video',this); openLightbox(this.src)" 
               alt="View 2"
               loading="lazy"
               width="48"
@@ -293,7 +369,7 @@
             <img 
               src="images/iphone-cover3.webp" 
               class="thumb-img" 
-              onclick="showImage('iphone-main','iphone-video',this)" 
+              onclick="showImage('iphone-main','iphone-video',this); openLightbox(this.src)" 
               alt="View 3"
               loading="lazy"
               width="48"
@@ -317,13 +393,19 @@
           
           <p class="text-gray-500 text-sm mb-4 line-clamp-2">Wholesale mixed models — one box contains approximately 500 pieces. Perfect for resellers and phone shops.</p>
           
+          <!-- Stock Warning -->
+          <div class="flex items-center gap-2 mb-3 text-red-600 text-xs font-semibold bg-red-50 px-3 py-2 rounded-lg">
+            <i data-lucide="alert-circle" class="w-4 h-4"></i>
+            <span>Limited Stock Available — Order Soon!</span>
+          </div>
+          
           <!-- Price -->
           <div class="mb-4">
             <div class="flex items-baseline gap-2">
               <span class="text-2xl font-bold text-gray-900">ZMW 2,900</span>
               <span class="text-sm text-gray-400">/ box</span>
             </div>
-            <p class="text-xs text-gray-500 mt-1">≈ $145.87 • 500 pieces per box</p>
+            <p class="text-xs text-gray-500 mt-1">≈ $153.12 • 500 pieces per box</p>
           </div>
 
           <!-- Features -->
@@ -342,7 +424,642 @@
         </div>
       </article>
 
-      <!-- Add more wholesale products here following the same pattern -->
+      <!-- Children's Clothing - Choose Your Style -->
+      <article class="product-card bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden group" id="wholesale-childrens-clothing-zambia">
+        
+        <!-- Video Display Area -->
+        <div class="relative aspect-square bg-gray-100 overflow-hidden">
+          
+          <!-- Video 1: Children's Dress Wholesale -->
+          <video 
+            id="wholesale-video-dress" 
+            class="w-full h-full object-cover" 
+            controls 
+            muted 
+            preload="metadata"
+            poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect fill='%231E3A8A' width='400' height='400'/%3E%3Ctext x='50%25' y='45%25' dominant-baseline='middle' text-anchor='middle' fill='white' font-size='80'%3E%F0%9F%91%97%3C/text%3E%3Ctext x='50%25' y='65%25' dominant-baseline='middle' text-anchor='middle' fill='white' font-size='16' font-family='Arial'%3EChildren's Dress%3C/text%3E%3Ctext x='50%25' y='75%25' dominant-baseline='middle' text-anchor='middle' fill='%23F59E0B' font-size='14' font-family='Arial'%3E19 ZMW%3C/text%3E%3C/svg%3E"
+            loop
+            playsinline
+          >
+            <source src="videos/childrens-dress-wholesale-zambia.webm" type="video/webm">
+            <source src="videos/childrens-dress-wholesale-zambia.mp4" type="video/mp4">
+          </video>
+          
+          <!-- Video 2: Children's T-Shirt Wholesale (Hidden) -->
+          <video 
+            id="wholesale-video-tshirt" 
+            class="w-full h-full object-cover hidden" 
+            controls 
+            muted 
+            preload="metadata"
+            poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect fill='%230F766E' width='400' height='400'/%3E%3Ctext x='50%25' y='45%25' dominant-baseline='middle' text-anchor='middle' fill='white' font-size='80'%3E%F0%9F%91%95%3C/text%3E%3Ctext x='50%25' y='65%25' dominant-baseline='middle' text-anchor='middle' fill='white' font-size='16' font-family='Arial'%3ECotton T-Shirt%3C/text%3E%3Ctext x='50%25' y='75%25' dominant-baseline='middle' text-anchor='middle' fill='%23F59E0B' font-size='14' font-family='Arial'%3E19 ZMW%3C/text%3E%3C/svg%3E"
+            loop
+            playsinline
+          >
+            <source src="videos/childrens-tshirt-cotton-wholesale.webm" type="video/webm">
+            <source src="videos/childrens-tshirt-cotton-wholesale.mp4" type="video/mp4">
+          </video>
+          
+          <!-- Product Selection Tabs -->
+          <div class="absolute top-3 left-3 right-3 flex gap-2">
+            <button 
+              onclick="selectProductStyle('dress')" 
+              id="select-dress"
+              class="flex-1 bg-primary text-white px-3 py-2 rounded-lg text-xs font-bold shadow-lg border-2 border-primary transition-all"
+            >
+              👗 Kids Dress
+            </button>
+            <button 
+              onclick="selectProductStyle('tshirt')" 
+              id="select-tshirt"
+              class="flex-1 bg-white/80 text-gray-600 px-3 py-2 rounded-lg text-xs font-bold shadow-lg border-2 border-transparent transition-all"
+            >
+              👕 Cotton Tee
+            </button>
+          </div>
+          
+          <!-- Badges -->
+          <div class="absolute top-16 right-3 flex flex-col gap-2">
+            <span class="bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full animate-pulse">LIMITED STOCK</span>
+            <span class="bg-blue-500 text-white text-xs font-bold px-3 py-1 rounded-full">CHOOSE STYLE</span>
+          </div>
+        </div>
+
+        <!-- Video Thumbnails -->
+        <div class="p-4 border-b border-gray-100">
+          <div class="flex items-center justify-center gap-4">
+            <div 
+              class="video-thumb active ring-2 ring-primary ring-offset-2" 
+              id="thumb-dress-select"
+              onclick="selectProductStyle('dress')"
+            >
+              <i data-lucide="play" class="w-4 h-4 ml-0.5"></i>
+            </div>
+            <div 
+              class="video-thumb" 
+              id="thumb-tshirt-select"
+              onclick="selectProductStyle('tshirt')"
+            >
+              <i data-lucide="play" class="w-4 h-4 ml-0.5"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Content -->
+        <div class="p-5">
+          
+          <!-- Dynamic Title -->
+          <div class="flex items-start justify-between gap-2 mb-2">
+            <h3 class="font-semibold text-lg text-gray-900 leading-tight" id="selected-title">
+              Children's Dress — Brand New Design
+            </h3>
+            <span class="flex items-center gap-1 text-sm font-medium text-amber-500 flex-shrink-0">
+              <i data-lucide="star" class="w-4 h-4 fill-current"></i> 4.9
+            </span>
+          </div>
+          
+          <!-- Dynamic Description -->
+          <p class="text-gray-500 text-sm mb-2 line-clamp-2" id="selected-desc">
+            19 ZMW per piece. Brand new design children's dress with complete sizes. Perfect for retail boutiques and resellers in Zambia.
+          </p>
+          
+          <!-- Selection Indicator -->
+          <div class="flex items-center gap-2 mb-3 text-blue-600 text-xs font-semibold bg-blue-50 px-3 py-2 rounded-lg">
+            <i data-lucide="mouse-pointer-2" class="w-4 h-4"></i>
+            <span id="selection-text">Selected: Kids Dress (tap above to switch)</span>
+          </div>
+          
+          <!-- Stock Warning -->
+          <div class="flex items-center gap-2 mb-3 text-red-600 text-xs font-semibold bg-red-50 px-3 py-2 rounded-lg">
+            <i data-lucide="alert-circle" class="w-4 h-4"></i>
+            <span>Limited Stock — Factory Direct While Supplies Last!</span>
+          </div>
+          
+          <!-- Price with USD Conversion -->
+          <div class="mb-4">
+            <div class="flex items-baseline gap-2">
+              <span class="text-2xl font-bold text-gray-900">ZMW 19</span>
+              <span class="text-sm text-gray-400">/ piece</span>
+            </div>
+            <p class="text-xs text-gray-500 mt-1" id="usd-price-childrens">
+              ≈ $1.00 • 500 pieces minimum order
+            </p>
+          </div>
+
+          <!-- Features -->
+          <div class="flex flex-wrap gap-2 mb-4" id="selected-features">
+            <span class="text-xs bg-blue-50 text-blue-700 px-2 py-1 rounded">New Design</span>
+            <span class="text-xs bg-green-50 text-green-700 px-2 py-1 rounded">Complete Sizes</span>
+            <span class="text-xs bg-amber-50 text-amber-700 px-2 py-1 rounded">MOQ 500</span>
+          </div>
+
+          <!-- Add to Cart - Dynamic -->
+          <button 
+            class="add-cart w-full bg-primary hover:bg-blue-800 text-white py-3 rounded-xl font-semibold transition-colors shadow-lg shadow-primary/30 flex items-center justify-center gap-2" 
+            id="childrens-add-cart"
+            data-name="Children's Dress Wholesale (500pcs, 19 ZMW/pc)" 
+            data-price="9500"
+          >
+            <i data-lucide="plus" class="w-5 h-5"></i>
+            Add to Cart
+          </button>
+          
+          <p class="text-center text-[10px] text-gray-400 mt-2" id="childrens-total-text">
+            Total for MOQ: ZMW 9,500 (≈ $501.60)
+          </p>
+        </div>
+      </article>
+
+      <!-- Children's Fisherman Hat Wholesale -->
+      <article class="product-card bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden group" id="wholesale-fisherman-hat">
+        <!-- Main Display -->
+        <div class="relative aspect-square bg-gray-100 overflow-hidden">
+          <!-- Main Image with Click to View -->
+          <img 
+            id="hat-main" 
+            src="images/fisherman-hat-1.webp" 
+            alt="Children's Fisherman Hat Wholesale Zambia" 
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 clickable-image"
+            loading="lazy"
+            width="600"
+            height="600"
+            decoding="async"
+            onclick="openLightbox(this.src)"
+          >
+          
+          <!-- Badges -->
+          <div class="absolute top-3 left-3 flex flex-col gap-2">
+            <span class="bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full animate-pulse">LIMITED STOCK</span>
+            <span class="bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full">NEW</span>
+          </div>
+          
+          <!-- Click hint -->
+          <div class="absolute bottom-3 left-3 bg-black/50 text-white text-xs px-2 py-1 rounded backdrop-blur-sm pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity">
+            <i data-lucide="zoom-in" class="w-3 h-3 inline mr-1"></i> Click to view
+          </div>
+        </div>
+
+        <!-- Thumbnails - 9 images in wrapped layout -->
+        <div class="p-4 border-b border-gray-100">
+          <div class="flex items-center justify-center gap-2 flex-wrap">
+            <img 
+              src="images/fisherman-hat-1.webp" 
+              class="thumb-img active" 
+              onclick="changeHatImage(this.src, this)" 
+              alt="View 1"
+              loading="lazy"
+              width="48"
+              height="48"
+              decoding="async"
+            >
+            <img 
+              src="images/fisherman-hat-2.webp" 
+              class="thumb-img" 
+              onclick="changeHatImage(this.src, this)" 
+              alt="View 2"
+              loading="lazy"
+              width="48"
+              height="48"
+              decoding="async"
+            >
+            <img 
+              src="images/fisherman-hat-3.webp" 
+              class="thumb-img" 
+              onclick="changeHatImage(this.src, this)" 
+              alt="View 3"
+              loading="lazy"
+              width="48"
+              height="48"
+              decoding="async"
+            >
+            <img 
+              src="images/fisherman-hat-4.webp" 
+              class="thumb-img" 
+              onclick="changeHatImage(this.src, this)" 
+              alt="View 4"
+              loading="lazy"
+              width="48"
+              height="48"
+              decoding="async"
+            >
+            <img 
+              src="images/fisherman-hat-5.webp" 
+              class="thumb-img" 
+              onclick="changeHatImage(this.src, this)" 
+              alt="View 5"
+              loading="lazy"
+              width="48"
+              height="48"
+              decoding="async"
+            >
+            <img 
+              src="images/fisherman-hat-6.webp" 
+              class="thumb-img" 
+              onclick="changeHatImage(this.src, this)" 
+              alt="View 6"
+              loading="lazy"
+              width="48"
+              height="48"
+              decoding="async"
+            >
+            <img 
+              src="images/fisherman-hat-7.webp" 
+              class="thumb-img" 
+              onclick="changeHatImage(this.src, this)" 
+              alt="View 7"
+              loading="lazy"
+              width="48"
+              height="48"
+              decoding="async"
+            >
+            <img 
+              src="images/fisherman-hat-8.webp" 
+              class="thumb-img" 
+              onclick="changeHatImage(this.src, this)" 
+              alt="View 8"
+              loading="lazy"
+              width="48"
+              height="48"
+              decoding="async"
+            >
+            <img 
+              src="images/fisherman-hat-9.webp" 
+              class="thumb-img" 
+              onclick="changeHatImage(this.src, this)" 
+              alt="View 9"
+              loading="lazy"
+              width="48"
+              height="48"
+              decoding="async"
+            >
+          </div>
+        </div>
+
+        <!-- Content -->
+        <div class="p-5">
+          <div class="flex items-start justify-between gap-2 mb-2">
+            <h3 class="font-semibold text-lg text-gray-900">Children's Fisherman Hat</h3>
+            <span class="flex items-center gap-1 text-sm font-medium text-amber-500">
+              <i data-lucide="star" class="w-4 h-4 fill-current"></i> 4.8
+            </span>
+          </div>
+          
+          <p class="text-gray-500 text-sm mb-2 line-clamp-2">Wholesale children's fisherman hats — 10 ZMW per piece. Perfect for sun protection and fashion. Complete sizes available for all ages.</p>
+          
+          <!-- Stock Warning -->
+          <div class="flex items-center gap-2 mb-3 text-red-600 text-xs font-semibold bg-red-50 px-3 py-2 rounded-lg">
+            <i data-lucide="alert-circle" class="w-4 h-4"></i>
+            <span>Limited Stock — Order While Available!</span>
+          </div>
+          
+          <!-- Price with USD Conversion -->
+          <div class="mb-4">
+            <div class="flex items-baseline gap-2">
+              <span class="text-2xl font-bold text-gray-900">ZMW 10</span>
+              <span class="text-sm text-gray-400">/ piece</span>
+            </div>
+            <p class="text-xs text-gray-500 mt-1" id="usd-price-hat">
+              ≈ $0.53 • 500 pieces minimum order
+            </p>
+          </div>
+
+          <!-- Features -->
+          <div class="flex flex-wrap gap-2 mb-4">
+            <span class="text-xs bg-blue-50 text-blue-700 px-2 py-1 rounded">Sun Protection</span>
+            <span class="text-xs bg-green-50 text-green-700 px-2 py-1 rounded">Complete Sizes</span>
+            <span class="text-xs bg-amber-50 text-amber-700 px-2 py-1 rounded">MOQ 500</span>
+          </div>
+
+          <!-- Add to Cart -->
+          <button class="add-cart w-full bg-primary hover:bg-blue-800 text-white py-3 rounded-xl font-semibold transition-colors shadow-lg shadow-primary/30 flex items-center justify-center gap-2" 
+                  data-name="Children's Fisherman Hat Wholesale (500pcs, 10 ZMW/pc)" 
+                  data-price="5000">
+            <i data-lucide="plus" class="w-5 h-5"></i>
+            Add to Cart
+          </button>
+          
+          <p class="text-center text-[10px] text-gray-400 mt-2" id="hat-total-text">
+            Total for MOQ: ZMW 5,000 (≈ $264.00)
+          </p>
+        </div>
+      </article>
+
+      <!-- Children's Sports Pants Wholesale -->
+      <article class="product-card bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden group" id="wholesale-sports-pants">
+        <!-- Main Display -->
+        <div class="relative aspect-square bg-gray-100 overflow-hidden">
+          <!-- Main Image with Click to View -->
+          <img 
+            id="pants-main" 
+            src="images/sports-pants-1.webp" 
+            alt="Children's Sports Pants Wholesale Zambia" 
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 clickable-image"
+            loading="lazy"
+            width="600"
+            height="600"
+            decoding="async"
+            onclick="openLightbox(this.src)"
+          >
+          
+          <!-- Badges -->
+          <div class="absolute top-3 left-3 flex flex-col gap-2">
+            <span class="bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full animate-pulse">LIMITED STOCK</span>
+            <span class="bg-blue-500 text-white text-xs font-bold px-3 py-1 rounded-full">ACTIVE WEAR</span>
+          </div>
+          
+          <!-- Click hint -->
+          <div class="absolute bottom-3 left-3 bg-black/50 text-white text-xs px-2 py-1 rounded backdrop-blur-sm pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity">
+            <i data-lucide="zoom-in" class="w-3 h-3 inline mr-1"></i> Click to view
+          </div>
+        </div>
+
+        <!-- Thumbnails - 5 images -->
+        <div class="p-4 border-b border-gray-100">
+          <div class="flex items-center justify-center gap-3">
+            <img 
+              src="images/sports-pants-1.webp" 
+              class="thumb-img active" 
+              onclick="changePantsImage(this.src, this)" 
+              alt="View 1"
+              loading="lazy"
+              width="48"
+              height="48"
+              decoding="async"
+            >
+            <img 
+              src="images/sports-pants-2.webp" 
+              class="thumb-img" 
+              onclick="changePantsImage(this.src, this)" 
+              alt="View 2"
+              loading="lazy"
+              width="48"
+              height="48"
+              decoding="async"
+            >
+            <img 
+              src="images/sports-pants-3.webp" 
+              class="thumb-img" 
+              onclick="changePantsImage(this.src, this)" 
+              alt="View 3"
+              loading="lazy"
+              width="48"
+              height="48"
+              decoding="async"
+            >
+            <img 
+              src="images/sports-pants-4.webp" 
+              class="thumb-img" 
+              onclick="changePantsImage(this.src, this)" 
+              alt="View 4"
+              loading="lazy"
+              width="48"
+              height="48"
+              decoding="async"
+            >
+            <img 
+              src="images/sports-pants-5.webp" 
+              class="thumb-img" 
+              onclick="changePantsImage(this.src, this)" 
+              alt="View 5"
+              loading="lazy"
+              width="48"
+              height="48"
+              decoding="async"
+            >
+          </div>
+        </div>
+
+        <!-- Content -->
+        <div class="p-5">
+          <div class="flex items-start justify-between gap-2 mb-2">
+            <h3 class="font-semibold text-lg text-gray-900">Children's Sports Pants</h3>
+            <span class="flex items-center gap-1 text-sm font-medium text-amber-500">
+              <i data-lucide="star" class="w-4 h-4 fill-current"></i> 4.9
+            </span>
+          </div>
+          
+          <p class="text-gray-500 text-sm mb-2 line-clamp-2">Wholesale children's sports pants — 37 ZMW per piece. Durable activewear for sports and play. Complete sizes available for all ages.</p>
+          
+          <!-- Stock Warning -->
+          <div class="flex items-center gap-2 mb-3 text-red-600 text-xs font-semibold bg-red-50 px-3 py-2 rounded-lg">
+            <i data-lucide="alert-circle" class="w-4 h-4"></i>
+            <span>Limited Stock — Order While Available!</span>
+          </div>
+          
+          <!-- Price with USD Conversion -->
+          <div class="mb-4">
+            <div class="flex items-baseline gap-2">
+              <span class="text-2xl font-bold text-gray-900">ZMW 37</span>
+              <span class="text-sm text-gray-400">/ piece</span>
+            </div>
+            <p class="text-xs text-gray-500 mt-1" id="usd-price-pants">
+              ≈ $1.95 • 500 pieces minimum order
+            </p>
+          </div>
+
+          <!-- Features -->
+          <div class="flex flex-wrap gap-2 mb-4">
+            <span class="text-xs bg-blue-50 text-blue-700 px-2 py-1 rounded">Sports Wear</span>
+            <span class="text-xs bg-green-50 text-green-700 px-2 py-1 rounded">Complete Sizes</span>
+            <span class="text-xs bg-amber-50 text-amber-700 px-2 py-1 rounded">MOQ 500</span>
+          </div>
+
+          <!-- Add to Cart -->
+          <button class="add-cart w-full bg-primary hover:bg-blue-800 text-white py-3 rounded-xl font-semibold transition-colors shadow-lg shadow-primary/30 flex items-center justify-center gap-2" 
+                  data-name="Children's Sports Pants Wholesale (500pcs, 37 ZMW/pc)" 
+                  data-price="18500">
+            <i data-lucide="plus" class="w-5 h-5"></i>
+            Add to Cart
+          </button>
+          
+          <p class="text-center text-[10px] text-gray-400 mt-2" id="pants-total-text">
+            Total for MOQ: ZMW 18,500 (≈ $976.80)
+          </p>
+        </div>
+      </article>
+
+      <!-- Football Jerseys Wholesale -->
+      <article class="product-card bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden group" id="wholesale-football-jerseys">
+        <!-- Main Display -->
+        <div class="relative aspect-square bg-gray-100 overflow-hidden">
+          <!-- Main Image (default) -->
+          <img 
+            id="jerseys-main" 
+            src="images/football-jerseys-1.webp" 
+            alt="Football Jerseys Wholesale Zambia 26/27 Season" 
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 clickable-image"
+            loading="lazy"
+            width="600"
+            height="600"
+            decoding="async"
+            onclick="openLightbox(this.src)"
+          >
+          
+          <!-- Video (hidden by default) -->
+          <video 
+            id="jerseys-video" 
+            class="w-full h-full object-cover hidden" 
+            controls 
+            muted 
+            preload="metadata"
+            poster="images/football-jerseys-1.webp"
+            loop
+            playsinline
+          >
+            <source src="videos/football-jerseys-26-27-season.webm" type="video/webm">
+            <source src="videos/football-jerseys-26-27-season.mp4" type="video/mp4">
+          </video>
+          
+          <!-- Badges -->
+          <div class="absolute top-3 left-3 flex flex-col gap-2">
+            <span class="bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full animate-pulse">LIMITED STOCK</span>
+            <span class="bg-purple-500 text-white text-xs font-bold px-3 py-1 rounded-full">26/27 SEASON</span>
+          </div>
+          
+          <!-- Retro badge (hidden by default) -->
+          <div class="absolute top-3 right-3 hidden" id="retro-badge">
+            <span class="bg-amber-500 text-white text-xs font-bold px-3 py-1 rounded-full">RETRO</span>
+          </div>
+          
+          <!-- Click hint -->
+          <div class="absolute bottom-3 left-3 bg-black/50 text-white text-xs px-2 py-1 rounded backdrop-blur-sm pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity">
+            <i data-lucide="zoom-in" class="w-3 h-3 inline mr-1"></i> Click to view
+          </div>
+        </div>
+
+        <!-- Thumbnails - 4 images + video -->
+        <div class="p-4 border-b border-gray-100">
+          <div class="flex items-center justify-center gap-3">
+            <img 
+              src="images/football-jerseys-1.webp" 
+              class="thumb-img active" 
+              onclick="showJerseysImage(this.src, this)" 
+              alt="View 1"
+              loading="lazy"
+              width="48"
+              height="48"
+              decoding="async"
+            >
+            <img 
+              src="images/football-jerseys-2.webp" 
+              class="thumb-img" 
+              onclick="showJerseysImage(this.src, this)" 
+              alt="View 2"
+              loading="lazy"
+              width="48"
+              height="48"
+              decoding="async"
+            >
+            <img 
+              src="images/football-jerseys-3.webp" 
+              class="thumb-img" 
+              onclick="showJerseysImage(this.src, this)" 
+              alt="View 3"
+              loading="lazy"
+              width="48"
+              height="48"
+              decoding="async"
+            >
+            <img 
+              src="images/football-jerseys-4.webp" 
+              class="thumb-img" 
+              onclick="showJerseysImage(this.src, this)" 
+              alt="View 4"
+              loading="lazy"
+              width="48"
+              height="48"
+              decoding="async"
+            >
+            <div class="video-thumb" onclick="showJerseysVideo(this)">
+              <i data-lucide="play" class="w-4 h-4 ml-0.5"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Content -->
+        <div class="p-5">
+          <!-- Title with Season Toggle -->
+          <div class="flex items-start justify-between gap-2 mb-2">
+            <h3 class="font-semibold text-lg text-gray-900 leading-tight" id="jerseys-title">
+              Football Jerseys — 26/27 Season
+            </h3>
+            <span class="flex items-center gap-1 text-sm font-medium text-amber-500 flex-shrink-0">
+              <i data-lucide="star" class="w-4 h-4 fill-current"></i> 4.9
+            </span>
+          </div>
+          
+          <!-- Description -->
+          <p class="text-gray-500 text-sm mb-2 line-clamp-2" id="jerseys-desc">
+            Official 26/27 season football jerseys — 250 ZMW per piece. High-quality replica jerseys with complete team options. Perfect for sports retailers.
+          </p>
+          
+          <!-- Season Selector -->
+          <div class="flex items-center gap-2 mb-3">
+            <span class="text-xs font-semibold text-gray-600">Select:</span>
+            <div class="flex gap-2">
+              <button 
+                onclick="selectJerseysSeason('current')" 
+                id="btn-current"
+                class="px-3 py-1.5 rounded-lg text-xs font-bold bg-primary text-white border-2 border-primary transition-all"
+              >
+                26/27 Season
+              </button>
+              <button 
+                onclick="selectJerseysSeason('retro')" 
+                id="btn-retro"
+                class="px-3 py-1.5 rounded-lg text-xs font-bold bg-white text-gray-600 border-2 border-gray-200 hover:border-primary transition-all"
+              >
+                Retro
+              </button>
+            </div>
+          </div>
+          
+          <!-- Selection Indicator -->
+          <div class="flex items-center gap-2 mb-3 text-purple-600 text-xs font-semibold bg-purple-50 px-3 py-2 rounded-lg">
+            <i data-lucide="shirt" class="w-4 h-4"></i>
+            <span id="jerseys-selection-text">Selected: 26/27 Season Jerseys</span>
+          </div>
+          
+          <!-- Stock Warning -->
+          <div class="flex items-center gap-2 mb-3 text-red-600 text-xs font-semibold bg-red-50 px-3 py-2 rounded-lg">
+            <i data-lucide="alert-circle" class="w-4 h-4"></i>
+            <span>Limited Stock — Premium Quality Jerseys!</span>
+          </div>
+          
+          <!-- Price with USD Conversion -->
+          <div class="mb-4">
+            <div class="flex items-baseline gap-2">
+              <span class="text-2xl font-bold text-gray-900">ZMW 250</span>
+              <span class="text-sm text-gray-400">/ piece</span>
+            </div>
+            <p class="text-xs text-gray-500 mt-1" id="usd-price-jerseys">
+              ≈ $13.20 • 35 pieces minimum order
+            </p>
+          </div>
+
+          <!-- Features -->
+          <div class="flex flex-wrap gap-2 mb-4" id="jerseys-features">
+            <span class="text-xs bg-purple-50 text-purple-700 px-2 py-1 rounded">26/27 Season</span>
+            <span class="text-xs bg-green-50 text-green-700 px-2 py-1 rounded">Official Replica</span>
+            <span class="text-xs bg-amber-50 text-amber-700 px-2 py-1 rounded">MOQ 35</span>
+          </div>
+
+          <!-- Add to Cart -->
+          <button 
+            class="add-cart w-full bg-primary hover:bg-blue-800 text-white py-3 rounded-xl font-semibold transition-colors shadow-lg shadow-primary/30 flex items-center justify-center gap-2" 
+            id="jerseys-add-cart"
+            data-name="Football Jerseys 26/27 Season Wholesale (35pcs, 250 ZMW/pc)" 
+            data-price="8750"
+          >
+            <i data-lucide="plus" class="w-5 h-5"></i>
+            Add to Cart
+          </button>
+          
+          <p class="text-center text-[10px] text-gray-400 mt-2" id="jerseys-total-text">
+            Total for MOQ: ZMW 8,750 (≈ $462.00)
+          </p>
+        </div>
+      </article>
 
     </div>
 
@@ -477,6 +1194,10 @@
       initMobileMenu();
       initCart();
       initIntersectionObserver();
+      initChildrensProduct();
+      initHatProduct();
+      initPantsProduct();
+      initJerseysProduct(); // Added Football Jerseys initialization
     }
     
     // Mobile menu toggle
@@ -523,6 +1244,31 @@
       });
     }
     
+    // ==========================================
+    // LIGHTBOX FUNCTIONALITY FOR IMAGE VIEWING
+    // ==========================================
+    
+    function openLightbox(src) {
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightbox-img');
+      lightboxImg.src = src;
+      lightbox.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    
+    function closeLightbox() {
+      const lightbox = document.getElementById('lightbox');
+      lightbox.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    
+    // Close on escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeLightbox();
+      }
+    });
+    
     // Image/Video toggle functions
     function showImage(imgId, videoId, thumb) {
       document.getElementById(imgId).classList.remove('hidden');
@@ -544,6 +1290,268 @@
       // Update active thumbnail
       document.querySelectorAll('.thumb-img').forEach(t => t.classList.remove('active'));
       if(thumb) thumb.classList.add('active');
+    }
+    
+    // ==========================================
+    // FISHERMAN HAT IMAGE SWITCHER
+    // ==========================================
+    
+    function changeHatImage(src, thumb) {
+      const mainImg = document.getElementById('hat-main');
+      mainImg.src = src;
+      
+      // Update active thumbnail
+      document.querySelectorAll('#wholesale-fisherman-hat .thumb-img').forEach(t => t.classList.remove('active'));
+      thumb.classList.add('active');
+    }
+    
+    // ==========================================
+    // SPORTS PANTS IMAGE SWITCHER
+    // ==========================================
+    
+    function changePantsImage(src, thumb) {
+      const mainImg = document.getElementById('pants-main');
+      mainImg.src = src;
+      
+      // Update active thumbnail
+      document.querySelectorAll('#wholesale-sports-pants .thumb-img').forEach(t => t.classList.remove('active'));
+      thumb.classList.add('active');
+    }
+    
+    // ==========================================
+    // PRODUCT STYLE SELECTOR (Dress vs T-Shirt)
+    // ==========================================
+    
+    let selectedStyle = 'dress'; // Default selection
+    
+    function selectProductStyle(style) {
+      selectedStyle = style;
+      
+      const video1 = document.getElementById('wholesale-video-dress');
+      const video2 = document.getElementById('wholesale-video-tshirt');
+      const title = document.getElementById('selected-title');
+      const desc = document.getElementById('selected-desc');
+      const features = document.getElementById('selected-features');
+      const selectionText = document.getElementById('selection-text');
+      const btn = document.getElementById('childrens-add-cart');
+      const totalText = document.getElementById('childrens-total-text');
+      
+      // Update videos
+      if(style === 'dress') {
+        video1.classList.remove('hidden');
+        video2.classList.add('hidden');
+        video2.pause();
+        
+        title.textContent = "Children's Dress — Brand New Design";
+        desc.textContent = "19 ZMW per piece. Brand new design children's dress with complete sizes. Perfect for retail boutiques and resellers in Zambia.";
+        features.innerHTML = `
+          <span class="text-xs bg-blue-50 text-blue-700 px-2 py-1 rounded">New Design</span>
+          <span class="text-xs bg-green-50 text-green-700 px-2 py-1 rounded">Complete Sizes</span>
+          <span class="text-xs bg-amber-50 text-amber-700 px-2 py-1 rounded">MOQ 500</span>
+        `;
+        selectionText.textContent = "Selected: Kids Dress (tap above to switch)";
+        btn.setAttribute('data-name', "Children's Dress Wholesale (500pcs, 19 ZMW/pc)");
+        btn.setAttribute('data-price', "9500");
+        totalText.textContent = "Total for MOQ: ZMW 9,500 (≈ $501.60)";
+        
+        // Update buttons
+        document.getElementById('select-dress').classList.add('bg-primary', 'text-white', 'border-primary');
+        document.getElementById('select-dress').classList.remove('bg-white/80', 'text-gray-600', 'border-transparent');
+        document.getElementById('select-tshirt').classList.remove('bg-primary', 'text-white', 'border-primary');
+        document.getElementById('select-tshirt').classList.add('bg-white/80', 'text-gray-600', 'border-transparent');
+        
+        // Update video thumbs
+        document.getElementById('thumb-dress-select').classList.add('ring-2', 'ring-primary', 'ring-offset-2');
+        document.getElementById('thumb-tshirt-select').classList.remove('ring-2', 'ring-primary', 'ring-offset-2');
+        
+        // Play video
+        video1.muted = true;
+        video1.play().catch(e => console.log('Autoplay prevented'));
+        
+      } else {
+        video1.classList.add('hidden');
+        video1.pause();
+        video2.classList.remove('hidden');
+        
+        title.textContent = "Children's Cotton T-Shirt — Summer Wholesale";
+        desc.textContent = "19 ZMW per piece. Pure cotton fabric summer T-shirt with complete sizes. Reliable factory stock quality 👍";
+        features.innerHTML = `
+          <span class="text-xs bg-blue-50 text-blue-700 px-2 py-1 rounded">Pure Cotton</span>
+          <span class="text-xs bg-green-50 text-green-700 px-2 py-1 rounded">Complete Sizes</span>
+          <span class="text-xs bg-amber-50 text-amber-700 px-2 py-1 rounded">MOQ 500</span>
+        `;
+        selectionText.textContent = "Selected: Cotton T-Shirt (tap above to switch)";
+        btn.setAttribute('data-name', "Children's Cotton T-Shirt Wholesale (500pcs, 19 ZMW/pc)");
+        btn.setAttribute('data-price', "9500");
+        totalText.textContent = "Total for MOQ: ZMW 9,500 (≈ $501.60)";
+        
+        // Update buttons
+        document.getElementById('select-tshirt').classList.add('bg-primary', 'text-white', 'border-primary');
+        document.getElementById('select-tshirt').classList.remove('bg-white/80', 'text-gray-600', 'border-transparent');
+        document.getElementById('select-dress').classList.remove('bg-primary', 'text-white', 'border-primary');
+        document.getElementById('select-dress').classList.add('bg-white/80', 'text-gray-600', 'border-transparent');
+        
+        // Update video thumbs
+        document.getElementById('thumb-tshirt-select').classList.add('ring-2', 'ring-primary', 'ring-offset-2');
+        document.getElementById('thumb-dress-select').classList.remove('ring-2', 'ring-primary', 'ring-offset-2');
+        
+        // Play video
+        video2.muted = true;
+        video2.play().catch(e => console.log('Autoplay prevented'));
+      }
+    }
+    
+    function initChildrensProduct() {
+      // Calculate and display USD price
+      const priceZMW = 19;
+      const priceUSD = (priceZMW * USD_RATE).toFixed(2);
+      const display = document.getElementById('usd-price-childrens');
+      if(display) {
+        display.textContent = `≈ $${priceUSD} • 500 pieces minimum order`;
+      }
+      
+      // Auto-play first video
+      const video1 = document.getElementById('wholesale-video-dress');
+      if(video1) {
+        video1.muted = true;
+        video1.play().catch(e => console.log('Autoplay prevented'));
+      }
+    }
+    
+    // Initialize Fisherman Hat USD price
+    function initHatProduct() {
+      const priceZMW = 10;
+      const priceUSD = (priceZMW * USD_RATE).toFixed(2);
+      const totalUSD = (5000 * USD_RATE).toFixed(2);
+      
+      const display = document.getElementById('usd-price-hat');
+      if(display) {
+        display.textContent = `≈ $${priceUSD} • 500 pieces minimum order`;
+      }
+      
+      // Update the total text
+      const totalText = document.getElementById('hat-total-text');
+      if(totalText) {
+        totalText.textContent = `Total for MOQ: ZMW 5,000 (≈ $${totalUSD})`;
+      }
+    }
+    
+    // Initialize Sports Pants USD price
+    function initPantsProduct() {
+      const priceZMW = 37;
+      const priceUSD = (priceZMW * USD_RATE).toFixed(2);
+      const totalUSD = (18500 * USD_RATE).toFixed(2);
+      
+      const display = document.getElementById('usd-price-pants');
+      if(display) {
+        display.textContent = `≈ $${priceUSD} • 500 pieces minimum order`;
+      }
+      
+      // Update the total text
+      const totalText = document.getElementById('pants-total-text');
+      if(totalText) {
+        totalText.textContent = `Total for MOQ: ZMW 18,500 (≈ $${totalUSD})`;
+      }
+    }
+    
+    // ==========================================
+    // FOOTBALL JERSEYS FUNCTIONS
+    // ==========================================
+    
+    let selectedJerseysSeason = 'current'; // 'current' or 'retro'
+    
+    function showJerseysImage(src, thumb) {
+      const mainImg = document.getElementById('jerseys-main');
+      const video = document.getElementById('jerseys-video');
+      
+      mainImg.src = src;
+      mainImg.classList.remove('hidden');
+      video.classList.add('hidden');
+      video.pause();
+      
+      // Update active thumbnail
+      document.querySelectorAll('#wholesale-football-jerseys .thumb-img').forEach(t => t.classList.remove('active'));
+      thumb.classList.add('active');
+    }
+    
+    function showJerseysVideo(thumb) {
+      const mainImg = document.getElementById('jerseys-main');
+      const video = document.getElementById('jerseys-video');
+      
+      mainImg.classList.add('hidden');
+      video.classList.remove('hidden');
+      video.play();
+      
+      // Update active thumbnail
+      document.querySelectorAll('#wholesale-football-jerseys .thumb-img').forEach(t => t.classList.remove('active'));
+      if(thumb) thumb.classList.add('active');
+    }
+    
+    function selectJerseysSeason(season) {
+      selectedJerseysSeason = season;
+      
+      const title = document.getElementById('jerseys-title');
+      const desc = document.getElementById('jerseys-desc');
+      const features = document.getElementById('jerseys-features');
+      const selectionText = document.getElementById('jerseys-selection-text');
+      const btn = document.getElementById('jerseys-add-cart');
+      const retroBadge = document.getElementById('retro-badge');
+      const btnCurrent = document.getElementById('btn-current');
+      const btnRetro = document.getElementById('btn-retro');
+      
+      if(season === 'current') {
+        title.textContent = "Football Jerseys — 26/27 Season";
+        desc.textContent = "Official 26/27 season football jerseys — 250 ZMW per piece. High-quality replica jerseys with complete team options. Perfect for sports retailers.";
+        features.innerHTML = `
+          <span class="text-xs bg-purple-50 text-purple-700 px-2 py-1 rounded">26/27 Season</span>
+          <span class="text-xs bg-green-50 text-green-700 px-2 py-1 rounded">Official Replica</span>
+          <span class="text-xs bg-amber-50 text-amber-700 px-2 py-1 rounded">MOQ 35</span>
+        `;
+        selectionText.textContent = "Selected: 26/27 Season Jerseys";
+        btn.setAttribute('data-name', "Football Jerseys 26/27 Season Wholesale (35pcs, 250 ZMW/pc)");
+        retroBadge.classList.add('hidden');
+        
+        // Button styles
+        btnCurrent.classList.add('bg-primary', 'text-white', 'border-primary');
+        btnCurrent.classList.remove('bg-white', 'text-gray-600', 'border-gray-200');
+        btnRetro.classList.remove('bg-primary', 'text-white', 'border-primary');
+        btnRetro.classList.add('bg-white', 'text-gray-600', 'border-gray-200');
+        
+      } else {
+        title.textContent = "Football Jerseys — Retro Collection";
+        desc.textContent = "Classic retro football jerseys — 250 ZMW per piece. Vintage designs from legendary seasons. Nostalgic appeal for collectors and fans.";
+        features.innerHTML = `
+          <span class="text-xs bg-amber-50 text-amber-700 px-2 py-1 rounded">Retro Vintage</span>
+          <span class="text-xs bg-green-50 text-green-700 px-2 py-1 rounded">Classic Designs</span>
+          <span class="text-xs bg-amber-50 text-amber-700 px-2 py-1 rounded">MOQ 35</span>
+        `;
+        selectionText.textContent = "Selected: Retro Jerseys";
+        btn.setAttribute('data-name', "Football Jerseys Retro Collection Wholesale (35pcs, 250 ZMW/pc)");
+        retroBadge.classList.remove('hidden');
+        
+        // Button styles
+        btnRetro.classList.add('bg-primary', 'text-white', 'border-primary');
+        btnRetro.classList.remove('bg-white', 'text-gray-600', 'border-gray-200');
+        btnCurrent.classList.remove('bg-primary', 'text-white', 'border-primary');
+        btnCurrent.classList.add('bg-white', 'text-gray-600', 'border-gray-200');
+      }
+    }
+    
+    function initJerseysProduct() {
+      const priceZMW = 250;
+      const priceUSD = (priceZMW * USD_RATE).toFixed(2);
+      const totalUSD = (8750 * USD_RATE).toFixed(2);
+      
+      const display = document.getElementById('usd-price-jerseys');
+      if(display) {
+        display.textContent = `≈ $${priceUSD} • 35 pieces minimum order`;
+      }
+      
+      // Update the total text
+      const totalText = document.getElementById('jerseys-total-text');
+      if(totalText) {
+        totalText.textContent = `Total for MOQ: ZMW 8,750 (≈ $${totalUSD})`;
+      }
     }
     
     // ==========================================
