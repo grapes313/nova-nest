@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QN8N334V6L"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-QN8N334V6L');
+</script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Detail - Velora</title>
+  <meta name="description" content="Buy electronics on Velora Market. Cash on Delivery across Zambia.">
+  <meta name="robots" content="index, follow">
+  <meta property="og:type" content="product">
+  <meta property="og:site_name" content="Velora Market">
+  <meta property="og:title" content="Product Detail - Velora">
+  <meta property="og:description" content="Buy electronics on Velora Market. Cash on Delivery across Zambia.">
+  <meta property="og:image" content="">
+  <meta property="og:url" content="">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Product Detail - Velora">
+  <meta name="twitter:description" content="Buy electronics on Velora Market.">
+  <link rel="canonical" href="">
+  <!-- JSON-LD will be set dynamically by JavaScript -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          colors: { velora: { blue: '#0D47FF', dark: '#080F19', market: '#6A00FF', cyan: '#00D4FF', light: '#f8fafc' } }
+        }
+      }
+    }
+  </script>
+  <style>
+    .product-img-wrapper { position: relative; overflow: hidden; border-radius: 16px; background: #f3f4f6; }
+    .product-img-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.3s ease, transform 0.3s ease; }
+    .product-img-wrapper img.switching { opacity: 0; transform: scale(0.95); }
+    .model-card { cursor: pointer; transition: all 0.2s ease; border: 2px solid #e5e7eb; }
+    .model-card:hover { border-color: #0D47FF; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(220,38,38,0.1); }
+    .model-card.selected { border-color: #0D47FF; background: #fef2f2; box-shadow: 0 0 0 3px rgba(220,38,38,0.1); }
+    .model-card img { transition: transform 0.2s ease; }
+    .model-card:hover img { transform: scale(1.05); }
+    .option-btn { padding: 0.6rem 1.2rem; border: 1.5px solid #e5e7eb; border-radius: 10px; font-size: 0.9rem; font-weight: 500; cursor: pointer; transition: all 0.2s ease; background: #fff; color: #374151; }
+    .option-btn:hover { border-color: #0D47FF; color: #0D47FF; }
+    .option-btn.selected { border-color: #0D47FF; background: #fef2f2; color: #0D47FF; font-weight: 600; box-shadow: 0 0 0 2px rgba(220,38,38,0.1); }
+    .option-btn.disabled { opacity: 0.4; cursor: not-allowed; pointer-events: none; }
+    .price-display { font-size: 2rem; font-weight: 800; color: #0D47FF; transition: opacity 0.15s ease; }
+    .price-display.updating { opacity: 0.4; }
+    .btn-primary { background: linear-gradient(135deg, #0D47FF, #0a2dbd); }
+    .btn-primary:hover { background: linear-gradient(135deg, #0a2dbd, #0836a3); transform: translateY(-1px); }
+    .btn-primary:active { transform: translateY(0); }
+    .step-badge { width: 28px; height: 28px; border-radius: 50%; background: #e5e7eb; color: #6b7280; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; flex-shrink: 0; transition: all 0.2s ease; }
+    .step-badge.active { background: #0D47FF; color: #fff; }
+    .step-badge.done { background: #6A00FF; color: #fff; }
+    .section-fade { animation: fadeIn 0.3s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    .color-dot { width: 24px; height: 24px; border-radius: 50%; border: 2px solid #e5e7eb; display: inline-block; margin-right: 8px; vertical-align: middle; }
+    .option-btn .color-dot { margin-right: 6px; }
+    .quantity-btn { width: 36px; height: 36px; border-radius: 50%; border: 1.5px solid #e5e7eb; background: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; }
+    .quantity-btn:hover { border-color: #0D47FF; color: #0D47FF; }
+    .breadcrumb a:hover { color: #0D47FF; }
+  </style>
+<base target="_blank">
+<base target="_blank">
+<base target="_blank">
+</head>
+<body class="font-sans bg-velora-light text-gray-900 antialiased">
+
+<!-- Loading State -->
+<div id="loadingState" class="fixed inset-0 bg-white z-50 flex items-center justify-center">
+  <div class="text-center">
+    <i class="fas fa-spinner fa-spin text-velora-blue text-3xl mb-3"></i>
+    <p class="text-gray-500">Loading product...</p>
+  </div>
+</div>
+
+<!-- Error State -->
+<div id="errorState" class="fixed inset-0 bg-white z-50 flex items-center justify-center hidden">
+  <div class="text-center max-w-md px-4">
+    <i class="fas fa-exclamation-circle text-red-400 text-4xl mb-3"></i>
+    <h2 class="text-xl font-bold mb-2">Product Not Found</h2>
+    <p class="text-gray-500 mb-4">This product may have been removed or the link is incorrect.</p>
+    <a href="velora-electronics.html" class="btn-primary text-white px-6 py-3 rounded-full font-semibold inline-flex items-center gap-2">
+      <i class="fas fa-arrow-left"></i> Back to Store
+    </a>
+  </div>
+</div>
+
+<!-- TOP BAR -->
+<div class="bg-velora-dark text-white text-xs py-2.5 px-4">
+  <div class="max-w-7xl mx-auto flex justify-between items-center">
+    <span class="flex items-center gap-1"><i class="fas fa-map-marker-alt text-velora-blue"></i> Delivering across Zambia</span>
+    <div class="flex items-center gap-4">
+      <a href="velora-electronics.html" class="hover:text-velora-blue transition">Back to Store</a>
+      <a href="index.html" class="hover:text-velora-blue transition font-medium">Marketplace</a>
+      <span class="font-semibold">ZMW</span>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="bg-white shadow-sm sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+      <a href="index.html" class="flex items-center gap-2 flex-shrink-0">
+        <div class="w-10 h-10 bg-gradient-to-br from-velora-blue to-blue-800 rounded-xl flex items-center justify-center">
+          <i class="fas fa-v text-white text-lg"></i>
+        </div>
+        <div>
+          <h1 class="text-xl font-bold text-gray-900 tracking-tight">Velora</h1>
+          <p class="text-[10px] text-velora-blue font-bold -mt-1 tracking-wider">MARKET</p>
+        </div>
+      </a>
+      <!-- Desktop Search -->
+      <div class="hidden md:flex flex-1 max-w-lg mx-6">
+        <form class="relative w-full" onsubmit="return goToSearch(event)">
+          <input type="text" id="navSearchInput" placeholder="Search all vendors..."
+            class="w-full pl-4 pr-12 py-2 bg-gray-100 border-2 border-transparent rounded-full focus:bg-white focus:border-velora-blue transition-all text-sm">
+          <button type="submit" class="absolute right-1.5 top-1/2 -translate-y-1/2 bg-velora-blue text-white w-8 h-8 rounded-full flex items-center justify-center hover:bg-blue-700 transition">
+            <i class="fas fa-search text-xs"></i>
+          </button>
+        </form>
+      </div>
+      <div class="flex items-center gap-3">
+        <a href="velora-electronics.html" class="hidden sm:block text-sm text-gray-600 hover:text-velora-blue transition font-medium">Store</a>
+        <a href="search.html" class="text-sm text-velora-blue hover:text-blue-700 transition font-medium md:hidden">Search</a>
+        <button onclick="window.VeloraCart.open()" class="relative p-2 hover:bg-gray-100 rounded-full transition">
+          <i class="fas fa-shopping-cart text-gray-700 text-lg"></i><span class="vcart-badge" id="navCartBadge" style="display:none">0</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- BREADCRUMB -->
+<div class="bg-white border-b border-gray-100">
+  <div class="max-w-5xl mx-auto px-4 py-3">
+    <div class="breadcrumb flex items-center gap-2 text-sm text-gray-500">
+      <a href="index.html" class="hover:text-velora-blue transition">Home</a>
+      <i class="fas fa-chevron-right text-xs text-gray-300"></i>
+      <a href="velora-electronics.html" class="hover:text-velora-blue transition">Electronics</a>
+      <i class="fas fa-chevron-right text-xs text-gray-300"></i>
+      <span id="breadcrumb-name" class="text-gray-900 font-medium">Loading...</span>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<main id="productContent" class="max-w-5xl mx-auto px-4 py-8 hidden">
+  <div class="grid lg:grid-cols-2 gap-8">
+
+    <!-- LEFT: Images -->
+    <div>
+      <!-- Main Image -->
+      <div class="product-img-wrapper aspect-square mb-4" id="mainImageWrapper">
+        <img id="mainImage" src="" alt="Product" onerror="this.src='images/placeholder.jpg'">
+      </div>
+      <!-- Thumbnails -->
+      <div class="flex gap-3 flex-wrap" id="thumbnailRow"></div>
+    </div>
+
+    <!-- RIGHT: Product Info & Selections -->
+    <div>
+      <!-- Header -->
+      <div class="mb-4">
+        <div class="flex items-center gap-2 mb-2">
+          <span class="bg-velora-blue text-white text-xs font-bold px-2 py-0.5 rounded-full">Velora Electronics</span>
+          <span class="bg-purple-100 text-purple-700 text-xs font-bold px-2 py-0.5 rounded-full flex items-center gap-1"><i class="fas fa-check-circle text-[10px]"></i> Verified</span>
+        </div>
+        <h1 class="text-2xl font-bold text-gray-900 mb-1" id="productName">Product Name</h1>
+        <div class="flex items-center gap-3 text-sm text-gray-500">
+          <span class="flex items-center gap-1"><i class="fas fa-star text-velora-cyan"></i> 4.9</span>
+          <span>|</span>
+          <span id="productCategory">Category</span>
+          <span>|</span>
+          <span id="stockBadge"></span>
+        </div>
+      </div>
+
+      <!-- Price -->
+      <div class="mb-6">
+        <p class="text-sm text-gray-500 mb-1">Price</p>
+        <div class="price-display" id="priceDisplay">ZMW 0</div>
+        <p class="text-xs text-gray-400 mt-1" id="priceNote">Select a model to see the price</p>
+      </div>
+
+      <!-- STEP 1: Select Model -->
+      <div class="mb-6 section-fade" id="modelSection">
+        <div class="flex items-center gap-2 mb-3">
+          <div class="step-badge active" id="step1Badge">1</div>
+          <h3 class="font-bold text-gray-900">Select Model</h3>
+          <span class="text-xs text-red-500 font-medium" id="modelRequired">* Required</span>
+        </div>
+        <div class="grid grid-cols-3 gap-3" id="modelGrid"></div>
+      </div>
+
+      <!-- STEP 2: Select Storage -->
+      <div class="mb-6 hidden" id="storageSection">
+        <div class="flex items-center gap-2 mb-3">
+          <div class="step-badge" id="step2Badge">2</div>
+          <h3 class="font-bold text-gray-900" id="storageTitle">Select Storage</h3>
+        </div>
+        <div class="flex flex-wrap gap-2" id="storageGrid"></div>
+      </div>
+
+      <!-- STEP 3: Select Color -->
+      <div class="mb-6 hidden" id="colorSection">
+        <div class="flex items-center gap-2 mb-3">
+          <div class="step-badge" id="step3Badge">3</div>
+          <h3 class="font-bold text-gray-900">Select Color</h3>
+        </div>
+        <div class="flex flex-wrap gap-2" id="colorGrid"></div>
+      </div>
+
+      <!-- Quantity -->
+      <div class="mb-6 flex items-center gap-4">
+        <span class="font-medium text-gray-700">Quantity:</span>
+        <div class="flex items-center gap-2">
+          <button class="quantity-btn" onclick="changeQty(-1)"><i class="fas fa-minus text-sm"></i></button>
+          <span class="text-lg font-bold w-8 text-center" id="qtyDisplay">1</span>
+          <button class="quantity-btn" onclick="changeQty(1)"><i class="fas fa-plus text-sm"></i></button>
+        </div>
+      </div>
+
+      <!-- Add to Cart -->
+      <button id="addToCartBtn" class="btn-primary text-white w-full py-4 rounded-xl font-bold text-lg transition flex items-center justify-center gap-2 shadow-lg" onclick="addToCart()" disabled>
+        <i class="fas fa-shopping-cart"></i>
+        <span id="cartBtnText">Select a Model First</span>
+      </button>
+
+      <!-- Trust -->
+      <div class="mt-6 grid grid-cols-3 gap-3 text-center text-xs text-gray-500">
+        <div class="p-3 bg-white rounded-lg border border-gray-100">
+          <i class="fas fa-truck text-velora-market text-lg mb-1"></i>
+          <p>2-5 Day Delivery</p>
+        </div>
+        <div class="p-3 bg-white rounded-lg border border-gray-100">
+          <i class="fas fa-shield-alt text-blue-500 text-lg mb-1"></i>
+          <p>7-Day Returns</p>
+        </div>
+        <div class="p-3 bg-white rounded-lg border border-gray-100">
+          <i class="fas fa-headset text-purple-500 text-lg mb-1"></i>
+          <p>Direct Support</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL = 'https://qlvransrclmziwibhgog.supabase.co';
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFsdnJhbnNyY2xteml3aWJoZ29nIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwNjE0MzYsImV4cCI6MjA4ODYzNzQzNn0.a-s7JLEI8ShwknOWJ0VF7TxedbaiI1b8WPSfpWDm84g';
+  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  window.supabaseClient = supabaseClient; // so cart.js can find it
+  // Anon-only client for product reads — bypasses RLS auth issues when user is logged in
+  const anonClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
+    global: { headers: { 'X-Client-Info': 'anon' } },
+    auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false }
+  });
+
+  // Get product ID from URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const productId = urlParams.get('id');
+
+  var product = null;
+  var selectedModel = null;
+  var selectedStorage = null;
+  var selectedColor = null;
+  var quantity = 1;
+
+  // Color map for dots
+  var colorMap = {
+    'black': '#1f2937', 'white': '#f9fafb', 'red': '#ef4444', 'blue': '#3b82f6',
+    'green': '#22c55e', 'yellow': '#eab308', 'purple': '#a855f7', 'pink': '#ec4899',
+    'gold': '#00a8cc', 'silver': '#9ca3af', 'gray': '#6b7280', 'orange': '#f97316',
+    'midnight': '#080F19', 'starlight': '#fef3c7', 'natural titanium': '#c4b49a',
+    'space gray': '#4b5563', 'sierra blue': '#60a5fa', 'deep purple': '#7c3aed',
+    'pacific blue': '#2563eb', 'coral': '#fb7185', 'lavender': '#c4b5fd',
+    'cream': '#fef3c7', 'graphite': '#374151', 'phantom black': '#111827',
+    'cloud white': '#f3f4f6', 'sky blue': '#7dd3fc', 'mint': '#6ee7b7',
+    'rose gold': '#fda4af', 'midnight green': '#14532d'
+  };
+
+  function getColorDot(colorName) {
+    var key = colorName.toLowerCase().replace(/[^a-z]/g, '');
+    for (var k in colorMap) {
+      if (key.includes(k.replace(/[^a-z]/g, ''))) return colorMap[k];
+    }
+    return '#e5e7eb';
+  }
+
+  async function loadProduct() {
+    if (!productId) { showError(); return; }
+
+    try {
+      // Use anonClient so product loads even when user is logged in (bypasses RLS auth issues)
+      var result = await anonClient.from('products').select('*').eq('id', productId).single();
+      if (result.error || !result.data) { showError(); return; }
+
+      product = result.data;
+      renderProduct();
+    } catch (err) { showError(); }
+  }
+
+  function showError() {
+    document.getElementById('loadingState').classList.add('hidden');
+    document.getElementById('errorState').classList.remove('hidden');
+  }
+
+  function renderProduct() {
+    document.getElementById('loadingState').classList.add('hidden');
+    document.getElementById('productContent').classList.remove('hidden');
+
+    // Basic info
+    document.getElementById('productName').textContent = product.name || 'Product';
+    document.getElementById('breadcrumb-name').textContent = product.name || 'Product';
+    document.getElementById('productCategory').textContent = product.category || 'Electronics';
+
+    // Stock badge
+    var stockBadge = document.getElementById('stockBadge');
+    if (product.stock_status === 'out_of_stock') stockBadge.innerHTML = '<span class="text-red-500 font-medium">Out of Stock</span>';
+    else if (product.stock_status === 'low_stock') stockBadge.innerHTML = '<span class="text-yellow-600 font-medium">Low Stock</span>';
+    else stockBadge.innerHTML = '<span class="text-purple-600 font-medium">In Stock</span>';
+
+    // Main image
+    var mainImg = document.getElementById('mainImage');
+    mainImg.src = product.image || 'images/placeholder.jpg';
+
+    // Thumbnails
+    var thumbRow = document.getElementById('thumbnailRow');
+    thumbRow.innerHTML = '';
+    if (product.thumbs && product.thumbs.length) {
+      product.thumbs.forEach(function(thumb, i) {
+        var src = typeof thumb === 'string' ? thumb : thumb.src;
+        var label = typeof thumb === 'string' ? '' : (thumb.label || '');
+        var btn = document.createElement('button');
+        btn.className = 'w-16 h-16 rounded-lg border-2 ' + (i === 0 ? 'border-velora-blue' : 'border-gray-200') + ' overflow-hidden flex-shrink-0 transition hover:border-velora-blue';
+        btn.innerHTML = '<img src="' + src + '" class="w-full h-full object-cover" onerror="this.style.display=\'none\'; this.parentElement.textContent=\'' + label + '\'">';
+        btn.onclick = function() {
+          updateMainImage(src);
+          thumbRow.querySelectorAll('button').forEach(function(b) { b.classList.remove('border-velora-blue'); b.classList.add('border-gray-200'); });
+          btn.classList.remove('border-gray-200');
+          btn.classList.add('border-velora-blue');
+        };
+        thumbRow.appendChild(btn);
+      });
+    }
+
+    // Models
+    renderModels();
+
+    // Update SEO after product loads
+    updateProductSEO();
+  }
+
+  function updateMainImage(src) {
+    var img = document.getElementById('mainImage');
+    if (img.src === src) return;
+    img.classList.add('switching');
+    setTimeout(function() {
+      img.src = src;
+      img.onload = function() { img.classList.remove('switching'); };
+      setTimeout(function() { img.classList.remove('switching'); }, 50);
+    }, 150);
+  }
+
+  function renderModels() {
+    var grid = document.getElementById('modelGrid');
+    grid.innerHTML = '';
+
+    var models = product.models || [];
+    if (!models.length && product.options) {
+      // Fallback: try to extract from old options format
+      var modelOpt = product.options.find(function(o) { return o.type === 'model'; });
+      if (modelOpt && modelOpt.choices) {
+        models = modelOpt.choices.map(function(c) {
+          return { value: c.value, price: c.price || 0, image: c.img || product.image };
+        });
+      }
+    }
+
+    if (!models.length) {
+      // No models - show base price, allow direct add
+      document.getElementById('modelSection').classList.add('hidden');
+      document.getElementById('storageSection').classList.add('hidden');
+      document.getElementById('colorSection').classList.add('hidden');
+      document.getElementById('priceDisplay').textContent = 'ZMW ' + (product.base_price || 0).toLocaleString();
+      document.getElementById('priceNote').textContent = product.name;
+      selectedModel = { value: product.name, price: 0, image: product.image };
+      selectedStorage = { value: 'Standard', price: product.base_price || 0 };
+      enableCart();
+      return;
+    }
+
+    models.forEach(function(model, i) {
+      var card = document.createElement('div');
+      card.className = 'model-card rounded-xl p-3 text-center';
+      card.dataset.modelValue = model.value;
+      card.dataset.modelPrice = model.price || 0;
+      card.dataset.modelImage = model.image || product.image;
+
+      var imgHtml = (model.image || product.image) ? '<img src="' + (model.image || product.image) + '" class="w-full h-20 object-cover rounded-lg mb-2" onerror="this.style.display=\'none\'">' : '<div class="w-full h-20 bg-gray-100 rounded-lg mb-2 flex items-center justify-center text-gray-400"><i class="fas fa-image"></i></div>';
+
+      card.innerHTML = imgHtml +
+        '<p class="text-sm font-semibold text-gray-900">' + model.value + '</p>' +
+        '<p class="text-xs text-gray-400">Select for options</p>';
+
+      card.onclick = function() { selectModel(model, card); };
+      grid.appendChild(card);
+    });
+
+    // Auto-select first model
+    var firstCard = grid.querySelector('.model-card');
+    if (firstCard) firstCard.click();
+
+    // If out of stock, disable
+    if (product.stock_status === 'out_of_stock') {
+      grid.querySelectorAll('.model-card').forEach(function(c) { c.classList.add('disabled'); c.style.pointerEvents = 'none'; });
+      document.getElementById('addToCartBtn').disabled = true;
+      document.getElementById('cartBtnText').textContent = 'Out of Stock';
+    }
+  }
+
+  function selectModel(model, cardEl) {
+    selectedModel = model;
+    selectedStorage = null;
+    selectedColor = null;
+
+    // Update model selection UI
+    document.querySelectorAll('.model-card').forEach(function(c) { c.classList.remove('selected'); });
+    if (cardEl) cardEl.classList.add('selected');
+
+    // Update image
+    if (model.image || product.image) updateMainImage(model.image || product.image);
+
+    // Mark step 1 done
+    document.getElementById('step1Badge').className = 'step-badge done';
+    document.getElementById('step1Badge').innerHTML = '<i class="fas fa-check text-xs"></i>';
+    document.getElementById('modelRequired').classList.add('hidden');
+
+    // Show and populate storage options
+    renderStorageOptions(model.value);
+
+    // Show and populate color options
+    renderColorOptions(model.value);
+
+    // Reset price - storage selection will set it
+    updatePrice();
+  }
+
+  function renderStorageOptions(modelValue) {
+    var section = document.getElementById('storageSection');
+    var grid = document.getElementById('storageGrid');
+    grid.innerHTML = '';
+
+    var storageOpts = getVariantOptions(modelValue, 'storage');
+
+    if (!storageOpts.length) {
+      section.classList.add('hidden');
+      return;
+    }
+
+    section.classList.remove('hidden');
+    section.classList.add('section-fade');
+    document.getElementById('step2Badge').className = 'step-badge active';
+
+    storageOpts.forEach(function(opt) {
+      var btn = document.createElement('button');
+      btn.className = 'option-btn';
+      btn.textContent = opt.value;
+      btn.innerHTML += ' <span class="text-velora-blue text-xs font-bold">ZMW ' + opt.price.toLocaleString() + '</span>';
+      btn.onclick = function() {
+        document.querySelectorAll('#storageGrid .option-btn').forEach(function(b) { b.classList.remove('selected'); });
+        btn.classList.add('selected');
+        selectedStorage = opt;
+        document.getElementById('step2Badge').className = 'step-badge done';
+        document.getElementById('step2Badge').innerHTML = '<i class="fas fa-check text-xs"></i>';
+        enableCart();
+        updatePrice();
+      };
+      grid.appendChild(btn);
+    });
+
+    // Auto-select first storage
+    var firstBtn = grid.querySelector('.option-btn');
+    if (firstBtn) firstBtn.click();
+  }
+
+  function renderColorOptions(modelValue) {
+    var section = document.getElementById('colorSection');
+    var grid = document.getElementById('colorGrid');
+    grid.innerHTML = '';
+
+    var colorOpts = getVariantOptions(modelValue, 'color');
+
+    if (!colorOpts.length) {
+      section.classList.add('hidden');
+      return;
+    }
+
+    section.classList.remove('hidden');
+    section.classList.add('section-fade');
+    document.getElementById('step3Badge').className = 'step-badge active';
+
+    colorOpts.forEach(function(opt) {
+      var btn = document.createElement('button');
+      btn.className = 'option-btn flex items-center gap-2';
+      var dotColor = getColorDot(opt.value);
+      btn.innerHTML = '<span class="color-dot" style="background:' + dotColor + '; border-color:' + (opt.value.toLowerCase().includes('white') || opt.value.toLowerCase().includes('cream') || opt.value.toLowerCase().includes('starlight') ? '#d1d5db' : '#e5e7eb') + '"></span>' + opt.value;
+      if (opt.price > 0) btn.innerHTML += ' <span class="text-velora-blue text-xs font-medium">+' + opt.price.toLocaleString() + '</span>';
+      btn.onclick = function() {
+        document.querySelectorAll('#colorGrid .option-btn').forEach(function(b) { b.classList.remove('selected'); });
+        btn.classList.add('selected');
+        selectedColor = opt;
+        document.getElementById('step3Badge').className = 'step-badge done';
+        document.getElementById('step3Badge').innerHTML = '<i class="fas fa-check text-xs"></i>';
+        updatePrice();
+      };
+      grid.appendChild(btn);
+    });
+  }
+
+  function getVariantOptions(modelValue, optionType) {
+    // New format: product.variant_options
+    if (product.variant_options && product.variant_options[modelValue]) {
+      var modelOpts = product.variant_options[modelValue];
+      if (modelOpts[optionType]) return modelOpts[optionType];
+    }
+
+    // Fallback: check in old options format
+    if (product.options) {
+      var opt = product.options.find(function(o) {
+        return o.label && o.label.toLowerCase() === optionType;
+      });
+      if (opt && opt.choices) return opt.choices;
+    }
+
+    return [];
+  }
+
+  function updatePrice() {
+    var priceEl = document.getElementById('priceDisplay');
+    priceEl.classList.add('updating');
+
+    if (!selectedModel) {
+      priceEl.textContent = 'Select model';
+      priceEl.classList.remove('updating');
+      document.getElementById('priceNote').textContent = 'Choose a model first';
+      return;
+    }
+    if (!selectedStorage) {
+      priceEl.textContent = 'Select storage';
+      priceEl.classList.remove('updating');
+      document.getElementById('priceNote').textContent = 'Choose a storage option to see the price';
+      return;
+    }
+
+    // Storage price IS the price. Color adds to it. Model has no price.
+    var price = selectedStorage.price || 0;
+    var parts = [selectedStorage.value + ': ZMW ' + price.toLocaleString()];
+
+    if (selectedColor && selectedColor.price) {
+      price += selectedColor.price;
+      if (selectedColor.price > 0) parts.push(selectedColor.value + ': +' + selectedColor.price.toLocaleString());
+    }
+
+    setTimeout(function() {
+      priceEl.textContent = 'ZMW ' + price.toLocaleString();
+      priceEl.classList.remove('updating');
+    }, 150);
+
+    var note = document.getElementById('priceNote');
+    if (parts.length > 1) {
+      note.innerHTML = parts.join('<br>');
+    } else {
+      note.textContent = selectedModel.value + ' ' + selectedStorage.value;
+    }
+  }
+
+  function enableCart() {
+    if (product.stock_status === 'out_of_stock') return;
+    var btn = document.getElementById('addToCartBtn');
+    btn.disabled = false;
+    document.getElementById('cartBtnText').textContent = 'Add to Cart';
+  }
+
+  function changeQty(delta) {
+    quantity = Math.max(1, quantity + delta);
+    document.getElementById('qtyDisplay').textContent = quantity;
+  }
+
+  function addToCart() {
+    if (!selectedModel) { alert('Please select a model first'); return; }
+    var unitPrice = (selectedStorage && selectedStorage.price) || product.base_price || 0;
+    if (selectedColor && selectedColor.price) unitPrice += selectedColor.price;
+    var item = {
+      product_id: product.id,
+      name: product.name,
+      image: selectedModel.image || product.image,
+      model: selectedModel.value,
+      storage: selectedStorage ? selectedStorage.value : '',
+      color: selectedColor ? selectedColor.value : '',
+      unit_price: unitPrice,
+      quantity: quantity,
+      vendor_id: product.vendor_id || 'velora-electronics'
+    };
+    try {
+      if (!window.VeloraCart) { alert('Cart not loaded. Refresh the page.'); return; }
+      window.VeloraCart.add(item);
+    } catch (err) {
+      alert('Add to cart error: ' + err.message);
+    }
+  }
+
+  // ===== DYNAMIC SEO =====
+  function updateProductSEO() {
+    if (!product) return;
+    var name = product.name || 'Product';
+    var desc = product.description ? (product.description.substring(0, 160) + (product.description.length > 160 ? '...' : '')) : 'Buy ' + name + ' on Velora Market with Cash on Delivery across Zambia.';
+    var price = product.base_price || 0;
+    if (selectedStorage && selectedStorage.price) price = selectedStorage.price;
+    if (selectedColor && selectedColor.price) price += selectedColor.price;
+    var img = product.image || '';
+    var url = window.location.href;
+
+    // Title
+    document.title = name + ' - ZMW ' + price.toLocaleString() + ' | Velora Market';
+
+    // Meta description
+    var metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) metaDesc.content = desc;
+    else { metaDesc = document.createElement('meta'); metaDesc.name = 'description'; metaDesc.content = desc; document.head.appendChild(metaDesc); }
+
+    // Open Graph
+    var ogTitle = document.querySelector('meta[property="og:title"]');
+    if (ogTitle) ogTitle.content = name + ' | Velora Market';
+    var ogDesc = document.querySelector('meta[property="og:description"]');
+    if (ogDesc) ogDesc.content = desc;
+    var ogImg = document.querySelector('meta[property="og:image"]');
+    if (ogImg) ogImg.content = img;
+    var ogUrl = document.querySelector('meta[property="og:url"]');
+    if (ogUrl) ogUrl.content = url;
+
+    // Twitter
+    var twTitle = document.querySelector('meta[name="twitter:title"]');
+    if (twTitle) twTitle.content = name + ' | Velora Market';
+    var twDesc = document.querySelector('meta[name="twitter:description"]');
+    if (twDesc) twDesc.content = desc;
+    var twImg = document.querySelector('meta[name="twitter:image"]');
+    if (twImg) twImg.content = img;
+    else { twImg = document.createElement('meta'); twImg.name = 'twitter:image'; twImg.content = img; document.head.appendChild(twImg); }
+
+    // Canonical
+    var canonical = document.querySelector('link[rel="canonical"]');
+    if (canonical) canonical.href = url;
+
+    // JSON-LD Product structured data
+    var existingLd = document.getElementById('product-ld');
+    if (existingLd) existingLd.remove();
+    var ld = {
+      '@context': 'https://schema.org',
+      '@type': 'Product',
+      name: name,
+      description: desc,
+      image: img,
+      url: url,
+      brand: { '@type': 'Brand', name: product.vendor_name || 'Velora Electronics' },
+      offers: {
+        '@type': 'Offer',
+        priceCurrency: 'ZMW',
+        price: price.toString(),
+        availability: product.stock_status === 'out_of_stock' ? 'https://schema.org/OutOfStock' : 'https://schema.org/InStock',
+        seller: { '@type': 'Organization', name: 'Velora Market' }
+      }
+    };
+    if (product.models && product.models.length) {
+      ld.sku = product.id + '-' + product.models[0].value.replace(/\s+/g, '-').toLowerCase();
+    }
+    var script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'product-ld';
+    script.textContent = JSON.stringify(ld);
+    document.head.appendChild(script);
+  }
+
+  // Redirect to universal search
+  function goToSearch(e) {
+    if (e) e.preventDefault();
+    var q = document.getElementById('navSearchInput').value.trim();
+    window.location.href = 'search.html' + (q ? '?q=' + encodeURIComponent(q) : '');
+    return false;
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    loadProduct();
+    setTimeout(function() {
+      if (!window.VeloraCart) console.error('VeloraCart not loaded - cart.js may be missing');
+    }, 2000);
+  });
+</script>
+  <script src="cart.js"></script>
+</body>
+</html>

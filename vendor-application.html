@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QN8N334V6L"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-QN8N334V6L');
+</script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Become a Vendor - Velora</title>
+  <meta name="description" content="Apply to become a vendor on Velora - Zambia's premier multi-vendor marketplace.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          colors: {
+            velora: { blue: '#0D47FF', dark: '#080F19', market: '#6A00FF', cyan: '#00D4FF', light: '#f8fafc' }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .gradient-vendor { background: linear-gradient(135deg, #0a1a6e 0%, #0d3a9e 100%); }
+    .gradient-hero { background: linear-gradient(135deg, #080F19 0%, #0d1833 50%, #1c2740 100%); }
+    @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-15px)} }
+    .animate-float { animation: float 6s ease-in-out infinite; }
+    @keyframes pulse-glow { 0%,100%{box-shadow:0 0 20px rgba(220,38,38,0.3)} 50%{box-shadow:0 0 40px rgba(220,38,38,0.6)} }
+    .pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+
+    /* Multi-step form sections */
+    .form-section { display: none; }
+    .form-section.active { display: block; animation: fadeIn 0.4s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Progress bar */
+    .step-circle { transition: all 0.3s ease; }
+    .step.active .step-circle { background: #0D47FF; border-color: #0D47FF; color: #fff; box-shadow: 0 0 0 4px rgba(220,38,38,0.2); }
+    .step.completed .step-circle { background: #6A00FF; border-color: #6A00FF; color: #fff; }
+    .step.active .step-label { color: #0D47FF; font-weight: 600; }
+
+    /* Form inputs - glass morphism style matching index vendor section */
+    .glass-input {
+      background: rgba(255,255,255,0.08);
+      border: 1.5px solid rgba(255,255,255,0.15);
+      color: #fff;
+      transition: all 0.2s ease;
+    }
+    .glass-input:focus {
+      background: rgba(255,255,255,0.12);
+      border-color: rgba(255,255,255,0.4);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(220,38,38,0.15);
+    }
+    .glass-input::placeholder { color: #94a3b8; }
+    .glass-input.error { border-color: #ef4444; box-shadow: 0 0 0 3px rgba(239,68,68,0.15); }
+    .glass-input option { background: #0a1a6e; color: #fff; }
+
+    /* Radio/checkbox options */
+    .glass-option {
+      background: rgba(255,255,255,0.06);
+      border: 1.5px solid rgba(255,255,255,0.12);
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .glass-option:hover { border-color: rgba(220,38,38,0.4); background: rgba(255,255,255,0.1); }
+    .glass-option input { accent-color: #0D47FF; }
+
+    /* Loading overlay */
+    .loading-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(15, 23, 42, 0.92); backdrop-filter: blur(6px);
+      z-index: 1000; align-items: center; justify-content: center; flex-direction: column; gap: 1.5rem;
+    }
+    .loading-overlay.active { display: flex; }
+    .spinner {
+      width: 50px; height: 50px;
+      border: 3px solid rgba(255,255,255,0.1); border-top-color: #0D47FF; border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Success animation */
+    .success-icon { animation: scaleIn 0.5s ease; }
+    @keyframes scaleIn { from { transform: scale(0); } to { transform: scale(1); } }
+
+    /* Commitment section */
+    .commitment-box {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 14px;
+    }
+
+    /* Error messages */
+    .error-msg { display: none; color: #ef4444; font-size: 0.8rem; margin-top: 0.35rem; }
+    .error-msg.show { display: block; }
+
+    /* Smooth scroll */
+    html { scroll-behavior: smooth; }
+  </style>
+<base target="_blank">
+<base target="_blank">
+<base target="_blank">
+<base target="_blank">
+</head>
+
+<body class="font-sans bg-velora-light text-gray-900 antialiased">
+
+<!-- ==========================================
+     LOADING OVERLAY
+     ========================================== -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="spinner"></div>
+  <div class="text-gray-300 font-medium">Submitting your application...</div>
+</div>
+
+<!-- ==========================================
+     TOP BAR
+     ========================================== -->
+<div class="bg-velora-dark text-white text-xs py-2.5 px-4">
+  <div class="max-w-7xl mx-auto flex justify-between items-center">
+    <div class="flex items-center gap-4">
+      <span class="flex items-center gap-1"><i class="fas fa-map-marker-alt text-velora-blue"></i> Delivering across Zambia</span>
+    </div>
+    <div class="flex items-center gap-4">
+      <a href="index.html#vendor-section" class="hover:text-velora-blue transition font-medium">Sell on Velora</a>
+      <a href="#" class="hover:text-velora-blue transition">Help Center</a>
+      <span class="hidden sm:inline text-gray-500">|</span>
+      <span class="hidden sm:inline font-semibold">ZMW</span>
+    </div>
+  </div>
+</div>
+
+<!-- ==========================================
+     NAVIGATION
+     ========================================== -->
+<nav class="bg-white shadow-sm sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+      <a href="index.html" class="flex items-center gap-2">
+        <div class="w-10 h-10 bg-gradient-to-br from-velora-blue to-blue-800 rounded-xl flex items-center justify-center">
+          <i class="fas fa-v text-white text-lg"></i>
+        </div>
+        <div>
+          <h1 class="text-xl font-bold text-gray-900 tracking-tight">Velora</h1>
+          <p class="text-[10px] text-velora-blue font-bold -mt-1 tracking-wider">MARKETPLACE</p>
+        </div>
+      </a>
+      <a href="index.html" class="flex items-center gap-2 text-gray-500 hover:text-velora-blue transition text-sm font-medium">
+        <i class="fas fa-arrow-left"></i> Back to Home
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- ==========================================
+     HERO SECTION
+     ========================================== -->
+<section class="gradient-hero relative overflow-hidden">
+  <div class="absolute inset-0 opacity-10">
+    <div class="absolute top-20 left-10 w-72 h-72 bg-velora-blue rounded-full blur-3xl"></div>
+    <div class="absolute bottom-20 right-10 w-96 h-96 bg-blue-500 rounded-full blur-3xl"></div>
+  </div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20 relative z-10">
+    <div class="text-center max-w-3xl mx-auto">
+      <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full mb-6 border border-white/20">
+        <i class="fas fa-store text-velora-blue"></i>
+        <span class="text-sm font-medium text-white">Vendor Partners</span>
+      </div>
+      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-4">
+        Become a <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-orange-400">Velora</span> Vendor
+      </h1>
+      <p class="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
+        Join Zambia's fastest growing multi-vendor marketplace. Reach thousands of customers across the country and grow your business with us.
+      </p>
+      <div class="flex flex-wrap justify-center gap-8">
+        <div class="text-center">
+          <div class="text-3xl font-bold text-white">10K+</div>
+          <div class="text-sm text-gray-400">Monthly Shoppers</div>
+        </div>
+        <div class="text-center">
+          <div class="text-3xl font-bold text-white">50+</div>
+          <div class="text-sm text-gray-400">Active Vendors</div>
+        </div>
+        <div class="text-center">
+          <div class="text-3xl font-bold text-white">24hrs</div>
+          <div class="text-sm text-gray-400">Avg. Approval</div>
+        </div>
+        <div class="text-center">
+          <div class="text-3xl font-bold text-white">5-8%</div>
+          <div class="text-sm text-gray-400">Commission</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Wave separator -->
+  <div class="absolute bottom-0 left-0 right-0">
+    <svg viewBox="0 0 1440 60" fill="none"><path d="M0 60L60 55C120 50 240 40 360 35C480 30 600 30 720 32C840 35 960 40 1080 42C1200 45 1320 45 1380 45L1440 45V60H0Z" fill="#f8fafc"/></svg>
+  </div>
+</section>
+
+<!-- ==========================================
+     PROGRESS STEPS
+     ========================================== -->
+<section class="bg-velora-light py-8 border-b border-gray-200">
+  <div class="max-w-3xl mx-auto px-4">
+    <div class="flex justify-between items-center relative">
+      <!-- Progress line -->
+      <div class="absolute top-5 left-0 right-0 h-0.5 bg-gray-200" style="margin: 0 2rem;">
+        <div class="h-full bg-gradient-to-r from-velora-blue to-red-400 transition-all duration-500" id="progressFill" style="width: 0%"></div>
+      </div>
+      <!-- Steps -->
+      <div class="step active relative z-10 flex flex-col items-center gap-2" data-step="1">
+        <div class="step-circle w-10 h-10 rounded-full bg-white border-2 border-gray-300 flex items-center justify-center text-sm font-bold text-gray-500">1</div>
+        <span class="step-label text-xs text-gray-500 hidden sm:block">Business</span>
+      </div>
+      <div class="step relative z-10 flex flex-col items-center gap-2" data-step="2">
+        <div class="step-circle w-10 h-10 rounded-full bg-white border-2 border-gray-300 flex items-center justify-center text-sm font-bold text-gray-500">2</div>
+        <span class="step-label text-xs text-gray-500 hidden sm:block">Products</span>
+      </div>
+      <div class="step relative z-10 flex flex-col items-center gap-2" data-step="3">
+        <div class="step-circle w-10 h-10 rounded-full bg-white border-2 border-gray-300 flex items-center justify-center text-sm font-bold text-gray-500">3</div>
+        <span class="step-label text-xs text-gray-500 hidden sm:block">Operations</span>
+      </div>
+      <div class="step relative z-10 flex flex-col items-center gap-2" data-step="4">
+        <div class="step-circle w-10 h-10 rounded-full bg-white border-2 border-gray-300 flex items-center justify-center text-sm font-bold text-gray-500">4</div>
+        <span class="step-label text-xs text-gray-500 hidden sm:block">Commitment</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================
+     MAIN FORM
+     ========================================== -->
+<main class="gradient-vendor relative overflow-hidden">
+  <div class="absolute inset-0 opacity-5">
+    <div class="absolute top-10 right-20 w-64 h-64 bg-white rounded-full blur-3xl"></div>
+    <div class="absolute bottom-10 left-20 w-48 h-48 bg-velora-blue rounded-full blur-3xl"></div>
+  </div>
+
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
+    <form id="vendorForm" novalidate>
+
+      <!-- ====== STEP 1: Business Information ====== -->
+      <div class="form-section active" data-section="1">
+        <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-white/20 mb-6">
+          <h2 class="text-2xl font-bold text-white mb-1">Tell us about your business</h2>
+          <p class="text-blue-200 text-sm mb-6">We'll use this to verify your identity and set up your vendor profile.</p>
+
+          <div class="grid sm:grid-cols-2 gap-4">
+            <!-- Business Name -->
+            <div class="sm:col-span-2">
+              <label class="block text-blue-200 text-sm mb-1.5 font-medium">Business Name <span class="text-red-400">*</span></label>
+              <input type="text" name="businessName" placeholder="e.g., Kam's Electronics" class="glass-input w-full px-4 py-3 rounded-lg" required>
+              <div class="error-msg">Please enter your business name</div>
+            </div>
+
+            <!-- Business Type -->
+            <div>
+              <label class="block text-blue-200 text-sm mb-1.5 font-medium">Business Type <span class="text-red-400">*</span></label>
+              <select name="businessType" class="glass-input w-full px-4 py-3 rounded-lg cursor-pointer" required>
+                <option value="">Select type</option>
+                <option value="individual">Individual / Sole Trader</option>
+                <option value="registered">Registered Business / Company</option>
+                <option value="partnership">Partnership</option>
+                <option value="cooperative">Cooperative</option>
+              </select>
+              <div class="error-msg">Please select a business type</div>
+            </div>
+
+            <!-- Years in Business -->
+            <div>
+              <label class="block text-blue-200 text-sm mb-1.5 font-medium">Years in Business <span class="text-red-400">*</span></label>
+              <select name="yearsExperience" class="glass-input w-full px-4 py-3 rounded-lg cursor-pointer" required>
+                <option value="">Select experience</option>
+                <option value="0-1">Less than 1 year</option>
+                <option value="1-3">1 - 3 years</option>
+                <option value="3-5">3 - 5 years</option>
+                <option value="5-10">5 - 10 years</option>
+                <option value="10+">10+ years</option>
+              </select>
+              <div class="error-msg">Please select years in business</div>
+            </div>
+
+            <!-- Full Name -->
+            <div>
+              <label class="block text-blue-200 text-sm mb-1.5 font-medium">Your Full Name <span class="text-red-400">*</span></label>
+              <input type="text" name="fullName" placeholder="e.g., Kamanga Banda" class="glass-input w-full px-4 py-3 rounded-lg" required>
+              <div class="error-msg">Please enter your full name</div>
+            </div>
+
+            <!-- Email -->
+            <div>
+              <label class="block text-blue-200 text-sm mb-1.5 font-medium">Email Address <span class="text-red-400">*</span></label>
+              <input type="email" name="email" placeholder="e.g., vendor@example.com" class="glass-input w-full px-4 py-3 rounded-lg" required>
+              <div class="error-msg">Please enter a valid email</div>
+            </div>
+
+            <!-- Phone -->
+            <div>
+              <label class="block text-blue-200 text-sm mb-1.5 font-medium">Phone (WhatsApp) <span class="text-red-400">*</span></label>
+              <input type="tel" name="phone" placeholder="e.g., +260 97 123 4567" class="glass-input w-full px-4 py-3 rounded-lg" required>
+              <div class="error-msg">Please enter your phone number</div>
+            </div>
+
+            <!-- ID/TPIN -->
+            <div>
+              <label class="block text-blue-200 text-sm mb-1.5 font-medium">NRC / Passport <span class="text-blue-300 text-xs">(optional)</span></label>
+              <input type="text" name="idNumber" placeholder="Identity verification" class="glass-input w-full px-4 py-3 rounded-lg">
+            </div>
+
+            <!-- TPIN -->
+            <div>
+              <label class="block text-blue-200 text-sm mb-1.5 font-medium">TPIN Number <span class="text-blue-300 text-xs">(optional)</span></label>
+              <input type="text" name="tpin" placeholder="Tax Payer ID" class="glass-input w-full px-4 py-3 rounded-lg">
+              <p class="text-blue-300/60 text-xs mt-1">Required for registered businesses</p>
+            </div>
+
+            <!-- Province -->
+            <div>
+              <label class="block text-blue-200 text-sm mb-1.5 font-medium">Province <span class="text-red-400">*</span></label>
+              <select name="province" class="glass-input w-full px-4 py-3 rounded-lg cursor-pointer" required>
+                <option value="">Select Province</option>
+                <option value="lusaka">Lusaka</option>
+                <option value="copperbelt">Copperbelt</option>
+                <option value="southern">Southern</option>
+                <option value="central">Central</option>
+                <option value="eastern">Eastern</option>
+                <option value="northern">Northern</option>
+                <option value="luapula">Luapula</option>
+                <option value="north-western">North-Western</option>
+                <option value="western">Western</option>
+                <option value="muchinga">Muchinga</option>
+              </select>
+              <div class="error-msg">Please select your province</div>
+            </div>
+
+            <!-- Town -->
+            <div>
+              <label class="block text-blue-200 text-sm mb-1.5 font-medium">Town / Area <span class="text-red-400">*</span></label>
+              <input type="text" name="town" placeholder="e.g., Kabwata" class="glass-input w-full px-4 py-3 rounded-lg" required>
+              <div class="error-msg">Please enter your town</div>
+            </div>
+
+            <!-- Shop Address -->
+            <div class="sm:col-span-2">
+              <label class="block text-blue-200 text-sm mb-1.5 font-medium">Physical Shop Address <span class="text-blue-300 text-xs">(optional)</span></label>
+              <input type="text" name="shopAddress" placeholder="e.g., Shop 12, Cairo Road, Lusaka" class="glass-input w-full px-4 py-3 rounded-lg">
+            </div>
+
+            <!-- Social Links -->
+            <div class="sm:col-span-2">
+              <label class="block text-blue-200 text-sm mb-1.5 font-medium">Social Media / Website <span class="text-blue-300 text-xs">(optional)</span></label>
+              <input type="url" name="socialLinks" placeholder="e.g., Facebook, Instagram, or website URL" class="glass-input w-full px-4 py-3 rounded-lg">
+              <p class="text-blue-300/60 text-xs mt-1">Helps us learn more about your brand</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="flex justify-end">
+          <button type="button" class="pulse-glow bg-velora-blue hover:bg-red-700 text-white px-8 py-3.5 rounded-full font-bold transition flex items-center gap-2" onclick="nextStep(1)">
+            Continue <i class="fas fa-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- ====== STEP 2: Products ====== -->
+      <div class="form-section" data-section="2">
+        <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-white/20 mb-6">
+          <h2 class="text-2xl font-bold text-white mb-1">What do you want to sell?</h2>
+          <p class="text-blue-200 text-sm mb-6">Tell us about the products you plan to list on Velora.</p>
+
+          <div class="space-y-4">
+            <!-- Product Categories -->
+            <div>
+              <label class="block text-blue-200 text-sm mb-2 font-medium">What categories will you sell? <span class="text-red-400">*</span></label>
+              <div class="grid grid-cols-2 sm:grid-cols-3 gap-2" id="categoryGroup">
+                <div class="glass-option rounded-lg px-3 py-2.5 flex items-center gap-2">
+                  <input type="checkbox" name="categories" value="Electronics" id="cat-electronics">
+                  <label for="cat-electronics" class="text-sm text-gray-200 cursor-pointer">Electronics</label>
+                </div>
+                <div class="glass-option rounded-lg px-3 py-2.5 flex items-center gap-2">
+                  <input type="checkbox" name="categories" value="Phones & Accessories" id="cat-phones">
+                  <label for="cat-phones" class="text-sm text-gray-200 cursor-pointer">Phones</label>
+                </div>
+                <div class="glass-option rounded-lg px-3 py-2.5 flex items-center gap-2">
+                  <input type="checkbox" name="categories" value="Fashion & Clothing" id="cat-fashion">
+                  <label for="cat-fashion" class="text-sm text-gray-200 cursor-pointer">Fashion</label>
+                </div>
+                <div class="glass-option rounded-lg px-3 py-2.5 flex items-center gap-2">
+                  <input type="checkbox" name="categories" value="Home & Garden" id="cat-home">
+                  <label for="cat-home" class="text-sm text-gray-200 cursor-pointer">Home & Garden</label>
+                </div>
+                <div class="glass-option rounded-lg px-3 py-2.5 flex items-center gap-2">
+                  <input type="checkbox" name="categories" value="Beauty & Health" id="cat-beauty">
+                  <label for="cat-beauty" class="text-sm text-gray-200 cursor-pointer">Beauty</label>
+                </div>
+                <div class="glass-option rounded-lg px-3 py-2.5 flex items-center gap-2">
+                  <input type="checkbox" name="categories" value="Food & Groceries" id="cat-food">
+                  <label for="cat-food" class="text-sm text-gray-200 cursor-pointer">Food</label>
+                </div>
+                <div class="glass-option rounded-lg px-3 py-2.5 flex items-center gap-2">
+                  <input type="checkbox" name="categories" value="Sports & Fitness" id="cat-sports">
+                  <label for="cat-sports" class="text-sm text-gray-200 cursor-pointer">Sports</label>
+                </div>
+                <div class="glass-option rounded-lg px-3 py-2.5 flex items-center gap-2">
+                  <input type="checkbox" name="categories" value="Toys & Kids" id="cat-toys">
+                  <label for="cat-toys" class="text-sm text-gray-200 cursor-pointer">Toys & Kids</label>
+                </div>
+                <div class="glass-option rounded-lg px-3 py-2.5 flex items-center gap-2">
+                  <input type="checkbox" name="categories" value="Automotive" id="cat-auto">
+                  <label for="cat-auto" class="text-sm text-gray-200 cursor-pointer">Automotive</label>
+                </div>
+                <div class="glass-option rounded-lg px-3 py-2.5 flex items-center gap-2">
+                  <input type="checkbox" name="categories" value="Books & Stationery" id="cat-books">
+                  <label for="cat-books" class="text-sm text-gray-200 cursor-pointer">Books</label>
+                </div>
+                <div class="glass-option rounded-lg px-3 py-2.5 flex items-center gap-2">
+                  <input type="checkbox" name="categories" value="Hardware & Tools" id="cat-hardware">
+                  <label for="cat-hardware" class="text-sm text-gray-200 cursor-pointer">Hardware</label>
+                </div>
+                <div class="glass-option rounded-lg px-3 py-2.5 flex items-center gap-2">
+                  <input type="checkbox" name="categories" value="Other" id="cat-other">
+                  <label for="cat-other" class="text-sm text-gray-200 cursor-pointer">Other</label>
+                </div>
+              </div>
+              <div class="error-msg" id="catError">Please select at least one category</div>
+            </div>
+
+            <!-- Other Category Text -->
+            <div id="otherCategoryWrap" style="display:none;">
+              <label class="block text-blue-200 text-sm mb-1.5 font-medium">Tell us your category</label>
+              <input type="text" name="otherCategory" placeholder="e.g., Handmade Crafts" class="glass-input w-full px-4 py-3 rounded-lg">
+            </div>
+
+            <!-- Product Description -->
+            <div>
+              <label class="block text-blue-200 text-sm mb-1.5 font-medium">Describe Your Products <span class="text-red-400">*</span></label>
+              <textarea name="productDescription" rows="3" placeholder="Briefly describe what you sell (brands, quality, sourcing...)" class="glass-input w-full px-4 py-3 rounded-lg resize-vertical" required></textarea>
+              <div class="error-msg">Please describe your products</div>
+            </div>
+
+            <!-- Two columns: Condition & Stock -->
+            <div class="grid sm:grid-cols-2 gap-4">
+              <!-- Product Condition -->
+              <div>
+                <label class="block text-blue-200 text-sm mb-2 font-medium">Product Condition <span class="text-red-400">*</span></label>
+                <div class="space-y-2">
+                  <div class="glass-option rounded-lg p-3 flex items-start gap-3">
+                    <input type="radio" name="productCondition" value="new" id="cond-new" class="mt-0.5" required>
+                    <label for="cond-new" class="text-sm text-gray-200 cursor-pointer flex-1">
+                      <strong class="text-white">Brand New</strong>
+                      <span class="block text-blue-200/70 text-xs">Sealed and unused</span>
+                    </label>
+                  </div>
+                  <div class="glass-option rounded-lg p-3 flex items-start gap-3">
+                    <input type="radio" name="productCondition" value="mixed" id="cond-mixed" class="mt-0.5">
+                    <label for="cond-mixed" class="text-sm text-gray-200 cursor-pointer flex-1">
+                      <strong class="text-white">Mixed</strong>
+                      <span class="block text-blue-200/70 text-xs">New & pre-owned</span>
+                    </label>
+                  </div>
+                  <div class="glass-option rounded-lg p-3 flex items-start gap-3">
+                    <input type="radio" name="productCondition" value="refurbished" id="cond-refurb" class="mt-0.5">
+                    <label for="cond-refurb" class="text-sm text-gray-200 cursor-pointer flex-1">
+                      <strong class="text-white">Refurbished</strong>
+                      <span class="block text-blue-200/70 text-xs">Professionally restored</span>
+                    </label>
+                  </div>
+                </div>
+                <div class="error-msg">Please select product condition</div>
+              </div>
+
+              <!-- Stock Readiness -->
+              <div>
+                <label class="block text-blue-200 text-sm mb-2 font-medium">Stock Readiness <span class="text-red-400">*</span></label>
+                <div class="space-y-2">
+                  <div class="glass-option rounded-lg p-3 flex items-start gap-3">
+                    <input type="radio" name="stockReady" value="ready" id="stock-ready" class="mt-0.5" required>
+                    <label for="stock-ready" class="text-sm text-gray-200 cursor-pointer flex-1">
+                      <strong class="text-white">Ready to Ship</strong>
+                      <span class="block text-blue-200/70 text-xs">Ships within 24hrs</span>
+                    </label>
+                  </div>
+                  <div class="glass-option rounded-lg p-3 flex items-start gap-3">
+                    <input type="radio" name="stockReady" value="order" id="stock-order" class="mt-0.5">
+                    <label for="stock-order" class="text-sm text-gray-200 cursor-pointer flex-1">
+                      <strong class="text-white">Order Based</strong>
+                      <span class="block text-blue-200/70 text-xs">2-5 days to fulfill</span>
+                    </label>
+                  </div>
+                  <div class="glass-option rounded-lg p-3 flex items-start gap-3">
+                    <input type="radio" name="stockReady" value="mixed" id="stock-mixed" class="mt-0.5">
+                    <label for="stock-mixed" class="text-sm text-gray-200 cursor-pointer flex-1">
+                      <strong class="text-white">Mixed</strong>
+                      <span class="block text-blue-200/70 text-xs">Some ready, some not</span>
+                    </label>
+                  </div>
+                </div>
+                <div class="error-msg">Please select stock readiness</div>
+              </div>
+            </div>
+
+            <!-- Stock Quantity -->
+            <div>
+              <label class="block text-blue-200 text-sm mb-1.5 font-medium">Average Stock Quantity <span class="text-red-400">*</span></label>
+              <select name="stockQuantity" class="glass-input w-full sm:w-1/2 px-4 py-3 rounded-lg cursor-pointer" required>
+                <option value="">Select quantity</option>
+                <option value="1-10">1 - 10 items</option>
+                <option value="10-50">10 - 50 items</option>
+                <option value="50-100">50 - 100 items</option>
+                <option value="100-500">100 - 500 items</option>
+                <option value="500+">500+ items</option>
+              </select>
+              <div class="error-msg">Please select stock quantity</div>
+            </div>
+
+            <!-- Sample Photos Note -->
+            <div class="bg-white/5 border border-white/10 rounded-lg p-4">
+              <p class="text-blue-200/70 text-sm flex items-start gap-2">
+                <i class="fas fa-info-circle text-velora-cyan mt-0.5"></i>
+                <span>You can upload product photos later from your vendor dashboard. For now, just tell us what you plan to sell.</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="flex justify-between">
+          <button type="button" class="bg-white/10 hover:bg-white/20 text-white border border-white/30 px-6 py-3.5 rounded-full font-semibold transition flex items-center gap-2" onclick="prevStep(2)">
+            <i class="fas fa-arrow-left"></i> Back
+          </button>
+          <button type="button" class="pulse-glow bg-velora-blue hover:bg-red-700 text-white px-8 py-3.5 rounded-full font-bold transition flex items-center gap-2" onclick="nextStep(2)">
+            Continue <i class="fas fa-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- ====== STEP 3: Operations ====== -->
+      <div class="form-section" data-section="3">
+        <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-white/20 mb-6">
+          <h2 class="text-2xl font-bold text-white mb-1">Operations & Fulfillment</h2>
+          <p class="text-blue-200 text-sm mb-6">Help us understand how you'll manage orders and deliveries.</p>
+
+          <div class="space-y-4">
+            <!-- Delivery Options -->
+            <div>
+              <label class="block text-blue-200 text-sm mb-2 font-medium">Nationwide Delivery? <span class="text-red-400">*</span></label>
+              <div class="grid sm:grid-cols-3 gap-3">
+                <div class="glass-option rounded-lg p-4 text-center">
+                  <input type="radio" name="delivery" value="yes" id="del-yes" class="mb-2" required>
+                  <label for="del-yes" class="block text-sm text-white cursor-pointer font-medium">Yes, Nationwide</label>
+                  <span class="text-blue-200/60 text-xs">All 10 provinces</span>
+                </div>
+                <div class="glass-option rounded-lg p-4 text-center">
+                  <input type="radio" name="delivery" value="partial" id="del-partial" class="mb-2">
+                  <label for="del-partial" class="block text-sm text-white cursor-pointer font-medium">Partial</label>
+                  <span class="text-blue-200/60 text-xs">Specific regions</span>
+                </div>
+                <div class="glass-option rounded-lg p-4 text-center">
+                  <input type="radio" name="delivery" value="local" id="del-local" class="mb-2">
+                  <label for="del-local" class="block text-sm text-white cursor-pointer font-medium">Local Pickup</label>
+                  <span class="text-blue-200/60 text-xs">Customers collect</span>
+                </div>
+              </div>
+              <div class="error-msg">Please select a delivery option</div>
+            </div>
+
+            <!-- Provinces (conditional) -->
+            <div id="provincesGroup" class="hidden">
+              <label class="block text-blue-200 text-sm mb-2 font-medium">Which provinces do you cover? <span class="text-red-400">*</span></label>
+              <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                <div class="glass-option rounded-lg px-3 py-2 flex items-center gap-2">
+                  <input type="checkbox" name="provinces" value="lusaka" id="prov-lusaka">
+                  <label for="prov-lusaka" class="text-sm text-gray-200 cursor-pointer">Lusaka</label>
+                </div>
+                <div class="glass-option rounded-lg px-3 py-2 flex items-center gap-2">
+                  <input type="checkbox" name="provinces" value="copperbelt" id="prov-cb">
+                  <label for="prov-cb" class="text-sm text-gray-200 cursor-pointer">Copperbelt</label>
+                </div>
+                <div class="glass-option rounded-lg px-3 py-2 flex items-center gap-2">
+                  <input type="checkbox" name="provinces" value="southern" id="prov-southern">
+                  <label for="prov-southern" class="text-sm text-gray-200 cursor-pointer">Southern</label>
+                </div>
+                <div class="glass-option rounded-lg px-3 py-2 flex items-center gap-2">
+                  <input type="checkbox" name="provinces" value="central" id="prov-central">
+                  <label for="prov-central" class="text-sm text-gray-200 cursor-pointer">Central</label>
+                </div>
+                <div class="glass-option rounded-lg px-3 py-2 flex items-center gap-2">
+                  <input type="checkbox" name="provinces" value="eastern" id="prov-eastern">
+                  <label for="prov-eastern" class="text-sm text-gray-200 cursor-pointer">Eastern</label>
+                </div>
+                <div class="glass-option rounded-lg px-3 py-2 flex items-center gap-2">
+                  <input type="checkbox" name="provinces" value="northern" id="prov-northern">
+                  <label for="prov-northern" class="text-sm text-gray-200 cursor-pointer">Northern</label>
+                </div>
+                <div class="glass-option rounded-lg px-3 py-2 flex items-center gap-2">
+                  <input type="checkbox" name="provinces" value="luapula" id="prov-luapula">
+                  <label for="prov-luapula" class="text-sm text-gray-200 cursor-pointer">Luapula</label>
+                </div>
+                <div class="glass-option rounded-lg px-3 py-2 flex items-center gap-2">
+                  <input type="checkbox" name="provinces" value="north-western" id="prov-nw">
+                  <label for="prov-nw" class="text-sm text-gray-200 cursor-pointer">North-Western</label>
+                </div>
+                <div class="glass-option rounded-lg px-3 py-2 flex items-center gap-2">
+                  <input type="checkbox" name="provinces" value="western" id="prov-western">
+                  <label for="prov-western" class="text-sm text-gray-200 cursor-pointer">Western</label>
+                </div>
+                <div class="glass-option rounded-lg px-3 py-2 flex items-center gap-2">
+                  <input type="checkbox" name="provinces" value="muchinga" id="prov-muchinga">
+                  <label for="prov-muchinga" class="text-sm text-gray-200 cursor-pointer">Muchinga</label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Reference Contact -->
+            <div class="border-t border-white/10 pt-4">
+              <label class="block text-blue-200 text-sm mb-2 font-medium">Reference Contact <span class="text-blue-300 text-xs">(optional)</span></label>
+              <div class="grid sm:grid-cols-2 gap-3">
+                <input type="text" name="refName" placeholder="Reference person's name" class="glass-input w-full px-4 py-3 rounded-lg">
+                <input type="tel" name="refPhone" placeholder="Their phone number" class="glass-input w-full px-4 py-3 rounded-lg">
+              </div>
+              <p class="text-blue-300/60 text-xs mt-1">A supplier, customer, or partner who can vouch for you</p>
+            </div>
+
+            <!-- Bank Details -->
+            <div class="border-t border-white/10 pt-4">
+              <label class="block text-blue-200 text-sm mb-2 font-medium">Bank Details for Payouts <span class="text-red-400">*</span></label>
+              <div class="grid sm:grid-cols-2 gap-3">
+                <input type="text" name="bankName" placeholder="Bank Name (e.g., Zanaco)" class="glass-input w-full px-4 py-3 rounded-lg" required>
+                <input type="text" name="accountName" placeholder="Account Name" class="glass-input w-full px-4 py-3 rounded-lg" required>
+                <input type="text" name="accountNumber" placeholder="Account Number" class="glass-input w-full px-4 py-3 rounded-lg" required>
+                <select name="branch" class="glass-input w-full px-4 py-3 rounded-lg cursor-pointer" required>
+                  <option value="">Select Branch</option>
+                  <option value="lusaka">Lusaka Main</option>
+                  <option value="kitwe">Kitwe</option>
+                  <option value="ndola">Ndola</option>
+                  <option value="livingstone">Livingstone</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div class="error-msg">Please complete all bank details</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="flex justify-between">
+          <button type="button" class="bg-white/10 hover:bg-white/20 text-white border border-white/30 px-6 py-3.5 rounded-full font-semibold transition flex items-center gap-2" onclick="prevStep(3)">
+            <i class="fas fa-arrow-left"></i> Back
+          </button>
+          <button type="button" class="pulse-glow bg-velora-blue hover:bg-red-700 text-white px-8 py-3.5 rounded-full font-bold transition flex items-center gap-2" onclick="nextStep(3)">
+            Continue <i class="fas fa-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- ====== STEP 4: Commitment ====== -->
+      <div class="form-section" data-section="4">
+        <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-white/20 mb-6">
+          <h2 class="text-2xl font-bold text-white mb-1">Final Step: Your Commitment</h2>
+          <p class="text-blue-200 text-sm mb-6">Tell us why you want to join and agree to our vendor standards.</p>
+
+          <div class="space-y-4">
+            <!-- Motivation -->
+            <div>
+              <label class="block text-blue-200 text-sm mb-1.5 font-medium">Why do you want to join Velora? <span class="text-red-400">*</span></label>
+              <textarea name="motivation" rows="4" placeholder="Share your motivation, goals, and what makes your business special. Why should customers buy from you?" class="glass-input w-full px-4 py-3 rounded-lg resize-vertical" required></textarea>
+              <div class="error-msg">Please tell us why you want to join</div>
+            </div>
+
+            <!-- How did you hear -->
+            <div>
+              <label class="block text-blue-200 text-sm mb-1.5 font-medium">How did you hear about Velora? <span class="text-blue-300 text-xs">(optional)</span></label>
+              <select name="referralSource" class="glass-input w-full sm:w-1/2 px-4 py-3 rounded-lg cursor-pointer">
+                <option value="">Select an option</option>
+                <option value="social">Social Media</option>
+                <option value="friend">Friend / Family</option>
+                <option value="google">Google Search</option>
+                <option value="vendor">Another Vendor</option>
+                <option value="event">Event / Market</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            <!-- Vendor Pledge -->
+            <div class="commitment-box p-5 sm:p-6 mt-4">
+              <h3 class="text-white font-bold text-lg mb-1 flex items-center gap-2">
+                <i class="fas fa-handshake text-velora-cyan"></i>
+                Vendor Pledge
+              </h3>
+              <p class="text-blue-200/70 text-sm mb-4">Before submitting, please confirm the following commitments:</p>
+
+              <div class="space-y-3">
+                <div class="glass-option rounded-lg p-4 flex items-start gap-3">
+                  <input type="checkbox" name="commitments" value="quality" id="commit-quality" class="mt-0.5" required>
+                  <label for="commit-quality" class="text-sm cursor-pointer flex-1">
+                    <strong class="text-white">Product Quality Guarantee</strong>
+                    <span class="block text-blue-200/60 text-xs mt-0.5">I guarantee all products are genuine, accurately described, and meet quality standards.</span>
+                  </label>
+                </div>
+                <div class="glass-option rounded-lg p-4 flex items-start gap-3">
+                  <input type="checkbox" name="commitments" value="returns" id="commit-returns" class="mt-0.5" required>
+                  <label for="commit-returns" class="text-sm cursor-pointer flex-1">
+                    <strong class="text-white">Returns & Refunds Policy</strong>
+                    <span class="block text-blue-200/60 text-xs mt-0.5">I agree to honor Velora's return policy and process refunds within 7 business days.</span>
+                  </label>
+                </div>
+                <div class="glass-option rounded-lg p-4 flex items-start gap-3">
+                  <input type="checkbox" name="commitments" value="terms" id="commit-terms" class="mt-0.5" required>
+                  <label for="commit-terms" class="text-sm cursor-pointer flex-1">
+                    <strong class="text-white">Terms & Conditions</strong>
+                    <span class="block text-blue-200/60 text-xs mt-0.5">I have read and agree to abide by Velora's vendor terms, commission structure, and rules.</span>
+                  </label>
+                </div>
+                <div class="glass-option rounded-lg p-4 flex items-start gap-3">
+                  <input type="checkbox" name="commitments" value="accuracy" id="commit-accuracy" class="mt-0.5" required>
+                  <label for="commit-accuracy" class="text-sm cursor-pointer flex-1">
+                    <strong class="text-white">Information Accuracy</strong>
+                    <span class="block text-blue-200/60 text-xs mt-0.5">I confirm all information provided is true. False information may result in account termination.</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="flex justify-between">
+          <button type="button" class="bg-white/10 hover:bg-white/20 text-white border border-white/30 px-6 py-3.5 rounded-full font-semibold transition flex items-center gap-2" onclick="prevStep(4)">
+            <i class="fas fa-arrow-left"></i> Back
+          </button>
+          <button type="submit" class="pulse-glow bg-velora-blue hover:bg-red-700 text-white px-8 py-3.5 rounded-full font-bold transition flex items-center gap-2" id="submitBtn">
+            Submit Application <i class="fas fa-paper-plane"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- ====== SUCCESS SCREEN ====== -->
+      <div class="form-section" id="successSection">
+        <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 sm:p-12 border border-white/20 text-center">
+          <div class="success-icon w-24 h-24 bg-gradient-to-br from-velora-market to-green-400 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+            <i class="fas fa-check text-white text-4xl"></i>
+          </div>
+          <h2 class="text-3xl font-bold text-white mb-3">Application Submitted!</h2>
+          <p class="text-blue-200 max-w-lg mx-auto mb-6">
+            Thank you for applying to become a Velora vendor. We've received your application and our team will review it within <strong class="text-white">24-48 hours</strong>.
+          </p>
+
+          <div class="bg-white/5 border border-white/10 rounded-xl p-5 max-w-md mx-auto mb-8 text-left">
+            <h4 class="text-velora-cyan font-semibold text-sm mb-3 flex items-center gap-2">
+              <i class="fas fa-clock"></i> What happens next?
+            </h4>
+            <ul class="space-y-2">
+              <li class="text-blue-200 text-sm flex items-start gap-2">
+                <i class="fas fa-check text-velora-market mt-0.5 text-xs"></i>
+                Our team reviews your application
+              </li>
+              <li class="text-blue-200 text-sm flex items-start gap-2">
+                <i class="fas fa-check text-velora-market mt-0.5 text-xs"></i>
+                We may contact you for additional info
+              </li>
+              <li class="text-blue-200 text-sm flex items-start gap-2">
+                <i class="fas fa-check text-velora-market mt-0.5 text-xs"></i>
+                You'll receive an approval email
+              </li>
+              <li class="text-blue-200 text-sm flex items-start gap-2">
+                <i class="fas fa-check text-velora-market mt-0.5 text-xs"></i>
+                Set up your dashboard and start selling!
+              </li>
+            </ul>
+          </div>
+
+          <a href="index.html" class="inline-flex items-center gap-2 bg-white text-blue-900 px-8 py-4 rounded-full font-bold hover:bg-gray-100 transition shadow-lg">
+            <i class="fas fa-home"></i> Back to Home
+          </a>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</main>
+
+<!-- ==========================================
+     FOOTER
+     ========================================== -->
+<footer class="bg-velora-dark text-gray-300 py-12">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 bg-gradient-to-br from-velora-blue to-blue-800 rounded-lg flex items-center justify-center">
+          <i class="fas fa-v text-white text-sm"></i>
+        </div>
+        <span class="text-white font-bold">Velora</span>
+        <span class="text-gray-500 text-sm">- Zambia's Multi-Vendor Marketplace</span>
+      </div>
+      <p class="text-gray-500 text-sm">&copy; 2025 Velora. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ==========================================
+     SUPABASE
+     ========================================== -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL = 'https://qlvransrclmziwibhgog.supabase.co';
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFsdnJhbnNyY2xteml3aWJoZ29nIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwNjE0MzYsImV4cCI6MjA4ODYzNzQzNn0.a-s7JLEI8ShwknOWJ0VF7TxedbaiI1b8WPSfpWDm84g';
+  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+</script>
+
+<!-- ==========================================
+     JAVASCRIPT
+     ========================================== -->
+<script>
+// =====================
+// MULTI-STEP NAVIGATION
+// =====================
+let currentStep = 1;
+const totalSteps = 4;
+
+function updateProgress(step) {
+  const percentage = ((step - 1) / (totalSteps - 1)) * 100;
+  document.getElementById('progressFill').style.width = percentage + '%';
+
+  document.querySelectorAll('.step').forEach((s, i) => {
+    s.classList.remove('active', 'completed');
+    if (i + 1 < step) s.classList.add('completed');
+    else if (i + 1 === step) s.classList.add('active');
+  });
+}
+
+function showSection(step) {
+  document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
+  const target = document.querySelector(`.form-section[data-section="${step}"]`);
+  if (target) target.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function nextStep(current) {
+  if (validateStep(current)) {
+    currentStep = current + 1;
+    updateProgress(currentStep);
+    showSection(currentStep);
+  }
+}
+
+function prevStep(current) {
+  currentStep = current - 1;
+  updateProgress(currentStep);
+  showSection(currentStep);
+}
+
+// =====================
+// VALIDATION
+// =====================
+function validateStep(step) {
+  const section = document.querySelector(`.form-section[data-section="${step}"]`);
+  if (!section) return true;
+
+  const required = section.querySelectorAll('[required]');
+  let valid = true;
+
+  required.forEach(field => {
+    let isValid = true;
+
+    if (field.type === 'checkbox') {
+      const name = field.name;
+      isValid = section.querySelectorAll(`[name="${name}"]:checked`).length > 0;
+    } else if (field.type === 'radio') {
+      const name = field.name;
+      isValid = section.querySelector(`[name="${name}"]:checked`) !== null;
+    } else if (field.type === 'email') {
+      isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value);
+    } else {
+      isValid = field.value.trim() !== '';
+    }
+
+    const group = field.closest('.space-y-2') || field.closest('.grid') || field.closest('div');
+    if (group) {
+      const input = field.classList.contains('glass-input') ? field : group.querySelector('.glass-input, .glass-option');
+      const error = group.querySelector('.error-msg');
+
+      if (!isValid) {
+        valid = false;
+        if (field.classList.contains('glass-input')) field.classList.add('error');
+        if (error) error.classList.add('show');
+      } else {
+        if (field.classList.contains('glass-input')) field.classList.remove('error');
+        if (error) error.classList.remove('show');
+      }
+    }
+  });
+
+  // Special: categories checkboxes
+  if (step === 2) {
+    const catGroup = document.getElementById('categoryGroup');
+    const catError = document.getElementById('catError');
+    const checked = catGroup.querySelectorAll('input[name="categories"]:checked');
+    if (checked.length === 0) {
+      valid = false;
+      catGroup.classList.add('error');
+      if (catError) catError.classList.add('show');
+    } else {
+      catGroup.classList.remove('error');
+      if (catError) catError.classList.remove('show');
+    }
+  }
+
+  if (!valid) {
+    const firstError = section.querySelector('.error');
+    if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  return valid;
+}
+
+// Clear errors on input
+document.addEventListener('input', function(e) {
+  if (e.target.classList.contains('glass-input')) {
+    e.target.classList.remove('error');
+    const group = e.target.closest('.grid') || e.target.closest('div');
+    if (group) {
+      const error = group.querySelector('.error-msg');
+      if (error) error.classList.remove('show');
+    }
+  }
+});
+
+// =====================
+// CATEGORY "OTHER" TOGGLE
+// =====================
+document.getElementById('cat-other').addEventListener('change', function() {
+  document.getElementById('otherCategoryWrap').style.display = this.checked ? 'block' : 'none';
+});
+
+// =====================
+// DELIVERY PROVINCES TOGGLE
+// =====================
+document.querySelectorAll('input[name="delivery"]').forEach(radio => {
+  radio.addEventListener('change', function() {
+    const pg = document.getElementById('provincesGroup');
+    pg.style.display = this.value === 'partial' ? 'block' : 'none';
+  });
+});
+
+// =====================
+// FORM SUBMISSION
+// =====================
+const form = document.getElementById('vendorForm');
+const loadingOverlay = document.getElementById('loadingOverlay');
+const successSection = document.getElementById('successSection');
+
+form.addEventListener('submit', async function(e) {
+  e.preventDefault();
+  if (!validateStep(4)) return;
+
+  loadingOverlay.classList.add('active');
+
+  const formData = new FormData(form);
+
+  // Collect categories
+  const catCheckboxes = document.querySelectorAll('input[name="categories"]:checked');
+  const categories = Array.from(catCheckboxes).map(cb => cb.value);
+
+  // Collect provinces (if partial delivery)
+  const provCheckboxes = document.querySelectorAll('input[name="provinces"]:checked');
+  const provinces = Array.from(provCheckboxes).map(cb => cb.value);
+
+  // Collect commitments
+  const commitCheckboxes = document.querySelectorAll('input[name="commitments"]:checked');
+  const commitments = Array.from(commitCheckboxes).map(cb => cb.value);
+
+  // Build data with snake_case keys for Supabase
+  const data = {
+    business_name: formData.get('businessName') || '',
+    business_type: formData.get('businessType') || '',
+    years_experience: formData.get('yearsExperience') || '',
+    owner_name: formData.get('fullName') || '',
+    email: formData.get('email') || '',
+    phone: formData.get('phone') || '',
+    id_number: formData.get('idNumber') || null,
+    tpin: formData.get('tpin') || null,
+    province: formData.get('province') || '',
+    town: formData.get('town') || '',
+    shop_address: formData.get('shopAddress') || null,
+    social_links: formData.get('socialLinks') || null,
+    categories: categories,
+    other_category: formData.get('otherCategory') || null,
+    product_description: formData.get('productDescription') || '',
+    product_condition: formData.get('productCondition') || '',
+    stock_ready: formData.get('stockReady') || '',
+    stock_quantity: formData.get('stockQuantity') || '',
+    delivery_coverage: formData.get('delivery') || '',
+    delivery_provinces: provinces.length ? provinces : null,
+    ref_name: formData.get('refName') || null,
+    ref_phone: formData.get('refPhone') || null,
+    bank_name: formData.get('bankName') || '',
+    account_name: formData.get('accountName') || '',
+    account_number: formData.get('accountNumber') || '',
+    bank_branch: formData.get('branch') || '',
+    motivation: formData.get('motivation') || '',
+    referral_source: formData.get('referralSource') || null,
+    commitments: commitments,
+    status: 'pending'
+  };
+
+  console.log('Submitting to Supabase:', data);
+
+  // Send to Supabase
+  try {
+    const { error } = await supabaseClient
+      .from('vendor_applications')
+      .insert([data]);
+
+    if (error) {
+      console.error('Supabase error:', error);
+      loadingOverlay.classList.remove('active');
+      alert('Error: ' + error.message + '. Please check your Supabase table exists.');
+      return;
+    }
+  } catch (err) {
+    console.error('Network error:', err);
+    loadingOverlay.classList.remove('active');
+    alert('Network error. Please check your connection and try again.');
+    return;
+  }
+
+  loadingOverlay.classList.remove('active');
+  document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
+  successSection.classList.add('active');
+
+  document.querySelectorAll('.step').forEach(s => {
+    s.classList.remove('active');
+    s.classList.add('completed');
+  });
+  document.getElementById('progressFill').style.width = '100%';
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+</script>
+</body>
+</html>

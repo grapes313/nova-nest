@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QN8N334V6L"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-QN8N334V6L');
+</script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Velora Electronics - Velora Market</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- SEO -->
+  <meta name="description" content="Velora Market - Zambia's trusted marketplace for electronics. Buy iPhones, Samsung, Google Pixel, laptops & accessories with Cash on Delivery.">
+  <meta name="keywords" content="Velora, Zambia, electronics, iPhone, Samsung, Google Pixel, laptops, buy online, Cash on Delivery">
+  <meta name="author" content="Velora Market">
+  <meta name="robots" content="index, follow">
+  <!-- Open Graph -->
+  <meta property="og:title" content="Velora Market - Buy Electronics in Zambia">
+  <meta property="og:description" content="Zambia's trusted marketplace for electronics. Verified vendors, Cash on Delivery, 7-day returns.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://velora.market/velora-electronics.html">
+  <meta property="og:image" content="https://velora.market/images/og-store.jpg">
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Velora Market - Buy Electronics in Zambia">
+  <meta name="twitter:description" content="Zambia's trusted marketplace for electronics.">
+  <meta name="twitter:image" content="https://velora.market/images/og-store.jpg">
+  <!-- Canonical -->
+  <link rel="canonical" href="https://velora.market/velora-electronics.html">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          colors: {
+            velora: { blue: '#0D47FF', dark: '#080F19', market: '#6A00FF', cyan: '#00D4FF', light: '#f8fafc' }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .product-card { transition: all 0.3s ease; display: flex; flex-direction: column; height: 100%; }
+    .product-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
+    .product-card > div:first-child { height: 192px; overflow: hidden; background: #f3f4f6; }
+    .product-card > div:first-child img { width: 100%; height: 100%; object-fit: cover; }
+    .product-img-wrapper { position: relative; width: 100%; height: 100%; overflow: hidden; }
+    .product-img-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.3s ease, transform 0.3s ease; }
+    .auth-overlay { position: fixed; inset: 0; background: rgba(15,23,42,0.7); backdrop-filter: blur(6px); z-index: 3000; display: none; align-items: center; justify-content: center; }
+    .auth-overlay.active { display: flex; }
+    .chat-panel { position: fixed; top: 0; right: 0; bottom: 0; width: 100%; max-width: 420px; background: #fff; z-index: 2000; transform: translateX(100%); transition: transform 0.3s ease; display: flex; flex-direction: column; box-shadow: -10px 0 40px rgba(0,0,0,0.15); }
+    .chat-panel.active { transform: translateX(0); }
+    .chat-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 1999; display: none; }
+    .chat-overlay.active { display: block; }
+    .chat-messages { flex: 1; overflow-y: auto; padding: 1rem; display: flex; flex-direction: column; gap: 0.75rem; }
+    .chat-msg-customer { align-self: flex-end; background: linear-gradient(135deg, #0D47FF, #0a2dbd); color: #fff; padding: 0.6rem 1rem; border-radius: 16px 16px 4px 16px; max-width: 80%; font-size: 0.875rem; word-break: break-word; }
+    .chat-msg-vendor { align-self: flex-start; background: #f1f5f9; color: #1f2937; padding: 0.6rem 1rem; border-radius: 16px 16px 16px 4px; max-width: 80%; font-size: 0.875rem; word-break: break-word; }
+    .chat-msg-meta { font-size: 0.65rem; opacity: 0.6; margin-top: 2px; }
+    .auth-tab { cursor: pointer; padding: 0.75rem 0; text-align: center; font-weight: 600; font-size: 0.9rem; color: #9ca3af; border-bottom: 2px solid transparent; transition: all 0.2s; }
+    .auth-tab.active { color: #0D47FF; border-bottom-color: #0D47FF; }
+    .auth-form-panel { display: none; }
+    .auth-form-panel.active { display: block; animation: fadeIn 0.3s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    .avatar-circle { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #0D47FF, #0a2dbd); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 600; font-size: 0.85rem; }
+    .btn-velora { background: linear-gradient(135deg, #0D47FF, #0a2dbd); }
+    .btn-velora:hover { background: linear-gradient(135deg, #0a2dbd, #0836a3); }
+    input:focus, select:focus, textarea:focus { outline: none; border-color: #0D47FF; }
+  </style>
+<base target="_blank">
+<base target="_blank">
+<base target="_blank">
+<base target="_blank">
+</head>
+<body class="font-sans bg-velora-light text-gray-900 antialiased">
+
+<!-- AUTH MODAL -->
+<div class="auth-overlay" id="authModal">
+  <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md mx-4 overflow-hidden">
+    <div class="p-6 pb-0">
+      <div class="text-center mb-4">
+        <div class="w-14 h-14 bg-gradient-to-br from-velora-blue to-blue-800 rounded-xl flex items-center justify-center mx-auto mb-3">
+          <i class="fas fa-v text-white text-xl"></i>
+        </div>
+        <h2 class="text-xl font-bold text-gray-900">Welcome to Velora</h2>
+        <p class="text-gray-500 text-sm" id="authSubtitle">Sign in to follow, chat, and shop</p>
+      </div>
+      <div class="flex border-b border-gray-200 mb-4">
+        <div class="auth-tab active flex-1" id="tabSignIn" onclick="switchAuthTab('signin')">Sign In</div>
+        <div class="auth-tab flex-1" id="tabSignUp" onclick="switchAuthTab('signup')">Create Account</div>
+      </div>
+    </div>
+    <div class="px-6 pb-6">
+      <!-- SIGN IN -->
+      <div class="auth-form-panel active" id="panelSignIn">
+        <form onsubmit="return handleSignIn(event)">
+          <div class="space-y-3">
+            <input type="text" id="signinId" placeholder="Phone number or email" class="w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl focus:border-velora-blue focus:outline-none transition text-sm" required>
+            <input type="password" id="signinPassword" placeholder="Password" class="w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl focus:border-velora-blue focus:outline-none transition text-sm" required minlength="6">
+          </div>
+          <p class="text-red-500 text-sm mt-2 hidden" id="signinError"></p>
+          <button type="submit" class="btn-velora text-white w-full py-3 rounded-xl font-bold mt-4 transition text-sm" id="signinBtn">Sign In</button>
+        </form>
+      </div>
+      <!-- SIGN UP -->
+      <div class="auth-form-panel" id="panelSignUp">
+        <form onsubmit="return handleSignUp(event)">
+          <div class="space-y-3">
+            <input type="text" id="signupName" placeholder="Full name *" class="w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl focus:border-velora-blue focus:outline-none transition text-sm" required>
+            <input type="tel" id="signupPhone" placeholder="Phone number * (e.g. 0977123456)" class="w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl focus:border-velora-blue focus:outline-none transition text-sm" required>
+            <input type="email" id="signupEmail" placeholder="Email (optional)" class="w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl focus:border-velora-blue focus:outline-none transition text-sm">
+            <textarea id="signupAddress" placeholder="Delivery address *" rows="2" class="w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl focus:border-velora-blue focus:outline-none transition text-sm resize-none" required></textarea>
+            <input type="password" id="signupPassword" placeholder="Password * (min 6 characters)" class="w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl focus:border-velora-blue focus:outline-none transition text-sm" required minlength="6">
+          </div>
+          <p class="text-red-500 text-sm mt-2 hidden" id="signupError"></p>
+          <button type="submit" class="btn-velora text-white w-full py-3 rounded-xl font-bold mt-4 transition text-sm" id="signupBtn">Create Account</button>
+          <p class="text-xs text-gray-400 mt-2 text-center">Your phone number is your login. Email is optional for order updates.</p>
+        </form>
+      </div>
+      <button onclick="closeAuthModal()" class="mt-4 text-sm text-gray-400 hover:text-gray-600 font-medium w-full text-center transition">Continue as Guest</button>
+    </div>
+  </div>
+</div>
+
+<!-- CHAT PANEL -->
+<div class="chat-overlay" id="chatOverlay" onclick="closeChat()"></div>
+<div class="chat-panel" id="chatPanel">
+  <div class="p-4 border-b border-gray-200 flex items-center justify-between bg-white">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 bg-gray-900 rounded-xl flex items-center justify-center"><i class="fas fa-bolt text-white"></i></div>
+      <div>
+        <p class="font-bold text-sm text-gray-900">Velora Electronics</p>
+        <p class="text-xs text-green-600 flex items-center gap-1"><span class="w-1.5 h-1.5 bg-green-500 rounded-full"></span> Usually replies in minutes</p>
+      </div>
+    </div>
+    <button onclick="closeChat()" class="w-8 h-8 rounded-full hover:bg-gray-100 flex items-center justify-center transition"><i class="fas fa-times text-gray-500"></i></button>
+  </div>
+  <div class="p-3 bg-velora-light border-b border-gray-100"><p class="text-xs text-gray-500 text-center">Messages are saved. The vendor will reply as soon as possible.</p></div>
+  <div class="chat-messages" id="chatMessages"><div class="text-center text-xs text-gray-400 py-4">No messages yet. Say hello!</div></div>
+  <div class="p-3 border-t border-gray-200 flex items-center gap-2 bg-white">
+    <input type="text" id="chatInput" placeholder="Type a message..." class="flex-1 px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-full text-sm focus:outline-none focus:border-velora-blue" onkeypress="if(event.key==='Enter')sendChatMessage()">
+    <button onclick="sendChatMessage()" class="w-10 h-10 btn-velora text-white rounded-full flex items-center justify-center transition flex-shrink-0"><i class="fas fa-paper-plane text-sm"></i></button>
+  </div>
+</div>
+
+<!-- TOP BAR -->
+<div class="bg-velora-dark text-white text-xs py-2.5 px-4">
+  <div class="max-w-7xl mx-auto flex justify-between items-center">
+    <span class="flex items-center gap-1"><i class="fas fa-map-marker-alt text-velora-blue"></i> Delivering across Zambia</span>
+    <div class="flex items-center gap-4">
+      <a href="index.html" class="hover:text-velora-blue transition font-medium">Back to Marketplace</a>
+      <span class="font-semibold">ZMW</span>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="bg-white shadow-sm sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+      <a href="index.html" class="flex items-center gap-2">
+        <div class="w-10 h-10 bg-gradient-to-br from-velora-blue to-blue-800 rounded-xl flex items-center justify-center">
+          <i class="fas fa-v text-white text-lg"></i>
+        </div>
+        <div>
+          <h1 class="text-xl font-bold text-gray-900 tracking-tight">Velora</h1>
+          <p class="text-[10px] text-velora-blue font-bold -mt-1 tracking-wider">MARKET</p>
+        </div>
+      </a>
+      <div class="hidden md:flex flex-1 max-w-xl mx-8">
+        <div class="relative w-full">
+          <input type="text" id="product-search" placeholder="Search this store... (Enter for all vendors)" oninput="searchProducts(this.value)" onkeydown="if(event.key==='Enter'){event.preventDefault();window.location.href='search.html?q='+encodeURIComponent(this.value);}" class="w-full pl-4 pr-12 py-2.5 bg-gray-100 border-2 border-transparent rounded-full focus:bg-white focus:border-velora-blue transition-all text-sm">
+          <button class="absolute right-1.5 top-1/2 -translate-y-1/2 bg-velora-blue text-white w-9 h-9 rounded-full flex items-center justify-center hover:bg-blue-700 transition"><i class="fas fa-search text-sm"></i></button>
+        </div>
+      </div>
+      <div class="flex items-center gap-3" id="navRight">
+        <button onclick="openAuthModal('signin')" class="text-sm text-gray-600 hover:text-velora-blue font-medium transition" id="navLoginBtn">Sign In / Join</button>
+        <a href="index.html#vendor-section" class="hidden lg:flex items-center gap-2 bg-velora-market text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-purple-700 transition"><i class="fas fa-store"></i> Become a Vendor</a>
+        <button onclick="window.VeloraCart.open()" class="relative p-2 hover:bg-gray-100 rounded-full transition"><i class="fas fa-shopping-cart text-gray-700 text-lg"></i><span class="vcart-badge">0</span></button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- VENDOR HEADER -->
+<section class="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="flex items-center gap-2 text-sm text-gray-400 mb-4">
+      <a href="index.html" class="hover:text-white transition">Velora</a><i class="fas fa-chevron-right text-xs"></i><span class="text-white">Velora Electronics</span>
+    </div>
+    <div class="flex flex-col md:flex-row items-start md:items-center gap-6">
+      <div class="w-20 h-20 bg-white rounded-2xl flex items-center justify-center shadow-xl flex-shrink-0"><i class="fas fa-bolt text-velora-blue text-3xl"></i></div>
+      <div class="flex-1">
+        <div class="flex items-center gap-3 mb-1 flex-wrap">
+          <h1 class="text-2xl sm:text-3xl font-bold">Velora Electronics</h1>
+          <span class="bg-purple-500 text-white text-xs font-bold px-2 py-1 rounded-full flex items-center gap-1"><i class="fas fa-check-circle"></i> Verified</span>
+          <span class="bg-velora-blue text-white text-xs font-bold px-2 py-1 rounded-full">Vendor #1</span>
+        </div>
+        <p class="text-gray-400 text-sm mb-3">Lusaka, Zambia | Premium Electronics & Accessories</p>
+        <div class="flex items-center gap-4 text-sm flex-wrap">
+          <span class="flex items-center gap-1"><i class="fas fa-star text-velora-cyan"></i> <strong>4.9</strong> (128 reviews)</span><span class="text-gray-600">|</span>
+          <span class="flex items-center gap-1"><i class="fas fa-box text-gray-400"></i> <strong id="product-count">Loading...</strong></span><span class="text-gray-600">|</span>
+          <span class="flex items-center gap-1"><i class="fas fa-truck text-green-400"></i> Delivery in 15-17 days</span>
+        </div>
+      </div>
+      <div class="flex gap-3">
+        <button id="followBtn" onclick="toggleFollow()" class="bg-white/10 hover:bg-white/20 px-5 py-2.5 rounded-full text-sm font-semibold transition flex items-center gap-2"><i class="fas fa-heart" id="followIcon"></i> <span id="followText">Follow</span></button>
+        <button onclick="openChat()" class="bg-velora-blue hover:bg-blue-700 px-5 py-2.5 rounded-full text-sm font-semibold transition flex items-center gap-2"><i class="fas fa-comment"></i> Chat</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STORE NAV -->
+<div class="bg-white border-b border-gray-200 sticky top-16 z-40">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex gap-1 overflow-x-auto py-3 scrollbar-hide" id="category-nav">
+      <button onclick="filterCategory('all')" class="cat-btn bg-velora-blue text-white px-5 py-2 rounded-full text-sm font-medium whitespace-nowrap transition">All Products</button>
+      <button onclick="filterCategory('iPhones')" class="cat-btn bg-gray-100 hover:bg-gray-200 text-gray-700 px-5 py-2 rounded-full text-sm font-medium transition whitespace-nowrap">iPhones</button>
+      <button onclick="filterCategory('Samsung')" class="cat-btn bg-gray-100 hover:bg-gray-200 text-gray-700 px-5 py-2 rounded-full text-sm font-medium transition whitespace-nowrap">Samsung</button>
+      <button onclick="filterCategory('Google Pixel')" class="cat-btn bg-gray-100 hover:bg-gray-200 text-gray-700 px-5 py-2 rounded-full text-sm font-medium transition whitespace-nowrap">Google Pixel</button>
+      <button onclick="filterCategory('Laptops')" class="cat-btn bg-gray-100 hover:bg-gray-200 text-gray-700 px-5 py-2 rounded-full text-sm font-medium transition whitespace-nowrap">Laptops</button>
+      <button onclick="filterCategory('Accessories')" class="cat-btn bg-gray-100 hover:bg-gray-200 text-gray-700 px-5 py-2 rounded-full text-sm font-medium transition whitespace-nowrap">Accessories</button>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCTS -->
+<section id="products" class="py-12 bg-velora-light">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-3 mb-8">
+      <div>
+        <h2 class="text-3xl font-bold text-gray-900" id="category-title">All Products</h2>
+        <p class="text-gray-500 mt-1">From Velora Electronics</p>
+      </div>
+      <a href="search.html" class="text-sm text-velora-blue hover:text-blue-700 font-medium transition flex items-center gap-1">
+        <i class="fas fa-search"></i> Search all vendors
+      </a>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6" id="product-grid">
+      <div class="col-span-full text-center py-12"><i class="fas fa-spinner fa-spin text-3xl text-velora-blue"></i><p class="text-gray-500 mt-3">Loading products...</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- VENDOR TRUST -->
+<section class="bg-white border-t border-gray-200 py-8">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid md:grid-cols-3 gap-6 text-center">
+      <div class="p-4"><i class="fas fa-shield-check text-purple-600 text-2xl mb-2"></i><h4 class="font-bold text-gray-900">Verified Vendor</h4><p class="text-sm text-gray-500">Verified by Velora</p></div>
+      <div class="p-4"><i class="fas fa-undo text-blue-600 text-2xl mb-2"></i><h4 class="font-bold text-gray-900">7-Day Returns</h4><p class="text-sm text-gray-500">Protected by marketplace</p></div>
+      <div class="p-4"><i class="fas fa-headset text-cyan-600 text-2xl mb-2"></i><h4 class="font-bold text-gray-900">Direct Support</h4><p class="text-sm text-gray-500">Chat with vendor</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-velora-dark text-gray-300 py-12">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 bg-gradient-to-br from-velora-blue to-blue-800 rounded-lg flex items-center justify-center"><i class="fas fa-v text-white text-sm"></i></div>
+        <div><p class="text-white font-bold text-sm">Velora</p><p class="text-[10px] text-velora-blue font-bold tracking-wider">MARKET</p></div>
+      </div>
+      <p class="text-sm text-gray-500">2026 Velora Market. All rights reserved.</p>
+      <div class="flex gap-4 text-sm"><a href="index.html" class="hover:text-white transition">Marketplace</a><a href="#" class="hover:text-white transition">Terms</a><a href="#" class="hover:text-white transition">Privacy</a></div>
+    </div>
+  </div>
+</footer>
+
+<!-- Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  // Match vendor dashboard exactly
+  const SUPABASE_URL = 'https://qlvransrclmziwibhgog.supabase.co';
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFsdnJhbnNyY2xteml3aWJoZ29nIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwNjE0MzYsImV4cCI6MjA4ODYzNzQzNn0.a-s7JLEI8ShwknOWJ0VF7TxedbaiI1b8WPSfpWDm84g';
+  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  window.supabaseClient = supabaseClient; // so cart.js can find it
+  // Separate anon client for product reads — bypasses auth/RLS issues when user is logged in
+  const anonClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
+    global: { headers: { 'X-Client-Info': 'anon' } },
+    auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false }
+  });
+
+  const VENDOR_ID = 'velora-electronics';
+
+  // ===== GLOBAL STATE =====
+  let products = [];
+  let currentCategory = 'all';
+  let currentSearch = '';
+  let searchTimeout = null;
+  let currentUser = null;
+  let currentProfile = null;
+  let isFollowing = false;
+  let chatMessages = [];
+  let chatPollInterval = null;
+
+  // ===== AUTH STATE =====
+  async function initAuth() {
+    var result = await supabaseClient.auth.getSession();
+    if (result.data && result.data.session) {
+      currentUser = result.data.session.user;
+      await loadProfile();
+      updateNavForUser();
+      checkFollowStatus();
+    }
+    supabaseClient.auth.onAuthStateChange(function(event, session) {
+      if (event === 'SIGNED_IN' && session) {
+        currentUser = session.user;
+        loadProfile().then(function() {
+          updateNavForUser();
+          closeAuthModal();
+          checkFollowStatus();
+        });
+      } else if (event === 'SIGNED_OUT') {
+        currentUser = null; currentProfile = null; isFollowing = false;
+        updateNavForGuest(); updateFollowButton();
+      }
+    });
+  }
+
+  async function loadProfile() {
+    if (!currentUser) return;
+    var result = await supabaseClient.from('customer_profiles').select('id, full_name, email, phone, address, extra_addresses, created_at').eq('id', currentUser.id).maybeSingle();
+    if (result.data) {
+      currentProfile = result.data;
+      // Save to localStorage so checkout can access addresses
+      try { localStorage.setItem('velora-profile', JSON.stringify(currentProfile)); } catch(e) {}
+    }
+  }
+
+  function getDisplayName() {
+    if (currentProfile && currentProfile.full_name) return currentProfile.full_name;
+    if (currentUser && currentUser.user_metadata && currentUser.user_metadata.full_name) return currentUser.user_metadata.full_name;
+    if (currentProfile && currentProfile.phone) return currentProfile.phone;
+    return 'User';
+  }
+  function getInitials() {
+    return getDisplayName().split(' ').map(function(n) { return n[0]; }).join('').toUpperCase().substring(0, 2);
+  }
+  function updateNavForUser() {
+    document.getElementById('navRight').innerHTML =
+      '<a href="customer-dashboard.html" class="flex items-center gap-2 hover:bg-gray-100 px-2 py-1.5 rounded-full transition">' +
+        '<div class="avatar-circle" title="' + getDisplayName() + '">' + getInitials() + '</div>' +
+        '<span class="text-sm font-medium text-gray-700 hidden sm:block">' + getDisplayName() + '</span>' +
+      '</a>' +
+      '<button onclick="logout()" class="text-sm text-gray-500 hover:text-velora-blue font-medium transition">Logout</button>' +
+      '<a href="index.html#vendor-section" class="hidden lg:flex items-center gap-2 bg-velora-market text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-purple-700 transition"><i class="fas fa-store"></i> Become a Vendor</a>' +
+      '<button onclick="window.VeloraCart.open()" class="relative p-2 hover:bg-gray-100 rounded-full transition"><i class="fas fa-shopping-cart text-gray-700 text-lg"></i><span class="vcart-badge">0</span></button>';
+  }
+  function updateNavForGuest() {
+    document.getElementById('navRight').innerHTML =
+      '<button onclick="openAuthModal(\'signin\')" class="text-sm text-gray-600 hover:text-velora-blue font-medium transition" id="navLoginBtn">Sign In / Join</button>' +
+      '<a href="index.html#vendor-section" class="hidden lg:flex items-center gap-2 bg-velora-market text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-purple-700 transition"><i class="fas fa-store"></i> Become a Vendor</a>' +
+      '<button onclick="window.VeloraCart.open()" class="relative p-2 hover:bg-gray-100 rounded-full transition"><i class="fas fa-shopping-cart text-gray-700 text-lg"></i><span class="vcart-badge">0</span></button>';
+  }
+  async function logout() { await supabaseClient.auth.signOut(); window.location.reload(); }
+
+  // ===== AUTH MODAL =====
+  function openAuthModal(tab, subtitle) {
+    document.getElementById('authModal').classList.add('active');
+    document.getElementById('authSubtitle').textContent = subtitle || 'Sign in to follow, chat, and shop';
+    document.getElementById('signinError').classList.add('hidden');
+    document.getElementById('signupError').classList.add('hidden');
+    switchAuthTab(tab || 'signin');
+  }
+  function closeAuthModal() { document.getElementById('authModal').classList.remove('active'); }
+  function switchAuthTab(tab) {
+    document.getElementById('tabSignIn').classList.toggle('active', tab === 'signin');
+    document.getElementById('tabSignUp').classList.toggle('active', tab === 'signup');
+    document.getElementById('panelSignIn').classList.toggle('active', tab === 'signin');
+    document.getElementById('panelSignUp').classList.toggle('active', tab === 'signup');
+  }
+
+  function normalizePhone(phone) {
+    var digits = phone.replace(/\D/g, '');
+    if (digits.indexOf('260') !== 0) { if (digits.indexOf('0') === 0) digits = '260' + digits.substring(1); }
+    return digits;
+  }
+  function phoneToEmail(phone) { return normalizePhone(phone) + '@customer.velora.local'; }
+  function resolveIdentifier(input) {
+    if (input.indexOf('@') > -1) return input.trim().toLowerCase();
+    return phoneToEmail(input);
+  }
+
+  async function handleSignIn(e) {
+    e.preventDefault();
+    var btn = document.getElementById('signinBtn');
+    var errorEl = document.getElementById('signinError');
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>'; btn.disabled = true; errorEl.classList.add('hidden');
+    try {
+      var result = await supabaseClient.auth.signInWithPassword({
+        email: resolveIdentifier(document.getElementById('signinId').value),
+        password: document.getElementById('signinPassword').value
+      });
+      if (result.error) { errorEl.textContent = 'Wrong phone/email or password.'; errorEl.classList.remove('hidden'); }
+    } catch (err) { errorEl.textContent = 'Sign in failed.'; errorEl.classList.remove('hidden'); }
+    btn.innerHTML = 'Sign In'; btn.disabled = false;
+    return false;
+  }
+
+  async function handleSignUp(e) {
+    e.preventDefault();
+    var btn = document.getElementById('signupBtn');
+    var errorEl = document.getElementById('signupError');
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>'; btn.disabled = true; errorEl.classList.add('hidden');
+    var name = document.getElementById('signupName').value.trim();
+    var phone = document.getElementById('signupPhone').value.trim();
+    var emailInput = document.getElementById('signupEmail').value.trim();
+    var address = document.getElementById('signupAddress').value.trim();
+    var password = document.getElementById('signupPassword').value;
+    var normalizedPhone = normalizePhone(phone);
+    if (normalizedPhone.length < 9) { errorEl.textContent = 'Invalid phone number.'; errorEl.classList.remove('hidden'); btn.innerHTML = 'Create Account'; btn.disabled = false; return false; }
+    if (!address) { errorEl.textContent = 'Delivery address is required.'; errorEl.classList.remove('hidden'); btn.innerHTML = 'Create Account'; btn.disabled = false; return false; }
+    var hasRealEmail = emailInput.length > 0 && emailInput.indexOf('@') > -1;
+    var authEmail = phoneToEmail(phone);
+    try {
+      var result = await supabaseClient.auth.signUp({ email: authEmail, password: password, options: { data: { full_name: name, phone: normalizedPhone } } });
+      if (result.error) {
+        errorEl.textContent = result.error.message.indexOf('already') > -1 ? 'Account exists. Try signing in.' : result.error.message;
+        errorEl.classList.remove('hidden'); btn.innerHTML = 'Create Account'; btn.disabled = false; return false;
+      }
+      if (result.data && result.data.user) {
+        await supabaseClient.from('customer_profiles').insert([{ id: result.data.user.id, full_name: name, email: hasRealEmail ? emailInput : null, phone: normalizedPhone, address: address }]);
+        await supabaseClient.auth.signInWithPassword({ email: authEmail, password: password });
+      }
+    } catch (err) { errorEl.textContent = 'Failed. Try again.'; errorEl.classList.remove('hidden'); }
+    btn.innerHTML = 'Create Account'; btn.disabled = false;
+    return false;
+  }
+
+  function requireAuth(action) { if (!currentUser) { openAuthModal('signin', 'Sign in to ' + action); return false; } return true; }
+
+  // ===== FOLLOW =====
+  async function toggleFollow() {
+    if (!requireAuth('follow this vendor')) return;
+    try {
+      if (isFollowing) {
+        await supabaseClient.from('follows').delete().eq('user_id', currentUser.id).eq('vendor_id', VENDOR_ID);
+        isFollowing = false;
+      } else {
+        await supabaseClient.from('follows').insert([{ user_id: currentUser.id, vendor_id: VENDOR_ID }]);
+        isFollowing = true;
+      }
+      updateFollowButton();
+    } catch (err) { alert('Something went wrong.'); }
+  }
+  async function checkFollowStatus() {
+    if (!currentUser) return;
+    try { var result = await supabaseClient.from('follows').select('*').eq('user_id', currentUser.id).eq('vendor_id', VENDOR_ID).maybeSingle(); isFollowing = !!result.data; updateFollowButton(); } catch (err) {}
+  }
+  function updateFollowButton() {
+    var btn = document.getElementById('followBtn'); var icon = document.getElementById('followIcon'); var text = document.getElementById('followText');
+    if (isFollowing) { btn.classList.add('bg-velora-blue'); btn.classList.remove('bg-white/10'); icon.classList.add('text-white'); text.textContent = 'Following'; }
+    else { btn.classList.remove('bg-velora-blue'); btn.classList.add('bg-white/10'); icon.classList.remove('text-white'); text.textContent = 'Follow'; }
+  }
+
+  // ===== CHAT =====
+  function openChat() { if (!requireAuth('chat with the vendor')) return; document.getElementById('chatPanel').classList.add('active'); document.getElementById('chatOverlay').classList.add('active'); document.body.style.overflow = 'hidden'; loadChatMessages(); startChatPolling(); setTimeout(function() { document.getElementById('chatInput').focus(); }, 300); }
+  function closeChat() { document.getElementById('chatPanel').classList.remove('active'); document.getElementById('chatOverlay').classList.remove('active'); document.body.style.overflow = ''; stopChatPolling(); }
+  async function loadChatMessages() {
+    if (!currentUser) return;
+    var container = document.getElementById('chatMessages');
+    try {
+      var result = await supabaseClient.from('messages').select('*').or('and(sender_id.eq.' + currentUser.id + ',receiver_id.eq.' + VENDOR_ID + '),and(sender_id.eq.' + VENDOR_ID + ',receiver_id.eq.' + currentUser.id + ')').order('created_at', { ascending: true });
+      if (result.error) { container.innerHTML = '<div class="text-center text-red-500 text-xs py-4">Error: ' + result.error.message + '</div>'; return; }
+      chatMessages = result.data || [];
+      renderChatMessages();
+    } catch (err) { container.innerHTML = '<div class="text-center text-red-500 text-xs py-4">Failed to load</div>'; }
+  }
+  function renderChatMessages() {
+    var container = document.getElementById('chatMessages');
+    if (!chatMessages.length) { container.innerHTML = '<div class="text-center text-xs text-gray-400 py-4">No messages yet. Say hello!</div>'; return; }
+    var html = ''; var lastDate = '';
+    chatMessages.forEach(function(msg) {
+      var msgDate = new Date(msg.created_at).toLocaleDateString();
+      if (msgDate !== lastDate) { html += '<div class="text-center text-[10px] text-gray-400 my-2">' + msgDate + '</div>'; lastDate = msgDate; }
+      var isMe = msg.sender_id === currentUser.id;
+      var time = new Date(msg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      html += '<div class="' + (isMe ? 'chat-msg-customer' : 'chat-msg-vendor') + '"><div>' + escapeHtml(msg.content) + '</div><div class="chat-msg-meta">' + time + '</div></div>';
+    });
+    container.innerHTML = html; container.scrollTop = container.scrollHeight;
+  }
+  async function sendChatMessage() {
+    var input = document.getElementById('chatInput');
+    var content = input.value.trim();
+    if (!content || !currentUser) return;
+    input.value = ''; input.disabled = true;
+    try {
+      var result = await supabaseClient.from('messages').insert([{ sender_id: currentUser.id, receiver_id: VENDOR_ID, content: content }]);
+      if (result.error) { console.error('Send error:', result.error); alert('Failed: ' + result.error.message); }
+      else { await loadChatMessages(); }
+    } catch (err) { console.error('Send catch:', err); }
+    input.disabled = false; input.focus();
+  }
+  function startChatPolling() { stopChatPolling(); chatPollInterval = setInterval(loadChatMessages, 3000); }
+  function stopChatPolling() { if (chatPollInterval) { clearInterval(chatPollInterval); chatPollInterval = null; } }
+  function escapeHtml(text) { var d = document.createElement('div'); d.textContent = text; return d.innerHTML; }
+
+  // ===== PRODUCTS =====
+  async function loadProducts() {
+    var grid = document.getElementById('product-grid');
+    try {
+      // Use anonClient so products load even when user is logged in (bypasses RLS auth issues)
+      var result = await anonClient.from('products').select('*').eq('vendor_id', VENDOR_ID).order('created_at', { ascending: false });
+      if (result.error) { grid.innerHTML = '<div class="col-span-full text-center py-12 text-red-500">Error: ' + result.error.message + '</div>'; return; }
+      products = result.data || [];
+      var inStock = products.filter(function(p) { return p.stock_status !== 'out_of_stock'; }).length;
+      document.getElementById('product-count').textContent = inStock + ' Products';
+      if (!products.length) { grid.innerHTML = '<div class="col-span-full text-center py-12 text-gray-500">No products yet. Add some from your vendor dashboard!</div>'; return; }
+      renderProducts();
+    } catch (err) { grid.innerHTML = '<div class="col-span-full text-center py-12 text-red-500">Error: ' + (err.message || 'Check connection') + '</div>'; }
+  }
+
+  function filterCategory(cat) {
+    currentCategory = cat;
+    document.querySelectorAll('.cat-btn').forEach(function(btn) { btn.classList.remove('bg-velora-blue', 'text-white'); btn.classList.add('bg-gray-100', 'text-gray-700'); });
+    event.target.classList.remove('bg-gray-100', 'text-gray-700');
+    event.target.classList.add('bg-velora-blue', 'text-white');
+    document.getElementById('category-title').textContent = cat === 'all' ? 'All Products' : cat;
+    renderProducts();
+  }
+
+
+  // ===== SEARCH =====
+  function searchProducts(query) {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(function() {
+      currentSearch = query.toLowerCase().trim();
+      renderProducts();
+      // Update title to show search results
+      var title = document.getElementById('category-title');
+      if (title) {
+        if (currentSearch) {
+          title.innerHTML = 'Results for "' + escapeHtml(currentSearch) + '" <span class="text-sm font-normal text-gray-500">(' + getFilteredProducts().length + ' found)</span>';
+        } else {
+          title.textContent = currentCategory === 'all' ? 'All Products' : currentCategory;
+        }
+      }
+    }, 200); // debounce 200ms
+  }
+
+  function escapeHtml(text) {
+    if (!text) return '';
+    var d = document.createElement('div');
+    d.textContent = text;
+    return d.innerHTML;
+  }
+
+  function getFilteredProducts() {
+    var filtered = currentCategory === 'all' ? products : products.filter(function(p) { return p.category === currentCategory; });
+    if (currentSearch) {
+      filtered = filtered.filter(function(p) {
+        var name = (p.name || '').toLowerCase();
+        var desc = (p.description || '').toLowerCase();
+        var cat = (p.category || '').toLowerCase();
+        var modelNames = '';
+        if (p.models && p.models.length) {
+          modelNames = p.models.map(function(m) { return (m.value || '').toLowerCase(); }).join(' ');
+        }
+        return name.indexOf(currentSearch) !== -1 || 
+               desc.indexOf(currentSearch) !== -1 || 
+               cat.indexOf(currentSearch) !== -1 ||
+               modelNames.indexOf(currentSearch) !== -1;
+      });
+    }
+    return filtered;
+  }
+
+  // Pick one random model's first storage price — or base_price for single-model products
+  function getCardPrice(product) {
+    var price = product.base_price || 0;
+    if (product.models && product.models.length && product.variant_options) {
+      var randIdx = Math.floor(Math.random() * product.models.length);
+      var model = product.models[randIdx];
+      if (model && product.variant_options[model.value]) {
+        var storage = product.variant_options[model.value].storage;
+        if (storage && storage.length) price = storage[0].price || 0;
+      }
+    }
+    return price;
+  }
+
+function renderProducts() {
+    var grid = document.getElementById('product-grid');
+    var filtered = getFilteredProducts();
+    if (!filtered.length) {
+      var msg = currentSearch ? 'No products match "' + escapeHtml(currentSearch) + '".' : 'No products in this category.';
+      grid.innerHTML = '<div class="col-span-full text-center py-12 text-gray-500">' + msg + '</div>';
+      return;
+    }
+
+    var html = '';
+    filtered.forEach(function(product) {
+      var price = getCardPrice(product);
+      var priceDisplay = 'ZMW ' + price.toLocaleString();
+      var modelCount = (product.models && product.models.length) || 0;
+      var variantLabel = modelCount > 1 ? modelCount + ' models' : '';
+      var stockBadge = product.stock_status === 'out_of_stock' ? '<span class="text-xs bg-red-100 text-red-700 px-2 py-0.5 rounded-full font-medium">Out of Stock</span>' : product.stock_status === 'low_stock' ? '<span class="text-xs bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded-full font-medium">Low Stock</span>' : '<span class="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full font-medium">In Stock</span>';
+
+      html += '<a href="product-detail.html?id=' + product.id + '" class="product-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition duration-300 block">' +
+        '<div class="relative" style="height:192px; overflow:hidden; background:#f3f4f6;">' +
+          '<div class="product-img-wrapper">' +
+            '<img src="' + (product.image || '') + '" alt="' + (product.name || '') + '" onerror="this.style.display=\'none\'; this.parentElement.style.background=\'#e5e7eb\'" loading="lazy">' +
+          '</div>' +
+          '<button class="absolute top-3 right-3 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-red-50 transition group z-10" onclick="event.preventDefault(); toggleWishlist(\'' + product.id + '\');">' +
+            '<i class="far fa-heart text-gray-400 group-hover:text-red-500 transition"></i>' +
+          '</button>' +
+          (variantLabel ? '<span class="absolute bottom-3 left-3 bg-black/70 text-white text-xs px-2 py-1 rounded-full font-medium">' + variantLabel + '</span>' : '') +
+        '</div>' +
+        '<div class="p-4">' +
+          '<div class="flex items-center gap-1.5 mb-2">' +
+            '<div class="w-4 h-4 bg-gray-900 rounded flex items-center justify-center"><i class="fas fa-bolt text-white text-[8px]"></i></div>' +
+            '<span class="text-[10px] text-gray-500">Velora Electronics</span>' +
+            '<i class="fas fa-check-circle text-purple-500 text-[10px]"></i>' +
+          '</div>' +
+          '<h3 class="font-bold text-gray-900 mb-2 text-sm line-clamp-2">' + (product.name || '') + '</h3>' +
+          '<div class="flex items-center justify-between">' +
+            '<span class="text-base font-bold text-velora-blue">' + priceDisplay + '</span>' +
+            stockBadge +
+          '</div>' +
+          '<p class="text-xs text-gray-400 mt-2">Click to view options</p>' +
+        '</div>' +
+      '</a>';
+    });
+    grid.innerHTML = html;
+  }
+
+  function toggleWishlist(productId) {
+    var heart = event.target;
+    if (heart.classList.contains('far')) { heart.classList.remove('far'); heart.classList.add('fas', 'text-red-500'); }
+    else { heart.classList.remove('fas', 'text-red-500'); heart.classList.add('far'); }
+  }
+
+  // ===== INIT =====
+  document.addEventListener('DOMContentLoaded', function() {
+    initAuth();
+    loadProducts();
+    updateFollowButton();
+  });
+</script>
+<script src="cart.js"></script>
+
+<!-- JSON-LD Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Store",
+  "name": "Velora Electronics Store",
+  "description": "Zambia's trusted marketplace for electronics. Buy iPhones, Samsung, Google Pixel, laptops & accessories.",
+  "url": "https://velora.market/velora-electronics.html",
+  "logo": "https://velora.market/images/logo.png",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Lusaka",
+    "addressCountry": "ZM"
+  },
+  "paymentAccepted": "Cash on Delivery, MTN Mobile Money, Airtel Money",
+  "currenciesAccepted": "ZMW",
+  "openingHours": "Mo-Sa 08:00-18:00",
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.8",
+    "reviewCount": "156"
+  }
+}
+</script>
+</body>
+</html>

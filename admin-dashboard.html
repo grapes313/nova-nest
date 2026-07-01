@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QN8N334V6L"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-QN8N334V6L');
+</script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - Velora Market</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          colors: {
+            velora: { blue: '#0D47FF', dark: '#080F19', market: '#6A00FF', cyan: '#00D4FF', light: '#f8fafc', blue: '#0a1a8e' }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .status-pending { background: #fef3c7; color: #92400e; }
+    .status-approved { background: #d1fae5; color: #065f46; }
+    .status-rejected { background: #fee2e2; color: #0836a3; }
+    .sidebar-link { transition: all 0.2s; }
+    .sidebar-link:hover, .sidebar-link.active { background: rgba(255,255,255,0.1); border-left: 3px solid #0D47FF; }
+
+    /* Detail Modal */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(15,23,42,0.7); backdrop-filter: blur(4px);
+      z-index: 100; align-items: center; justify-content: center;
+      padding: 1rem;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal-content {
+      background: #fff; border-radius: 16px;
+      max-width: 700px; width: 100%; max-height: 85vh;
+      overflow-y: auto; box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+    }
+    .detail-row {
+      display: flex; justify-content: space-between;
+      padding: 0.75rem 0; border-bottom: 1px solid #f1f5f9;
+    }
+    .detail-label { color: #64748b; font-size: 0.85rem; }
+    .detail-value { color: #080F19; font-size: 0.9rem; font-weight: 500; text-align: right; max-width: 60%; }
+    .badge-list { display: flex; flex-wrap: wrap; gap: 0.35rem; justify-content: flex-end; }
+    .badge { background: #f1f5f9; padding: 0.2rem 0.6rem; border-radius: 6px; font-size: 0.75rem; color: #475569; }
+
+    /* Full Form View */
+    .form-view-section {
+      background: linear-gradient(135deg, #0a1a6e 0%, #0d3a9e 100%);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .form-view-section h4 {
+      color: #fff;
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.15);
+    }
+    .form-view-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+    .form-view-field {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+    }
+    .form-view-label {
+      color: #94a3b8;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.25rem;
+    }
+    .form-view-value {
+      color: #fff;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+    .form-view-value.empty {
+      color: #475569;
+      font-style: italic;
+    }
+    .view-toggle {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    .view-toggle button {
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid #e2e8f0;
+      background: #fff;
+      color: #64748b;
+      transition: all 0.2s;
+    }
+    .view-toggle button.active {
+      background: #080F19;
+      color: #fff;
+      border-color: #080F19;
+    }
+    .view-panel { display: none; }
+    .view-panel.active { display: block; }
+  </style>
+<base target="_blank">
+<base target="_blank">
+<base target="_blank">
+</head>
+<body class="font-sans bg-gray-100 text-gray-900 antialiased">
+
+<!-- LOGIN OVERLAY -->
+<div id="login-overlay" class="fixed inset-0 bg-velora-dark z-50 flex items-center justify-center">
+  <div class="bg-white rounded-2xl p-8 max-w-md w-full mx-4 shadow-2xl">
+    <div class="text-center mb-6">
+      <div class="w-16 h-16 bg-gradient-to-br from-velora-blue to-blue-800 rounded-xl flex items-center justify-center mx-auto mb-4">
+        <i class="fas fa-lock text-white text-2xl"></i>
+      </div>
+      <h2 class="text-2xl font-bold text-gray-900">Admin Login</h2>
+      <p class="text-gray-500 text-sm mt-1">Velora Market</p>
+    </div>
+    <div class="space-y-4">
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+        <input type="password" id="admin-password" placeholder="Enter admin password"
+          class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-velora-blue focus:outline-none transition"
+          onkeypress="if(event.key==='Enter')checkPassword()">
+      </div>
+      <button onclick="checkPassword()" class="w-full bg-velora-blue hover:bg-red-700 text-white py-3 rounded-xl font-bold transition">
+        Login
+      </button>
+      <p id="login-error" class="text-red-500 text-sm text-center hidden">Wrong password. Try again.</p>
+    </div>
+    <div class="mt-6 text-center">
+      <a href="index.html" class="text-gray-400 text-sm hover:text-gray-600 transition">← Back to Marketplace</a>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div id="admin-content" class="hidden">
+
+<!-- TOP BAR -->
+<div class="bg-velora-dark text-white text-xs py-2.5 px-4">
+  <div class="max-w-7xl mx-auto flex justify-between items-center">
+    <span class="font-semibold">Velora Admin</span>
+    <div class="flex items-center gap-4">
+      <a href="index.html" class="hover:text-velora-blue transition">View Marketplace</a>
+      <button onclick="logout()" class="hover:text-velora-blue transition">Logout</button>
+    </div>
+  </div>
+</div>
+
+<div class="flex min-h-screen">
+
+  <!-- SIDEBAR -->
+  <aside class="w-64 bg-velora-dark text-white flex-shrink-0">
+    <div class="p-6 border-b border-white/10">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-gradient-to-br from-velora-blue to-blue-800 rounded-xl flex items-center justify-center">
+          <i class="fas fa-v text-white"></i>
+        </div>
+        <div>
+          <h1 class="font-bold text-sm">Velora</h1>
+          <p class="text-[10px] text-velora-blue font-bold tracking-wider">ADMIN PANEL</p>
+        </div>
+      </div>
+    </div>
+    <nav class="py-4">
+      <a href="javascript:void(0)" id="sidebar-apps" class="sidebar-link active flex items-center gap-3 px-6 py-3 text-sm" onclick="switchAdminTab('apps'); return false;">
+        <i class="fas fa-users w-5"></i> Vendor Applications
+      </a>
+      <a href="javascript:void(0)" id="sidebar-commission" class="sidebar-link flex items-center gap-3 px-6 py-3 text-sm" onclick="switchAdminTab('commission'); return false;">
+        <i class="fas fa-money-bill-wave w-5"></i> Commission & Revenue
+      </a>
+      <a href="javascript:void(0)" id="sidebar-vendors" class="sidebar-link flex items-center gap-3 px-6 py-3 text-sm" onclick="switchAdminTab('vendors'); return false;">
+        <i class="fas fa-store w-5"></i> All Vendors
+      </a>
+      <a href="javascript:void(0)" id="sidebar-settings" class="sidebar-link flex items-center gap-3 px-6 py-3 text-sm" onclick="switchAdminTab('settings'); return false;">
+        <i class="fas fa-cog w-5"></i> Settings
+      </a>
+    </nav>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="flex-1 p-8">
+
+    <!-- ===== TAB: VENDOR APPLICATIONS ===== -->
+    <div id="tab-apps" class="admin-tab">
+      <div class="flex justify-between items-center mb-8">
+        <div>
+          <h1 class="text-2xl font-bold text-gray-900">Vendor Applications</h1>
+          <p class="text-gray-500 text-sm">Review and manage vendor sign-ups</p>
+        </div>
+        <button onclick="loadApplications()" class="bg-velora-blue hover:bg-blue-800 text-white px-4 py-2 rounded-lg text-sm font-semibold transition flex items-center gap-2">
+          <i class="fas fa-sync-alt"></i> Refresh
+        </button>
+      </div>
+
+      <div class="grid grid-cols-4 gap-4 mb-8">
+        <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-200">
+          <p class="text-2xl font-bold text-gray-900" id="stat-total">0</p>
+          <p class="text-sm text-gray-500">Total Applications</p>
+        </div>
+        <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-200">
+          <p class="text-2xl font-bold text-yellow-600" id="stat-pending">0</p>
+          <p class="text-sm text-gray-500">Pending</p>
+        </div>
+        <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-200">
+          <p class="text-2xl font-bold text-purple-600" id="stat-approved">0</p>
+          <p class="text-sm text-gray-500">Approved</p>
+        </div>
+        <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-200">
+          <p class="text-2xl font-bold text-red-600" id="stat-rejected">0</p>
+          <p class="text-sm text-gray-500">Rejected</p>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+        <div class="p-4 border-b border-gray-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+          <h2 class="font-bold text-lg">All Applications</h2>
+          <div class="flex gap-2">
+            <button onclick="filterApps('all')" class="px-3 py-1 bg-gray-100 hover:bg-gray-200 rounded-full text-xs font-medium">All</button>
+            <button onclick="filterApps('pending')" class="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full text-xs font-medium">Pending</button>
+            <button onclick="filterApps('approved')" class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-medium">Approved</button>
+            <button onclick="filterApps('rejected')" class="px-3 py-1 bg-red-100 text-red-700 rounded-full text-xs font-medium">Rejected</button>
+          </div>
+        </div>
+        <div class="p-4 border-b border-gray-200 flex flex-col sm:flex-row gap-3">
+          <div class="relative flex-1">
+            <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+            <input type="text" id="searchInput" placeholder="Search by business name, owner, email, phone..."
+              class="w-full pl-9 pr-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-velora-blue transition"
+              oninput="handleSearch(this.value)">
+          </div>
+          <button onclick="exportCSV()" class="px-4 py-2 bg-velora-dark hover:bg-gray-800 text-white rounded-lg text-sm font-medium transition flex items-center gap-2 whitespace-nowrap">
+            <i class="fas fa-download"></i> Export CSV
+          </button>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full">
+            <thead>
+              <tr class="bg-gray-50 border-b border-gray-200">
+                <th class="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase">Business</th>
+                <th class="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase">Owner</th>
+                <th class="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase">Contact</th>
+                <th class="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase">Categories</th>
+                <th class="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase">Province</th>
+                <th class="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase">Status</th>
+                <th class="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase">Date</th>
+                <th class="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="applications-table">
+              <tr><td colspan="8" class="py-8 text-center text-gray-500">Loading applications...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== TAB: COMMISSION & REVENUE ===== -->
+    <div id="tab-commission" class="admin-tab hidden">
+      <div class="flex justify-between items-center mb-8">
+        <div>
+          <h1 class="text-2xl font-bold text-gray-900">Commission & Revenue</h1>
+          <p class="text-gray-500 text-sm">All marketplace earnings across vendors</p>
+        </div>
+        <button onclick="loadCommissionData()" class="bg-velora-blue hover:bg-blue-800 text-white px-4 py-2 rounded-lg text-sm font-semibold transition flex items-center gap-2">
+          <i class="fas fa-sync-alt"></i> Refresh
+        </button>
+      </div>
+
+      <!-- Revenue Stats -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+        <div class="bg-white rounded-xl p-5 shadow-sm border border-gray-200">
+          <div class="flex items-center gap-2 mb-3">
+            <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center"><i class="fas fa-shopping-bag text-purple-600"></i></div>
+            <span class="text-xs text-gray-400">All Orders</span>
+          </div>
+          <p class="text-3xl font-bold text-gray-900" id="comm-total-orders">0</p>
+          <p class="text-xs text-gray-400 mt-1">Across all vendors</p>
+        </div>
+        <div class="bg-white rounded-xl p-5 shadow-sm border border-gray-200">
+          <div class="flex items-center gap-2 mb-3">
+            <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center"><i class="fas fa-money-bill-wave text-blue-600"></i></div>
+            <span class="text-xs text-gray-400">Gross Revenue</span>
+          </div>
+          <p class="text-3xl font-bold text-gray-900" id="comm-gross">ZMW 0</p>
+          <p class="text-xs text-gray-400 mt-1">Total customer payments</p>
+        </div>
+        <div class="bg-white rounded-xl p-5 shadow-sm border border-gray-200">
+          <div class="flex items-center gap-2 mb-3">
+            <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center"><i class="fas fa-percentage text-orange-600"></i></div>
+            <span class="text-xs text-gray-400">Velora Commission</span>
+          </div>
+          <p class="text-3xl font-bold text-orange-600" id="comm-commission">ZMW 0</p>
+          <p class="text-xs text-gray-400 mt-1">Your earnings</p>
+        </div>
+        <div class="bg-white rounded-xl p-5 shadow-sm border border-gray-200">
+          <div class="flex items-center gap-2 mb-3">
+            <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center"><i class="fas fa-hand-holding-usd text-green-600"></i></div>
+            <span class="text-xs text-gray-400">Vendor Payouts</span>
+          </div>
+          <p class="text-3xl font-bold text-green-600" id="comm-payouts">ZMW 0</p>
+          <p class="text-xs text-gray-400 mt-1">Owed to vendors</p>
+        </div>
+      </div>
+
+      <!-- Per-Vendor Breakdown -->
+      <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-8">
+        <div class="p-4 border-b border-gray-200">
+          <h2 class="font-bold text-lg">Per-Vendor Commission Breakdown</h2>
+          <p class="text-sm text-gray-500">How much each vendor generated and what Velora keeps</p>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full">
+            <thead>
+              <tr class="bg-gray-50 border-b border-gray-200">
+                <th class="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase">Vendor</th>
+                <th class="text-right py-3 px-4 text-xs font-semibold text-gray-500 uppercase">Orders</th>
+                <th class="text-right py-3 px-4 text-xs font-semibold text-gray-500 uppercase">Gross Revenue</th>
+                <th class="text-right py-3 px-4 text-xs font-semibold text-gray-500 uppercase">Rate</th>
+                <th class="text-right py-3 px-4 text-xs font-semibold text-gray-500 uppercase">Velora Keeps</th>
+                <th class="text-right py-3 px-4 text-xs font-semibold text-gray-500 uppercase">Vendor Gets</th>
+              </tr>
+            </thead>
+            <tbody id="commission-vendor-table">
+              <tr><td colspan="6" class="py-8 text-center text-gray-500">Loading...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- All Orders with Commission -->
+      <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+        <div class="p-4 border-b border-gray-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+          <h2 class="font-bold text-lg">All Orders</h2>
+          <div class="flex gap-2">
+            <button onclick="filterCommissionOrders('all')" class="px-3 py-1 bg-gray-100 hover:bg-gray-200 rounded-full text-xs font-medium">All</button>
+            <button onclick="filterCommissionOrders('pending')" class="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full text-xs font-medium">Pending</button>
+            <button onclick="filterCommissionOrders('confirmed')" class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-medium">Confirmed</button>
+            <button onclick="filterCommissionOrders('delivered')" class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium">Delivered</button>
+          </div>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full">
+            <thead>
+              <tr class="bg-gray-50 border-b border-gray-200">
+                <th class="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase">Order Ref</th>
+                <th class="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase">Vendor</th>
+                <th class="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase">Customer</th>
+                <th class="text-right py-3 px-4 text-xs font-semibold text-gray-500 uppercase">Total</th>
+                <th class="text-right py-3 px-4 text-xs font-semibold text-gray-500 uppercase">Rate</th>
+                <th class="text-right py-3 px-4 text-xs font-semibold text-gray-500 uppercase">Commission</th>
+                <th class="text-right py-3 px-4 text-xs font-semibold text-gray-500 uppercase">Vendor Payout</th>
+                <th class="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase">Status</th>
+              </tr>
+            </thead>
+            <tbody id="commission-orders-table">
+              <tr><td colspan="8" class="py-8 text-center text-gray-500">Loading orders...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== TAB: ALL VENDORS ===== -->
+    <div id="tab-vendors" class="admin-tab hidden">
+      <div class="flex justify-between items-center mb-8">
+        <div>
+          <h1 class="text-2xl font-bold text-gray-900">All Vendors</h1>
+          <p class="text-gray-500 text-sm">Registered vendors on the marketplace</p>
+        </div>
+        <button onclick="loadVendorsList()" class="bg-velora-blue hover:bg-blue-800 text-white px-4 py-2 rounded-lg text-sm font-semibold transition flex items-center gap-2">
+          <i class="fas fa-sync-alt"></i> Refresh
+        </button>
+      </div>
+      <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full">
+            <thead>
+              <tr class="bg-gray-50 border-b border-gray-200">
+                <th class="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase">ID</th>
+                <th class="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase">Name</th>
+                <th class="text-right py-3 px-4 text-xs font-semibold text-gray-500 uppercase">Commission</th>
+                <th class="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase">Settings</th>
+              </tr>
+            </thead>
+            <tbody id="vendors-table">
+              <tr><td colspan="4" class="py-8 text-center text-gray-500">Loading vendors...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== TAB: SETTINGS ===== -->
+    <div id="tab-settings" class="admin-tab hidden">
+      <div class="flex justify-between items-center mb-8">
+        <div>
+          <h1 class="text-2xl font-bold text-gray-900">Settings</h1>
+          <p class="text-gray-500 text-sm">Manage commission rates and marketplace settings</p>
+        </div>
+      </div>
+      <div class="max-w-2xl">
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
+          <h2 class="font-bold text-lg mb-4">Default Commission Rate</h2>
+          <p class="text-sm text-gray-500 mb-4">This rate applies to all new vendors unless individually changed.</p>
+          <div class="flex items-center gap-4">
+            <input type="number" id="default-commission" value="10" min="0" max="50"
+              class="w-24 px-3 py-2 border-2 border-gray-200 rounded-lg text-sm focus:border-velora-blue focus:outline-none">
+            <span class="text-gray-500 font-medium">%</span>
+            <button onclick="saveDefaultCommission()" class="bg-velora-blue text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700 transition">Save</button>
+          </div>
+          <p class="text-xs text-gray-400 mt-2">Per ZMW 1000, vendor gets ZMW <span id="settings-example">900</span></p>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+</div>
+
+<!-- DETAIL MODAL -->
+<div class="modal-overlay" id="detailModal">
+  <div class="modal-content">
+    <div class="p-6 border-b border-gray-200 flex justify-between items-center sticky top-0 bg-white z-10">
+      <div>
+        <h3 class="text-xl font-bold text-gray-900" id="modalBusiness">Business Name</h3>
+        <p class="text-sm text-gray-500" id="modalDate">Submitted on ...</p>
+      </div>
+      <button onclick="closeModal()" class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200 transition">
+        <i class="fas fa-times text-gray-600"></i>
+      </button>
+    </div>
+    <!-- View Toggle -->
+    <div class="px-6 pt-4">
+      <div class="view-toggle">
+        <button onclick="switchView('summary')" id="btnSummary" class="active">Summary View</button>
+        <button onclick="switchView('form')" id="btnForm">Full Form View</button>
+      </div>
+    </div>
+
+    <div class="p-6 pt-2" id="modalBody">
+      <!-- Summary View -->
+      <div id="viewSummary" class="view-panel active">
+        <!-- Injected by JS -->
+      </div>
+      <!-- Full Form View -->
+      <div id="viewForm" class="view-panel">
+        <!-- Injected by JS -->
+      </div>
+      <!-- Admin Notes -->
+      <div class="mt-4 pt-4 border-t border-gray-200">
+        <label class="block text-sm font-semibold text-gray-700 mb-2">
+          <i class="fas fa-sticky-note text-velora-cyan mr-1"></i>Admin Notes
+        </label>
+        <textarea id="adminNotes" rows="3" placeholder="Add your private notes about this vendor..."
+          class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-velora-blue transition resize-vertical"></textarea>
+        <button onclick="saveNotes()" class="mt-2 px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg text-xs font-medium transition">
+          <i class="fas fa-save mr-1"></i>Save Notes
+        </button>
+        <p id="notesStatus" class="text-xs text-velora-market mt-1 hidden">Notes saved!</p>
+      </div>
+    </div>
+    <div class="p-6 border-t border-gray-200 flex justify-end gap-3 sticky bottom-0 bg-white" id="modalActions">
+      <!-- Actions injected here -->
+    </div>
+  </div>
+</div>
+
+<!-- Supabase + Logic -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  // ADMIN PASSWORD
+  const ADMIN_PASSWORD = 'novanest2026';
+
+  function checkPassword() {
+    const input = document.getElementById('admin-password');
+    const error = document.getElementById('login-error');
+    const overlay = document.getElementById('login-overlay');
+    const content = document.getElementById('admin-content');
+
+    if (input.value === ADMIN_PASSWORD) {
+      overlay.style.display = 'none';
+      content.classList.remove('hidden');
+      localStorage.setItem('admin_logged_in', 'true');
+      loadApplications();
+    } else {
+      error.classList.remove('hidden');
+      input.value = '';
+      input.focus();
+    }
+  }
+
+  function logout() {
+    localStorage.removeItem('admin_logged_in');
+    location.reload();
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    if (localStorage.getItem('admin_logged_in') === 'true') {
+      document.getElementById('login-overlay').style.display = 'none';
+      document.getElementById('admin-content').classList.remove('hidden');
+      loadApplications();
+    }
+  });
+
+  const SUPABASE_URL = 'https://qlvransrclmziwibhgog.supabase.co';
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFsdnJhbnNyY2xteml3aWJoZ29nIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwNjE0MzYsImV4cCI6MjA4ODYzNzQzNn0.a-s7JLEI8ShwknOWJ0VF7TxedbaiI1b8WPSfpWDm84g';
+  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  let allApplications = [];
+
+  function loadApplications() {
+    const tbody = document.getElementById('applications-table');
+    tbody.innerHTML = '<tr><td colspan="8" class="py-8 text-center text-gray-500"><i class="fas fa-spinner fa-spin mr-2"></i>Loading...</td></tr>';
+
+    supabaseClient
+      .from('vendor_applications')
+      .select('*')
+      .order('created_at', { ascending: false })
+      .then(function(result) {
+        if (result.error) {
+          console.error('Error:', result.error);
+          tbody.innerHTML = '<tr><td colspan="8" class="py-8 text-center text-red-500">Error: ' + result.error.message + '. Make sure the "vendor_applications" table exists in Supabase.</td></tr>';
+          return;
+        }
+
+        allApplications = result.data || [];
+        renderTable(allApplications);
+        updateStats(allApplications);
+      })
+      .catch(function(err) {
+        console.error('Catch:', err);
+        tbody.innerHTML = '<tr><td colspan="8" class="py-8 text-center text-red-500">Network error. Check console.</td></tr>';
+      });
+  }
+
+  function renderTable(apps) {
+    const tbody = document.getElementById('applications-table');
+
+    if (apps.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="8" class="py-8 text-center text-gray-500">No applications yet. They will appear here when vendors apply.</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = apps.map(function(app) {
+      const date = app.created_at ? new Date(app.created_at).toLocaleDateString('en-ZM', { day: 'numeric', month: 'short', year: 'numeric' }) : '-';
+      const statusClass = app.status === 'approved' ? 'status-approved' :
+                         app.status === 'rejected' ? 'status-rejected' : 'status-pending';
+
+      // Format categories
+      let catDisplay = '-';
+      if (app.categories) {
+        const cats = Array.isArray(app.categories) ? app.categories : (typeof app.categories === 'string' ? JSON.parse(app.categories) : []);
+        catDisplay = cats.slice(0, 2).join(', ') + (cats.length > 2 ? ' +' + (cats.length - 2) : '');
+      }
+
+      return '<tr class="border-b border-gray-100 hover:bg-gray-50">' +
+        '<td class="py-3 px-4"><p class="font-semibold text-sm">' + (app.business_name || '-') + '</p><p class="text-xs text-gray-400">' + (app.business_type || '') + '</p></td>' +
+        '<td class="py-3 px-4 text-sm">' + (app.owner_name || '-') + '</td>' +
+        '<td class="py-3 px-4 text-sm">' + (app.phone || '-') + '<br><span class="text-xs text-gray-400">' + (app.email || 'No email') + '</span></td>' +
+        '<td class="py-3 px-4 text-sm text-gray-600">' + catDisplay + '</td>' +
+        '<td class="py-3 px-4 text-sm text-gray-600">' + (app.province || '-') + '</td>' +
+        '<td class="py-3 px-4"><span class="text-xs font-bold px-2 py-1 rounded-full capitalize ' + statusClass + '">' + (app.status || 'pending') + '</span></td>' +
+        '<td class="py-3 px-4 text-xs text-gray-500">' + date + '</td>' +
+        '<td class="py-3 px-4">' +
+          '<button onclick="openDetail(\'' + app.id + '\')" class="text-nova-blue hover:text-blue-800 text-sm font-medium mr-2">View</button>' +
+        '</td>' +
+      '</tr>';
+    }).join('');
+  }
+
+  function updateStats(apps) {
+    document.getElementById('stat-total').textContent = apps.length;
+    document.getElementById('stat-pending').textContent = apps.filter(function(a) { return a.status === 'pending' || a.status === 'pending_review'; }).length;
+    document.getElementById('stat-approved').textContent = apps.filter(function(a) { return a.status === 'approved'; }).length;
+    document.getElementById('stat-rejected').textContent = apps.filter(function(a) { return a.status === 'rejected'; }).length;
+  }
+
+  function filterApps(status) {
+    currentFilter = status;
+    applyFilterAndSearch();
+  }
+
+  var currentFilter = 'all';
+  var currentSearch = '';
+
+  function applyFilterAndSearch() {
+    var filtered = allApplications;
+
+    // Apply status filter
+    if (currentFilter !== 'all') {
+      filtered = filtered.filter(function(a) {
+        return a.status === currentFilter || (currentFilter === 'pending' && a.status === 'pending_review');
+      });
+    }
+
+    // Apply search
+    if (currentSearch.trim()) {
+      var q = currentSearch.toLowerCase();
+      filtered = filtered.filter(function(a) {
+        return (a.business_name || '').toLowerCase().indexOf(q) !== -1 ||
+               (a.owner_name || '').toLowerCase().indexOf(q) !== -1 ||
+               (a.email || '').toLowerCase().indexOf(q) !== -1 ||
+               (a.phone || '').toLowerCase().indexOf(q) !== -1 ||
+               (a.province || '').toLowerCase().indexOf(q) !== -1 ||
+               (a.town || '').toLowerCase().indexOf(q) !== -1 ||
+               formatArray(a.categories).toLowerCase().indexOf(q) !== -1;
+      });
+    }
+
+    renderTable(filtered);
+  }
+
+  function handleSearch(value) {
+    currentSearch = value;
+    applyFilterAndSearch();
+  }
+
+  function exportCSV() {
+    // Determine which data to export
+    var dataToExport = allApplications;
+    if (currentFilter !== 'all') {
+      dataToExport = allApplications.filter(function(a) {
+        return a.status === currentFilter || (currentFilter === 'pending' && a.status === 'pending_review');
+      });
+    }
+    if (currentSearch.trim()) {
+      var q = currentSearch.toLowerCase();
+      dataToExport = dataToExport.filter(function(a) {
+        return (a.business_name || '').toLowerCase().indexOf(q) !== -1 ||
+               (a.owner_name || '').toLowerCase().indexOf(q) !== -1 ||
+               (a.email || '').toLowerCase().indexOf(q) !== -1 ||
+               (a.phone || '').toLowerCase().indexOf(q) !== -1;
+      });
+    }
+
+    if (dataToExport.length === 0) {
+      alert('No data to export.');
+      return;
+    }
+
+    // Build CSV
+    var headers = ['Business Name', 'Business Type', 'Owner Name', 'Email', 'Phone', 'Province', 'Town', 'Categories', 'Product Condition', 'Stock Ready', 'Delivery', 'Bank Name', 'Account Name', 'Account Number', 'Bank Branch', 'Status', 'Submitted Date'];
+    var rows = dataToExport.map(function(a) {
+      return [
+        a.business_name || '',
+        a.business_type || '',
+        a.owner_name || '',
+        a.email || '',
+        a.phone || '',
+        a.province || '',
+        a.town || '',
+        formatArray(a.categories),
+        a.product_condition || '',
+        a.stock_ready || '',
+        a.delivery_coverage || '',
+        a.bank_name || '',
+        a.account_name || '',
+        a.account_number || '',
+        a.bank_branch || '',
+        a.status || 'pending',
+        a.created_at ? new Date(a.created_at).toLocaleDateString('en-ZM') : ''
+      ].map(function(cell) {
+        // Escape CSV cells
+        var s = String(cell || '').replace(/"/g, '""');
+        if (s.indexOf(',') !== -1 || s.indexOf('"') !== -1 || s.indexOf('\n') !== -1) {
+          s = '"' + s + '"';
+        }
+        return s;
+      }).join(',');
+    });
+
+    var csv = '\uFEFF' + headers.join(',') + '\n' + rows.join('\n');
+
+    // Download
+    var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    var link = document.createElement('a');
+    var url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    var filename = 'velora-vendors-' + (currentFilter !== 'all' ? currentFilter + '-' : '') + new Date().toISOString().slice(0,10) + '.csv';
+    link.setAttribute('download', filename);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
+  function saveNotes() {
+    if (!currentAppId) return;
+    var notes = document.getElementById('adminNotes').value;
+
+    supabaseClient
+      .from('vendor_applications')
+      .update({ admin_notes: notes })
+      .eq('id', currentAppId)
+      .then(function(result) {
+        if (result.error) {
+          alert('Error saving notes: ' + result.error.message);
+        } else {
+          // Update local data
+          var app = allApplications.find(function(a) { return a.id === currentAppId; });
+          if (app) app.admin_notes = notes;
+          var statusEl = document.getElementById('notesStatus');
+          statusEl.classList.remove('hidden');
+          setTimeout(function() { statusEl.classList.add('hidden'); }, 2000);
+        }
+      });
+  }
+
+  // DETAIL MODAL
+  let currentAppId = null;
+
+  function switchView(view) {
+    document.querySelectorAll('.view-panel').forEach(function(p) { p.classList.remove('active'); });
+    document.querySelectorAll('.view-toggle button').forEach(function(b) { b.classList.remove('active'); });
+    document.getElementById('view' + (view === 'summary' ? 'Summary' : 'Form')).classList.add('active');
+    document.getElementById('btn' + (view === 'summary' ? 'Summary' : 'Form')).classList.add('active');
+  }
+
+  function fv(label, value) {
+    var v = value || '';
+    var emptyClass = !v ? ' empty' : '';
+    var display = v || 'Not provided';
+    return '<div class="form-view-field"><div class="form-view-label">' + label + '</div><div class="form-view-value' + emptyClass + '">' + display + '</div></div>';
+  }
+
+  function fvFull(label, value) {
+    return '<div class="form-view-field" style="grid-column:1/-1;"><div class="form-view-label">' + label + '</div><div class="form-view-value">' + (value || '-') + '</div></div>';
+  }
+
+  function fvArray(label, arr) {
+    var formatted = formatArray(arr);
+    return fv(label, formatted === '-' ? '' : formatted);
+  }
+
+  function openDetail(id) {
+    const app = allApplications.find(function(a) { return a.id === id; });
+    if (!app) return;
+    currentAppId = id;
+
+    document.getElementById('modalBusiness').textContent = app.business_name || 'Unnamed Business';
+    document.getElementById('modalDate').textContent = app.created_at
+      ? 'Applied on ' + new Date(app.created_at).toLocaleDateString('en-ZM', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' })
+      : '';
+
+    // ===== SUMMARY VIEW =====
+    var sumSections = [
+      { title: 'Business Information', rows: [
+        { label: 'Business Name', value: app.business_name },
+        { label: 'Business Type', value: app.business_type },
+        { label: 'Years in Business', value: app.years_experience },
+        { label: 'Owner Name', value: app.owner_name },
+        { label: 'Email', value: app.email },
+        { label: 'Phone (WhatsApp)', value: app.phone },
+        { label: 'NRC / Passport', value: app.id_number || 'Not provided' },
+        { label: 'TPIN', value: app.tpin || 'Not provided' },
+        { label: 'Province', value: app.province },
+        { label: 'Town / Area', value: app.town },
+        { label: 'Shop Address', value: app.shop_address || 'Not provided' },
+        { label: 'Social Media / Website', value: app.social_links || 'Not provided' },
+      ]},
+      { title: 'Products', rows: [
+        { label: 'Categories', value: formatArray(app.categories) },
+        { label: 'Other Category', value: app.other_category || 'N/A', showIf: app.other_category },
+        { label: 'Product Description', value: app.product_description },
+        { label: 'Product Condition', value: app.product_condition },
+        { label: 'Stock Readiness', value: app.stock_ready },
+        { label: 'Stock Quantity', value: app.stock_quantity },
+      ]},
+      { title: 'Operations & Fulfillment', rows: [
+        { label: 'Delivery Coverage', value: app.delivery_coverage },
+        { label: 'Delivery Provinces', value: formatArray(app.delivery_provinces), showIf: app.delivery_provinces },
+        { label: 'Reference Contact', value: (app.ref_name || 'Not provided') + (app.ref_phone ? ' - ' + app.ref_phone : '') },
+        { label: 'Bank Name', value: app.bank_name },
+        { label: 'Account Name', value: app.account_name },
+        { label: 'Account Number', value: app.account_number },
+        { label: 'Bank Branch', value: app.bank_branch },
+      ]},
+      { title: 'Commitment', rows: [
+        { label: 'Why Velora?', value: app.motivation },
+        { label: 'Referral Source', value: app.referral_source || 'Not specified' },
+        { label: 'Pledges', value: formatArray(app.commitments) },
+      ]},
+    ];
+
+    var sumHtml = '';
+    sumSections.forEach(function(section) {
+      var visibleRows = section.rows.filter(function(r) { return r.showIf !== false && r.value; });
+      if (visibleRows.length === 0) return;
+
+      sumHtml += '<div class="mb-6">';
+      sumHtml += '<h4 class="font-bold text-sm text-gray-900 mb-3 pb-2 border-b border-gray-200">' + section.title + '</h4>';
+      visibleRows.forEach(function(row) {
+        var val = Array.isArray(row.value) ? row.value.join(', ') : (row.value || '-');
+        sumHtml += '<div class="detail-row">';
+        sumHtml += '<span class="detail-label">' + row.label + '</span>';
+        sumHtml += '<span class="detail-value">' + val + '</span>';
+        sumHtml += '</div>';
+      });
+      sumHtml += '</div>';
+    });
+    document.getElementById('viewSummary').innerHTML = sumHtml;
+
+    // ===== FULL FORM VIEW =====
+    var formHtml = '<div style="max-height:60vh;overflow-y:auto;">';
+
+    // STEP 1: Business Information
+    formHtml += '<div class="form-view-section">';
+    formHtml += '<h4><i class="fas fa-building mr-2"></i>Step 1: Business Information</h4>';
+    formHtml += '<div class="form-view-grid">';
+    formHtml += fv('Business Name *', app.business_name);
+    formHtml += fv('Business Type *', app.business_type);
+    formHtml += fv('Your Full Name *', app.owner_name);
+    formHtml += fv('Email Address *', app.email);
+    formHtml += fv('Phone (WhatsApp) *', app.phone);
+    formHtml += fv('Years in Business *', app.years_experience);
+    formHtml += fv('NRC / Passport', app.id_number);
+    formHtml += fv('TPIN Number', app.tpin);
+    formHtml += fv('Province *', app.province);
+    formHtml += fv('Town / Area *', app.town);
+    formHtml += fvFull('Physical Shop Address', app.shop_address);
+    formHtml += fvFull('Social Media / Website', app.social_links);
+    formHtml += '</div></div>';
+
+    // STEP 2: Products
+    formHtml += '<div class="form-view-section">';
+    formHtml += '<h4><i class="fas fa-box mr-2"></i>Step 2: Products</h4>';
+    formHtml += '<div class="form-view-grid">';
+    formHtml += fvArray('Product Categories *', app.categories);
+    if (app.other_category) {
+      formHtml += fv('Other Category', app.other_category);
+    }
+    formHtml += fvFull('Describe Your Products *', app.product_description);
+    formHtml += fv('Product Condition *', app.product_condition);
+    formHtml += fv('Stock Readiness *', app.stock_ready);
+    formHtml += fv('Average Stock Quantity *', app.stock_quantity);
+    formHtml += '</div></div>';
+
+    // STEP 3: Operations
+    formHtml += '<div class="form-view-section">';
+    formHtml += '<h4><i class="fas fa-truck mr-2"></i>Step 3: Operations & Fulfillment</h4>';
+    formHtml += '<div class="form-view-grid">';
+    formHtml += fv('Nationwide Delivery? *', app.delivery_coverage);
+    if (app.delivery_provinces) {
+      formHtml += fvArray('Provinces Covered', app.delivery_provinces);
+    }
+    formHtml += fv('Reference Name', app.ref_name);
+    formHtml += fv('Reference Phone', app.ref_phone);
+    formHtml += fv('Bank Name *', app.bank_name);
+    formHtml += fv('Account Name *', app.account_name);
+    formHtml += fv('Account Number *', app.account_number);
+    formHtml += fv('Bank Branch *', app.bank_branch);
+    formHtml += '</div></div>';
+
+    // STEP 4: Commitment
+    formHtml += '<div class="form-view-section">';
+    formHtml += '<h4><i class="fas fa-handshake mr-2"></i>Step 4: Commitment</h4>';
+    formHtml += '<div class="form-view-grid">';
+    formHtml += fvFull('Why do you want to join Velora? *', app.motivation);
+    formHtml += fv('How did you hear about us?', app.referral_source);
+    formHtml += fvArray('Vendor Pledges *', app.commitments);
+    formHtml += '</div></div>';
+
+    formHtml += '</div>';
+    document.getElementById('viewForm').innerHTML = formHtml;
+
+    // Reset to summary view
+    switchView('summary');
+
+    // Load existing notes
+    document.getElementById('adminNotes').value = app.admin_notes || '';
+    document.getElementById('notesStatus').classList.add('hidden');
+
+    // Actions - always show approve/reject for status reversal
+    const currentStatus = app.status || 'pending';
+    const statusBadge = currentStatus === 'approved' ? '<span class="px-2 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-bold capitalize mr-2">' + currentStatus + '</span>' :
+                        currentStatus === 'rejected' ? '<span class="px-2 py-1 bg-red-100 text-red-700 rounded-full text-xs font-bold capitalize mr-2">' + currentStatus + '</span>' :
+                        '<span class="px-2 py-1 bg-yellow-100 text-yellow-700 rounded-full text-xs font-bold capitalize mr-2">' + currentStatus + '</span>';
+
+    const actionsEl = document.getElementById('modalActions');
+    actionsEl.innerHTML =
+      '<div class="flex items-center gap-2">' + statusBadge + '<span class="text-xs text-gray-400">Current status</span></div>' +
+      '<div class="flex gap-2">' +
+        '<button onclick="closeModal()" class="px-4 py-2 text-gray-500 hover:text-gray-700 text-sm font-medium">Close</button>' +
+        '<button onclick="rejectVendor(\'' + app.id + '\')" class="px-4 py-2 bg-red-100 text-red-700 rounded-lg text-sm font-semibold hover:bg-red-200 transition">' + (currentStatus === 'rejected' ? 'Keep Rejected' : 'Reject') + '</button>' +
+        '<button onclick="approveVendor(\'' + app.id + '\')" class="px-4 py-2 bg-purple-100 text-purple-700 rounded-lg text-sm font-semibold hover:bg-green-200 transition">' + (currentStatus === 'approved' ? 'Keep Approved' : 'Approve') + '</button>' +
+      '</div>';
+
+    document.getElementById('detailModal').classList.add('active');
+  }
+
+  function closeModal() {
+    document.getElementById('detailModal').classList.remove('active');
+    currentAppId = null;
+  }
+
+  function formatArray(val) {
+    if (!val) return '-';
+    if (Array.isArray(val)) return val.join(', ');
+    try {
+      const parsed = JSON.parse(val);
+      return Array.isArray(parsed) ? parsed.join(', ') : val;
+    } catch (e) { return val; }
+  }
+
+  function approveVendor(id) {
+    var app = allApplications.find(function(a) { return a.id === id; });
+    var isReversal = app && app.status === 'rejected';
+    var msg = isReversal
+      ? 'This vendor was previously REJECTED. Are you sure you want to change their status to APPROVED?'
+      : 'Approve this vendor? Their status will be set to approved.';
+
+    if (!confirm(msg)) return;
+
+    supabaseClient
+      .from('vendor_applications')
+      .update({ status: 'approved' })
+      .eq('id', id)
+      .then(function(result) {
+        if (result.error) {
+          alert('Error: ' + result.error.message);
+        } else {
+          // Update local data without full reload
+          if (app) app.status = 'approved';
+          openDetail(id);
+          loadApplications();
+        }
+      });
+  }
+
+  function rejectVendor(id) {
+    var app = allApplications.find(function(a) { return a.id === id; });
+    var isReversal = app && app.status === 'approved';
+    var msg = isReversal
+      ? 'This vendor was previously APPROVED. Are you sure you want to change their status to REJECTED?'
+      : 'Reject this vendor? Their status will be set to rejected.';
+
+    if (!confirm(msg)) return;
+
+    supabaseClient
+      .from('vendor_applications')
+      .update({ status: 'rejected' })
+      .eq('id', id)
+      .then(function(result) {
+        if (result.error) {
+          alert('Error: ' + result.error.message);
+        } else {
+          // Update local data without full reload
+          if (app) app.status = 'rejected';
+          openDetail(id);
+          loadApplications();
+        }
+      });
+  }
+
+  // Close modal on backdrop click
+  document.getElementById('detailModal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+
+  // ===== ADMIN TAB SWITCHING =====
+  function switchAdminTab(tab) {
+    // Hide all tabs
+    document.querySelectorAll('.admin-tab').forEach(function(t) { t.classList.add('hidden'); });
+    document.querySelectorAll('.sidebar-link').forEach(function(l) { l.classList.remove('active'); });
+    // Show selected tab
+    var panel = document.getElementById('tab-' + tab);
+    if (panel) panel.classList.remove('hidden');
+    var link = document.getElementById('sidebar-' + tab);
+    if (link) link.classList.add('active');
+    // Load data
+    if (tab === 'commission') loadCommissionData();
+    if (tab === 'vendors') loadVendorsList();
+  }
+
+  // ===== COMMISSION & REVENUE DATA =====
+  var allCommissionOrders = [];
+  var commissionFilter = 'all';
+
+  async function loadCommissionData() {
+    try {
+      // Fetch all orders with vendor info
+      var result = await supabaseClient.from('orders').select('*').order('created_at', { ascending: false });
+      allCommissionOrders = result.data || [];
+
+      // Calculate totals
+      var totalOrders = allCommissionOrders.length;
+      var grossRevenue = 0;
+      var totalCommission = 0;
+      var totalPayouts = 0;
+
+      // Per-vendor aggregation
+      var vendorMap = {};
+
+      allCommissionOrders.forEach(function(o) {
+        var amount = o.total_amount || 0;
+        grossRevenue += amount;
+
+        var rate = 10;
+        var commission = 0;
+        var payout = 0;
+
+        if (o.commission_amount !== undefined && o.commission_amount !== null) {
+          rate = o.commission_rate || 10;
+          commission = o.commission_amount || 0;
+          payout = o.vendor_payout || 0;
+        } else if (o.shipping_notes && o.shipping_notes.indexOf('Commission:') > -1) {
+          var match = o.shipping_notes.match(/Commission:\s*(\d+)%/);
+          if (match) rate = parseFloat(match[1]);
+          commission = Math.round(amount * (rate / 100));
+          payout = amount - commission;
+        } else {
+          commission = Math.round(amount * (rate / 100));
+          payout = amount - commission;
+        }
+
+        totalCommission += commission;
+        totalPayouts += payout;
+
+        // Per vendor
+        var vid = o.vendor_id || 'unknown';
+        if (!vendorMap[vid]) {
+          vendorMap[vid] = { vendor_id: vid, name: vid.replace(/-/g, ' ').replace(/\b\w/g, function(l) { return l.toUpperCase(); }), orders: 0, gross: 0, commission: 0, payout: 0, rate: rate };
+        }
+        vendorMap[vid].orders++;
+        vendorMap[vid].gross += amount;
+        vendorMap[vid].commission += commission;
+        vendorMap[vid].payout += payout;
+      });
+
+      // Update top stats
+      document.getElementById('comm-total-orders').textContent = totalOrders;
+      document.getElementById('comm-gross').textContent = 'ZMW ' + grossRevenue.toLocaleString();
+      document.getElementById('comm-commission').textContent = 'ZMW ' + totalCommission.toLocaleString();
+      document.getElementById('comm-payouts').textContent = 'ZMW ' + totalPayouts.toLocaleString();
+
+      // Render vendor breakdown
+      renderCommissionVendors(vendorMap);
+
+      // Render orders
+      renderCommissionOrders();
+
+    } catch(err) {
+      console.error('Commission load error:', err);
+      document.getElementById('commission-vendor-table').innerHTML = '<tr><td colspan="6" class="py-8 text-center text-red-500">Error loading data. Check console.</td></tr>';
+      document.getElementById('commission-orders-table').innerHTML = '<tr><td colspan="8" class="py-8 text-center text-red-500">Error loading data.</td></tr>';
+    }
+  }
+
+  function renderCommissionVendors(vendorMap) {
+    var tbody = document.getElementById('commission-vendor-table');
+    var vendors = Object.values(vendorMap).sort(function(a, b) { return b.gross - a.gross; });
+
+    if (!vendors.length) {
+      tbody.innerHTML = '<tr><td colspan="6" class="py-8 text-center text-gray-500">No orders yet.</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = vendors.map(function(v) {
+      return '<tr class="border-b border-gray-100 hover:bg-gray-50">' +
+        '<td class="py-3 px-4 font-medium text-sm">' + v.name + '<br><span class="text-xs text-gray-400">' + v.vendor_id + '</span></td>' +
+        '<td class="py-3 px-4 text-sm text-right">' + v.orders + '</td>' +
+        '<td class="py-3 px-4 text-sm text-right font-semibold">ZMW ' + v.gross.toLocaleString() + '</td>' +
+        '<td class="py-3 px-4 text-sm text-right">' + v.rate + '%</td>' +
+        '<td class="py-3 px-4 text-sm text-right text-orange-600 font-semibold">ZMW ' + v.commission.toLocaleString() + '</td>' +
+        '<td class="py-3 px-4 text-sm text-right text-green-600 font-semibold">ZMW ' + v.payout.toLocaleString() + '</td>' +
+      '</tr>';
+    }).join('');
+  }
+
+  function renderCommissionOrders() {
+    var tbody = document.getElementById('commission-orders-table');
+    var orders = allCommissionOrders;
+
+    if (commissionFilter !== 'all') {
+      orders = orders.filter(function(o) { return o.status === commissionFilter; });
+    }
+
+    if (!orders.length) {
+      tbody.innerHTML = '<tr><td colspan="8" class="py-8 text-center text-gray-500">No orders match this filter.</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = orders.slice(0, 200).map(function(o) {
+      var amount = o.total_amount || 0;
+      var rate = o.commission_rate || 10;
+      var commission = 0;
+      var payout = 0;
+
+      if (o.commission_amount !== undefined && o.commission_amount !== null) {
+        commission = o.commission_amount;
+        payout = o.vendor_payout || 0;
+      } else if (o.shipping_notes && o.shipping_notes.indexOf('Commission:') > -1) {
+        var match = o.shipping_notes.match(/Commission:\s*(\d+)%/);
+        if (match) rate = parseFloat(match[1]);
+        commission = Math.round(amount * (rate / 100));
+        payout = amount - commission;
+      } else {
+        commission = Math.round(amount * (rate / 100));
+        payout = amount - commission;
+      }
+
+      var statusClass = o.status === 'delivered' ? 'bg-green-100 text-green-700' :
+                        o.status === 'shipped' ? 'bg-blue-100 text-blue-700' :
+                        o.status === 'confirmed' ? 'bg-purple-100 text-purple-700' :
+                        o.status === 'cancelled' ? 'bg-red-100 text-red-700' :
+                        'bg-yellow-100 text-yellow-700';
+      var vendorName = (o.vendor_id || 'unknown').replace(/-/g, ' ').replace(/\b\w/g, function(l) { return l.toUpperCase(); });
+      var date = o.created_at ? new Date(o.created_at).toLocaleDateString('en-ZM', { day: 'numeric', month: 'short' }) : '-';
+
+      return '<tr class="border-b border-gray-100 hover:bg-gray-50">' +
+        '<td class="py-3 px-4 text-sm font-mono">' + (o.order_ref || o.id.slice(0, 8)) + '<br><span class="text-xs text-gray-400">' + date + '</span></td>' +
+        '<td class="py-3 px-4 text-xs text-gray-600">' + vendorName + '</td>' +
+        '<td class="py-3 px-4 text-xs text-gray-600">' + (o.guest_name || o.customer_phone || '-') + '</td>' +
+        '<td class="py-3 px-4 text-sm text-right font-semibold">ZMW ' + amount.toLocaleString() + '</td>' +
+        '<td class="py-3 px-4 text-sm text-right">' + rate + '%</td>' +
+        '<td class="py-3 px-4 text-sm text-right text-orange-600">ZMW ' + commission.toLocaleString() + '</td>' +
+        '<td class="py-3 px-4 text-sm text-right text-green-600">ZMW ' + payout.toLocaleString() + '</td>' +
+        '<td class="py-3 px-4"><span class="text-xs font-bold px-2 py-1 rounded-full capitalize ' + statusClass + '">' + (o.status || 'pending') + '</span></td>' +
+      '</tr>';
+    }).join('');
+  }
+
+  function filterCommissionOrders(status) {
+    commissionFilter = status;
+    renderCommissionOrders();
+  }
+
+  // ===== ALL VENDORS =====
+  async function loadVendorsList() {
+    try {
+      var result = await supabaseClient.from('vendors').select('*').order('created_at', { ascending: false });
+      var vendors = result.data || [];
+      var tbody = document.getElementById('vendors-table');
+
+      if (!vendors.length) {
+        tbody.innerHTML = '<tr><td colspan="4" class="py-8 text-center text-gray-500">No vendors registered yet.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = vendors.map(function(v) {
+        var rate = 10;
+        if (v.settings && v.settings.commission_rate) rate = v.settings.commission_rate;
+        return '<tr class="border-b border-gray-100 hover:bg-gray-50">' +
+          '<td class="py-3 px-4 text-xs font-mono text-gray-500">' + v.id + '</td>' +
+          '<td class="py-3 px-4 font-medium text-sm">' + (v.name || v.id) + '</td>' +
+          '<td class="py-3 px-4 text-sm text-right font-semibold">' + rate + '%</td>' +
+          '<td class="py-3 px-4 text-xs text-gray-500">' + JSON.stringify(v.settings || {}) + '</td>' +
+        '</tr>';
+      }).join('');
+    } catch(err) {
+      console.error('Vendors load error:', err);
+      document.getElementById('vendors-table').innerHTML = '<tr><td colspan="4" class="py-8 text-center text-red-500">Error loading vendors.</td></tr>';
+    }
+  }
+
+  // ===== SETTINGS =====
+  function saveDefaultCommission() {
+    var rate = parseFloat(document.getElementById('default-commission').value);
+    if (isNaN(rate) || rate < 0 || rate > 100) { alert('Enter a valid percentage (0-100)'); return; }
+    localStorage.setItem('velora_default_commission', rate);
+    document.getElementById('settings-example').textContent = Math.round(1000 * ((100 - rate) / 100));
+    alert('Default commission rate saved: ' + rate + '%');
+  }
+
+  document.getElementById('default-commission').addEventListener('input', function() {
+    var rate = parseFloat(this.value) || 10;
+    document.getElementById('settings-example').textContent = Math.round(1000 * ((100 - rate) / 100));
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,2015 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QN8N334V6L"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-QN8N334V6L');
+</script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vendor Dashboard - Velora Market Electronics</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          colors: {
+            primary: '#1E3A8A',
+            secondary: '#3B82F6',
+            accent: '#F59E0B',
+            dark: '#0F172A',
+            velora: { blue: '#0D47FF', dark: '#080F19', market: '#6A00FF', cyan: '#00D4FF', light: '#f8fafc', blue: '#0a1a8e' }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .sidebar-link { transition: all 0.2s; }
+    .sidebar-link:hover, .sidebar-link.active { background: rgba(255,255,255,0.1); border-left: 3px solid #0D47FF; }
+    .stat-card { transition: transform 0.2s; }
+    .stat-card:hover { transform: translateY(-2px); }
+    .dashboard-card { transition: all 0.3s; }
+    .dashboard-card:hover { box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+    input:focus, select:focus, textarea:focus { outline: none; border-color: #0D47FF; }
+    .btn-primary { background: linear-gradient(135deg, #0D47FF, #0a2dbd); }
+    .btn-primary:hover { background: linear-gradient(135deg, #0a2dbd, #0836a3); }
+    .btn-secondary { background: #f1f5f9; color: #374151; }
+    .btn-secondary:hover { background: #e2e8f0; }
+    .model-card-form { background: #fff; border: 1.5px solid #e2e8f0; border-radius: 12px; padding: 1rem; transition: all 0.2s; }
+    .model-card-form:hover { border-color: #0D47FF; }
+    .variant-section { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 1rem; margin-bottom: 0.75rem; }
+    .variant-row { display: grid; grid-template-columns: 1fr 100px auto; gap: 0.5rem; align-items: end; margin-bottom: 0.4rem; }
+    .thumb-row { display: grid; grid-template-columns: 1fr 1fr auto; gap: 0.5rem; align-items: end; margin-bottom: 0.4rem; }
+    .price-preview { background: linear-gradient(135deg, #f0fdf4, #dcfce7); border: 1px solid #86efac; border-radius: 10px; padding: 0.75rem 1rem; }
+    .price-preview .final { font-size: 1.25rem; font-weight: 800; color: #15803d; }
+    .img-fade-wrapper { position: relative; overflow: hidden; }
+    .img-fade-wrapper img { transition: opacity 0.3s ease; }
+    .img-fade-wrapper img.switching { opacity: 0; }
+    .tab-btn { padding: 0.5rem 1.25rem; border-radius: 8px; font-size: 0.85rem; font-weight: 600; cursor: pointer; border: 1px solid #e2e8f0; background: #fff; color: #64748b; transition: all 0.2s; }
+    .tab-btn.active { background: #0D47FF; color: #fff; border-color: #0D47FF; }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; animation: fadeIn 0.3s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    .chat-msg-customer { word-break: break-word; }
+    .chat-msg-vendor { word-break: break-word; }
+    .hidden-force { display: none !important; }
+    .badge-count { display: inline-flex; align-items: center; justify-content: center; min-width: 18px; height: 18px; padding: 0 5px; background: #0D47FF; color: #fff; border-radius: 9999px; font-size: 0.65rem; font-weight: 700; margin-left: 6px; }
+    .loading-overlay { display: none; position: fixed; inset: 0; background: rgba(15,23,42,0.9); backdrop-filter: blur(6px); z-index: 2000; align-items: center; justify-content: center; flex-direction: column; gap: 1rem; }
+    .loading-overlay.active { display: flex; }
+    .spinner { width: 40px; height: 40px; border: 3px solid rgba(255,255,255,0.1); border-top-color: #0D47FF; border-radius: 50%; animation: spin 0.8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .model-img-upload { width: 60px; height: 60px; border: 2px dashed #d1d5db; border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; overflow: hidden; flex-shrink: 0; }
+    .model-img-upload:hover { border-color: #0D47FF; }
+    .model-img-upload.has-image { border-style: solid; border-color: #86efac; }
+    .model-img-upload img { width: 100%; height: 100%; object-fit: cover; }
+    .choice-chip-row { display: flex; align-items: center; gap: 0.5rem; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0.4rem 0.75rem; margin-bottom: 0.4rem; }
+    .choice-chip-row input { border: none; background: transparent; padding: 0; font-size: 0.875rem; }
+    .choice-chip-row input:focus { outline: none; border: none; box-shadow: none; }
+    .choice-chip-row .price-input { width: 80px; text-align: right; font-size: 0.8rem; color: #0D47FF; font-weight: 600; }
+    .choice-chip-row .plus-label { font-size: 0.7rem; color: #9ca3af; margin-right: -4px; }
+    .choice-chip-row .currency-label { font-size: 0.7rem; color: #9ca3af; margin-left: -4px; }
+  </style>
+
+<base target="_blank">
+<base target="_blank">
+<base target="_blank">
+</head>
+<body class="font-sans bg-gray-100 text-gray-900 antialiased">
+
+<!-- Loading -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="spinner"></div>
+  <div class="text-gray-300 text-sm font-medium">Saving...</div>
+</div>
+
+<!-- LOGIN -->
+<div id="login-overlay" class="fixed inset-0 bg-velora-dark z-50 flex items-center justify-center">
+  <div class="bg-white rounded-2xl p-8 max-w-md w-full mx-4 shadow-2xl">
+    <div class="text-center mb-6">
+      <div class="w-16 h-16 bg-gradient-to-br from-velora-blue to-blue-800 rounded-xl flex items-center justify-center mx-auto mb-4">
+        <i class="fas fa-store text-white text-2xl"></i>
+      </div>
+      <h2 class="text-2xl font-bold text-gray-900">Vendor Login</h2>
+      <p class="text-gray-500 text-sm mt-1">Velora Electronics</p>
+    </div>
+    <div class="space-y-4">
+      <input type="text" id="vendor-id" placeholder="Vendor ID (e.g. velora-electronics)"
+        class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-velora-blue focus:outline-none transition text-sm"
+        value="velora-electronics"
+        onkeypress="if(event.key==='Enter')checkPassword()">
+      <input type="password" id="vendor-password" placeholder="Enter vendor password"
+        class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-velora-blue focus:outline-none transition text-sm"
+        onkeypress="if(event.key==='Enter')checkPassword()">
+      <button onclick="checkPassword()" class="w-full btn-primary text-white py-3 rounded-xl font-bold transition text-sm">
+        Login
+      </button>
+      <p id="login-error" class="text-red-500 text-sm text-center hidden">Wrong vendor ID or password.</p>
+    </div>
+    <div class="mt-6 text-center">
+      <a href="index.html" class="text-gray-400 text-sm hover:text-gray-600 transition">Back to Marketplace</a>
+    </div>
+  </div>
+</div>
+
+<!-- TOP BAR -->
+<div class="bg-velora-dark text-white text-xs py-2.5 px-4">
+  <div class="max-w-7xl mx-auto flex justify-between items-center">
+    <div class="flex items-center gap-4">
+      <span class="flex items-center gap-1"><i class="fas fa-map-marker-alt text-velora-blue"></i> Delivering across Zambia</span>
+    </div>
+    <div class="flex items-center gap-4">
+      <a href="index.html" class="hover:text-velora-blue transition font-medium">Back to Marketplace</a>
+      <a href="velora-electronics.html" target="_blank" class="hover:text-velora-blue transition">View Store</a>
+      <button onclick="logout()" class="hover:text-velora-blue transition">Logout</button>
+      <span class="font-semibold">ZMW</span>
+    </div>
+  </div>
+</div>
+
+<div class="flex min-h-screen">
+
+  <!-- SIDEBAR -->
+  <aside class="w-64 bg-velora-dark text-white flex-shrink-0">
+    <div class="p-6 border-b border-white/10">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-gradient-to-br from-velora-blue to-blue-800 rounded-xl flex items-center justify-center">
+          <i class="fas fa-v text-white"></i>
+        </div>
+        <div>
+          <h1 class="font-bold text-sm">Velora</h1>
+          <p class="text-[10px] text-velora-blue font-bold tracking-wider">VENDOR DASHBOARD</p>
+        </div>
+      </div>
+    </div>
+
+    <nav class="py-4">
+      <a href="#" onclick="switchTab('overview'); return false;" id="nav-overview" class="sidebar-link active flex items-center gap-3 px-6 py-3 text-sm">
+        <i class="fas fa-chart-line w-5"></i> Overview
+      </a>
+      <a href="#" onclick="switchTab('products'); return false;" id="nav-products" class="sidebar-link flex items-center gap-3 px-6 py-3 text-sm">
+        <i class="fas fa-box w-5"></i> Products
+      </a>
+      <a href="#" onclick="switchTab('inventory'); return false;" id="nav-inventory" class="sidebar-link flex items-center gap-3 px-6 py-3 text-sm">
+        <i class="fas fa-warehouse w-5"></i> Inventory
+      </a>
+      <a href="#" onclick="switchTab('orders'); return false;" id="nav-orders" class="sidebar-link flex items-center gap-3 px-6 py-3 text-sm">
+        <i class="fas fa-shopping-bag w-5"></i> Orders <span class="badge-count hidden" id="orderBadge">0</span>
+      </a>
+      <a href="#" onclick="switchTab('messages'); return false;" id="nav-messages" class="sidebar-link flex items-center gap-3 px-6 py-3 text-sm">
+        <i class="fas fa-comments w-5"></i> Messages <span class="badge-count hidden" id="msgBadge">0</span>
+      </a>
+      <a href="#payouts" class="sidebar-link flex items-center gap-3 px-6 py-3 text-sm">
+        <i class="fas fa-money-bill-wave w-5"></i> Payouts
+      </a>
+      <a href="#analytics" class="sidebar-link flex items-center gap-3 px-6 py-3 text-sm">
+        <i class="fas fa-chart-bar w-5"></i> Analytics
+      </a>
+      <div class="border-t border-white/10 my-4"></div>
+      <a href="index.html" class="sidebar-link flex items-center gap-3 px-6 py-3 text-sm text-gray-400 hover:text-white">
+        <i class="fas fa-store w-5"></i> View Storefront
+      </a>
+      <a href="#" class="sidebar-link flex items-center gap-3 px-6 py-3 text-sm text-gray-400 hover:text-white">
+        <i class="fas fa-cog w-5"></i> Settings
+      </a>
+      <div class="border-t border-white/10 my-4"></div>
+      <a href="#" onclick="diagnose(); return false;" class="sidebar-link flex items-center gap-3 px-6 py-3 text-sm text-orange-400 hover:text-orange-300">
+        <i class="fas fa-stethoscope w-5"></i> Diagnose
+      </a>
+      <a href="#" onclick="fixAll(); return false;" class="sidebar-link flex items-center gap-3 px-6 py-3 text-sm text-green-400 hover:text-green-300">
+        <i class="fas fa-wrench w-5"></i> Fix Vendor IDs
+      </a>
+    </nav>
+
+    <div class="p-6 mt-auto">
+      <div class="bg-white/10 rounded-xl p-4">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-8 h-8 bg-velora-blue rounded-full flex items-center justify-center">
+            <i class="fas fa-user text-white text-xs"></i>
+          </div>
+          <div>
+            <p class="text-sm font-semibold">Velora Electronics</p>
+            <p class="text-xs text-gray-400">Vendor #1</p>
+          </div>
+        </div>
+        <span class="inline-flex items-center gap-1 bg-purple-500/20 text-purple-400 text-xs px-2 py-1 rounded-full">
+          <i class="fas fa-check-circle"></i> Verified
+        </span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="flex-1 p-8">
+
+    <!-- TABS -->
+    <div id="tab-overview" class="tab-panel active">
+      <!-- HEADER -->
+      <div class="flex justify-between items-center mb-8">
+        <div>
+          <h1 class="text-2xl font-bold text-gray-900">Vendor Dashboard</h1>
+          <p class="text-gray-500 text-sm">Manage your Velora Electronics store</p>
+        </div>
+        <button onclick="switchTab('products')" class="bg-velora-blue hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition flex items-center gap-2">
+          <i class="fas fa-plus"></i> Add Product
+        </button>
+      </div>
+
+      <!-- STATS ROW -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+        <div class="stat-card bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-12 h-12 bg-velora-blue/10 rounded-xl flex items-center justify-center">
+              <i class="fas fa-shopping-cart text-velora-blue text-xl"></i>
+            </div>
+            <span class="text-xs text-gray-500 font-semibold bg-gray-100 px-2 py-1 rounded-full">Orders</span>
+          </div>
+          <p class="text-3xl font-bold text-gray-900" id="stat-total-orders">0</p>
+          <p class="text-sm text-gray-500">Total Orders</p>
+        </div>
+
+        <div class="stat-card bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
+              <i class="fas fa-money-bill-wave text-velora-market text-xl"></i>
+            </div>
+            <span class="text-xs text-gray-500 font-semibold bg-gray-100 px-2 py-1 rounded-full">Gross</span>
+          </div>
+          <p class="text-3xl font-bold text-gray-900" id="stat-gross-revenue">ZMW 0</p>
+          <p class="text-sm text-gray-500">Gross Revenue</p>
+        </div>
+
+        <div class="stat-card bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center">
+              <i class="fas fa-percentage text-orange-600 text-xl"></i>
+            </div>
+            <span class="text-xs text-orange-600 font-semibold bg-orange-100 px-2 py-1 rounded-full" id="stat-commission-rate">10%</span>
+          </div>
+          <p class="text-3xl font-bold text-gray-900" id="stat-commission">ZMW 0</p>
+          <p class="text-sm text-gray-500">Marketplace Commission</p>
+        </div>
+
+        <div class="stat-card bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
+              <i class="fas fa-hand-holding-usd text-green-600 text-xl"></i>
+            </div>
+            <span class="text-xs text-green-600 font-semibold bg-green-100 px-2 py-1 rounded-full" id="stat-product-count">0 items</span>
+          </div>
+          <p class="text-3xl font-bold text-gray-900" id="stat-net-payout">ZMW 0</p>
+          <p class="text-sm text-gray-500">Your Net Payout</p>
+        </div>
+      </div>
+
+      <!-- PAYOUTS -->
+      <section id="payouts" class="dashboard-card bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+            <i class="fas fa-money-bill-wave text-velora-market text-lg"></i>
+          </div>
+          <div>
+            <h2 class="text-xl font-bold text-gray-900">Payouts</h2>
+            <p class="text-sm text-gray-500">Your earnings after marketplace commission</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="bg-gradient-to-br from-velora-blue to-blue-800 rounded-xl p-6 text-white">
+            <p class="text-sm opacity-90 mb-2">Your Net Payout</p>
+            <p class="text-3xl font-bold" id="payout-net">ZMW 0</p>
+            <p class="text-xs opacity-75 mt-1" id="payout-orders">From 0 orders</p>
+            <p class="text-xs opacity-75 mt-1" id="payout-rate">Commission: 10%</p>
+          </div>
+
+          <div class="bg-white rounded-xl p-6 border border-gray-200">
+            <p class="text-sm text-gray-500 mb-2">Gross Revenue</p>
+            <p class="text-3xl font-bold text-gray-900" id="payout-gross">ZMW 0</p>
+            <p class="text-xs text-gray-400 mt-1">Total before commission</p>
+          </div>
+
+          <div class="bg-white rounded-xl p-6 border border-gray-200">
+            <p class="text-sm text-gray-500 mb-2">Commission Deducted</p>
+            <p class="text-3xl font-bold text-orange-600" id="payout-commission">ZMW 0</p>
+            <p class="text-xs text-gray-400 mt-1">Goes to Velora Market</p>
+          </div>
+        </div>
+
+        <div class="mt-6 bg-gray-50 rounded-xl p-6 border border-gray-200">
+          <h3 class="font-bold text-gray-900 mb-4">Commission Breakdown</h3>
+          <div class="space-y-3">
+            <div class="flex justify-between text-sm">
+              <span class="text-gray-500">Commission Rate</span>
+              <span class="font-semibold text-gray-900" id="breakdown-rate">10%</span>
+            </div>
+            <div class="flex justify-between text-sm">
+              <span class="text-gray-500">Per ZMW 1000 Sale</span>
+              <span class="font-semibold text-gray-900">You get ZMW <span id="breakdown-example">900</span></span>
+            </div>
+            <div class="border-t border-gray-200 pt-3 flex justify-between text-sm">
+              <span class="font-semibold text-gray-900">You Receive</span>
+              <span class="font-bold text-green-600" id="breakdown-percent">90%</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ANALYTICS -->
+      <section id="analytics" class="dashboard-card bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+            <i class="fas fa-chart-bar text-purple-600 text-lg"></i>
+          </div>
+          <div>
+            <h2 class="text-xl font-bold text-gray-900">Store Analytics</h2>
+            <p class="text-sm text-gray-500">Performance overview</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div class="text-center p-4 bg-gray-50 rounded-xl">
+            <p class="text-3xl font-bold text-gray-900" id="analytics-orders">0</p>
+            <p class="text-sm text-gray-500">Total Orders</p>
+            <p class="text-xs text-gray-400 mt-1">All time</p>
+          </div>
+          <div class="text-center p-4 bg-gray-50 rounded-xl">
+            <p class="text-3xl font-bold text-gray-900" id="analytics-pending">0</p>
+            <p class="text-sm text-gray-500">Pending</p>
+            <p class="text-xs text-orange-500 mt-1">Awaiting action</p>
+          </div>
+          <div class="text-center p-4 bg-gray-50 rounded-xl">
+            <p class="text-3xl font-bold text-gray-900" id="analytics-completed">0</p>
+            <p class="text-sm text-gray-500">Completed</p>
+            <p class="text-xs text-green-600 mt-1">Delivered</p>
+          </div>
+          <div class="text-center p-4 bg-gray-50 rounded-xl">
+            <p class="text-3xl font-bold text-gray-900" id="analytics-avg">ZMW 0</p>
+            <p class="text-sm text-gray-500">Avg Order</p>
+            <p class="text-xs text-gray-400 mt-1">Per order value</p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- PRODUCTS TAB (Add Product) -->
+    <div id="tab-products" class="tab-panel">
+      <div class="flex justify-between items-center mb-6">
+        <div>
+          <h1 class="text-2xl font-bold text-gray-900">Upload Products</h1>
+          <p class="text-gray-500 text-sm">Add new products to your store. They appear immediately.</p>
+        </div>
+        <button onclick="switchTab('inventory')" class="text-sm text-velora-blue font-semibold hover:underline">
+          <i class="fas fa-list mr-1"></i>View Inventory
+        </button>
+      </div>
+
+      <div class="dashboard-card bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        <form id="productForm" onsubmit="return submitProduct(event)">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Product Name *</label>
+              <input type="text" name="name" placeholder="e.g. iPhone 15" class="w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl focus:border-velora-blue transition text-sm" required>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Base Price (ZMW) *</label>
+              <input type="number" name="basePrice" placeholder="e.g. 4700" class="w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl focus:border-velora-blue transition text-sm" required min="1">
+              <p class="text-xs text-gray-400 mt-1">Default price shown on product card (e.g. iPhone 11 64GB)</p>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Category *</label>
+              <select name="category" class="w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl focus:border-velora-blue transition text-sm" required>
+                <option value="">Select category</option>
+                <option value="iPhones">iPhones</option>
+                <option value="Samsung">Samsung</option>
+                <option value="Google Pixel">Google Pixel</option>
+                <option value="Laptops">Laptops</option>
+                <option value="Accessories">Accessories</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Main Product Image *</label>
+              <input type="file" id="mainImageFile" accept="image/*" class="hidden" onchange="handleMainImageUpload(this)">
+              <div id="mainImagePreview" class="border-2 border-dashed border-gray-300 rounded-xl p-4 text-center cursor-pointer hover:border-velora-blue transition" onclick="document.getElementById('mainImageFile').click()">
+                <i class="fas fa-cloud-upload-alt text-gray-400 text-2xl mb-2"></i>
+                <p class="text-sm text-gray-500">Click to upload product image</p>
+                <p class="text-xs text-gray-400">JPG, PNG, WEBP</p>
+              </div>
+              <input type="hidden" name="image" id="mainImageUrl" required>
+              <p class="text-xs text-red-500 mt-1 hidden" id="mainImageError"></p>
+            </div>
+          </div>
+
+          <!-- Thumbnails -->
+          <div class="mb-6">
+            <div class="flex justify-between items-center mb-2">
+              <label class="block text-sm font-medium text-gray-700">Thumbnail Images</label>
+              <button type="button" onclick="addThumbUpload()" class="text-xs bg-velora-blue text-white px-3 py-1.5 rounded-lg hover:bg-red-700 transition">
+                <i class="fas fa-plus mr-1"></i>Add Thumbnail
+              </button>
+            </div>
+            <div id="thumbsContainer" class="space-y-2"></div>
+            <p class="text-xs text-gray-400 mt-1">Additional images shown below the main image on the product page</p>
+          </div>
+
+          <!-- MODELS SECTION -->
+          <div class="mb-6">
+            <div class="flex justify-between items-center mb-2">
+              <label class="block text-sm font-medium text-gray-700">Models / Variants</label>
+              <button type="button" onclick="addModelRow()" class="text-xs bg-velora-blue text-white px-3 py-1.5 rounded-lg hover:bg-red-700 transition">
+                <i class="fas fa-plus mr-1"></i>Add Model
+              </button>
+            </div>
+            <p class="text-xs text-gray-400 mb-2">Each model is a different version of this product (e.g. iPhone 11, 11 Pro, 11 Pro Max). Each has its own image and base price.</p>
+            <div id="modelsContainer" class="space-y-3"></div>
+          </div>
+
+          <!-- VARIANT OPTIONS SECTION (per model) -->
+          <div class="mb-6" id="variantsWrapper" style="display:none;">
+            <div class="flex justify-between items-center mb-2">
+              <label class="block text-sm font-medium text-gray-700">Variant Options (per Model)</label>
+              <span class="text-xs text-gray-400">Storage, Color, etc. with additional prices</span>
+            </div>
+            <p class="text-xs text-gray-400 mb-2">Add storage and color options for each model. The price entered is <strong>added</strong> to the model's base price.</p>
+            <div id="variantsContainer" class="space-y-4"></div>
+          </div>
+
+          <!-- Price Preview -->
+          <div class="mb-6">
+            <label class="block text-sm font-medium text-gray-700 mb-2"><i class="fas fa-calculator text-velora-cyan mr-1"></i>Price Summary</label>
+            <div class="price-preview" id="pricePreview">
+              <div id="previewModels"></div>
+              <div class="border-t border-green-200 pt-2 mt-2 flex items-center justify-between">
+                <span class="text-sm font-medium text-green-800">Price Structure:</span>
+                <span class="final" id="previewSummary">Add models, then set storage prices.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Stock -->
+          <div class="mb-6">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Stock Status</label>
+            <div class="flex gap-4">
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="radio" name="stock" value="in_stock" checked class="accent-velora-blue">
+                <span class="text-sm">In Stock</span>
+              </label>
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="radio" name="stock" value="low_stock" class="accent-velora-blue">
+                <span class="text-sm">Low Stock</span>
+              </label>
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="radio" name="stock" value="out_of_stock" class="accent-velora-blue">
+                <span class="text-sm">Out of Stock</span>
+              </label>
+            </div>
+          </div>
+
+          <button type="button" onclick="updatePricePreview()" class="mb-3 text-sm text-velora-blue font-semibold hover:underline">
+            <i class="fas fa-sync-alt mr-1"></i>Update Price Summary
+          </button>
+
+          <button type="submit" class="btn-primary text-white px-8 py-3 rounded-xl font-semibold transition flex items-center gap-2 block w-full">
+            <i class="fas fa-save"></i> Save Product to Store
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- INVENTORY TAB -->
+    <div id="tab-inventory" class="tab-panel">
+      <div class="flex justify-between items-center mb-6">
+        <div>
+          <h1 class="text-2xl font-bold text-gray-900">Inventory</h1>
+          <p class="text-gray-500 text-sm">Manage your product stock</p>
+        </div>
+        <div class="flex gap-2">
+          <button onclick="loadInventory()" class="text-sm text-velora-blue font-semibold hover:underline">
+            <i class="fas fa-sync-alt mr-1"></i>Refresh
+          </button>
+        </div>
+      </div>
+
+      <div class="dashboard-card bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full">
+            <thead>
+              <tr class="border-b border-gray-200 bg-gray-50">
+                <th class="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase">Product</th>
+                <th class="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase">Models</th>
+                <th class="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase">Price Range</th>
+                <th class="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase">Category</th>
+                <th class="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase">Stock</th>
+                <th class="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="inventoryTable">
+              <tr><td colspan="6" class="py-8 text-center text-gray-500">Loading...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- MESSAGES TAB -->
+    <div id="tab-messages" class="tab-panel">
+      <div class="flex justify-between items-center mb-6">
+        <div>
+          <h1 class="text-2xl font-bold text-gray-900">Customer Messages</h1>
+          <p class="text-gray-500 text-sm">Reply to customers who messaged your store</p>
+        </div>
+        <button onclick="loadVendorMessages()" class="text-sm text-velora-blue font-semibold hover:underline">
+          <i class="fas fa-sync-alt mr-1"></i>Refresh
+        </button>
+      </div>
+
+      <div class="grid lg:grid-cols-3 gap-6" style="height: calc(100vh - 240px);">
+        <!-- Conversations List -->
+        <div class="dashboard-card overflow-hidden flex flex-col">
+          <div class="p-4 border-b border-gray-200 bg-gray-50">
+            <h3 class="font-bold text-sm text-gray-700">Conversations</h3>
+          </div>
+          <div class="flex-1 overflow-y-auto p-2" id="vendorConversationsList">
+            <div class="text-center py-8 text-gray-400 text-sm"><i class="fas fa-spinner fa-spin mr-2"></i>Loading...</div>
+          </div>
+        </div>
+
+        <!-- Chat Area -->
+        <div class="lg:col-span-2 dashboard-card overflow-hidden flex flex-col">
+          <div class="p-4 border-b border-gray-200 flex items-center justify-between bg-gray-50" id="vendorChatHeader">
+            <p class="text-sm text-gray-500">Select a conversation to start chatting</p>
+          </div>
+          <div class="flex-1 overflow-y-auto p-4" id="vendorChatMessages">
+            <div class="flex items-center justify-center h-full text-gray-400 text-sm">
+              <div class="text-center">
+                <i class="fas fa-comments text-3xl mb-2"></i>
+                <p>Select a customer to view messages</p>
+              </div>
+            </div>
+          </div>
+          <div class="p-3 border-t border-gray-200 flex items-center gap-2 bg-white hidden-force" id="vendorChatInputArea">
+            <input type="text" id="vendorReplyInput" placeholder="Type your reply..." class="flex-1 px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-full text-sm focus:outline-none focus:border-velora-blue" onkeypress="if(event.key==='Enter')sendVendorReply()">
+            <button onclick="sendVendorReply()" class="w-10 h-10 bg-gradient-to-r from-velora-blue to-blue-700 text-white rounded-full flex items-center justify-center transition flex-shrink-0 hover:from-red-700 hover:to-blue-800">
+              <i class="fas fa-paper-plane text-sm"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ORDERS TAB -->
+    <div id="tab-orders" class="tab-panel">
+      <div class="flex justify-between items-center mb-6">
+        <div>
+          <h1 class="text-2xl font-bold text-gray-900">Customer Orders</h1>
+          <p class="text-gray-500 text-sm">Manage and fulfill incoming orders</p>
+        </div>
+        <button onclick="loadVendorOrders()" class="text-sm text-velora-blue font-semibold hover:underline">
+          <i class="fas fa-sync-alt mr-1"></i>Refresh
+        </button>
+      </div>
+
+      <!-- Order Stats -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+        <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center">
+          <p class="text-2xl font-bold text-gray-900" id="orderStat-total">0</p>
+          <p class="text-xs text-gray-500">Total Orders</p>
+        </div>
+        <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center">
+          <p class="text-2xl font-bold text-yellow-600" id="orderStat-pending">0</p>
+          <p class="text-xs text-gray-500">Pending</p>
+        </div>
+        <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center">
+          <p class="text-2xl font-bold text-blue-600" id="orderStat-shipped">0</p>
+          <p class="text-xs text-gray-500">Shipped</p>
+        </div>
+        <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center">
+          <p class="text-2xl font-bold text-green-600" id="orderStat-delivered">0</p>
+          <p class="text-xs text-gray-500">Delivered</p>
+        </div>
+      </div>
+
+      <!-- Filter Buttons -->
+      <div class="flex gap-2 mb-4">
+        <button onclick="filterOrders('all')" class="order-filter-btn px-4 py-2 bg-velora-blue text-white text-xs font-semibold rounded-full" data-filter="all">All</button>
+        <button onclick="filterOrders('pending')" class="order-filter-btn px-4 py-2 bg-gray-100 text-gray-600 text-xs font-semibold rounded-full hover:bg-gray-200 transition" data-filter="pending">Pending</button>
+        <button onclick="filterOrders('confirmed')" class="order-filter-btn px-4 py-2 bg-gray-100 text-gray-600 text-xs font-semibold rounded-full hover:bg-gray-200 transition" data-filter="confirmed">Confirmed</button>
+        <button onclick="filterOrders('shipped')" class="order-filter-btn px-4 py-2 bg-gray-100 text-gray-600 text-xs font-semibold rounded-full hover:bg-gray-200 transition" data-filter="shipped">Shipped</button>
+        <button onclick="filterOrders('delivered')" class="order-filter-btn px-4 py-2 bg-gray-100 text-gray-600 text-xs font-semibold rounded-full hover:bg-gray-200 transition" data-filter="delivered">Delivered</button>
+      </div>
+
+      <!-- Orders List -->
+      <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+        <div id="vendorOrdersList" class="divide-y divide-gray-100">
+          <div class="text-center py-12 text-gray-400 text-sm"><i class="fas fa-spinner fa-spin mr-2"></i>Loading orders...</div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL = 'https://qlvransrclmziwibhgog.supabase.co';
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFsdnJhbnNyY2xteml3aWJoZ29nIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwNjE0MzYsImV4cCI6MjA4ODYzNzQzNn0.a-s7JLEI8ShwknOWJ0VF7TxedbaiI1b8WPSfpWDm84g';
+  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  window.supabaseClient = supabaseClient;
+
+  // Anon client for reads — bypasses RLS auth issues when customer is logged in
+  const anonClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
+    global: { headers: { 'X-Client-Info': 'anon' } },
+    auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false }
+  });
+
+  // ===== UNIVERSAL VENDOR ID SYSTEM =====
+  // Get the current vendor ID from localStorage (set at login)
+  // Falls back to 'velora-electronics' for backward compatibility
+  function getVendorId() {
+    return localStorage.getItem('velora_vendor_id') || 'velora-electronics';
+  }
+  function setVendorId(id) {
+    localStorage.setItem('velora_vendor_id', id);
+  }
+  var VENDOR_ID = getVendorId();
+
+  // ===== LOGIN =====
+  // Now accepts vendor_id + password for multi-vendor support
+  function checkPassword() {
+    var passwordInput = document.getElementById('vendor-password');
+    var vendorIdInput = document.getElementById('vendor-id');
+    var password = passwordInput.value.trim();
+    // Support both old single-vendor mode and new multi-vendor mode
+    var enteredVendorId = vendorIdInput ? vendorIdInput.value.trim() : 'velora-electronics';
+
+    if (!enteredVendorId) enteredVendorId = 'velora-electronics';
+
+    // Validate against Supabase vendors table
+    validateVendorLogin(enteredVendorId, password);
+  }
+
+  async function validateVendorLogin(vendorId, password) {
+    var btn = document.querySelector('#login-overlay button');
+    if (btn) { btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Checking...'; btn.disabled = true; }
+
+    try {
+      // For the default vendor, also accept the legacy password
+      if (vendorId === 'velora-electronics' && password === 'electronics2026') {
+        loginSuccess(vendorId);
+        return;
+      }
+
+      // Check against vendors table via RPC
+      var { data, error } = await supabaseClient.rpc('vendor_login', {
+        p_vendor_id: vendorId,
+        p_password: password
+      });
+
+      if (error || !data || !data.length) {
+        throw new Error('Invalid credentials');
+      }
+
+      loginSuccess(vendorId);
+    } catch (err) {
+      console.error('[Vendor Login Error]', err);
+      // Fallback: accept legacy password for default vendor
+      if (vendorId === 'velora-electronics' && password === 'electronics2026') {
+        loginSuccess(vendorId);
+        return;
+      }
+      document.getElementById('login-error').classList.remove('hidden');
+      if (btn) { btn.innerHTML = 'Login'; btn.disabled = false; }
+    }
+  }
+
+  function loginSuccess(vendorId) {
+    VENDOR_ID = vendorId;
+    setVendorId(vendorId);
+    localStorage.setItem('vendor_logged_in', 'true');
+    document.getElementById('login-overlay').style.display = 'none';
+    // Update dashboard vendor name
+    loadVendorInfo();
+    loadInventory();
+    startVendorRealtime();
+  }
+
+  async function loadVendorInfo() {
+    try {
+      var { data, error } = await anonClient.from('vendors')
+        .select('name, category')
+        .eq('id', VENDOR_ID)
+        .single();
+      if (data) {
+        var nameEl = document.querySelector('#login-overlay + div h2, .vendor-name-display');
+        if (nameEl) nameEl.textContent = data.name;
+      }
+    } catch(e) {}
+  }
+
+  function logout() {
+    stopVendorRealtime();
+    localStorage.removeItem('vendor_logged_in');
+    localStorage.removeItem('velora_vendor_id');
+    location.reload();
+  }
+
+  // ===== PAYOUT STATS (Commission) =====
+  async function loadPayoutStats() {
+    var VENDOR_ID = localStorage.getItem('velora_vendor_id') || 'velora-electronics';
+    try {
+      // Fetch all orders for this vendor
+      var result = await anonClient.from('orders').select('total_amount,commission_rate,commission_amount,vendor_payout,status').eq('vendor_id', VENDOR_ID);
+      var orders = result.data || [];
+
+      // Also try fetching shipping_notes as fallback (for orders before commission columns)
+      if (!orders.length) {
+        var r2 = await anonClient.from('orders').select('total_amount,shipping_notes,status').eq('vendor_id', VENDOR_ID);
+        orders = r2.data || [];
+      }
+
+      // Calculate totals
+      var totalOrders = orders.length;
+      var grossRevenue = 0;
+      var totalCommission = 0;
+      var netPayout = 0;
+      var commissionRate = 10;
+
+      orders.forEach(function(o) {
+        var amount = o.total_amount || 0;
+        grossRevenue += amount;
+
+        if (o.commission_amount !== undefined && o.commission_amount !== null) {
+          // New format with commission columns
+          totalCommission += (o.commission_amount || 0);
+          netPayout += (o.vendor_payout || 0);
+          if (o.commission_rate) commissionRate = o.commission_rate;
+        } else if (o.shipping_notes && o.shipping_notes.indexOf('Commission:') > -1) {
+          // Fallback: parse from shipping_notes
+          var match = o.shipping_notes.match(/Commission:\s*(\d+)%/);
+          if (match) commissionRate = parseFloat(match[1]);
+          var comm = Math.round(amount * (commissionRate / 100));
+          totalCommission += comm;
+          netPayout += (amount - comm);
+        } else {
+          // Legacy order: calculate commission on the fly
+          var comm = Math.round(amount * (commissionRate / 100));
+          totalCommission += comm;
+          netPayout += (amount - comm);
+        }
+      });
+
+      // Also fetch commission rate from vendor settings
+      try {
+        var vr = await anonClient.from('vendors').select('settings').eq('id', VENDOR_ID).maybeSingle();
+        if (vr.data && vr.data.settings && vr.data.settings.commission_rate) {
+          commissionRate = parseFloat(vr.data.settings.commission_rate);
+        }
+      } catch(e) {}
+
+      // Update DOM
+      document.getElementById('stat-total-orders').textContent = totalOrders;
+      document.getElementById('stat-gross-revenue').textContent = 'ZMW ' + grossRevenue.toLocaleString();
+      document.getElementById('stat-commission').textContent = 'ZMW ' + totalCommission.toLocaleString();
+      document.getElementById('stat-commission-rate').textContent = commissionRate + '%';
+      document.getElementById('stat-net-payout').textContent = 'ZMW ' + netPayout.toLocaleString();
+
+      // Payout section
+      document.getElementById('payout-net').textContent = 'ZMW ' + netPayout.toLocaleString();
+      document.getElementById('payout-gross').textContent = 'ZMW ' + grossRevenue.toLocaleString();
+      document.getElementById('payout-commission').textContent = 'ZMW ' + totalCommission.toLocaleString();
+      document.getElementById('payout-orders').textContent = 'From ' + totalOrders + ' order' + (totalOrders !== 1 ? 's' : '');
+      document.getElementById('payout-rate').textContent = 'Commission: ' + commissionRate + '%';
+
+      // Breakdown
+      var youReceive = 100 - commissionRate;
+      var perThousand = Math.round(1000 * (youReceive / 100));
+      document.getElementById('breakdown-rate').textContent = commissionRate + '%';
+      document.getElementById('breakdown-example').textContent = perThousand;
+      document.getElementById('breakdown-percent').textContent = youReceive + '%';
+
+      // Analytics
+      var pendingCount = orders.filter(function(o) { return o.status === 'pending' || o.status === 'confirmed'; }).length;
+      var completedCount = orders.filter(function(o) { return o.status === 'delivered' || o.status === 'shipped'; }).length;
+      var avgOrder = totalOrders > 0 ? Math.round(grossRevenue / totalOrders) : 0;
+      document.getElementById('analytics-orders').textContent = totalOrders;
+      document.getElementById('analytics-pending').textContent = pendingCount;
+      document.getElementById('analytics-completed').textContent = completedCount;
+      document.getElementById('analytics-avg').textContent = 'ZMW ' + avgOrder.toLocaleString();
+
+    } catch(err) {
+      console.error('Payout stats error:', err);
+    }
+  }
+
+  // ===== REALTIME: Listen for new orders and status changes =====
+  var _vendorOrdersChannel = null;
+
+  function startVendorRealtime() {
+    stopVendorRealtime();
+    try {
+      _vendorOrdersChannel = supabaseClient.channel('vendor-orders-' + VENDOR_ID)
+        .on('postgres_changes',
+          { event: '*', schema: 'public', table: 'orders', filter: 'vendor_id=eq.' + VENDOR_ID },
+          function(payload) {
+            console.log('[Vendor Realtime] Order update:', payload.eventType, payload.new);
+            loadVendorOrders();
+            loadPayoutStats();
+          }
+        )
+        .subscribe(function(status) {
+          console.log('[Vendor Realtime] Subscription status:', status);
+        });
+    } catch(e) { console.error('[Vendor Realtime] Failed to subscribe:', e); }
+  }
+
+  function stopVendorRealtime() {
+    if (_vendorOrdersChannel) {
+      try { _vendorOrdersChannel.unsubscribe(); } catch(e) {}
+      _vendorOrdersChannel = null;
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    if (localStorage.getItem('vendor_logged_in') === 'true') {
+      document.getElementById('login-overlay').style.display = 'none';
+      loadVendorInfo();
+      loadInventory();
+      loadPayoutStats();
+      startVendorRealtime();
+    }
+  });
+
+  // ===== TABS =====
+  function switchTab(tab) {
+    document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.remove('active'); });
+    document.querySelectorAll('.sidebar-link').forEach(function(l) { l.classList.remove('active'); });
+    var panel = document.getElementById('tab-' + tab);
+    if (panel) panel.classList.add('active');
+    var nav = document.getElementById('nav-' + tab);
+    if (nav) nav.classList.add('active');
+    if (tab === 'inventory') loadInventory();
+    if (tab === 'messages') { loadVendorMessages(); updateMessageBadge(); }
+    if (tab === 'orders') loadVendorOrders();
+    if (tab === 'overview') loadPayoutStats();
+  }
+
+  // ===== IMAGE UPLOAD =====
+  async function uploadToStorage(file, folder) {
+    var filename = folder + '/' + Date.now() + '-' + Math.random().toString(36).substring(2, 10) + '.' + file.name.split('.').pop();
+    var result = await supabaseClient.storage.from('products').upload(filename, file, { cacheControl: '3600', upsert: false });
+    if (result.error) throw new Error(result.error.message);
+    var urlResult = supabaseClient.storage.from('products').getPublicUrl(filename);
+    return urlResult.data.publicUrl;
+  }
+
+  async function handleMainImageUpload(input) {
+    if (!input.files || !input.files[0]) return;
+    var file = input.files[0];
+    var preview = document.getElementById('mainImagePreview');
+    var errorEl = document.getElementById('mainImageError');
+    preview.innerHTML = '<i class="fas fa-spinner fa-spin text-velora-blue text-2xl"></i><p class="text-sm text-gray-500 mt-2">Uploading...</p>';
+    errorEl.classList.add('hidden');
+    try {
+      var url = await uploadToStorage(file, 'main');
+      document.getElementById('mainImageUrl').value = url;
+      preview.innerHTML = '<img src="' + url + '" class="max-h-32 mx-auto rounded-lg object-contain"><p class="text-xs text-purple-600 mt-2"><i class="fas fa-check mr-1"></i>Uploaded</p><p class="text-xs text-gray-400 mt-1">Click to change</p>';
+      preview.classList.remove('border-dashed');
+      preview.classList.add('border-solid', 'border-green-300');
+    } catch (err) {
+      preview.innerHTML = '<i class="fas fa-cloud-upload-alt text-gray-400 text-2xl mb-2"></i><p class="text-sm text-gray-500">Click to upload product image</p>';
+      errorEl.textContent = 'Upload failed: ' + err.message;
+      errorEl.classList.remove('hidden');
+    }
+  }
+
+  // ===== THUMBNAILS =====
+  function addThumbUpload() {
+    var container = document.getElementById('thumbsContainer');
+    var rowId = 'thumb-' + Date.now();
+    var div = document.createElement('div');
+    div.className = 'thumb-row';
+    div.id = rowId;
+    div.innerHTML =
+      '<div class="col-span-2">' +
+        '<input type="file" id="' + rowId + '-file" accept="image/*" class="hidden" onchange="handleThumbUpload(this, \'' + rowId + '\')">' +
+        '<div id="' + rowId + '-preview" class="flex items-center gap-3 border-2 border-dashed border-gray-300 rounded-xl p-3 cursor-pointer hover:border-velora-blue transition" onclick="document.getElementById(\'' + rowId + '-file\').click()">' +
+          '<div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0"><i class="fas fa-image text-gray-400"></i></div>' +
+          '<div class="flex-1 min-w-0"><p class="text-sm text-gray-500">Click to upload thumbnail</p><p class="text-xs text-gray-400">Small variant image</p></div>' +
+        '</div>' +
+        '<input type="hidden" class="thumb-url">' +
+      '</div>' +
+      '<div class="flex flex-col gap-2">' +
+        '<input type="text" placeholder="Label" class="px-3 py-2 bg-gray-50 border-2 border-gray-200 rounded-lg text-sm thumb-label">' +
+        '<button type="button" onclick="document.getElementById(\'' + rowId + '\').remove()" class="text-red-500 hover:text-red-700 text-sm"><i class="fas fa-trash"></i> Remove</button>' +
+      '</div>';
+    container.appendChild(div);
+  }
+
+  async function handleThumbUpload(input, rowId) {
+    if (!input.files || !input.files[0]) return;
+    var preview = document.getElementById(rowId + '-preview');
+    try {
+      var url = await uploadToStorage(input.files[0], 'thumbs');
+      preview.parentElement.querySelector('.thumb-url').value = url;
+      preview.innerHTML = '<img src="' + url + '" class="w-12 h-12 rounded-lg object-cover"><div class="flex-1 min-w-0"><p class="text-sm text-purple-600"><i class="fas fa-check mr-1"></i>Uploaded</p><p class="text-xs text-gray-400">Click to change</p></div>';
+      preview.classList.remove('border-dashed');
+      preview.classList.add('border-solid', 'border-green-300');
+    } catch (err) {
+      preview.innerHTML = '<div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center"><i class="fas fa-exclamation text-red-500"></i></div><div class="flex-1"><p class="text-sm text-red-500">Upload failed</p></div>';
+    }
+  }
+
+  // ===== MODELS SYSTEM =====
+  var modelCount = 0;
+  var modelRows = {}; // keyed by modelId
+
+  function addModelRow(existingModel) {
+    modelCount++;
+    var modelId = 'model-' + modelCount;
+    var container = document.getElementById('modelsContainer');
+
+    var div = document.createElement('div');
+    div.className = 'model-card-form';
+    div.id = modelId;
+    div.dataset.modelValue = existingModel ? existingModel.value : '';
+    div.dataset.modelPrice = '';
+    div.dataset.modelImage = existingModel ? (existingModel.image || '') : '';
+
+    var imgDisplay = '';
+    if (existingModel && existingModel.image) {
+      imgDisplay = '<img src="' + existingModel.image + '" class="w-full h-full object-cover">';
+    } else {
+      imgDisplay = '<i class="fas fa-camera text-gray-400"></i>';
+    }
+
+    div.innerHTML =
+      '<div class="flex items-center gap-3">' +
+        '<div class="model-img-upload ' + (existingModel && existingModel.image ? 'has-image' : '') + '" id="' + modelId + '-img" onclick="document.getElementById(\'' + modelId + '-file\').click()">' + imgDisplay + '</div>' +
+        '<input type="file" id="' + modelId + '-file" accept="image/*" class="hidden" onchange="handleModelImageUpload(\'' + modelId + '\', this)">' +
+        '<div class="flex-1">' +
+          '<input type="text" placeholder="Model name (e.g. iPhone 11 Pro)" value="' + (existingModel ? existingModel.value : '') + '" class="w-full px-3 py-2 bg-gray-50 border-2 border-gray-200 rounded-lg text-sm font-medium mb-1 model-name-input" onchange="updateModelData(\'' + modelId + '\')">' +
+          '<div class="flex items-center gap-2">' +
+          '</div>' +
+        '</div>' +
+        '<button type="button" onclick="removeModelRow(\'' + modelId + '\')" class="text-red-400 hover:text-red-600 p-2"><i class="fas fa-trash"></i></button>' +
+      '</div>';
+
+    container.appendChild(div);
+    modelRows[modelId] = { value: existingModel ? existingModel.value : '', price: '', image: existingModel ? (existingModel.image || '') : '' };
+    renderVariantSections();
+    return modelId;
+  }
+
+  async function handleModelImageUpload(modelId, input) {
+    if (!input.files || !input.files[0]) return;
+    var imgDiv = document.getElementById(modelId + '-img');
+    imgDiv.innerHTML = '<i class="fas fa-spinner fa-spin text-velora-blue"></i>';
+    try {
+      var url = await uploadToStorage(input.files[0], 'models');
+      modelRows[modelId].image = url;
+      imgDiv.innerHTML = '<img src="' + url + '" class="w-full h-full object-cover">';
+      imgDiv.classList.add('has-image');
+    } catch (err) {
+      imgDiv.innerHTML = '<i class="fas fa-camera text-red-400"></i>';
+      alert('Upload failed: ' + err.message);
+    }
+  }
+
+  function updateModelData(modelId) {
+    var row = document.getElementById(modelId);
+    var nameInput = row.querySelector('.model-name-input');
+    modelRows[modelId].value = nameInput.value;
+    modelRows[modelId].price = '';
+    renderVariantSections();
+  }
+
+  function removeModelRow(modelId) {
+    var el = document.getElementById(modelId);
+    if (el) el.remove();
+    delete modelRows[modelId];
+    renderVariantSections();
+  }
+
+  function getActiveModels() {
+    var models = [];
+    Object.keys(modelRows).forEach(function(id) {
+      var m = modelRows[id];
+      if (m.value && m.value.trim()) {
+        models.push({ id: id, value: m.value.trim(), price: 0, image: m.image || '' });
+      }
+    });
+    return models;
+  }
+
+  // ===== VARIANT OPTIONS (per model) =====
+  function renderVariantSections() {
+    var models = getActiveModels();
+    var wrapper = document.getElementById('variantsWrapper');
+    var container = document.getElementById('variantsContainer');
+
+    if (models.length === 0) {
+      wrapper.style.display = 'none';
+      return;
+    }
+
+    wrapper.style.display = 'block';
+    container.innerHTML = '';
+
+    models.forEach(function(model) {
+      var section = document.createElement('div');
+      section.className = 'variant-section';
+      section.id = 'variant-section-' + model.id;
+
+      var storageHtml = buildVariantRows(model.id, 'storage');
+      var colorHtml = buildVariantRows(model.id, 'color');
+
+      section.innerHTML =
+        '<div class="flex items-center gap-2 mb-3 pb-2 border-b border-gray-200">' +
+          '<div class="w-8 h-8 rounded-lg bg-velora-blue/10 flex items-center justify-center flex-shrink-0">' +
+            (model.image ? '<img src="' + model.image + '" class="w-full h-full object-cover rounded-lg">' : '<i class="fas fa-mobile-alt text-velora-blue text-xs"></i>') +
+          '</div>' +
+          '<p class="font-semibold text-sm text-gray-900">' + model.value + '</p>' +
+          '<span class="text-xs text-gray-400">(ZMW ' + model.price.toLocaleString() + ')</span>' +
+        '</div>' +
+        '<div class="mb-3">' +
+          '<div class="flex items-center justify-between mb-1">' +
+            '<span class="text-xs font-semibold text-gray-600 uppercase tracking-wider">Storage</span>' +
+            '<button type="button" onclick="addVariantChoice(\'' + model.id + '\', \'storage\')" class="text-xs text-velora-blue hover:text-red-700 font-medium"><i class="fas fa-plus mr-1"></i>Add</button>' +
+          '</div>' +
+          '<div id="' + model.id + '-storage-list" class="space-y-1">' + storageHtml + '</div>' +
+        '</div>' +
+        '<div>' +
+          '<div class="flex items-center justify-between mb-1">' +
+            '<span class="text-xs font-semibold text-gray-600 uppercase tracking-wider">Color</span>' +
+            '<button type="button" onclick="addVariantChoice(\'' + model.id + '\', \'color\')" class="text-xs text-velora-blue hover:text-red-700 font-medium"><i class="fas fa-plus mr-1"></i>Add</button>' +
+          '</div>' +
+          '<div id="' + model.id + '-color-list" class="space-y-1">' + colorHtml + '</div>' +
+        '</div>';
+
+      container.appendChild(section);
+    });
+  }
+
+  function buildVariantRows(modelId, type) {
+    // Check if we have existing data from editing
+    var existing = getExistingVariantChoices(modelId, type);
+    if (existing && existing.length > 0) {
+      return existing.map(function(ch) {
+        return renderChoiceChipHtml(modelId, type, ch.value, ch.price);
+      }).join('');
+    }
+    // Default empty rows
+    return renderChoiceChipHtml(modelId, type, '', '') + renderChoiceChipHtml(modelId, type, '', '');
+  }
+
+  function renderChoiceChipHtml(modelId, type, value, price) {
+    return '<div class="choice-chip-row" data-model="' + modelId + '" data-type="' + type + '">' +
+      '<input type="text" placeholder="e.g. ' + (type === 'storage' ? '128GB' : 'Black') + '" value="' + (value || '') + '" class="flex-1 variant-value">' +
+      '<span class="plus-label">+ZMW</span>' +
+      '<input type="number" placeholder="0" value="' + (price !== undefined && price !== null ? price : '') + '" class="price-input variant-price">' +
+      '<button type="button" onclick="this.parentElement.remove()" class="text-red-400 hover:text-red-600 text-sm ml-1"><i class="fas fa-times"></i></button>' +
+    '</div>';
+  }
+
+  function addVariantChoice(modelId, type) {
+    var list = document.getElementById(modelId + '-' + type + '-list');
+    var div = document.createElement('div');
+    div.innerHTML = renderChoiceChipHtml(modelId, type, '', '');
+    list.appendChild(div.firstElementChild);
+  }
+
+  function getExistingVariantChoices(modelId, type) {
+    // During editing, variant data is stored in the DOM dataset or we rebuild from product data
+    return [];
+  }
+
+  // ===== PRICE PREVIEW =====
+  function updatePricePreview() {
+    var models = getActiveModels();
+    var previewDiv = document.getElementById('previewModels');
+    var summaryEl = document.getElementById('previewSummary');
+
+    if (models.length === 0) {
+      var basePrice = parseInt(document.querySelector('input[name="basePrice"]').value) || 0;
+      previewDiv.innerHTML = '<p class="text-sm text-gray-500">Default price: <strong>ZMW ' + basePrice.toLocaleString() + '</strong></p>';
+      summaryEl.textContent = 'ZMW ' + basePrice.toLocaleString();
+      return;
+    }
+
+    var html = '<div class="space-y-1">';
+    models.forEach(function(m) {
+      var storageChoices = collectVariantChoices(m.id, 'storage');
+      var colorChoices = collectVariantChoices(m.id, 'color');
+      var storageRange = getPriceRange(storageChoices);
+      var colorRange = getPriceRange(colorChoices);
+
+      html += '<div class="text-sm">';
+        html += '<strong>' + m.value + '</strong>: Model (no price)';
+      if (storageChoices.length) html += ' | Storage +' + storageRange;
+      if (colorChoices.length) html += ' | Color +' + colorRange;
+      html += '</div>';
+    });
+    html += '</div>';
+    previewDiv.innerHTML = html;
+
+    var prices = models.map(function(m) { return m.price; });
+    var minP = Math.min.apply(null, prices);
+    var maxP = Math.max.apply(null, prices);
+    summaryEl.textContent = 'ZMW ' + minP.toLocaleString() + (minP !== maxP ? ' - ' + maxP.toLocaleString() : '');
+  }
+
+  function collectVariantChoices(modelId, type) {
+    var list = document.getElementById(modelId + '-' + type + '-list');
+    if (!list) return [];
+    var choices = [];
+    list.querySelectorAll('.choice-chip-row').forEach(function(row) {
+      var val = row.querySelector('.variant-value').value.trim();
+      var price = row.querySelector('.variant-price').value;
+      if (val) choices.push({ value: val, price: parseInt(price) || 0 });
+    });
+    return choices;
+  }
+
+  function getPriceRange(choices) {
+    if (!choices.length) return '0';
+    var prices = choices.map(function(c) { return c.price; });
+    var min = Math.min.apply(null, prices);
+    var max = Math.max.apply(null, prices);
+    return min === max ? min.toLocaleString() : min.toLocaleString() + '-' + max.toLocaleString();
+  }
+
+  // Auto-update preview on base price change
+  document.addEventListener('input', function(e) {
+  });
+
+  // ===== SUBMIT PRODUCT =====
+  var editingProductId = null;
+
+  async function submitProduct(e) {
+    e.preventDefault();
+    var form = document.getElementById('productForm');
+    var btn = form.querySelector('button[type="submit"]');
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Saving...';
+
+    // Main image
+    var mainImage = document.getElementById('mainImageUrl').value;
+    if (!mainImage) { alert('Please upload a main product image.'); btn.disabled = false; btn.innerHTML = '<i class="fas fa-save mr-2"></i>Save Product'; return; }
+
+    // Collect thumbnails
+    var thumbs = [];
+    document.querySelectorAll('#thumbsContainer .thumb-row').forEach(function(row) {
+      var url = row.querySelector('.thumb-url') ? row.querySelector('.thumb-url').value.trim() : '';
+      var label = row.querySelector('.thumb-label') ? row.querySelector('.thumb-label').value.trim() : '';
+      if (url) thumbs.push({ src: url, label: label });
+    });
+
+    // Collect models
+    var models = getActiveModels().map(function(m) {
+      return { value: m.value, price: m.price, image: m.image };
+    });
+
+    // Collect variant_options
+    var variant_options = {};
+    models.forEach(function(model) {
+      var modelId = null;
+      // Find the modelId for this model value
+      Object.keys(modelRows).forEach(function(id) {
+        if (modelRows[id].value === model.value) modelId = id;
+      });
+      if (!modelId) return;
+
+      var storage = collectVariantChoices(modelId, 'storage');
+      var color = collectVariantChoices(modelId, 'color');
+      variant_options[model.value] = {};
+      if (storage.length) variant_options[model.value].storage = storage;
+      if (color.length) variant_options[model.value].color = color;
+    });
+
+    var data = {
+      name: form.name.value,
+      base_price: parseInt(form.basePrice.value) || 0,
+      image: mainImage,
+      thumbs: thumbs,
+      category: form.category.value,
+      stock_status: document.querySelector('input[name="stock"]:checked').value,
+      vendor_id: VENDOR_ID
+    };
+
+    // Only add models and variant_options if models exist
+    if (models.length > 0) {
+      data.models = models;
+      if (Object.keys(variant_options).length > 0) {
+        data.variant_options = variant_options;
+      }
+    } else {
+      // Backwards compatibility: save old-style options
+      data.options = [];
+    }
+
+    try {
+      var result;
+      if (editingProductId) {
+        result = await anonClient.from('products').update(data).eq('id', editingProductId);
+      } else {
+        result = await anonClient.from('products').insert([data]);
+      }
+      if (result.error) {
+        alert('Error: ' + result.error.message);
+      } else {
+        alert(editingProductId ? 'Product updated!' : 'Product saved!');
+        cancelEdit();
+        switchTab('inventory');
+      }
+    } catch (err) {
+      alert('Error: ' + err.message);
+    }
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-save mr-2"></i>' + (editingProductId ? 'Update Product' : 'Save Product to Store');
+  }
+
+  function cancelEdit() {
+    editingProductId = null;
+    document.getElementById('productForm').reset();
+    document.getElementById('thumbsContainer').innerHTML = '';
+    document.getElementById('modelsContainer').innerHTML = '';
+    document.getElementById('variantsContainer').innerHTML = '';
+    modelCount = 0;
+    modelRows = {};
+    // Reset main image preview
+    var preview = document.getElementById('mainImagePreview');
+    preview.innerHTML = '<i class="fas fa-cloud-upload-alt text-gray-400 text-2xl mb-2"></i><p class="text-sm text-gray-500">Click to upload product image</p><p class="text-xs text-gray-400">JPG, PNG, WEBP</p>';
+    preview.classList.add('border-dashed');
+    preview.classList.remove('border-solid', 'border-green-300');
+    document.getElementById('mainImageUrl').value = '';
+    document.getElementById('mainImageError').classList.add('hidden');
+    // Reset button
+    var btn = document.querySelector('#productForm button[type="submit"]');
+    btn.innerHTML = '<i class="fas fa-save mr-2"></i>Save Product to Store';
+    // Remove cancel button if exists
+    var cancelBtn = document.getElementById('cancelEditBtn');
+    if (cancelBtn) cancelBtn.remove();
+    // Hide variants
+    document.getElementById('variantsWrapper').style.display = 'none';
+  }
+
+  async function editProduct(id) {
+    var product = allProducts.find(function(p) { return p.id === id; });
+    if (!product) return;
+    editingProductId = id;
+    switchTab('products');
+
+    // Fill form
+    var form = document.getElementById('productForm');
+    form.name.value = product.name || '';
+    form.basePrice.value = product.base_price || '';
+    form.category.value = product.category || '';
+    document.getElementById('mainImageUrl').value = product.image || '';
+
+    // Show main image preview
+    if (product.image) {
+      var preview = document.getElementById('mainImagePreview');
+      preview.innerHTML = '<img src="' + product.image + '" class="max-h-32 mx-auto rounded-lg object-contain"><p class="text-xs text-purple-600 mt-2"><i class="fas fa-check mr-1"></i>Current image</p><p class="text-xs text-gray-400 mt-1">Click to change</p>';
+      preview.classList.remove('border-dashed');
+      preview.classList.add('border-solid', 'border-green-300');
+    }
+
+    // Stock status
+    var stockVal = product.stock_status || 'in_stock';
+    document.querySelectorAll('input[name="stock"]').forEach(function(r) { r.checked = (r.value === stockVal); });
+
+    // Thumbnails
+    document.getElementById('thumbsContainer').innerHTML = '';
+    if (product.thumbs && product.thumbs.length) {
+      product.thumbs.forEach(function(thumb) {
+        addExistingThumb(thumb.src || thumb, thumb.label || '');
+      });
+    }
+
+    // Models
+    document.getElementById('modelsContainer').innerHTML = '';
+    modelCount = 0;
+    modelRows = {};
+
+    if (product.models && product.models.length) {
+      product.models.forEach(function(m) {
+        addModelRow(m);
+      });
+      // After models are added, render variant sections, then populate with existing data
+      setTimeout(function() {
+        if (product.variant_options) {
+          Object.keys(product.variant_options).forEach(function(modelValue) {
+            var modelId = null;
+            Object.keys(modelRows).forEach(function(id) {
+              if (modelRows[id].value === modelValue) modelId = id;
+            });
+            if (!modelId) return;
+            var opts = product.variant_options[modelValue];
+            if (opts.storage) {
+              var sList = document.getElementById(modelId + '-storage-list');
+              if (sList) {
+                sList.innerHTML = '';
+                opts.storage.forEach(function(ch) {
+                  var div = document.createElement('div');
+                  div.innerHTML = renderChoiceChipHtml(modelId, 'storage', ch.value, ch.price);
+                  sList.appendChild(div.firstElementChild);
+                });
+              }
+            }
+            if (opts.color) {
+              var cList = document.getElementById(modelId + '-color-list');
+              if (cList) {
+                cList.innerHTML = '';
+                opts.color.forEach(function(ch) {
+                  var div = document.createElement('div');
+                  div.innerHTML = renderChoiceChipHtml(modelId, 'color', ch.value, ch.price);
+                  cList.appendChild(div.firstElementChild);
+                });
+              }
+            }
+          });
+        }
+        updatePricePreview();
+      }, 50);
+    } else if (product.options && product.options.length) {
+      // Try to convert old options format to new models format
+      var modelOpt = product.options.find(function(o) { return o.type === 'model'; });
+      if (modelOpt && modelOpt.choices) {
+        modelOpt.choices.forEach(function(ch) {
+          addModelRow({ value: ch.value, price: ch.price || 0, image: ch.img || product.image });
+        });
+      }
+      setTimeout(function() {
+        // Try to map old storage/color options to all models
+        var storageOpt = product.options.find(function(o) { return o.label && o.label.toLowerCase() === 'storage'; });
+        var colorOpt = product.options.find(function(o) { return o.label && o.label.toLowerCase() === 'color'; });
+        Object.keys(modelRows).forEach(function(modelId) {
+          if (storageOpt && storageOpt.choices) {
+            var sList = document.getElementById(modelId + '-storage-list');
+            if (sList) {
+              sList.innerHTML = '';
+              storageOpt.choices.forEach(function(ch) {
+                var div = document.createElement('div');
+                div.innerHTML = renderChoiceChipHtml(modelId, 'storage', ch.value, ch.price);
+                sList.appendChild(div.firstElementChild);
+              });
+            }
+          }
+          if (colorOpt && colorOpt.choices) {
+            var cList = document.getElementById(modelId + '-color-list');
+            if (cList) {
+              cList.innerHTML = '';
+              colorOpt.choices.forEach(function(ch) {
+                var div = document.createElement('div');
+                div.innerHTML = renderChoiceChipHtml(modelId, 'color', ch.value, ch.price);
+                cList.appendChild(div.firstElementChild);
+              });
+            }
+          }
+        });
+        updatePricePreview();
+      }, 50);
+    }
+
+    // Update button
+    var btn = form.querySelector('button[type="submit"]');
+    btn.innerHTML = '<i class="fas fa-save mr-2"></i>Update Product';
+    // Add cancel button
+    if (!document.getElementById('cancelEditBtn')) {
+      var cancel = document.createElement('button');
+      cancel.type = 'button';
+      cancel.id = 'cancelEditBtn';
+      cancel.className = 'mt-3 text-sm text-gray-500 hover:text-gray-700 font-medium transition';
+      cancel.innerHTML = '<i class="fas fa-times mr-1"></i>Cancel Editing';
+      cancel.onclick = cancelEdit;
+      btn.parentElement.appendChild(cancel);
+    }
+
+    updatePricePreview();
+  }
+
+  function addExistingThumb(url, label) {
+    var container = document.getElementById('thumbsContainer');
+    var rowId = 'thumb-' + Date.now() + Math.random();
+    var div = document.createElement('div');
+    div.className = 'thumb-row';
+    div.id = rowId;
+    div.innerHTML =
+      '<div class="col-span-2">' +
+        '<input type="file" id="' + rowId + '-file" accept="image/*" class="hidden" onchange="handleThumbUpload(this, \'' + rowId + '\')">' +
+        '<div id="' + rowId + '-preview" class="flex items-center gap-3 border-2 border-solid border-green-300 rounded-xl p-3 cursor-pointer hover:border-velora-blue transition" onclick="document.getElementById(\'' + rowId + '-file\').click()">' +
+          '<img src="' + url + '" class="w-12 h-12 rounded-lg object-cover">' +
+          '<div class="flex-1 min-w-0"><p class="text-sm text-purple-600"><i class="fas fa-check mr-1"></i>Uploaded</p><p class="text-xs text-gray-400">Click to change</p></div>' +
+        '</div>' +
+        '<input type="hidden" class="thumb-url" value="' + url + '">' +
+      '</div>' +
+      '<div class="flex flex-col gap-2">' +
+        '<input type="text" placeholder="Label" value="' + (label || '') + '" class="px-3 py-2 bg-gray-50 border-2 border-gray-200 rounded-lg text-sm thumb-label">' +
+        '<button type="button" onclick="document.getElementById(\'' + rowId + '\').remove()" class="text-red-500 hover:text-red-700 text-sm"><i class="fas fa-trash"></i> Remove</button>' +
+      '</div>';
+    container.appendChild(div);
+  }
+
+  var allProducts = [];
+
+  // ===== LOAD INVENTORY =====
+  async function loadInventory() {
+    var tbody = document.getElementById('inventoryTable');
+    tbody.innerHTML = '<tr><td colspan="6" class="py-8 text-center text-gray-500"><i class="fas fa-spinner fa-spin mr-2"></i>Loading...</td></tr>';
+    console.log('[Vendor] loadInventory() VENDOR_ID=', VENDOR_ID);
+
+    try {
+      var result = await anonClient
+        .from('products')
+        .select('*')
+        .eq('vendor_id', VENDOR_ID)
+        .order('created_at', { ascending: false });
+      console.log('[Vendor] Products query:', result.error ? 'ERROR:'+result.error.message : 'rows='+(result.data?result.data.length:0));
+
+      if (result.error) {
+        tbody.innerHTML = '<tr><td colspan="6" class="py-8 text-center text-red-500">Error: ' + result.error.message + '</td></tr>';
+        return;
+      }
+
+      allProducts = result.data || [];
+      var activeCount = allProducts.filter(function(p) { return p.stock_status !== 'out_of_stock'; }).length;
+      var countBadge = document.getElementById('stat-product-count');
+      if (countBadge) countBadge.textContent = activeCount + ' active';
+
+      if (allProducts.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" class="py-8 text-center text-gray-500">No products yet. Go to "Upload Products" to add your first product!</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = allProducts.map(function(p) {
+        var modelCount = (p.models && p.models.length) || (p.options && p.options.length) || 0;
+
+        // Calculate price range
+        var prices = [];
+        if (p.models && p.models.length) {
+          p.models.forEach(function(m) {
+            if (p.variant_options && p.variant_options[m.value] && p.variant_options[m.value].storage) {
+              p.variant_options[m.value].storage.forEach(function(s) { if (s.price > 0) prices.push(s.price); });
+            }
+          });
+        }
+        var minPrice = prices.length ? Math.min.apply(null, prices) : 0;
+        var maxPrice = prices.length ? Math.max.apply(null, prices) : 0;
+        var priceDisplay = 'ZMW ' + minPrice.toLocaleString() + (minPrice !== maxPrice ? ' - ' + maxPrice.toLocaleString() : '');
+
+        var stockBadge = p.stock_status === 'in_stock' ? '<span class="bg-purple-100 text-purple-700 text-xs font-bold px-2 py-1 rounded-full">In Stock</span>' :
+                          p.stock_status === 'low_stock' ? '<span class="bg-yellow-100 text-yellow-700 text-xs font-bold px-2 py-1 rounded-full">Low Stock</span>' :
+                          '<span class="bg-red-100 text-red-700 text-xs font-bold px-2 py-1 rounded-full">Out of Stock</span>';
+        return '<tr class="border-b border-gray-100 hover:bg-gray-50 transition">' +
+          '<td class="py-4 px-4"><div class="flex items-center gap-3"><img src="' + (p.image || '') + '" class="w-10 h-10 rounded-lg object-cover bg-gray-100" onerror="this.style.display=\'none\'"><div><p class="font-semibold text-sm">' + (p.name || '-') + '</p></div></div></td>' +
+          '<td class="py-4 px-4 text-sm text-gray-500">' + (modelCount || 'None') + '</td>' +
+          '<td class="py-4 px-4 font-semibold text-sm">' + priceDisplay + '</td>' +
+          '<td class="py-4 px-4 text-sm text-gray-500">' + (p.category || '-') + '</td>' +
+          '<td class="py-4 px-4">' + stockBadge + '</td>' +
+          '<td class="py-4 px-4"><button onclick="editProduct(\'' + p.id + '\')" class="text-blue-600 hover:text-blue-800 text-sm font-medium mr-3" title="Edit"><i class="fas fa-edit"></i> Edit</button><button onclick="deleteProduct(\'' + p.id + '\')" class="text-red-500 hover:text-red-700 text-sm" title="Delete"><i class="fas fa-trash"></i></button></td>' +
+        '</tr>';
+      }).join('');
+    } catch (err) {
+      tbody.innerHTML = '<tr><td colspan="6" class="py-8 text-center text-red-500">Network error</td></tr>';
+    }
+  }
+
+  async function deleteProduct(id) {
+    if (!confirm('Delete this product?')) return;
+    try {
+      await anonClient.from('products').delete().eq('id', id);
+      loadInventory();
+    } catch (err) {
+      alert('Error: ' + err.message);
+    }
+  }
+
+  // ===== VENDOR MESSAGES =====
+  var currentCustomerId = null;
+  var vendorChatPollInterval = null;
+
+  async function loadVendorMessages() {
+    var container = document.getElementById('vendorConversationsList');
+    container.innerHTML = '<div class="text-center py-8 text-gray-400 text-sm"><i class="fas fa-spinner fa-spin mr-2"></i>Loading...</div>';
+    try {
+      // Find all messages where vendor is sender OR receiver
+      var result1 = await anonClient
+        .from('messages')
+        .select('*')
+        .eq('receiver_id', VENDOR_ID)
+        .order('created_at', { ascending: false });
+
+      var result2 = await anonClient
+        .from('messages')
+        .select('*')
+        .eq('sender_id', VENDOR_ID)
+        .order('created_at', { ascending: false });
+
+      if (result1.error) {
+        container.innerHTML = '<div class="text-center py-4 text-red-500 text-sm">Error: ' + escapeHtml(result1.error.message) + '</div>';
+        console.error('Vendor messages error:', result1.error);
+        return;
+      }
+
+      // Merge and deduplicate
+      var msgMap = {};
+      (result1.data || []).forEach(function(m) { msgMap[m.id] = m; });
+      (result2.data || []).forEach(function(m) { msgMap[m.id] = m; });
+      var messages = Object.values(msgMap).sort(function(a, b) {
+        return new Date(b.created_at) - new Date(a.created_at);
+      });
+
+      if (!messages.length) { container.innerHTML = '<div class="text-center py-8 text-gray-400 text-sm"><i class="fas fa-comments text-2xl mb-2"></i><p>No messages yet</p><p class="text-xs mt-1">Customer messages will appear here</p></div>'; return; }
+
+      // Group by customer
+      var convos = {};
+      messages.forEach(function(m) {
+        var custId = m.sender_id === VENDOR_ID ? m.receiver_id : m.sender_id;
+        if (!convos[custId]) convos[custId] = { customer_id: custId, lastMessage: m, count: 0, unread: 0 };
+        convos[custId].count++;
+        if (m.sender_id !== VENDOR_ID && !m.read) convos[custId].unread++;
+      });
+
+      var convoList = Object.values(convos);
+
+      // Fetch customer names
+      var custIds = convoList.map(function(c) { return c.customer_id; }).filter(function(id) { return id.indexOf('-') > -1; });
+      var cResult = await anonClient.from('customer_profiles').select('id, full_name, phone').in('id', custIds);
+      var customers = {};
+      (cResult.data || []).forEach(function(c) { customers[c.id] = c; });
+
+      container.innerHTML = convoList.map(function(c) {
+        var cust = customers[c.customer_id] || {};
+        var name = cust.full_name || 'Customer';
+        var initials = (name || 'C').split(' ').map(function(n) { return n[0]; }).join('').toUpperCase().substring(0,2);
+        var time = new Date(c.lastMessage.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+        var preview = c.lastMessage.content.substring(0, 40) + (c.lastMessage.content.length > 40 ? '...' : '');
+        var isUnread = c.unread > 0;
+        return '<div class="flex items-center gap-3 p-3 rounded-xl cursor-pointer transition hover:bg-gray-50 ' + (isUnread ? 'bg-red-50 border-l-3 border-velora-blue' : '') + '" onclick="openVendorChat(\'' + c.customer_id + '\', \'' + name.replace(/'/g, "\\'") + '\')">' +
+          '<div class="w-10 h-10 rounded-full bg-gradient-to-br from-velora-blue to-blue-800 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">' + initials + '</div>' +
+          '<div class="flex-1 min-w-0">' +
+            '<div class="flex items-center justify-between">' +
+              '<p class="text-sm font-semibold truncate">' + name + '</p>' +
+              '<span class="text-[10px] text-gray-400 flex-shrink-0">' + time + '</span>' +
+            '</div>' +
+            '<p class="text-xs text-gray-500 truncate">' + (isUnread ? '<strong>' + preview + '</strong>' : preview) + '</p>' +
+          '</div>' +
+          (isUnread ? '<span class="w-2 h-2 bg-velora-blue rounded-full flex-shrink-0"></span>' : '') +
+        '</div>';
+      }).join('');
+    } catch (err) {
+      container.innerHTML = '<div class="text-center py-4 text-red-500 text-sm">Failed: ' + (err.message || 'Unknown error') + '</div>';
+      console.error('Vendor messages catch:', err);
+    }
+  }
+
+  function openVendorChat(customerId, customerName) {
+    currentCustomerId = customerId;
+    document.getElementById('vendorChatHeader').innerHTML =
+      '<div class="flex items-center gap-3">' +
+        '<div class="w-8 h-8 rounded-full bg-gradient-to-br from-velora-blue to-blue-800 flex items-center justify-center text-white text-xs font-bold">' +
+          (customerName || 'C').split(' ').map(function(n){return n[0]}).join('').toUpperCase().substring(0,2) +
+        '</div>' +
+        '<p class="font-semibold text-sm">' + (customerName || 'Customer') + '</p>' +
+      '</div>';
+    document.getElementById('vendorChatInputArea').classList.remove('hidden-force');
+    loadVendorChatMessages();
+    startVendorChatPolling();
+    // Mark messages from this customer as read
+    markMessagesRead(customerId);
+  }
+
+  async function markMessagesRead(customerId) {
+    try {
+      await anonClient
+        .from('messages')
+        .update({ read: true })
+        .eq('sender_id', customerId)
+        .eq('receiver_id', VENDOR_ID)
+        .eq('read', false);
+      // Refresh badge and list
+      updateMessageBadge();
+      loadVendorMessages();
+    } catch (err) {
+      // silent
+    }
+  }
+
+  async function loadVendorChatMessages() {
+    if (!currentCustomerId) return;
+    var container = document.getElementById('vendorChatMessages');
+    try {
+      // Query messages in both directions separately
+      var result1 = await anonClient
+        .from('messages')
+        .select('*')
+        .eq('sender_id', VENDOR_ID)
+        .eq('receiver_id', currentCustomerId)
+        .order('created_at', { ascending: true });
+
+      var result2 = await anonClient
+        .from('messages')
+        .select('*')
+        .eq('sender_id', currentCustomerId)
+        .eq('receiver_id', VENDOR_ID)
+        .order('created_at', { ascending: true });
+
+      if (result1.error) {
+        container.innerHTML = '<div class="text-center text-red-500 text-xs py-4">Error: ' + escapeHtml(result1.error.message) + '</div>';
+        console.error('Vendor chat load error:', result1.error);
+        return;
+      }
+
+      // Merge and sort by time
+      var msgMap = {};
+      (result1.data || []).forEach(function(m) { msgMap[m.id] = m; });
+      (result2.data || []).forEach(function(m) { msgMap[m.id] = m; });
+      var msgs = Object.values(msgMap).sort(function(a, b) {
+        return new Date(a.created_at) - new Date(b.created_at);
+      });
+
+      if (!msgs.length) { container.innerHTML = '<div class="text-center text-xs text-gray-400 py-4">No messages yet</div>'; return; }
+
+      var html = '';
+      var lastDate = '';
+      msgs.forEach(function(msg) {
+        var msgDate = new Date(msg.created_at).toLocaleDateString();
+        if (msgDate !== lastDate) { html += '<div class="text-center text-[10px] text-gray-400 my-2">' + msgDate + '</div>'; lastDate = msgDate; }
+        var isMe = msg.sender_id === VENDOR_ID;
+        var time = new Date(msg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        html += '<div class="' + (isMe ? 'chat-msg-vendor' : 'chat-msg-customer') + '" style="' + (isMe ? 'align-self:flex-end;background:linear-gradient(135deg,#0D47FF,#0a2dbd);color:#fff;' : 'align-self:flex-start;background:#f1f5f9;color:#1f2937;') + 'padding:0.6rem 1rem;border-radius:' + (isMe ? '16px 16px 4px 16px' : '16px 16px 16px 4px') + ';max-width:80%;font-size:0.875rem;">' +
+          '<div>' + escapeHtml(msg.content) + '</div>' +
+          '<div style="font-size:0.65rem;opacity:0.6;margin-top:2px;">' + time + '</div>' +
+        '</div>';
+      });
+      container.innerHTML = html;
+      container.scrollTop = container.scrollHeight;
+    } catch (err) {
+      container.innerHTML = '<div class="text-center text-red-500 text-sm">Failed</div>';
+    }
+  }
+
+  async function sendVendorReply() {
+    var input = document.getElementById('vendorReplyInput');
+    var content = input.value.trim();
+    if (!content || !currentCustomerId) return;
+    input.value = '';
+    input.disabled = true;
+    try {
+      var result = await anonClient.from('messages').insert([{
+        sender_id: VENDOR_ID,
+        receiver_id: currentCustomerId,
+        content: content
+      }]);
+      if (result.error) {
+        console.error('Send reply error:', result.error);
+        alert('Failed to send: ' + result.error.message);
+      } else {
+        await loadVendorChatMessages();
+      }
+    } catch (err) {
+      console.error('Send reply catch:', err);
+      alert('Failed to send: ' + (err.message || 'Network error'));
+    }
+    input.disabled = false;
+    input.focus();
+  }
+
+  function escapeHtml(text) {
+    var d = document.createElement('div');
+    d.textContent = text;
+    return d.innerHTML;
+  }
+
+  function startVendorChatPolling() {
+    stopVendorChatPolling();
+    vendorChatPollInterval = setInterval(loadVendorChatMessages, 3000);
+  }
+
+  function stopVendorChatPolling() {
+    if (vendorChatPollInterval) { clearInterval(vendorChatPollInterval); vendorChatPollInterval = null; }
+  }
+
+  function escapeHtml(text) {
+    var d = document.createElement('div');
+    d.textContent = text;
+    return d.innerHTML;
+  }
+
+  // ===== MESSAGE COUNT BADGE =====
+  async function updateMessageBadge() {
+    try {
+      var result = await anonClient
+        .from('messages')
+        .select('id', { count: 'exact', head: true })
+        .eq('receiver_id', VENDOR_ID)
+        .eq('read', false);
+
+      if (result.error) return;
+      var count = result.count || 0;
+      var badge = document.getElementById('msgBadge');
+      if (count > 0) {
+        badge.textContent = count > 99 ? '99+' : count;
+        badge.classList.remove('hidden');
+      } else {
+        badge.classList.add('hidden');
+      }
+    } catch (err) {
+      // silent
+    }
+  }
+
+  // Poll badge every 10 seconds
+  setInterval(updateMessageBadge, 10000);
+  // Initial check after login
+  setTimeout(updateMessageBadge, 2000);
+
+  // Stop polling when switching away from messages tab
+  document.querySelectorAll('.sidebar-link').forEach(function(link) {
+    link.addEventListener('click', function() {
+      if (this.id !== 'nav-messages') stopVendorChatPolling();
+    });
+  });
+
+  // ===== ORDERS MANAGEMENT =====
+  var allVendorOrders = [];
+  var currentOrderFilter = 'all';
+
+  async function loadVendorOrders() {
+    var list = document.getElementById('vendorOrdersList');
+    list.innerHTML = '<div class="text-center py-12 text-gray-400 text-sm"><i class="fas fa-spinner fa-spin mr-2"></i>Loading orders...</div>';
+    try {
+      var result = await anonClient.from('orders')
+        .select('*')
+        .eq('vendor_id', VENDOR_ID)
+        .order('created_at', { ascending: false });
+      if (result.error) {
+        list.innerHTML = '<div class="text-center py-12 text-red-400 text-sm"><i class="fas fa-exclamation-triangle mr-2"></i>Error: ' + result.error.message + '</div>';
+        return;
+      }
+      allVendorOrders = result.data || [];
+      // Diagnostic: if no orders, show what's in database
+      if (allVendorOrders.length === 0) {
+        var allResult = await anonClient.from('orders').select('id,vendor_id,order_ref,total_amount,status').limit(20);
+        if (!allResult.error && allResult.data && allResult.data.length > 0) {
+          var vidCounts = {};
+          allResult.data.forEach(function(o) { var v = o.vendor_id || '(null/empty)'; vidCounts[v] = (vidCounts[v] || 0) + 1; });
+          var diagHtml = '<div style="background:#fffbeb;border:2px solid #f59e0b;border-radius:12px;padding:20px;margin:20px">' +
+            '<p style="font-weight:700;color:#92400e;margin-bottom:10px;font-size:16px"><i class="fas fa-search mr-2"></i>Orders Found But Not Linked</p>' +
+            '<p style="font-size:13px;color:#78350f;margin-bottom:12px">Dashboard looks for vendor_id = <code style="background:#fff;padding:3px 8px;border-radius:4px;border:1px solid #fcd34d">' + VENDOR_ID + '</code></p>' +
+            '<p style="font-size:13px;color:#78350f;margin-bottom:10px">What is in your database:</p>';
+          for (var vid in vidCounts) {
+            var isMatch = vid === VENDOR_ID;
+            diagHtml += '<div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;padding:6px 10px;background:#fff;border-radius:6px">' +
+              '<span style="font-size:13px;font-family:monospace">' + vid + '</span>' +
+              '<span style="background:' + (isMatch ? '#16a34a' : '#f59e0b') + ';color:#fff;font-size:11px;padding:2px 10px;border-radius:999px;font-weight:600">' + vidCounts[vid] + ' orders</span>' +
+              (isMatch ? '<i class="fas fa-check-circle text-green-600"></i>' : '') +
+              '</div>';
+          }
+          diagHtml += '<button onclick="fixOrderVendorIds()" style="margin-top:14px;background:#0D47FF;color:#fff;border:none;padding:10px 20px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;display:block;width:100%"><i class="fas fa-wrench mr-2"></i>Click to Fix: Set ALL orders to ' + VENDOR_ID + '</button></div>';
+          list.innerHTML = diagHtml;
+          return;
+        }
+      }
+      updateOrderStats();
+      renderOrdersList();
+    } catch (err) {
+      list.innerHTML = '<div class="text-center py-12 text-red-400 text-sm"><i class="fas fa-exclamation-triangle mr-2"></i>Failed: ' + (err.message || 'Unknown error') + '</div>';
+    }
+  }
+
+  function updateOrderStats() {
+    var total = allVendorOrders.length;
+    var pending = allVendorOrders.filter(function(o) { return o.status === 'pending'; }).length;
+    var confirmed = allVendorOrders.filter(function(o) { return o.status === 'confirmed'; }).length;
+    var shipped = allVendorOrders.filter(function(o) { return o.status === 'shipped'; }).length;
+    var delivered = allVendorOrders.filter(function(o) { return o.status === 'delivered'; }).length;
+    document.getElementById('orderStat-total').textContent = total;
+    document.getElementById('orderStat-pending').textContent = pending;
+    document.getElementById('orderStat-shipped').textContent = shipped;
+    document.getElementById('orderStat-delivered').textContent = delivered;
+
+    // Update badge
+    var badge = document.getElementById('orderBadge');
+    var actionable = pending + confirmed;
+    if (actionable > 0) {
+      badge.textContent = actionable > 99 ? '99+' : actionable;
+      badge.classList.remove('hidden');
+    } else {
+      badge.classList.add('hidden');
+    }
+  }
+
+  function renderOrdersList() {
+    var list = document.getElementById('vendorOrdersList');
+    var filtered = currentOrderFilter === 'all'
+      ? allVendorOrders
+      : allVendorOrders.filter(function(o) { return o.status === currentOrderFilter; });
+
+    if (!filtered.length) {
+      list.innerHTML = '<div class="text-center py-12 text-gray-400 text-sm"><i class="fas fa-inbox text-2xl mb-2"></i><p>No ' + currentOrderFilter + ' orders</p></div>';
+      return;
+    }
+
+    var html = '';
+    filtered.forEach(function(order) {
+      var dateStr = '';
+      try { dateStr = new Date(order.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }); } catch(e) {}
+
+      // Build items summary
+      var items = Array.isArray(order.items) ? order.items : [];
+      var itemsSummary = items.slice(0, 2).map(function(it) {
+        return (it.quantity || 1) + 'x ' + (it.product_name || it.name || 'Item');
+      }).join(', ') + (items.length > 2 ? ' +' + (items.length - 2) + ' more' : '');
+
+      // Customer info
+      var customerName = order.guest_name || 'Customer';
+      var customerPhone = order.customer_phone || order.guest_phone || 'N/A';
+
+      // Status badge colors
+      var statusColors = {
+        pending: 'bg-yellow-100 text-yellow-700',
+        confirmed: 'bg-blue-100 text-blue-700',
+        shipped: 'bg-purple-100 text-purple-700',
+        delivered: 'bg-green-100 text-green-700',
+        cancelled: 'bg-red-100 text-red-700'
+      };
+      var statusColor = statusColors[order.status] || 'bg-gray-100 text-gray-700';
+
+      // Action buttons based on status
+      var deleteBtn = '<button onclick="deleteVendorOrder(\'' + order.id + '\')" class="px-3 py-1.5 bg-red-50 text-red-500 text-xs font-semibold rounded-lg hover:bg-red-100 transition" title="Delete order"><i class="fas fa-trash"></i></button>';
+      var actions = '';
+      if (order.status === 'pending') {
+        actions = '<button onclick="updateOrderStatus(\'' + order.id + '\', \'confirmed\')" class="px-3 py-1.5 bg-blue-600 text-white text-xs font-semibold rounded-lg hover:bg-blue-700 transition">Confirm</button>' +
+                  '<button onclick="updateOrderStatus(\'' + order.id + '\', \'cancelled\')" class="px-3 py-1.5 bg-gray-200 text-gray-600 text-xs font-semibold rounded-lg hover:bg-gray-300 transition">Cancel</button>' +
+                  deleteBtn;
+      } else if (order.status === 'confirmed') {
+        actions = '<button onclick="updateOrderStatus(\'' + order.id + '\', \'shipped\')" class="px-3 py-1.5 bg-purple-600 text-white text-xs font-semibold rounded-lg hover:bg-purple-700 transition">Mark Shipped</button>' +
+                  '<button onclick="updateOrderStatus(\'' + order.id + '\', \'cancelled\')" class="px-3 py-1.5 bg-gray-200 text-gray-600 text-xs font-semibold rounded-lg hover:bg-gray-300 transition">Cancel</button>' +
+                  deleteBtn;
+      } else if (order.status === 'shipped') {
+        actions = '<button onclick="updateOrderStatus(\'' + order.id + '\', \'delivered\')" class="px-3 py-1.5 bg-green-600 text-white text-xs font-semibold rounded-lg hover:bg-green-700 transition">Mark Delivered</button>' +
+                  deleteBtn;
+      } else if (order.status === 'delivered') {
+        actions = '<span class="text-green-600 text-xs font-semibold"><i class="fas fa-check-circle mr-1"></i>Completed</span>' +
+                  deleteBtn;
+      } else if (order.status === 'cancelled') {
+        actions = '<span class="text-gray-400 text-xs">Cancelled</span>' +
+                  deleteBtn;
+      }
+
+      html += '<div class="p-4 hover:bg-gray-50 transition">' +
+        '<div class="flex flex-col md:flex-row md:items-center justify-between gap-3">' +
+          '<div class="flex items-start gap-4">' +
+            '<div class="w-10 h-10 bg-velora-blue/10 rounded-full flex items-center justify-center flex-shrink-0">' +
+              '<i class="fas fa-shopping-bag text-velora-blue text-sm"></i>' +
+            '</div>' +
+            '<div>' +
+              '<div class="flex items-center gap-2 mb-1">' +
+                '<span class="font-bold text-sm text-gray-900">' + (order.order_ref || order.id.substring(0, 8)) + '</span>' +
+                '<span class="' + statusColor + ' text-xs font-bold px-2 py-0.5 rounded-full capitalize">' + order.status + '</span>' +
+              '</div>' +
+              '<p class="text-sm text-gray-600">' + itemsSummary + '</p>' +
+              '<div class="flex items-center gap-3 mt-1 text-xs text-gray-400">' +
+                '<span><i class="fas fa-user mr-1"></i>' + customerName + '</span>' +
+                '<span><i class="fas fa-phone mr-1"></i>' + customerPhone + '</span>' +
+                '<span><i class="fas fa-calendar mr-1"></i>' + dateStr + '</span>' +
+              '</div>' +
+              '<p class="text-xs text-gray-400 mt-1"><i class="fas fa-map-marker-alt mr-1"></i>' + (order.delivery_address || 'No address') + '</p>' +
+            '</div>' +
+          '</div>' +
+          '<div class="flex flex-col items-end gap-1 flex-shrink-0">' +
+            '<span class="font-bold text-sm text-gray-900">ZMW ' + (order.total_amount || 0).toLocaleString() + '</span>' +
+            (order.vendor_payout !== undefined && order.vendor_payout !== null && order.commission_amount > 0
+              ? '<span class="text-xs text-green-600 font-medium">You get ZMW ' + order.vendor_payout.toLocaleString() + '</span>'
+              : (order.shipping_notes && order.shipping_notes.indexOf('Vendor gets:') > -1
+                ? '<span class="text-xs text-green-600 font-medium">' + order.shipping_notes.split('|')[1].trim() + '</span>'
+                : '')) +
+            '<div class="flex gap-2 mt-1">' + actions + '</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+    });
+
+    list.innerHTML = html;
+  }
+
+  function filterOrders(status) {
+    currentOrderFilter = status;
+    // Update button styles
+    document.querySelectorAll('.order-filter-btn').forEach(function(btn) {
+      if (btn.getAttribute('data-filter') === status) {
+        btn.classList.remove('bg-gray-100', 'text-gray-600');
+        btn.classList.add('bg-velora-blue', 'text-white');
+      } else {
+        btn.classList.remove('bg-velora-blue', 'text-white');
+        btn.classList.add('bg-gray-100', 'text-gray-600');
+      }
+    });
+    renderOrdersList();
+  }
+
+  async function deleteVendorOrder(orderId) {
+    if (!confirm('Delete this order? This cannot be undone.')) return;
+    try {
+      var result = await anonClient.from('orders').delete().eq('id', orderId);
+      if (result.error) { alert('Failed to delete: ' + result.error.message); return; }
+      // Remove from array
+      allVendorOrders = allVendorOrders.filter(function(o) { return o.id !== orderId; });
+      updateOrderStats();
+      renderOrdersList();
+    } catch(err) { alert('Delete failed: ' + err.message); }
+  }
+
+  async function updateOrderStatus(orderId, newStatus) {
+    try {
+      var result = await anonClient.from('orders')
+        .update({ status: newStatus, updated_at: new Date().toISOString() })
+        .eq('id', orderId);
+      if (result.error) { alert('Update failed: ' + result.error.message); return; }
+      // Refresh list
+      loadVendorOrders();
+    } catch (err) {
+      alert('Failed to update order');
+    }
+  }
+
+  // ===== DIAGNOSTIC: Check what's in the database =====
+  async function diagnose() {
+    console.log('=== VENDOR DIAGNOSTIC ===');
+    console.log('Current VENDOR_ID:', VENDOR_ID);
+    try {
+      var p = await anonClient.from('products').select('vendor_id').limit(50);
+      var o = await anonClient.from('orders').select('vendor_id').limit(50);
+      var pVids = {};
+      var oVids = {};
+      (p.data||[]).forEach(function(r){ pVids[r.vendor_id||'NULL'] = (pVids[r.vendor_id||'NULL']||0)+1; });
+      (o.data||[]).forEach(function(r){ oVids[r.vendor_id||'NULL'] = (oVids[r.vendor_id||'NULL']||0)+1; });
+      console.log('Products vendor_ids:', pVids);
+      console.log('Orders vendor_ids:', oVids);
+      console.log('=========================');
+      alert('Products: ' + JSON.stringify(pVids) + '\nOrders: ' + JSON.stringify(oVids));
+    } catch(e) { console.error(e); }
+  }
+
+  // ===== FIX: Move all items to current VENDOR_ID =====
+  async function fixAll() {
+    if (!confirm('Move ALL products and orders to vendor "' + VENDOR_ID + '"?')) return;
+    try {
+      // Get all distinct vendor_ids from products
+      var pResult = await anonClient.from('products').select('id,vendor_id').neq('vendor_id', VENDOR_ID);
+      var fixedProducts = 0;
+      if (pResult.data) {
+        for (var i = 0; i < pResult.data.length; i++) {
+          await anonClient.from('products').update({ vendor_id: VENDOR_ID }).eq('id', pResult.data[i].id);
+          fixedProducts++;
+        }
+      }
+      // Also fix null vendor_ids
+      await anonClient.from('products').update({ vendor_id: VENDOR_ID }).is('vendor_id', null);
+
+      var oResult = await anonClient.from('orders').select('id,vendor_id').neq('vendor_id', VENDOR_ID);
+      var fixedOrders = 0;
+      if (oResult.data) {
+        for (var i = 0; i < oResult.data.length; i++) {
+          await anonClient.from('orders').update({ vendor_id: VENDOR_ID }).eq('id', oResult.data[i].id);
+          fixedOrders++;
+        }
+      }
+      await anonClient.from('orders').update({ vendor_id: VENDOR_ID }).is('vendor_id', null);
+
+      alert('Fixed ' + fixedProducts + ' products and ' + fixedOrders + ' orders! Reloading...');
+      loadInventory();
+      loadVendorOrders();
+    } catch(e) { alert('Fix failed: ' + e.message); console.error(e); }
+  }
+
+
+  async function fixOrderVendorIds() {
+    if (!confirm('Set ALL orders to vendor_id="' + VENDOR_ID + '"?')) return;
+    try {
+      var result = await anonClient.from('orders').select('id,vendor_id');
+      if (!result.error && result.data) {
+        var fixed = 0;
+        for (var i = 0; i < result.data.length; i++) {
+          var o = result.data[i];
+          if (!o.vendor_id || o.vendor_id === 'null' || o.vendor_id === 'nova-nest-electronics' || o.vendor_id !== VENDOR_ID) {
+            await anonClient.from('orders').update({ vendor_id: VENDOR_ID }).eq('id', o.id);
+            fixed++;
+          }
+        }
+        alert('Fixed ' + fixed + ' orders! Reloading...');
+        loadVendorOrders();
+      }
+    } catch(err) { alert('Fix failed: ' + err.message); }
+  }
+</script>
+</body>
+</html>

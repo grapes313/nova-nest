@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QN8N334V6L"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-QN8N334V6L');
+</script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Account - Velora Market</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          colors: {
+            velora: { blue: '#0D47FF', dark: '#080F19', market: '#6A00FF', cyan: '#00D4FF', light: '#f8fafc' }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .sidebar-link { transition: all 0.2s; }
+    .sidebar-link:hover, .sidebar-link.active { background: rgba(255,255,255,0.1); border-left: 3px solid #0D47FF; }
+    .dashboard-card { transition: all 0.3s; }
+    .dashboard-card:hover { box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+    .order-status-pending { background: #fef3c7; color: #92400e; }
+    .order-status-confirmed { background: #dbeafe; color: #1e40af; }
+    .order-status-shipped { background: #e0e7ff; color: #3730a3; }
+    .order-status-delivered { background: #d1fae5; color: #065f46; }
+    .order-status-cancelled { background: #fee2e2; color: #991b1b; }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; animation: fadeIn 0.3s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    .skeleton { background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%); background-size: 200% 100%; animation: skeleton 1.5s ease-in-out infinite; }
+    @keyframes skeleton { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+    .address-card { transition: all 0.2s; cursor: pointer; }
+    .address-card:hover { border-color: #0D47FF; }
+    .address-card.selected { border-color: #0D47FF; background: #f0f4ff; }
+    .product-img-small { width: 48px; height: 48px; object-fit: cover; border-radius: 8px; background: #f3f4f6; }
+    .vendor-follow-card { transition: all 0.3s; }
+    .vendor-follow-card:hover { box-shadow: 0 8px 25px rgba(0,0,0,0.1); transform: translateY(-2px); }
+    .btn-unfollow { transition: all 0.2s; }
+    .btn-unfollow:hover { background: #fee2e2; color: #dc2626; border-color: #fecaca; }
+  </style>
+<base target="_blank">
+<base target="_blank">
+</head>
+<body class="font-sans bg-gray-100 text-gray-900 antialiased">
+
+<!-- LOGIN OVERLAY -->
+<div id="login-overlay" class="fixed inset-0 bg-velora-dark z-50 flex items-center justify-center hidden">
+  <div class="bg-white rounded-2xl p-8 max-w-md w-full mx-4 shadow-2xl">
+    <div class="text-center mb-6">
+      <div class="w-16 h-16 bg-gradient-to-br from-velora-blue to-blue-800 rounded-xl flex items-center justify-center mx-auto mb-4">
+        <i class="fas fa-user text-white text-2xl"></i>
+      </div>
+      <h2 class="text-2xl font-bold text-gray-900">Sign In</h2>
+      <p class="text-gray-500 text-sm mt-1">Access your Velora account</p>
+    </div>
+    <div class="space-y-4">
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number or Email</label>
+        <input type="text" id="login-id" placeholder="e.g. 0977123456" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-velora-blue focus:outline-none transition text-sm">
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+        <input type="password" id="login-password" placeholder="Enter your password" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-velora-blue focus:outline-none transition text-sm">
+      </div>
+      <button onclick="handleLogin()" class="w-full bg-velora-blue hover:bg-blue-700 text-white py-3 rounded-xl font-bold transition text-sm">Sign In</button>
+      <p id="login-error" class="text-red-500 text-sm text-center hidden"></p>
+    </div>
+    <div class="mt-6 text-center">
+      <p class="text-gray-400 text-sm mb-2">Don't have an account?</p>
+      <button onclick="showRegister()" class="text-velora-blue font-semibold text-sm hover:underline">Create Account</button>
+    </div>
+    <div class="mt-4 text-center">
+      <a href="index.html" class="text-gray-400 text-sm hover:text-gray-600 transition">&larr; Back to Marketplace</a>
+    </div>
+  </div>
+</div>
+
+<!-- REGISTER OVERLAY -->
+<div id="register-overlay" class="fixed inset-0 bg-velora-dark z-50 flex items-center justify-center hidden">
+  <div class="bg-white rounded-2xl p-8 max-w-md w-full mx-4 shadow-2xl max-h-[90vh] overflow-y-auto">
+    <div class="text-center mb-6">
+      <div class="w-16 h-16 bg-gradient-to-br from-velora-blue to-blue-800 rounded-xl flex items-center justify-center mx-auto mb-4">
+        <i class="fas fa-user-plus text-white text-2xl"></i>
+      </div>
+      <h2 class="text-2xl font-bold text-gray-900">Create Account</h2>
+      <p class="text-gray-500 text-sm mt-1">Join Velora Market</p>
+    </div>
+    <form onsubmit="return handleRegister(event)">
+      <div class="space-y-4">
+        <input type="text" id="reg-name" placeholder="Full Name *" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-velora-blue focus:outline-none transition text-sm" required>
+        <input type="tel" id="reg-phone" placeholder="Phone Number * (e.g. 0977123456)" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-velora-blue focus:outline-none transition text-sm" required>
+        <input type="email" id="reg-email" placeholder="Email (optional)" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-velora-blue focus:outline-none transition text-sm">
+        <textarea id="reg-address" placeholder="Delivery Address *" rows="2" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-velora-blue focus:outline-none transition text-sm resize-none" required></textarea>
+        <input type="password" id="reg-password" placeholder="Password * (min 6 characters)" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-velora-blue focus:outline-none transition text-sm" required minlength="6">
+        <p id="register-error" class="text-red-500 text-sm text-center hidden"></p>
+        <button type="submit" class="w-full bg-velora-blue hover:bg-blue-700 text-white py-3 rounded-xl font-bold transition text-sm">Create Account</button>
+      </div>
+    </form>
+    <div class="mt-4 text-center">
+      <button onclick="showLogin()" class="text-gray-400 text-sm hover:text-gray-600 transition">&larr; Already have an account? Sign In</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOP BAR -->
+<div class="bg-velora-dark text-white text-xs py-2.5 px-4">
+  <div class="max-w-7xl mx-auto flex justify-between items-center">
+    <span class="flex items-center gap-1"><i class="fas fa-map-marker-alt text-velora-blue"></i> Delivering across Zambia</span>
+    <div class="flex items-center gap-4">
+      <a href="index.html" class="hover:text-velora-blue transition font-medium">Marketplace</a>
+      <a href="velora-electronics.html" class="hover:text-velora-blue transition">Store</a>
+      <button onclick="logout()" class="hover:text-velora-blue transition">Logout</button>
+    </div>
+  </div>
+</div>
+
+<div class="flex min-h-screen">
+
+  <!-- SIDEBAR -->
+  <aside class="w-64 bg-velora-dark text-white flex-shrink-0 hidden md:flex flex-col">
+    <div class="p-6 border-b border-white/10">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-gradient-to-br from-velora-blue to-blue-800 rounded-xl flex items-center justify-center">
+          <i class="fas fa-v text-white"></i>
+        </div>
+        <div>
+          <h1 class="font-bold text-sm">Velora</h1>
+          <p class="text-[10px] text-velora-blue font-bold tracking-wider">MY ACCOUNT</p>
+        </div>
+      </div>
+    </div>
+    <nav class="py-4 flex-1">
+      <a href="#" onclick="switchTab('overview'); return false;" id="nav-overview" class="sidebar-link active flex items-center gap-3 px-6 py-3 text-sm">
+        <i class="fas fa-chart-line w-5"></i> Overview
+      </a>
+      <a href="#" onclick="switchTab('orders'); return false;" id="nav-orders" class="sidebar-link flex items-center gap-3 px-6 py-3 text-sm">
+        <i class="fas fa-shopping-bag w-5"></i> My Orders
+      </a>
+      <a href="#" onclick="switchTab('following'); return false;" id="nav-following" class="sidebar-link flex items-center gap-3 px-6 py-3 text-sm">
+        <i class="fas fa-heart w-5"></i> Following <span class="badge-count hidden" id="followingBadge">0</span>
+      </a>
+      <a href="#" onclick="switchTab('addresses'); return false;" id="nav-addresses" class="sidebar-link flex items-center gap-3 px-6 py-3 text-sm">
+        <i class="fas fa-map-marker-alt w-5"></i> Addresses
+      </a>
+      <a href="#" onclick="switchTab('profile'); return false;" id="nav-profile" class="sidebar-link flex items-center gap-3 px-6 py-3 text-sm">
+        <i class="fas fa-user w-5"></i> Profile
+      </a>
+      <div class="border-t border-white/10 my-4"></div>
+      <a href="index.html" class="sidebar-link flex items-center gap-3 px-6 py-3 text-sm text-gray-400 hover:text-white">
+        <i class="fas fa-store w-5"></i> Back to Marketplace
+      </a>
+      <a href="velora-electronics.html" class="sidebar-link flex items-center gap-3 px-6 py-3 text-sm text-gray-400 hover:text-white">
+        <i class="fas fa-bolt w-5"></i> Visit Store
+      </a>
+    </nav>
+    <div class="p-6 mt-auto">
+      <div class="bg-white/10 rounded-xl p-4">
+        <div class="flex items-center gap-3">
+          <div id="user-avatar" class="w-10 h-10 bg-velora-blue rounded-full flex items-center justify-center text-white text-sm font-bold">U</div>
+          <div>
+            <p id="user-name" class="text-sm font-semibold">User</p>
+            <p id="user-phone" class="text-xs text-gray-400">--</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="flex-1 p-4 md:p-8">
+
+    <!-- MOBILE HEADER -->
+    <div class="md:hidden flex items-center justify-between mb-6">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 bg-gradient-to-br from-velora-blue to-blue-800 rounded-lg flex items-center justify-center">
+          <i class="fas fa-v text-white text-xs"></i>
+        </div>
+        <span class="font-bold text-sm">My Account</span>
+      </div>
+      <button onclick="logout()" class="text-sm text-gray-500 hover:text-velora-blue"><i class="fas fa-sign-out-alt"></i></button>
+    </div>
+
+    <!-- MOBILE NAV -->
+    <div class="md:hidden flex gap-2 overflow-x-auto mb-6 pb-2">
+      <button onclick="switchTab('overview')" class="px-4 py-2 bg-white rounded-full text-xs font-semibold shadow-sm whitespace-nowrap">Overview</button>
+      <button onclick="switchTab('orders')" class="px-4 py-2 bg-white rounded-full text-xs font-semibold shadow-sm whitespace-nowrap">Orders</button>
+      <button onclick="switchTab('following')" class="px-4 py-2 bg-white rounded-full text-xs font-semibold shadow-sm whitespace-nowrap">Following</button>
+      <button onclick="switchTab('addresses')" class="px-4 py-2 bg-white rounded-full text-xs font-semibold shadow-sm whitespace-nowrap">Addresses</button>
+      <button onclick="switchTab('profile')" class="px-4 py-2 bg-white rounded-full text-xs font-semibold shadow-sm whitespace-nowrap">Profile</button>
+    </div>
+
+    <!-- ===== OVERVIEW TAB ===== -->
+    <div id="tab-overview" class="tab-panel active">
+      <div class="flex justify-between items-center mb-6">
+        <div>
+          <h1 class="text-2xl font-bold text-gray-900">Welcome back, <span id="welcome-name">User</span></h1>
+          <p class="text-gray-500 text-sm">Here's what's happening with your account</p>
+        </div>
+        <a href="index.html" class="hidden sm:flex items-center gap-2 bg-velora-blue text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700 transition">
+          <i class="fas fa-shopping-bag"></i> Shop Now
+        </a>
+      </div>
+
+      <!-- Stats -->
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
+        <div class="dashboard-card bg-white rounded-xl p-5 shadow-sm border border-gray-200">
+          <div class="w-10 h-10 bg-velora-blue/10 rounded-lg flex items-center justify-center mb-3">
+            <i class="fas fa-shopping-bag text-velora-blue"></i>
+          </div>
+          <p class="text-2xl font-bold text-gray-900" id="stat-total-orders">0</p>
+          <p class="text-xs text-gray-500">Total Orders</p>
+        </div>
+        <div class="dashboard-card bg-white rounded-xl p-5 shadow-sm border border-gray-200">
+          <div class="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center mb-3">
+            <i class="fas fa-clock text-yellow-600"></i>
+          </div>
+          <p class="text-2xl font-bold text-yellow-600" id="stat-pending">0</p>
+          <p class="text-xs text-gray-500">Pending</p>
+        </div>
+        <div class="dashboard-card bg-white rounded-xl p-5 shadow-sm border border-gray-200">
+          <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mb-3">
+            <i class="fas fa-check text-blue-600"></i>
+          </div>
+          <p class="text-2xl font-bold text-blue-600" id="stat-confirmed">0</p>
+          <p class="text-xs text-gray-500">Confirmed</p>
+        </div>
+        <div class="dashboard-card bg-white rounded-xl p-5 shadow-sm border border-gray-200">
+          <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center mb-3">
+            <i class="fas fa-truck text-purple-600"></i>
+          </div>
+          <p class="text-2xl font-bold text-purple-600" id="stat-shipped">0</p>
+          <p class="text-xs text-gray-500">Shipped</p>
+        </div>
+        <div class="dashboard-card bg-white rounded-xl p-5 shadow-sm border border-gray-200">
+          <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center mb-3">
+            <i class="fas fa-check-circle text-green-600"></i>
+          </div>
+          <p class="text-2xl font-bold text-green-600" id="stat-delivered">0</p>
+          <p class="text-xs text-gray-500">Delivered</p>
+        </div>
+      </div>
+
+      <!-- Recent Orders -->
+      <div class="dashboard-card bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-lg font-bold text-gray-900">Recent Orders</h2>
+          <button onclick="switchTab('orders')" class="text-sm text-velora-blue font-semibold hover:underline">View All</button>
+        </div>
+        <div id="recent-orders-list">
+          <div class="text-center py-8 text-gray-400 text-sm"><i class="fas fa-spinner fa-spin mr-2"></i>Loading orders...</div>
+        </div>
+      </div>
+
+      <!-- Followed Vendors Preview -->
+      <div class="dashboard-card bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-lg font-bold text-gray-900">Vendors You Follow</h2>
+          <button onclick="switchTab('following')" class="text-sm text-velora-blue font-semibold hover:underline">View All</button>
+        </div>
+        <div id="following-preview-list">
+          <div class="text-center py-8 text-gray-400 text-sm"><i class="fas fa-spinner fa-spin mr-2"></i>Loading...</div>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="grid md:grid-cols-3 gap-4">
+        <a href="index.html" class="dashboard-card bg-white rounded-xl p-5 shadow-sm border border-gray-200 hover:border-velora-blue transition flex items-center gap-4">
+          <div class="w-12 h-12 bg-velora-blue/10 rounded-xl flex items-center justify-center">
+            <i class="fas fa-shopping-bag text-velora-blue text-xl"></i>
+          </div>
+          <div>
+            <p class="font-bold text-gray-900">Continue Shopping</p>
+            <p class="text-xs text-gray-500">Browse new arrivals</p>
+          </div>
+        </a>
+        <a href="velora-electronics.html" class="dashboard-card bg-white rounded-xl p-5 shadow-sm border border-gray-200 hover:border-velora-blue transition flex items-center gap-4">
+          <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
+            <i class="fas fa-bolt text-velora-market text-xl"></i>
+          </div>
+          <div>
+            <p class="font-bold text-gray-900">Velora Electronics</p>
+            <p class="text-xs text-gray-500">Visit our featured store</p>
+          </div>
+        </a>
+        <button onclick="switchTab('addresses')" class="dashboard-card bg-white rounded-xl p-5 shadow-sm border border-gray-200 hover:border-velora-blue transition flex items-center gap-4 text-left">
+          <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
+            <i class="fas fa-map-marker-alt text-green-600 text-xl"></i>
+          </div>
+          <div>
+            <p class="font-bold text-gray-900">Manage Addresses</p>
+            <p class="text-xs text-gray-500">Update delivery locations</p>
+          </div>
+        </button>
+      </div>
+    </div>
+
+    <!-- ===== ORDERS TAB ===== -->
+    <div id="tab-orders" class="tab-panel">
+      <div class="flex justify-between items-center mb-6">
+        <div>
+          <h1 class="text-2xl font-bold text-gray-900">My Orders</h1>
+          <p class="text-gray-500 text-sm">Track and manage your purchases</p>
+        </div>
+      </div>
+
+      <!-- Order Filters -->
+      <div class="flex gap-2 mb-4 overflow-x-auto pb-2">
+        <button onclick="filterOrders('all')" class="order-filter-btn px-4 py-2 bg-velora-blue text-white text-xs font-semibold rounded-full" data-filter="all">All</button>
+        <button onclick="filterOrders('pending')" class="order-filter-btn px-4 py-2 bg-gray-100 text-gray-600 text-xs font-semibold rounded-full hover:bg-gray-200 transition" data-filter="pending">Pending</button>
+        <button onclick="filterOrders('confirmed')" class="order-filter-btn px-4 py-2 bg-gray-100 text-gray-600 text-xs font-semibold rounded-full hover:bg-gray-200 transition" data-filter="confirmed">Confirmed</button>
+        <button onclick="filterOrders('shipped')" class="order-filter-btn px-4 py-2 bg-gray-100 text-gray-600 text-xs font-semibold rounded-full hover:bg-gray-200 transition" data-filter="shipped">Shipped</button>
+        <button onclick="filterOrders('delivered')" class="order-filter-btn px-4 py-2 bg-gray-100 text-gray-600 text-xs font-semibold rounded-full hover:bg-gray-200 transition" data-filter="delivered">Delivered</button>
+      </div>
+
+      <!-- Orders List -->
+      <div class="dashboard-card bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+        <div id="orders-list">
+          <div class="text-center py-12 text-gray-400 text-sm"><i class="fas fa-spinner fa-spin mr-2"></i>Loading orders...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== FOLLOWING TAB ===== -->
+    <div id="tab-following" class="tab-panel">
+      <div class="flex justify-between items-center mb-6">
+        <div>
+          <h1 class="text-2xl font-bold text-gray-900">Vendors You Follow</h1>
+          <p class="text-gray-500 text-sm">Stay updated with your favorite vendors</p>
+        </div>
+      </div>
+
+      <!-- Followed Vendors Grid -->
+      <div id="following-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div class="text-center py-12 text-gray-400 text-sm sm:col-span-2 lg:col-span-3"><i class="fas fa-spinner fa-spin mr-2"></i>Loading vendors...</div>
+      </div>
+
+      <!-- Empty State (hidden by default) -->
+      <div id="following-empty" class="hidden text-center py-16">
+        <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <i class="fas fa-heart text-gray-400 text-2xl"></i>
+        </div>
+        <h3 class="text-lg font-bold text-gray-900 mb-1">No vendors followed yet</h3>
+        <p class="text-gray-500 text-sm mb-4 max-w-md mx-auto">Follow vendors to get updates on their new products and deals.</p>
+        <a href="velora-electronics.html" class="inline-flex items-center gap-2 bg-velora-blue text-white px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-blue-700 transition">
+          <i class="fas fa-store"></i> Browse Vendors
+        </a>
+      </div>
+    </div>
+
+    <!-- ===== ADDRESSES TAB ===== -->
+    <div id="tab-addresses" class="tab-panel">
+      <div class="flex justify-between items-center mb-6">
+        <div>
+          <h1 class="text-2xl font-bold text-gray-900">My Addresses</h1>
+          <p class="text-gray-500 text-sm">Manage your delivery locations</p>
+        </div>
+        <button onclick="showAddAddressForm()" class="bg-velora-blue text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700 transition flex items-center gap-2">
+          <i class="fas fa-plus"></i> Add Address
+        </button>
+      </div>
+
+      <!-- Add Address Form -->
+      <div id="add-address-form" class="dashboard-card bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6 hidden">
+        <h3 class="font-bold text-gray-900 mb-4">Add New Address</h3>
+        <div class="grid md:grid-cols-2 gap-4">
+          <input type="text" id="new-address-line" placeholder="Street, Area, City, Province..." class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-velora-blue focus:outline-none transition text-sm md:col-span-2">
+          <input type="text" id="new-address-label" placeholder="Label (e.g. Home, Work)" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-velora-blue focus:outline-none transition text-sm">
+          <div class="flex gap-2 md:col-span-2">
+            <button onclick="saveNewAddress()" class="bg-velora-blue text-white px-6 py-2.5 rounded-lg text-sm font-semibold hover:bg-blue-700 transition">Save Address</button>
+            <button onclick="hideAddAddressForm()" class="bg-gray-100 text-gray-600 px-6 py-2.5 rounded-lg text-sm font-semibold hover:bg-gray-200 transition">Cancel</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Addresses Grid -->
+      <div id="addresses-grid" class="grid md:grid-cols-2 gap-4">
+        <div class="text-center py-8 text-gray-400 text-sm md:col-span-2"><i class="fas fa-spinner fa-spin mr-2"></i>Loading addresses...</div>
+      </div>
+    </div>
+
+    <!-- ===== PROFILE TAB ===== -->
+    <div id="tab-profile" class="tab-panel">
+      <div class="flex justify-between items-center mb-6">
+        <div>
+          <h1 class="text-2xl font-bold text-gray-900">My Profile</h1>
+          <p class="text-gray-500 text-sm">Manage your account details</p>
+        </div>
+      </div>
+
+      <div class="dashboard-card bg-white rounded-xl shadow-sm border border-gray-200 p-6 max-w-2xl">
+        <div class="flex items-center gap-4 mb-6 pb-6 border-b border-gray-100">
+          <div id="profile-avatar" class="w-16 h-16 bg-gradient-to-br from-velora-blue to-blue-800 rounded-full flex items-center justify-center text-white text-xl font-bold">U</div>
+          <div>
+            <h3 id="profile-name" class="font-bold text-lg text-gray-900">User</h3>
+            <p id="profile-phone" class="text-sm text-gray-500">--</p>
+            <p id="profile-email" class="text-sm text-gray-400">--</p>
+          </div>
+        </div>
+
+        <form onsubmit="return updateProfile(event)">
+          <div class="space-y-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+              <input type="text" id="edit-name" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-velora-blue focus:outline-none transition text-sm">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+              <input type="tel" id="edit-phone" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-velora-blue focus:outline-none transition text-sm">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+              <input type="email" id="edit-email" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-velora-blue focus:outline-none transition text-sm">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Primary Address</label>
+              <textarea id="edit-address" rows="2" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-velora-blue focus:outline-none transition text-sm resize-none"></textarea>
+            </div>
+            <button type="submit" class="bg-velora-blue text-white px-6 py-3 rounded-xl font-bold text-sm hover:bg-blue-700 transition flex items-center gap-2">
+              <i class="fas fa-save"></i> Save Changes
+            </button>
+            <p id="profile-save-status" class="text-sm text-green-600 hidden"><i class="fas fa-check-circle mr-1"></i> Profile updated successfully!</p>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL = 'https://qlvransrclmziwibhgog.supabase.co';
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFsdnJhbnNyY2xteml3aWJoZ29nIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwNjE0MzYsImV4cCI6MjA4ODYzNzQzNn0.a-s7JLEI8ShwknOWJ0VF7TxedbaiI1b8WPSfpWDm84g';
+  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
+    auth: { persistSession: true, storageKey: 'velora-auth', autoRefreshToken: true, detectSessionInUrl: false }
+  });
+  window.supabaseClient = supabaseClient;
+
+  // Anon client for reads that bypass RLS auth issues
+  const anonClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
+    global: { headers: { 'X-Client-Info': 'anon' } },
+    auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false }
+  });
+
+  // ===== AUTH STATE =====
+  let currentUser = null;
+  let currentProfile = null;
+  let allOrders = [];
+  let orderFilter = 'all';
+  let followedVendors = [];
+
+  // ===== AUTH: OVERLAY STARTS HIDDEN; only show if NOT logged in =====
+  async function initAuth() {
+    try {
+      var result = await supabaseClient.auth.getSession();
+      if (result.data && result.data.session) {
+        // LOGGED IN: stay hidden, load everything
+        currentUser = result.data.session.user;
+        try { await loadProfile(); } catch(e) { console.log('Profile load error (non-critical):', e); }
+        hideLogin();
+        updateUI();
+        loadOrders();
+        loadFollowedVendors();
+        startRealtimeSubscription();
+      } else {
+        // NOT LOGGED IN: show login overlay
+        showLogin();
+      }
+    } catch (err) {
+      console.error('Auth init error:', err);
+      showLogin();
+    }
+
+    supabaseClient.auth.onAuthStateChange(function(event, session) {
+      if (event === 'SIGNED_IN' && session) {
+        currentUser = session.user;
+        loadProfile().then(function() {
+          hideLogin();
+          updateUI();
+          loadOrders();
+          loadFollowedVendors();
+          startRealtimeSubscription();
+        }).catch(function(e) {
+          console.log('Profile load error:', e);
+          hideLogin();
+          updateUI();
+          loadOrders();
+          startRealtimeSubscription();
+        });
+      } else if (event === 'SIGNED_OUT') {
+        currentUser = null;
+        currentProfile = null;
+        followedVendors = [];
+        allOrders = [];
+        stopRealtimeSubscription();
+        showLogin();
+      }
+    });
+  }
+
+  // ===== REALTIME: Listen for order status changes =====
+  var _ordersChannel = null;
+
+  function startRealtimeSubscription() {
+    if (!currentUser) return;
+    stopRealtimeSubscription();
+    try {
+      _ordersChannel = supabaseClient.channel('customer-orders-' + currentUser.id)
+        .on('postgres_changes',
+          { event: '*', schema: 'public', table: 'orders', filter: 'customer_id=eq.' + currentUser.id },
+          function(payload) {
+            console.log('[Realtime] Order update:', payload.eventType, payload.new);
+            loadOrders();
+          }
+        )
+        .subscribe(function(status) {
+          console.log('[Realtime] Subscription status:', status);
+        });
+    } catch(e) { console.error('[Realtime] Failed to subscribe:', e); }
+  }
+
+  function stopRealtimeSubscription() {
+    if (_ordersChannel) {
+      try { _ordersChannel.unsubscribe(); } catch(e) {}
+      _ordersChannel = null;
+    }
+  }
+
+  function showLogin() {
+    document.getElementById('login-overlay').classList.remove('hidden');
+    document.getElementById('register-overlay').classList.add('hidden');
+  }
+
+  function hideLogin() {
+    document.getElementById('login-overlay').classList.add('hidden');
+    document.getElementById('register-overlay').classList.add('hidden');
+  }
+
+  function showRegister() {
+    document.getElementById('login-overlay').classList.add('hidden');
+    document.getElementById('register-overlay').classList.remove('hidden');
+  }
+
+  function showLoginFromReg() {
+    document.getElementById('register-overlay').classList.add('hidden');
+    document.getElementById('login-overlay').classList.remove('hidden');
+  }
+
+  function normalizePhone(phone) {
+    var digits = phone.replace(/\D/g, '');
+    if (digits.indexOf('260') !== 0) {
+      if (digits.indexOf('0') === 0) digits = '260' + digits.substring(1);
+    }
+    return digits;
+  }
+
+  function phoneToEmail(phone) {
+    return normalizePhone(phone) + '@customer.velora.local';
+  }
+
+  function resolveIdentifier(input) {
+    if (input.indexOf('@') > -1) return input.trim().toLowerCase();
+    return phoneToEmail(input);
+  }
+
+  async function handleLogin() {
+    var idInput = document.getElementById('login-id');
+    var passInput = document.getElementById('login-password');
+    var errorEl = document.getElementById('login-error');
+    errorEl.classList.add('hidden');
+
+    if (!idInput.value || !passInput.value) {
+      errorEl.textContent = 'Please enter phone/email and password';
+      errorEl.classList.remove('hidden');
+      return;
+    }
+
+    try {
+      var result = await supabaseClient.auth.signInWithPassword({
+        email: resolveIdentifier(idInput.value),
+        password: passInput.value
+      });
+      if (result.error) {
+        errorEl.textContent = result.error.message.indexOf('Invalid') > -1 ? 'Wrong phone/email or password' : result.error.message;
+        errorEl.classList.remove('hidden');
+      }
+    } catch (err) {
+      errorEl.textContent = 'Sign in failed. Please try again.';
+      errorEl.classList.remove('hidden');
+    }
+  }
+
+  async function handleRegister(e) {
+    e.preventDefault();
+    var errorEl = document.getElementById('register-error');
+    errorEl.classList.add('hidden');
+
+    var name = document.getElementById('reg-name').value.trim();
+    var phone = document.getElementById('reg-phone').value.trim();
+    var email = document.getElementById('reg-email').value.trim();
+    var address = document.getElementById('reg-address').value.trim();
+    var password = document.getElementById('reg-password').value;
+
+    var normalizedPhone = normalizePhone(phone);
+    if (normalizedPhone.length < 9) {
+      errorEl.textContent = 'Invalid phone number';
+      errorEl.classList.remove('hidden');
+      return false;
+    }
+
+    var authEmail = phoneToEmail(phone);
+    var hasRealEmail = email.length > 0 && email.indexOf('@') > -1;
+
+    try {
+      var result = await supabaseClient.auth.signUp({
+        email: authEmail,
+        password: password,
+        options: { data: { full_name: name, phone: normalizedPhone } }
+      });
+
+      if (result.error) {
+        errorEl.textContent = result.error.message.indexOf('already') > -1 ? 'Account exists. Try signing in.' : result.error.message;
+        errorEl.classList.remove('hidden');
+        return false;
+      }
+
+      if (result.data && result.data.user) {
+        await supabaseClient.from('customer_profiles').insert([{
+          id: result.data.user.id,
+          full_name: name,
+          email: hasRealEmail ? email : null,
+          phone: normalizedPhone,
+          address: address
+        }]);
+        await supabaseClient.auth.signInWithPassword({ email: authEmail, password: password });
+      }
+    } catch (err) {
+      errorEl.textContent = 'Registration failed. Try again.';
+      errorEl.classList.remove('hidden');
+    }
+    return false;
+  }
+
+  async function logout() {
+    await supabaseClient.auth.signOut();
+    localStorage.removeItem('velora-profile');
+    location.reload();
+  }
+
+  // ===== PROFILE =====
+  async function loadProfile() {
+    if (!currentUser) return;
+    try {
+      var result = await supabaseClient.from('customer_profiles')
+        .select('*')
+        .eq('id', currentUser.id)
+        .maybeSingle();
+
+      if (result.data) {
+        currentProfile = result.data;
+        try { localStorage.setItem('velora-profile', JSON.stringify(currentProfile)); } catch(e) {}
+      } else {
+        var meta = currentUser.user_metadata || {};
+        currentProfile = {
+          full_name: meta.full_name || '',
+          phone: meta.phone || '',
+          email: currentUser.email || '',
+          address: ''
+        };
+      }
+    } catch (e) {
+      console.error('Profile load error:', e);
+    }
+  }
+
+  function getDisplayName() {
+    return (currentProfile && currentProfile.full_name) || (currentUser && currentUser.user_metadata && currentUser.user_metadata.full_name) || 'User';
+  }
+
+  function getInitials() {
+    return getDisplayName().split(' ').map(function(n) { return n[0]; }).join('').toUpperCase().substring(0, 2);
+  }
+
+  function updateUI() {
+    var name = getDisplayName();
+    var phone = (currentProfile && currentProfile.phone) || '--';
+    var email = (currentProfile && currentProfile.email) || (currentUser && currentUser.email) || '--';
+    var address = (currentProfile && currentProfile.address) || '';
+
+    // Sidebar
+    document.getElementById('user-name').textContent = name;
+    document.getElementById('user-phone').textContent = phone;
+    document.getElementById('user-avatar').textContent = getInitials();
+
+    // Welcome
+    document.getElementById('welcome-name').textContent = name;
+
+    // Profile form
+    document.getElementById('profile-name').textContent = name;
+    document.getElementById('profile-phone').textContent = phone;
+    document.getElementById('profile-email').textContent = email;
+    document.getElementById('profile-avatar').textContent = getInitials();
+
+    document.getElementById('edit-name').value = name;
+    document.getElementById('edit-phone').value = phone;
+    document.getElementById('edit-email').value = (currentProfile && currentProfile.email) || '';
+    document.getElementById('edit-address').value = address;
+
+    // Load addresses
+    renderAddresses();
+  }
+
+  async function updateProfile(e) {
+    e.preventDefault();
+    if (!currentUser) return false;
+
+    var name = document.getElementById('edit-name').value.trim();
+    var phone = document.getElementById('edit-phone').value.trim();
+    var email = document.getElementById('edit-email').value.trim();
+    var address = document.getElementById('edit-address').value.trim();
+
+    var updates = {
+      full_name: name,
+      phone: normalizePhone(phone),
+      email: email || null,
+      address: address
+    };
+
+    try {
+      var result = await supabaseClient.from('customer_profiles')
+        .update(updates)
+        .eq('id', currentUser.id);
+
+      if (result.error) {
+        await supabaseClient.from('customer_profiles').insert([{ id: currentUser.id, ...updates }]);
+      }
+
+      currentProfile = { ...currentProfile, ...updates };
+      try { localStorage.setItem('velora-profile', JSON.stringify(currentProfile)); } catch(e) {}
+
+      updateUI();
+
+      var statusEl = document.getElementById('profile-save-status');
+      statusEl.classList.remove('hidden');
+      setTimeout(function() { statusEl.classList.add('hidden'); }, 3000);
+    } catch (err) {
+      alert('Failed to update profile: ' + err.message);
+    }
+    return false;
+  }
+
+  // ===== ORDERS =====
+  async function loadOrders() {
+    if (!currentUser) return;
+
+    try {
+      // Try loading from Supabase by customer_id (user ID) first
+      var result = await supabaseClient.from('orders')
+        .select('*')
+        .eq('customer_id', currentUser.id)
+        .order('created_at', { ascending: false });
+
+      if (result.error) throw result.error;
+      allOrders = result.data || [];
+
+      // Also load by phone number for orders placed before customer_id was linked
+      var phone = currentProfile && currentProfile.phone;
+      if (phone && allOrders.length === 0) {
+        var r2 = await anonClient.from('orders')
+          .select('*')
+          .or('customer_phone.eq.' + phone + ',guest_phone.eq.' + phone)
+          .order('created_at', { ascending: false });
+        if (!r2.error) allOrders = r2.data || [];
+      }
+
+      // Also check localStorage for guest orders
+      var localOrders = JSON.parse(localStorage.getItem('velora-orders') || '[]');
+      var existingIds = allOrders.map(function(o) { return o.id; });
+      localOrders.forEach(function(lo) {
+        if (existingIds.indexOf(lo.id) === -1) {
+          allOrders.push(lo);
+        }
+      });
+
+    } catch (err) {
+      allOrders = JSON.parse(localStorage.getItem('velora-orders') || '[]');
+    }
+
+    updateOrderStats();
+    renderRecentOrders();
+    renderOrdersList();
+  }
+
+  function updateOrderStats() {
+    var total = allOrders.length;
+    var pending = allOrders.filter(function(o) { return o.status === 'pending'; }).length;
+    var confirmed = allOrders.filter(function(o) { return o.status === 'confirmed'; }).length;
+    var shipped = allOrders.filter(function(o) { return o.status === 'shipped'; }).length;
+    var delivered = allOrders.filter(function(o) { return o.status === 'delivered'; }).length;
+
+    document.getElementById('stat-total-orders').textContent = total;
+    document.getElementById('stat-pending').textContent = pending;
+    document.getElementById('stat-confirmed').textContent = confirmed;
+    document.getElementById('stat-shipped').textContent = shipped;
+    document.getElementById('stat-delivered').textContent = delivered;
+  }
+
+  function getStatusBadge(status) {
+    var classes = {
+      pending: 'order-status-pending',
+      confirmed: 'order-status-confirmed',
+      shipped: 'order-status-shipped',
+      delivered: 'order-status-delivered',
+      cancelled: 'order-status-cancelled'
+    };
+    return '<span class="' + (classes[status] || 'bg-gray-100 text-gray-600') + ' text-xs font-bold px-2 py-1 rounded-full capitalize">' + (status || 'pending') + '</span>';
+  }
+
+  function renderOrderCard(order, isCompact) {
+    var dateStr = '';
+    try { dateStr = new Date(order.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }); } catch(e) {}
+
+    var items = Array.isArray(order.items) ? order.items : [];
+    var itemsHtml = '';
+    if (items.length) {
+      itemsHtml = '<div class="space-y-2 mt-3 ' + (isCompact ? 'hidden md:block' : '') + '">';
+      items.forEach(function(item) {
+        itemsHtml += '<div class="flex items-center gap-3 p-2 bg-gray-50 rounded-lg">' +
+          '<img src="' + (item.image || item.product_image || '') + '" class="product-img-small" onerror="this.style.display=\'none\'">' +
+          '<div class="flex-1 min-w-0">' +
+            '<p class="text-sm font-medium truncate">' + (item.product_name || item.name || 'Product') + '</p>' +
+            '<p class="text-xs text-gray-400">Qty: ' + (item.quantity || 1) + ' x ZMW ' + (item.price_each || item.unit_price || 0).toLocaleString() + '</p>' +
+          '</div>' +
+          '<span class="text-sm font-bold text-velora-blue">ZMW ' + ((item.total || (item.price_each || item.unit_price || 0) * (item.quantity || 1))).toLocaleString() + '</span>' +
+        '</div>';
+      });
+      itemsHtml += '</div>';
+    }
+
+    var total = order.total_amount || order.total || 0;
+
+    return '<div class="p-4 border-b border-gray-100 last:border-b-0 hover:bg-gray-50 transition">' +
+      '<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">' +
+        '<div class="flex-1">' +
+          '<div class="flex items-center gap-2 mb-1">' +
+            '<span class="font-bold text-sm text-gray-900">' + (order.order_ref || order.id || 'Order') + '</span>' +
+            getStatusBadge(order.status) +
+          '</div>' +
+          '<p class="text-xs text-gray-400">' + dateStr + ' &bull; ' + (items.length || 0) + ' item' + (items.length !== 1 ? 's' : '') + '</p>' +
+          (order.delivery_address ? '<p class="text-xs text-gray-400 mt-1"><i class="fas fa-map-marker-alt mr-1"></i>' + order.delivery_address + '</p>' : '') +
+          (order.vendor_id ? '<p class="text-xs text-purple-500 mt-1"><i class="fas fa-store mr-1"></i>' + order.vendor_id.replace(/-/g, ' ').replace(/\b\w/g, function(l) { return l.toUpperCase(); }) + '</p>' : '') +
+        '</div>' +
+        '<div class="text-right flex-shrink-0">' +
+          '<p class="font-bold text-lg text-gray-900">ZMW ' + total.toLocaleString() + '</p>' +
+          '<p class="text-xs text-gray-400">' + (order.payment_method || 'Cash on Delivery') + '</p>' +
+        '</div>' +
+      '</div>' +
+      itemsHtml +
+    '</div>';
+  }
+
+  function renderRecentOrders() {
+    var container = document.getElementById('recent-orders-list');
+    var recent = allOrders.slice(0, 3);
+    if (!recent.length) {
+      container.innerHTML = '<div class="text-center py-8 text-gray-400 text-sm"><i class="fas fa-shopping-bag text-2xl mb-2 block"></i><p>No orders yet</p><a href="index.html" class="text-velora-blue font-medium hover:underline mt-2 inline-block">Start Shopping</a></div>';
+      return;
+    }
+    container.innerHTML = recent.map(function(o) { return renderOrderCard(o, true); }).join('');
+  }
+
+  function renderOrdersList() {
+    var container = document.getElementById('orders-list');
+    var filtered = orderFilter === 'all' ? allOrders : allOrders.filter(function(o) { return o.status === orderFilter; });
+
+    if (!filtered.length) {
+      container.innerHTML = '<div class="text-center py-12 text-gray-400 text-sm"><i class="fas fa-inbox text-2xl mb-2 block"></i><p>No ' + orderFilter + ' orders</p></div>';
+      return;
+    }
+
+    container.innerHTML = filtered.map(function(o) { return renderOrderCard(o, false); }).join('');
+  }
+
+  function filterOrders(status) {
+    orderFilter = status;
+    document.querySelectorAll('.order-filter-btn').forEach(function(btn) {
+      if (btn.getAttribute('data-filter') === status) {
+        btn.classList.remove('bg-gray-100', 'text-gray-600');
+        btn.classList.add('bg-velora-blue', 'text-white');
+      } else {
+        btn.classList.remove('bg-velora-blue', 'text-white');
+        btn.classList.add('bg-gray-100', 'text-gray-600');
+      }
+    });
+    renderOrdersList();
+  }
+
+  // ===== VENDOR FOLLOWING =====
+  async function loadFollowedVendors() {
+    if (!currentUser) return;
+    try {
+      var result = await supabaseClient.from('follows')
+        .select('vendor_id')
+        .eq('user_id', currentUser.id);
+
+      if (result.error) throw result.error;
+
+      var vendorIds = (result.data || []).map(function(f) { return f.vendor_id; });
+
+      // Update badge
+      var badge = document.getElementById('followingBadge');
+      if (vendorIds.length > 0) {
+        badge.textContent = vendorIds.length;
+        badge.classList.remove('hidden');
+      } else {
+        badge.classList.add('hidden');
+      }
+
+      if (!vendorIds.length) {
+        followedVendors = [];
+        renderFollowedVendors();
+        renderFollowingPreview();
+        return;
+      }
+
+      // Fetch vendor details from vendors table
+      var vResult = await anonClient.from('vendors')
+        .select('*')
+        .in('id', vendorIds);
+
+      if (vResult.error) throw vResult.error;
+
+      followedVendors = (vResult.data || []).map(function(v) {
+        return {
+          id: v.id,
+          name: v.name || v.id.replace(/-/g, ' ').replace(/\b\w/g, function(l) { return l.toUpperCase(); }),
+          category: v.category || 'General',
+          description: v.description || '',
+          logo: v.logo_url || '',
+          rating: v.rating || 4.5
+        };
+      });
+
+      renderFollowedVendors();
+      renderFollowingPreview();
+    } catch (err) {
+      console.error('Load followed vendors error:', err);
+      followedVendors = [];
+      renderFollowedVendors();
+      renderFollowingPreview();
+    }
+  }
+
+  function renderFollowedVendors() {
+    var container = document.getElementById('following-grid');
+    var emptyState = document.getElementById('following-empty');
+
+    if (!followedVendors.length) {
+      container.innerHTML = '';
+      container.classList.add('hidden');
+      emptyState.classList.remove('hidden');
+      return;
+    }
+
+    container.classList.remove('hidden');
+    emptyState.classList.add('hidden');
+
+    container.innerHTML = followedVendors.map(function(v) {
+      return '<div class="vendor-follow-card bg-white rounded-xl p-5 shadow-sm border border-gray-200">' +
+        '<div class="flex items-center gap-4 mb-4">' +
+          '<div class="w-14 h-14 bg-gradient-to-br from-velora-blue to-blue-800 rounded-xl flex items-center justify-center flex-shrink-0">' +
+            '<i class="fas fa-store text-white text-xl"></i>' +
+          '</div>' +
+          '<div class="flex-1 min-w-0">' +
+            '<h3 class="font-bold text-gray-900 truncate">' + v.name + '</h3>' +
+            '<p class="text-xs text-gray-500">' + v.category + '</p>' +
+            '<div class="flex items-center gap-1 mt-1">' +
+              '<i class="fas fa-star text-yellow-400 text-xs"></i>' +
+              '<span class="text-xs text-gray-600 font-medium">' + v.rating + '</span>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="flex gap-2">' +
+          '<a href="' + v.id + '.html" class="flex-1 bg-velora-blue text-white text-center py-2 rounded-lg text-sm font-semibold hover:bg-blue-700 transition">Visit Store</a>' +
+          '<button onclick="unfollowVendor(\'' + v.id + '\')" class="btn-unfollow px-3 py-2 border border-gray-200 rounded-lg text-gray-500" title="Unfollow">' +
+            '<i class="fas fa-heart text-red-500"></i>' +
+          '</button>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+  }
+
+  function renderFollowingPreview() {
+    var container = document.getElementById('following-preview-list');
+    if (!followedVendors.length) {
+      container.innerHTML = '<div class="text-center py-8 text-gray-400 text-sm"><i class="fas fa-heart text-2xl mb-2 block"></i><p>No vendors followed yet</p><a href="velora-electronics.html" class="text-velora-blue font-medium hover:underline mt-2 inline-block">Discover vendors</a></div>';
+      return;
+    }
+    var preview = followedVendors.slice(0, 3);
+    container.innerHTML = '<div class="flex flex-wrap gap-3">' + preview.map(function(v) {
+      return '<a href="' + v.id + '.html" class="flex items-center gap-3 bg-gray-50 rounded-xl px-4 py-3 hover:bg-gray-100 transition">' +
+        '<div class="w-10 h-10 bg-gradient-to-br from-velora-blue to-blue-800 rounded-lg flex items-center justify-center flex-shrink-0">' +
+          '<i class="fas fa-store text-white text-sm"></i>' +
+        '</div>' +
+        '<div>' +
+          '<p class="font-semibold text-sm text-gray-900">' + v.name + '</p>' +
+          '<p class="text-xs text-gray-500">' + v.category + '</p>' +
+        '</div>' +
+      '</a>';
+    }).join('') + '</div>';
+  }
+
+  async function unfollowVendor(vendorId) {
+    if (!currentUser) return;
+    if (!confirm('Unfollow this vendor?')) return;
+    try {
+      await supabaseClient.from('follows')
+        .delete()
+        .eq('user_id', currentUser.id)
+        .eq('vendor_id', vendorId);
+
+      followedVendors = followedVendors.filter(function(v) { return v.id !== vendorId; });
+
+      // Update badge
+      var badge = document.getElementById('followingBadge');
+      if (followedVendors.length > 0) {
+        badge.textContent = followedVendors.length;
+      } else {
+        badge.classList.add('hidden');
+      }
+
+      renderFollowedVendors();
+      renderFollowingPreview();
+    } catch (err) {
+      alert('Failed to unfollow vendor');
+    }
+  }
+
+  // ===== ADDRESSES =====
+  function renderAddresses() {
+    var container = document.getElementById('addresses-grid');
+    if (!currentProfile) {
+      container.innerHTML = '<div class="text-center py-8 text-gray-400 text-sm md:col-span-2">Sign in to manage addresses</div>';
+      return;
+    }
+
+    var addresses = [];
+    if (currentProfile.address) addresses.push({ value: currentProfile.address, label: 'Primary', isPrimary: true });
+    if (currentProfile.extra_addresses && Array.isArray(currentProfile.extra_addresses)) {
+      currentProfile.extra_addresses.forEach(function(addr, idx) {
+        if (addr) addresses.push({ value: addr, label: 'Address ' + (idx + 1), isPrimary: false });
+      });
+    }
+
+    if (!addresses.length) {
+      container.innerHTML = '<div class="text-center py-8 text-gray-400 text-sm md:col-span-2"><i class="fas fa-map-marker-alt text-2xl mb-2 block"></i><p>No saved addresses</p><button onclick="showAddAddressForm()" class="text-velora-blue font-medium hover:underline mt-2">Add your first address</button></div>';
+      return;
+    }
+
+    container.innerHTML = addresses.map(function(addr, idx) {
+      return '<div class="address-card bg-white rounded-xl p-5 shadow-sm border-2 border-gray-200 ' + (addr.isPrimary ? 'selected' : '') + '">' +
+        '<div class="flex items-start justify-between mb-2">' +
+          '<div class="flex items-center gap-2">' +
+            '<i class="fas fa-map-marker-alt text-velora-blue"></i>' +
+            '<span class="font-semibold text-sm text-gray-900">' + addr.label + '</span>' +
+            (addr.isPrimary ? '<span class="text-[10px] bg-velora-blue text-white px-2 py-0.5 rounded-full font-bold">DEFAULT</span>' : '') +
+          '</div>' +
+          '<button onclick="removeAddress(' + idx + ')" class="text-gray-400 hover:text-red-500 transition"><i class="fas fa-trash text-sm"></i></button>' +
+        '</div>' +
+        '<p class="text-sm text-gray-600 leading-relaxed">' + addr.value + '</p>' +
+        (!addr.isPrimary ? '<button onclick="setPrimaryAddress(' + idx + ')" class="mt-3 text-xs text-velora-blue font-semibold hover:underline">Set as Default</button>' : '') +
+      '</div>';
+    }).join('');
+  }
+
+  function showAddAddressForm() {
+    document.getElementById('add-address-form').classList.remove('hidden');
+  }
+
+  function hideAddAddressForm() {
+    document.getElementById('add-address-form').classList.add('hidden');
+    document.getElementById('new-address-line').value = '';
+    document.getElementById('new-address-label').value = '';
+  }
+
+  async function saveNewAddress() {
+    var address = document.getElementById('new-address-line').value.trim();
+    var label = document.getElementById('new-address-label').value.trim() || 'Address';
+    if (!address) return;
+
+    if (!currentProfile.extra_addresses) currentProfile.extra_addresses = [];
+    currentProfile.extra_addresses.push(address);
+
+    try {
+      await supabaseClient.from('customer_profiles')
+        .update({ extra_addresses: currentProfile.extra_addresses })
+        .eq('id', currentUser.id);
+      try { localStorage.setItem('velora-profile', JSON.stringify(currentProfile)); } catch(e) {}
+      renderAddresses();
+      hideAddAddressForm();
+    } catch (err) {
+      alert('Failed to save address');
+    }
+  }
+
+  async function setPrimaryAddress(idx) {
+    var extra = currentProfile.extra_addresses || [];
+    var addresses = [];
+    if (currentProfile.address) addresses.push(currentProfile.address);
+    extra.forEach(function(a) { if (a) addresses.push(a); });
+
+    var newPrimary = addresses[idx];
+    if (!newPrimary) return;
+
+    var newExtras = addresses.filter(function(_, i) { return i !== idx; });
+
+    try {
+      await supabaseClient.from('customer_profiles')
+        .update({ address: newPrimary, extra_addresses: newExtras })
+        .eq('id', currentUser.id);
+
+      currentProfile.address = newPrimary;
+      currentProfile.extra_addresses = newExtras;
+      try { localStorage.setItem('velora-profile', JSON.stringify(currentProfile)); } catch(e) {}
+      renderAddresses();
+    } catch (err) {
+      alert('Failed to update address');
+    }
+  }
+
+  async function removeAddress(idx) {
+    if (!confirm('Remove this address?')) return;
+
+    var extra = currentProfile.extra_addresses || [];
+    var addresses = [];
+    if (currentProfile.address) addresses.push(currentProfile.address);
+    extra.forEach(function(a) { if (a) addresses.push(a); });
+
+    var toRemove = addresses[idx];
+    var newPrimary = currentProfile.address;
+    var newExtras = extra.filter(function(a) { return a !== toRemove; });
+
+    if (toRemove === currentProfile.address) {
+      newPrimary = newExtras.length ? newExtras[0] : '';
+      newExtras = newExtras.slice(1);
+    }
+
+    try {
+      await supabaseClient.from('customer_profiles')
+        .update({ address: newPrimary, extra_addresses: newExtras })
+        .eq('id', currentUser.id);
+
+      currentProfile.address = newPrimary;
+      currentProfile.extra_addresses = newExtras;
+      try { localStorage.setItem('velora-profile', JSON.stringify(currentProfile)); } catch(e) {}
+      renderAddresses();
+    } catch (err) {
+      alert('Failed to remove address');
+    }
+  }
+
+  // ===== TABS =====
+  function switchTab(tab) {
+    document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.remove('active'); });
+    document.querySelectorAll('.sidebar-link').forEach(function(l) { l.classList.remove('active'); });
+
+    var panel = document.getElementById('tab-' + tab);
+    if (panel) panel.classList.add('active');
+
+    var nav = document.getElementById('nav-' + tab);
+    if (nav) nav.classList.add('active');
+
+    if (tab === 'orders') renderOrdersList();
+    if (tab === 'addresses') renderAddresses();
+    if (tab === 'following') { renderFollowedVendors(); renderFollowingPreview(); }
+  }
+
+  // ===== INIT =====
+  document.addEventListener('DOMContentLoaded', function() {
+    initAuth();
+
+    document.getElementById('login-password').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') handleLogin();
+    });
+  });
+</script>
+</body>
+</html>

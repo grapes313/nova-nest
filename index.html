@@ -1,974 +1,863 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
-  <title>Nova Nest | Zambia's Modern Marketplace</title>
-  <meta name="description" content="Zambia's premier marketplace for electronics, fashion, home & kitchen. Fast delivery, secure payments." />
-  
-  <!-- Performance: Resource Hints -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://unpkg.com">
-  <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
-  <link rel="dns-prefetch" href="https://www.googletagmanager.com">
-  
-  <!-- Fonts with Display Swap -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet" />
-  
-  <!-- Tailwind CSS -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QN8N334V6L"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-QN8N334V6L');
+</script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Velora Market - Zambia's Trusted Online Marketplace</title>
+  <meta name="description" content="Zambia's premier multi-vendor marketplace. Shop from verified vendors. Fast delivery, secure payments.">
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <script>
     tailwind.config = {
       theme: {
         extend: {
-          fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-            display: ['Outfit', 'sans-serif'],
-          },
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
           colors: {
-            primary: '#1E3A8A',
-            secondary: '#3B82F6',
-            accent: '#F59E0B',
-            dark: '#0F172A',
+            velora: { blue: '#0D47FF', dark: '#080F19', market: '#6A00FF', cyan: '#00D4FF', light: '#f8fafc' }
           }
         }
       }
     }
   </script>
-  
-  <!-- Lucide Icons - Deferred -->
-  <script src="https://unpkg.com/lucide@latest" defer></script>
-  
   <style>
-    /* Font Display Swap for Performance */
-    @font-face {
-      font-family: 'Inter';
-      font-display: swap;
-    }
-    @font-face {
-      font-family: 'Outfit';
-      font-display: swap;
-    }
-    
-    /* Optimized Scrollbar */
-    ::-webkit-scrollbar { width: 8px; }
-    ::-webkit-scrollbar-track { background: #f1f1f1; }
-    ::-webkit-scrollbar-thumb { background: #888; border-radius: 4px; }
-    
-    /* Animation */
-    @keyframes slideDown { 
-      from { transform: translateY(-100%); opacity: 0; } 
-      to { transform: translateY(0); opacity: 1; } 
-    }
-    .promo-banner { animation: slideDown 0.8s cubic-bezier(0.34, 1.56, 0.64, 1); }
-    
-    .safe-bottom { padding-bottom: env(safe-area-inset-bottom, 20px); }
-    
-    /* Performance: Content Visibility for Product Cards */
-    .product-card { 
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      content-visibility: auto;
-      contain-intrinsic-size: 0 500px;
-    }
-    .product-card:hover { transform: translateY(-4px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); }
-    
-    /* Critical CSS for Above-the-Fold */
-    .hero-bg {
-      background: linear-gradient(135deg, #1E3A8A 0%, #1e40af 50%, #1e3a8a 100%);
-    }
-    
-    /* Smooth transitions */
-    .transition-transform { transition-property: transform; }
-    .transition-opacity { transition-property: opacity; }
+    /* ==========================================
+       VELORA MARKET - STYLES
+       Platform: Velora
+       Vendor #1: Velora Electronics
+       ========================================== */
+    .gradient-hero { background: linear-gradient(135deg, #080F19 0%, #0d1833 50%, #1c2740 100%); }
+    .gradient-vendor { background: linear-gradient(135deg, #0a1a6e 0%, #0d3a9e 100%); }
+    @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-15px)} }
+    .animate-float { animation: float 6s ease-in-out infinite; }
+    @keyframes pulse-glow { 0%,100%{box-shadow:0 0 20px rgba(220,38,38,0.3)} 50%{box-shadow:0 0 40px rgba(220,38,38,0.6)} }
+    .pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+    .product-card { transition: all 0.3s ease; }
+    .product-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
+    .vendor-card { transition: all 0.3s ease; }
+    .vendor-card:hover { transform: scale(1.02); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
+    .trust-badge { transition: transform 0.3s ease; }
+    .trust-badge:hover { transform: scale(1.05); }
+    input:focus, select:focus { outline: none; border-color: #0D47FF; }
   </style>
 
-  <!-- Google Analytics - Async -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QN8N334V6L"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-QN8N334V6L');
-  </script>
+<base target="_blank">
 </head>
 
-<body class="bg-gray-50 text-gray-900 antialiased">
-  
-  <!-- Promo Banner -->
-  <div class="promo-banner bg-gradient-to-r from-violet-600 to-indigo-600 text-white px-4 py-3 text-center text-sm font-semibold relative z-50">
-    <div class="max-w-7xl mx-auto flex items-center justify-center gap-2">
-      <i data-lucide="heart" class="w-4 h-4"></i>
-      <span id="promo-message">🎉 First-time buyers get 5% OFF</span>
+<body class="font-sans bg-velora-light text-gray-900 antialiased">
+
+<!-- ==========================================
+     SECTION 1: TOP BAR
+     ========================================== -->
+<div class="bg-velora-dark text-white text-xs py-2.5 px-4">
+  <div class="max-w-7xl mx-auto flex justify-between items-center">
+    <div class="flex items-center gap-4">
+      <span class="flex items-center gap-1"><i class="fas fa-map-marker-alt text-velora-blue"></i> Delivering across Zambia</span>
+      </div>
+    <div class="flex items-center gap-4">
+      <a href="vendor-application.html" class="hover:text-velora-blue transition font-medium">Sell on Velora</a>
+      <a href="#" class="hover:text-velora-blue transition">Help Center</a>
+      <span class="hidden sm:inline text-gray-500">|</span>
+      <span class="hidden sm:inline font-semibold">ZMW</span>
     </div>
   </div>
+</div>
 
-  <!-- Navigation -->
-  <nav class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-16 gap-4">
-        
-        <!-- Logo -->
-        <a href="/" class="flex items-center gap-2 flex-shrink-0">
-          <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-            <i data-lucide="shopping-bag" class="w-5 h-5 text-white"></i>
-          </div>
-          <span class="font-display font-bold text-xl text-primary">Nova Nest</span>
+<!-- ==========================================
+     SECTION 2: STICKY NAVIGATION
+     ========================================== -->
+<nav class="bg-white shadow-sm sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+      <div class="flex items-center gap-2">
+        <div class="w-10 h-10 bg-gradient-to-br from-velora-blue to-blue-800 rounded-xl flex items-center justify-center">
+          <i class="fas fa-v text-white text-lg"></i>
+        </div>
+        <div>
+          <h1 class="text-xl font-bold text-gray-900 tracking-tight">Velora</h1>
+          <p class="text-[10px] text-velora-blue font-bold -mt-1 tracking-wider">MARKETPLACE</p>
+        </div>
+      </div>
+      <div class="hidden md:flex flex-1 max-w-xl mx-8">
+        <form class="relative w-full" onsubmit="return goToSearch(event)">
+          <input type="text" id="heroSearchInput" placeholder="Search products, vendors, brands..."
+            class="w-full pl-4 pr-12 py-2.5 border-2 border-gray-200 rounded-full focus:border-velora-blue transition text-sm">
+          <button type="submit" class="absolute right-2 top-1/2 -translate-y-1/2 bg-velora-blue text-white p-2 rounded-full hover:bg-blue-700 transition">
+            <i class="fas fa-search text-sm"></i>
+          </button>
+        </form>
+      </div>
+      <div class="flex items-center gap-3" id="navRight">
+        <a href="vendor-application.html" class="hidden lg:flex items-center gap-2 bg-velora-market text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-purple-700 transition">
+          <i class="fas fa-store"></i> Become a Vendor
         </a>
-<div class="hidden md:flex flex-1 max-w-2xl mx-8">
-  <form action="search.html" method="GET" class="relative w-full">
-    <input 
-      type="text" 
-      name="q" 
-      placeholder="Search for products, brands..." 
-      class="w-full pl-10 pr-4 py-2.5 bg-gray-100 border-0 rounded-full focus:ring-2 focus:ring-primary focus:bg-white transition-all"
-    />
-    <i data-lucide="search" class="absolute left-3.5 top-3 w-5 h-5 text-gray-400"></i>
-    <button type="submit" class="absolute right-2 top-1.5 bg-primary text-white px-4 py-1.5 rounded-full text-sm font-medium hover:bg-blue-800 transition-colors">
-      Search
-    </button>
-  </form>
-</div>
-
-<!-- Mobile search -->
-<div id="mobile-search" class="hidden md:hidden pb-4">
-  <form action="search.html" method="GET" class="relative">
-    <input 
-      type="text" 
-      name="q" 
-      placeholder="Search products..." 
-      class="w-full pl-10 pr-4 py-3 bg-gray-100 border-0 rounded-xl focus:ring-2 focus:ring-primary"
-    />
-    <i data-lucide="search" class="absolute left-3 top-3.5 w-5 h-5 text-gray-400"></i>
-  </form>
-</div>
-
-        <!-- Right Actions -->
-        <div class="flex items-center gap-4">
-          <button class="md:hidden p-2 hover:bg-gray-100 rounded-full" id="mobile-search-toggle">
-            <i data-lucide="search" class="w-6 h-6 text-gray-700"></i>
-          </button>
-          
-          <a href="#" class="hidden sm:flex items-center gap-2 text-sm font-medium text-gray-700 hover:text-primary">
-            <i data-lucide="user" class="w-5 h-5"></i>
-            <span>Account</span>
-          </a>
-          
-          <button id="cart-link" class="relative p-2 hover:bg-gray-100 rounded-full transition-colors">
-            <i data-lucide="shopping-cart" class="w-6 h-6 text-gray-700"></i>
-            <span id="cart-count" class="absolute -top-1 -right-1 bg-accent text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center transform scale-0 transition-transform duration-200">0</span>
-          </button>
-          
-          <!-- Mobile Menu Button -->
-          <button class="lg:hidden p-2 hover:bg-gray-100 rounded-full" id="mobile-menu-btn">
-            <i data-lucide="menu" class="w-6 h-6 text-gray-700"></i>
-          </button>
-        </div>
-      </div>
-      
-      <!-- Mobile Search (Hidden by default) -->
-      <div id="mobile-search" class="hidden md:hidden pb-4">
-        <div class="relative">
-          <input 
-            type="text" 
-            placeholder="Search products..." 
-            class="w-full pl-10 pr-4 py-3 bg-gray-100 border-0 rounded-xl focus:ring-2 focus:ring-primary"
-          />
-          <i data-lucide="search" class="absolute left-3 top-3.5 w-5 h-5 text-gray-400"></i>
-        </div>
-      </div>
-    </div>
-
-    <!-- Category Nav - Desktop -->
-    <div class="hidden lg:block border-t border-gray-100 bg-white">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center gap-8 py-3 text-sm font-medium text-gray-600">
-          <a href="index.html" class="text-primary font-semibold">Home</a>
-          <a href="electronics.html" class="hover:text-primary transition-colors">Electronics</a>
-          <a href="fashion.html" class="hover:text-primary transition-colors">Fashion</a>
-          <a href="home-kitchen.html" class="hover:text-primary transition-colors">Home & Kitchen</a>
-          <a href="wholesale.html" class="hover:text-primary transition-colors text-accent">Wholesale</a>
-          <a href="about.html" class="hover:text-primary transition-colors ml-auto">About Us</a>
-          <a href="contact.html" class="hover:text-primary transition-colors">Contact</a>
-        </div>
-      </div>
-    </div>
-  </nav>
-
-  <!-- Mobile Menu Overlay -->
-  <div id="mobile-menu" class="fixed inset-0 z-50 hidden">
-    <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" id="mobile-menu-overlay"></div>
-    <div class="absolute right-0 top-0 h-full w-80 bg-white shadow-2xl transform transition-transform duration-300 translate-x-full" id="mobile-menu-panel">
-      <div class="p-6">
-        <div class="flex items-center justify-between mb-8">
-          <span class="font-display font-bold text-xl">Menu</span>
-          <button id="close-mobile-menu" class="p-2 hover:bg-gray-100 rounded-full">
-            <i data-lucide="x" class="w-6 h-6"></i>
-          </button>
-        </div>
-        <nav class="flex flex-col gap-4">
-          <a href="index.html" class="text-lg font-medium text-primary">Home</a>
-          <a href="electronics.html" class="text-lg font-medium text-gray-700">Electronics</a>
-          <a href="fashion.html" class="text-lg font-medium text-gray-700">Fashion</a>
-          <a href="home-kitchen.html" class="text-lg font-medium text-gray-700">Home & Kitchen</a>
-          <a href="wholesale.html" class="text-lg font-medium text-accent">Wholesale</a>
-          <hr class="my-4">
-          <a href="about.html" class="text-lg font-medium text-gray-700">About Us</a>
-          <a href="contact.html" class="text-lg font-medium text-gray-700">Contact</a>
-        </nav>
+        <button onclick="window.VeloraCart.open()" class="relative p-2 hover:bg-gray-100 rounded-full transition">
+          <i class="fas fa-shopping-cart text-gray-700 text-lg"></i>
+          <span class="vcart-badge" style="display:none">0</span>
+        </button>
+        <button class="p-2 hover:bg-gray-100 rounded-full transition md:hidden">
+          <i class="fas fa-bars text-gray-700 text-lg"></i>
+        </button>
+        <a href="customer-dashboard.html" id="navAccount" class="hidden md:flex items-center gap-2 hover:bg-gray-100 px-3 py-2 rounded-full transition">
+          <div class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">
+            <i class="fas fa-user text-gray-500 text-sm"></i>
+          </div>
+          <span class="text-sm font-medium">Account</span>
+        </a>
       </div>
     </div>
   </div>
+</nav>
 
-  <!-- Hero Section -->
-  <section class="relative hero-bg text-white overflow-hidden">
-    <div class="absolute inset-0 opacity-20" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.05\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 relative">
-      <div class="max-w-2xl">
-        <h1 class="font-display text-4xl md:text-6xl font-bold mb-6 leading-tight">
-          Zambia's Premier <span class="text-accent">Marketplace</span>
+<!-- ==========================================
+     SECTION 3: HERO
+     ========================================== -->
+<section class="gradient-hero relative overflow-hidden">
+  <div class="absolute inset-0 opacity-10">
+    <div class="absolute top-20 left-10 w-72 h-72 bg-velora-blue rounded-full blur-3xl"></div>
+    <div class="absolute bottom-20 right-10 w-96 h-96 bg-blue-500 rounded-full blur-3xl"></div>
+  </div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 relative z-10">
+    <div class="grid lg:grid-cols-2 gap-12 items-center">
+      <div class="text-white">
+        <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full mb-6 border border-white/20">
+          <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+          <span class="text-sm font-medium">Now Live in Zambia</span>
+        </div>
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6">
+          Zambia's Trusted<br>
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-orange-400">Online Marketplace</span>
         </h1>
-        <p class="text-lg md:text-xl text-blue-100 mb-8 leading-relaxed">
-          Discover quality electronics, fashion, and home essentials. Fast delivery across Zambia with secure mobile money payments.
+        <p class="text-lg text-gray-300 mb-8 max-w-lg">
+          Shop safely from verified vendors. From electronics to fashion, food to beauty — discover products from businesses you can trust.
         </p>
-        <div class="flex flex-wrap gap-4">
-          <a href="#featured" class="inline-flex items-center gap-2 bg-accent hover:bg-amber-500 text-white px-8 py-4 rounded-full font-semibold transition-all transform hover:scale-105 shadow-lg">
-            Shop Now
-            <i data-lucide="arrow-right" class="w-5 h-5"></i>
+        <div class="flex flex-col sm:flex-row gap-4 mb-8">
+          <a href="#trending" class="pulse-glow bg-velora-blue text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-red-700 transition flex items-center justify-center gap-2">
+            <i class="fas fa-shopping-bag"></i> Shop Products
           </a>
-          <a href="wholesale.html" class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white px-8 py-4 rounded-full font-semibold backdrop-blur-sm transition-all">
-            Wholesale Deals
+          <a href="vendor-application.html" class="bg-white/10 backdrop-blur-sm text-white border-2 border-white/30 px-8 py-4 rounded-full font-bold text-lg hover:bg-white/20 transition flex items-center justify-center gap-2">
+            <i class="fas fa-store"></i> Become a Vendor
           </a>
+        </div>
+        <div class="flex items-center gap-6 text-sm text-gray-400">
+          <span class="flex items-center gap-2"><i class="fas fa-check-circle text-purple-400"></i> Secure Payments</span>
+          <span class="flex items-center gap-2"><i class="fas fa-truck text-purple-400"></i> Fast Delivery</span>
+          <span class="flex items-center gap-2"><i class="fas fa-shield-alt text-purple-400"></i> Verified Vendors</span>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- Trust Badges -->
-  <section class="bg-white border-b border-gray-200">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center text-sm">
-        <div class="flex items-center justify-center gap-2 text-gray-600">
-          <i data-lucide="truck" class="w-5 h-5 text-primary"></i>
-          <span class="font-medium">Fast Delivery</span>
+      <div class="relative hidden lg:block">
+        <div class="grid grid-cols-2 gap-4">
+          <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-5 border border-white/20 animate-float">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-10 h-10 bg-velora-blue rounded-lg flex items-center justify-center">
+                <i class="fas fa-bolt text-white"></i>
+              </div>
+              <div>
+                <p class="font-bold text-white text-sm">Velora Electronics</p>
+                <p class="text-xs text-purple-400 flex items-center gap-1"><i class="fas fa-check-circle"></i> Verified Vendor</p>
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+              <a href="velora-electronics.html" class="bg-white/10 rounded-lg overflow-hidden hover:bg-white/20 transition group">
+                <img src="images/iphone15-promax.webp" alt="iPhone 15 Pro Max" class="w-full h-16 object-cover group-hover:scale-110 transition">
+              </a>
+              <a href="velora-electronics.html" class="bg-white/10 rounded-lg overflow-hidden hover:bg-white/20 transition group">
+                <img src="images/galaxy-s24-ultra.webp" alt="Samsung S24 Ultra" class="w-full h-16 object-cover group-hover:scale-110 transition">
+              </a>
+              <a href="velora-electronics.html" class="bg-white/10 rounded-lg overflow-hidden hover:bg-white/20 transition group">
+                <img src="images/pixel9-pro.webp" alt="Google Pixel 9 Pro" class="w-full h-16 object-cover group-hover:scale-110 transition">
+              </a>
+              <a href="velora-electronics.html" class="bg-white/10 rounded-lg overflow-hidden hover:bg-white/20 transition group">
+                <img src="images/headphones.webp" alt="Headphones" class="w-full h-16 object-cover group-hover:scale-110 transition">
+              </a>
+            </div>
+            <a href="velora-electronics.html" class="block text-xs text-gray-400 mt-3 text-center hover:text-white transition"><i class="fas fa-arrow-right mr-1"></i> Browse 24+ products</a>
+          </div>
+          <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-5 border border-white/20 animate-float" style="animation-delay:1s">
+            <div class="text-center mb-4">
+              <p class="text-3xl font-bold text-white">24+</p>
+              <p class="text-sm text-gray-300">Products Available</p>
+            </div>
+            <div class="border-t border-white/10 my-3"></div>
+            <div class="text-center mb-4">
+              <p class="text-3xl font-bold text-white">1</p>
+              <p class="text-sm text-gray-300">Verified Vendor</p>
+            </div>
+            <div class="border-t border-white/10 my-3"></div>
+            <div class="text-center">
+              <p class="text-3xl font-bold text-white">Lusaka</p>
+              <p class="text-sm text-gray-300">Delivering Across Zambia</p>
+            </div>
+          </div>
         </div>
-        <div class="flex items-center justify-center gap-2 text-gray-600">
-          <i data-lucide="shield-check" class="w-5 h-5 text-primary"></i>
-          <span class="font-medium">Secure Payment</span>
-        </div>
-        <div class="flex items-center justify-center gap-2 text-gray-600">
-          <i data-lucide="refresh-cw" class="w-5 h-5 text-primary"></i>
-          <span class="font-medium">Easy Returns</span>
-        </div>
-        <div class="flex items-center justify-center gap-2 text-gray-600">
-          <i data-lucide="headphones" class="w-5 h-5 text-primary"></i>
-          <span class="font-medium">24/7 Support</span>
-        </div>
+        <a href="vendor-application.html" class="absolute -bottom-4 right-0 bg-velora-blue hover:bg-blue-700 text-white px-5 py-3 rounded-full font-bold shadow-xl animate-float transition flex items-center gap-2 text-sm" style="animation-delay:0.5s">
+          <i class="fas fa-store"></i> More vendors joining soon
+        </a>
       </div>
     </div>
-  </section>
+  </div>
+  <div class="absolute bottom-0 left-0 right-0">
+    <svg viewBox="0 0 1440 120" fill="none"><path d="M0 120L60 110C120 100 240 80 360 70C480 60 600 60 720 65C840 70 960 80 1080 85C1200 90 1320 90 1380 90L1440 90V120H0Z" fill="#f8fafc"/></svg>
+  </div>
+</section>
 
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
-
-    <!-- Featured Products -->
-    <section id="featured">
-      <div class="flex items-center justify-between mb-8">
-        <div>
-          <h2 class="font-display text-3xl font-bold text-gray-900">Featured Products</h2>
-          <p class="text-gray-500 mt-1">Handpicked favorites just for you</p>
+<!-- ==========================================
+     SECTION 4: TRUST BAR
+     ========================================== -->
+<section class="bg-velora-light py-10">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+      <div class="trust-badge bg-white rounded-xl p-6 text-center shadow-sm hover:shadow-md transition cursor-pointer">
+        <div class="w-14 h-14 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-3">
+          <i class="fas fa-shield-alt text-velora-market text-2xl"></i>
         </div>
-        <a href="#" class="hidden sm:flex items-center gap-1 text-primary font-semibold hover:gap-2 transition-all">
-          View All <i data-lucide="chevron-right" class="w-5 h-5"></i>
+        <h3 class="font-bold text-gray-900 mb-1">Secure Payments</h3>
+        <p class="text-sm text-gray-500">Pay safely with multiple options</p>
+      </div>
+      <div class="trust-badge bg-white rounded-xl p-6 text-center shadow-sm hover:shadow-md transition cursor-pointer">
+        <div class="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
+          <i class="fas fa-shipping-fast text-blue-600 text-2xl"></i>
+        </div>
+        <h3 class="font-bold text-gray-900 mb-1">Fast Delivery</h3>
+        <p class="text-sm text-gray-500">2-5 days across Zambia</p>
+      </div>
+      <div class="trust-badge bg-white rounded-xl p-6 text-center shadow-sm hover:shadow-md transition cursor-pointer">
+        <div class="w-14 h-14 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-3">
+          <i class="fas fa-user-check text-purple-600 text-2xl"></i>
+        </div>
+        <h3 class="font-bold text-gray-900 mb-1">Verified Vendors</h3>
+        <p class="text-sm text-gray-500">Every seller is vetted</p>
+      </div>
+      <div class="trust-badge bg-white rounded-xl p-6 text-center shadow-sm hover:shadow-md transition cursor-pointer">
+        <div class="w-14 h-14 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-3">
+          <i class="fas fa-headset text-orange-600 text-2xl"></i>
+        </div>
+        <h3 class="font-bold text-gray-900 mb-1">24/7 Support</h3>
+        <p class="text-sm text-gray-500">Always here to help</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================
+     SECTION 5: FEATURED VENDORS
+     MOST IMPORTANT SECTION
+     ========================================== -->
+<section class="py-16 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <span class="text-velora-blue font-bold text-sm uppercase tracking-wider">Our Vendors</span>
+      <h2 class="text-3xl font-bold text-gray-900 mt-2">Featured Stores on Velora</h2>
+      <p class="text-gray-500 mt-2 max-w-2xl mx-auto">Meet the businesses selling on our marketplace. More vendors joining every week.</p>
+    </div>
+    <div class="grid md:grid-cols-3 gap-8">
+
+      <!-- VENDOR #1: Velora Electronics -->
+      <div class="vendor-card bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-6 text-white relative overflow-hidden">
+        <div class="absolute top-4 right-4 bg-velora-blue text-xs font-bold px-3 py-1 rounded-full">FEATURED</div>
+        <div class="flex items-center gap-4 mb-4">
+          <div class="w-16 h-16 bg-white rounded-xl flex items-center justify-center">
+            <i class="fas fa-bolt text-velora-blue text-2xl"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-lg">Velora Electronics</h3>
+            <p class="text-gray-400 text-sm">Vendor #1</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-4 mb-4 text-sm">
+          <span class="flex items-center gap-1"><i class="fas fa-star text-velora-cyan"></i> 4.8</span>
+          <span class="flex items-center gap-1"><i class="fas fa-box text-gray-400"></i> 24 items</span>
+          <span class="flex items-center gap-1"><i class="fas fa-check-circle text-purple-400"></i> Verified</span>
+        </div>
+        <p class="text-gray-300 text-sm mb-4">Phones, laptops, accessories, audio, and more. Your trusted electronics vendor on Velora.</p>
+        <div class="flex gap-2 mb-4">
+          <span class="text-xs bg-white/10 px-2 py-1 rounded">Phones</span>
+          <span class="text-xs bg-white/10 px-2 py-1 rounded">Laptops</span>
+          <span class="text-xs bg-white/10 px-2 py-1 rounded">Audio</span>
+        </div>
+        <a href="velora-electronics.html" class="w-full bg-white/10 hover:bg-white/20 py-2.5 rounded-lg text-sm font-semibold transition flex items-center justify-center gap-2 text-center">
+          <i class="fas fa-store"></i> Visit Store
         </a>
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        
-        <!-- Product 1: Adidas Shoes -->
-        <article class="product-card bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden group">
-          <div class="relative aspect-square bg-gray-100 overflow-hidden">
-            <img 
-              id="shoe-main" 
-              src="images/shoes1.webp" 
-              alt="Adidas Runfalcon 5 TR" 
-              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
-              loading="lazy"
-              width="600"
-              height="600"
-              decoding="async"
-            />
-            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors"></div>
-            <button class="absolute top-4 right-4 p-2 bg-white/90 backdrop-blur rounded-full shadow-sm opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white">
-              <i data-lucide="heart" class="w-5 h-5 text-gray-600"></i>
-            </button>
-            <div class="absolute bottom-4 left-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-              <img 
-                src="images/shoes2.webp" 
-                onclick="document.getElementById('shoe-main').src=this.src" 
-                class="w-12 h-12 object-cover rounded-lg border-2 border-white cursor-pointer hover:scale-110 transition-transform" 
-                alt="View 2"
-                loading="lazy"
-                width="48"
-                height="48"
-                decoding="async"
-              >
-              <img 
-                src="images/shoes3.webp" 
-                onclick="document.getElementById('shoe-main').src=this.src" 
-                class="w-12 h-12 object-cover rounded-lg border-2 border-white cursor-pointer hover:scale-110 transition-transform" 
-                alt="View 3"
-                loading="lazy"
-                width="48"
-                height="48"
-                decoding="async"
-              >
-              <img 
-                src="images/shoes4.webp" 
-                onclick="document.getElementById('shoe-main').src=this.src" 
-                class="w-12 h-12 object-cover rounded-lg border-2 border-white cursor-pointer hover:scale-110 transition-transform" 
-                alt="View 4"
-                loading="lazy"
-                width="48"
-                height="48"
-                decoding="async"
-              >
-            </div>
+      <!-- VENDOR #2: Coming Soon -->
+      <div class="vendor-card bg-gray-50 rounded-2xl p-6 border-2 border-dashed border-gray-300 relative overflow-hidden">
+        <div class="absolute top-4 right-4 bg-gray-200 text-gray-600 text-xs font-bold px-3 py-1 rounded-full">OPEN SPOT</div>
+        <div class="flex items-center gap-4 mb-4">
+          <div class="w-16 h-16 bg-gray-200 rounded-xl flex items-center justify-center">
+            <i class="fas fa-store text-gray-400 text-2xl"></i>
           </div>
-          <div class="p-5">
-            <div class="flex items-start justify-between gap-2 mb-2">
-              <h3 class="font-semibold text-lg text-gray-900 line-clamp-2">Adidas Runfalcon 5 TR</h3>
-              <span class="flex items-center gap-1 text-sm font-medium text-amber-500">
-                <i data-lucide="star" class="w-4 h-4 fill-current"></i> 4.8
-              </span>
-            </div>
-            <p class="text-gray-500 text-sm mb-4 line-clamp-2">Comfortable sports training running shoes with breathable mesh upper.</p>
-            <div class="flex items-center justify-between">
-              <div>
-                <span class="text-2xl font-bold text-gray-900">ZMW 1,190</span>
-                <span class="text-sm text-gray-400 block">≈ $59.85</span>
-              </div>
-              <button class="add-cart bg-primary hover:bg-blue-800 text-white p-3 rounded-xl transition-colors shadow-lg shadow-primary/30" 
-                      data-name="Adidas Runfalcon 5 TR" 
-                      data-price="1190">
-                <i data-lucide="plus" class="w-6 h-6"></i>
-              </button>
-            </div>
-          </div>
-        </article>
-
-        <!-- Product 2: Naviforce Watch -->
-        <article class="product-card bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden group">
-          <div class="relative aspect-square bg-gray-100 overflow-hidden">
-            <img 
-              id="watch-main" 
-              src="images/watch1.webp" 
-              alt="Naviforce Wrist Watch" 
-              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
-              loading="lazy"
-              width="600"
-              height="600"
-              decoding="async"
-            />
-            <div class="absolute top-3 left-3 bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full">BESTSELLER</div>
-            <button class="absolute top-4 right-4 p-2 bg-white/90 backdrop-blur rounded-full shadow-sm opacity-0 group-hover:opacity-100 transition-opacity">
-              <i data-lucide="heart" class="w-5 h-5 text-gray-600"></i>
-            </button>
-            <div class="absolute bottom-4 left-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-              <img 
-                src="images/watch1.webp" 
-                onclick="document.getElementById('watch-main').src=this.src" 
-                class="w-12 h-12 object-cover rounded-lg border-2 border-white cursor-pointer" 
-                alt="View 1"
-                loading="lazy"
-                width="48"
-                height="48"
-                decoding="async"
-              >
-              <img 
-                src="images/watch2.webp" 
-                onclick="document.getElementById('watch-main').src=this.src" 
-                class="w-12 h-12 object-cover rounded-lg border-2 border-white cursor-pointer" 
-                alt="View 2"
-                loading="lazy"
-                width="48"
-                height="48"
-                decoding="async"
-              >
-              <img 
-                src="images/watch3.webp" 
-                onclick="document.getElementById('watch-main').src=this.src" 
-                class="w-12 h-12 object-cover rounded-lg border-2 border-white cursor-pointer" 
-                alt="View 3"
-                loading="lazy"
-                width="48"
-                height="48"
-                decoding="async"
-              >
-              <img 
-                src="images/watch4.webp" 
-                onclick="document.getElementById('watch-main').src=this.src" 
-                class="w-12 h-12 object-cover rounded-lg border-2 border-white cursor-pointer" 
-                alt="View 4"
-                loading="lazy"
-                width="48"
-                height="48"
-                decoding="async"
-              >
-            </div>
-          </div>
-          <div class="p-5">
-            <div class="flex items-start justify-between gap-2 mb-2">
-              <h3 class="font-semibold text-lg text-gray-900">Naviforce Wrist Watch</h3>
-              <span class="flex items-center gap-1 text-sm font-medium text-amber-500">
-                <i data-lucide="star" class="w-4 h-4 fill-current"></i> 4.9
-              </span>
-            </div>
-            <p class="text-gray-500 text-sm mb-4">Stylish and durable timepiece with chronograph functionality.</p>
-            <div class="flex items-center justify-between">
-              <div>
-                <span class="text-2xl font-bold text-gray-900">ZMW 799</span>
-                <span class="text-sm text-gray-400 block">≈ $40.19</span>
-              </div>
-              <button class="add-cart bg-primary hover:bg-blue-800 text-white p-3 rounded-xl transition-colors shadow-lg shadow-primary/30" 
-                      data-name="Naviforce Wrist Watch" 
-                      data-price="799">
-                <i data-lucide="plus" class="w-6 h-6"></i>
-              </button>
-            </div>
-          </div>
-        </article>
-
-        <!-- Product 3: Arsenal Tracksuit -->
-        <article class="product-card bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden group">
-          <div class="relative aspect-square bg-gray-100 overflow-hidden">
-            <img 
-              id="tracksuit-main" 
-              src="images/tracksuit1.webp" 
-              alt="Arsenal Tracksuit" 
-              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
-              loading="lazy"
-              width="600"
-              height="600"
-              decoding="async"
-            />
-            <div class="absolute top-3 left-3 bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full">IN STOCK</div>
-            <button class="absolute top-4 right-4 p-2 bg-white/90 backdrop-blur rounded-full shadow-sm opacity-0 group-hover:opacity-100 transition-opacity">
-              <i data-lucide="heart" class="w-5 h-5 text-gray-600"></i>
-            </button>
-            <div class="absolute bottom-4 left-4 right-4 flex gap-2 overflow-x-auto pb-2 opacity-0 group-hover:opacity-100 transition-opacity scrollbar-hide">
-              <img 
-                src="images/tracksuit2.webp" 
-                onclick="document.getElementById('tracksuit-main').src=this.src" 
-                class="w-12 h-12 object-cover rounded-lg border-2 border-white cursor-pointer flex-shrink-0" 
-                alt="View 2"
-                loading="lazy"
-                width="48"
-                height="48"
-                decoding="async"
-              >
-              <img 
-                src="images/tracksuit3.webp" 
-                onclick="document.getElementById('tracksuit-main').src=this.src" 
-                class="w-12 h-12 object-cover rounded-lg border-2 border-white cursor-pointer flex-shrink-0" 
-                alt="View 3"
-                loading="lazy"
-                width="48"
-                height="48"
-                decoding="async"
-              >
-              <img 
-                src="images/tracksuit4.webp" 
-                onclick="document.getElementById('tracksuit-main').src=this.src" 
-                class="w-12 h-12 object-cover rounded-lg border-2 border-white cursor-pointer flex-shrink-0" 
-                alt="View 4"
-                loading="lazy"
-                width="48"
-                height="48"
-                decoding="async"
-              >
-              <img 
-                src="images/tracksuit5.webp" 
-                onclick="document.getElementById('tracksuit-main').src=this.src" 
-                class="w-12 h-12 object-cover rounded-lg border-2 border-white cursor-pointer flex-shrink-0" 
-                alt="View 5"
-                loading="lazy"
-                width="48"
-                height="48"
-                decoding="async"
-              >
-            </div>
-          </div>
-          <div class="p-5">
-            <div class="flex items-start justify-between gap-2 mb-2">
-              <h3 class="font-semibold text-lg text-gray-900 line-clamp-2">Arsenal Tracksuit (All Sizes)</h3>
-              <span class="flex items-center gap-1 text-sm font-medium text-amber-500">
-                <i data-lucide="star" class="w-4 h-4 fill-current"></i> 4.7
-              </span>
-            </div>
-            <p class="text-gray-500 text-sm mb-4 line-clamp-2">Official Arsenal tracksuit — stylish, comfortable, perfect for training or casual wear.</p>
-            <div class="flex items-center justify-between">
-              <div>
-                <span class="text-2xl font-bold text-gray-900">ZMW 600</span>
-                <span class="text-sm text-gray-400 block">≈ $30.18</span>
-              </div>
-              <button class="add-cart bg-primary hover:bg-blue-800 text-white p-3 rounded-xl transition-colors shadow-lg shadow-primary/30" 
-                      data-name="Arsenal Tracksuit" 
-                      data-price="600">
-                <i data-lucide="plus" class="w-6 h-6"></i>
-              </button>
-            </div>
-          </div>
-        </article>
-
-      </div>
-    </section>
-
-    <!-- Best Sellers -->
-    <section id="bestsellers" class="bg-gradient-to-r from-gray-50 to-blue-50/30 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-12">
-      <div class="max-w-7xl mx-auto">
-        <div class="flex items-center justify-between mb-8">
           <div>
-            <h2 class="font-display text-3xl font-bold text-gray-900">🔥 Best Sellers</h2>
-            <p class="text-gray-500 mt-1">Most popular items this week</p>
+            <h3 class="font-bold text-lg text-gray-700">Your Store Here</h3>
+            <p class="text-gray-500 text-sm">Become Vendor #2</p>
           </div>
         </div>
+        <div class="flex items-center gap-4 mb-4 text-sm text-gray-400">
+          <span class="flex items-center gap-1"><i class="fas fa-star"></i> --</span>
+          <span class="flex items-center gap-1"><i class="fas fa-box"></i> 0 items</span>
+          <span class="flex items-center gap-1"><i class="fas fa-clock"></i> Pending</span>
+        </div>
+        <p class="text-gray-500 text-sm mb-4">Be the next vendor on Velora. Early vendors get featured placement and reduced commission for 6 months.</p>
+        <div class="flex gap-2 mb-4">
+          <span class="text-xs bg-gray-200 text-gray-500 px-2 py-1 rounded">Any Category</span>
+        </div>
+        <a href="vendor-application.html" class="w-full bg-velora-blue hover:bg-red-700 text-white py-2.5 rounded-lg text-sm font-semibold transition flex items-center justify-center gap-2">
+          <i class="fas fa-handshake"></i> Apply Now
+        </a>
+      </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          <!-- Best Seller 1: iPhone -->
-          <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 flex gap-4 hover:shadow-md transition-shadow">
-            <div class="w-32 h-32 bg-gray-100 rounded-xl overflow-hidden flex-shrink-0">
-              <img 
-                src="images/iphone-11.webp" 
-                alt="iPhone 11" 
-                class="w-full h-full object-cover" 
-                loading="lazy"
-                width="128"
-                height="128"
-                decoding="async"
-              />
-            </div>
-            <div class="flex-1 flex flex-col justify-between py-1">
-              <div>
-                <div class="flex items-center gap-2 mb-1">
-                  <span class="bg-red-100 text-red-600 text-xs font-bold px-2 py-0.5 rounded">HOT</span>
-                  <span class="text-gray-400 text-xs">1,240 sold</span>
-                </div>
-                <h3 class="font-semibold text-lg text-gray-900 mb-1">iPhone 11 Series</h3>
-                <p class="text-gray-500 text-sm">Premium refurbished with warranty</p>
-              </div>
-              <div class="flex items-center justify-between">
-                <span class="text-xl font-bold text-gray-900">From ZMW 4,700</span>
-                <a href="electronics.html#iphone11" class="bg-gray-900 hover:bg-gray-800 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
-                  View Details
-                </a>
-              </div>
-            </div>
+      <!-- VENDOR #3: Coming Soon -->
+      <div class="vendor-card bg-gray-50 rounded-2xl p-6 border-2 border-dashed border-gray-300 relative overflow-hidden">
+        <div class="absolute top-4 right-4 bg-gray-200 text-gray-600 text-xs font-bold px-3 py-1 rounded-full">OPEN SPOT</div>
+        <div class="flex items-center gap-4 mb-4">
+          <div class="w-16 h-16 bg-gray-200 rounded-xl flex items-center justify-center">
+            <i class="fas fa-store text-gray-400 text-2xl"></i>
           </div>
+          <div>
+            <h3 class="font-bold text-lg text-gray-700">Your Store Here</h3>
+            <p class="text-gray-500 text-sm">Become Vendor #3</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-4 mb-4 text-sm text-gray-400">
+          <span class="flex items-center gap-1"><i class="fas fa-star"></i> --</span>
+          <span class="flex items-center gap-1"><i class="fas fa-box"></i> 0 items</span>
+          <span class="flex items-center gap-1"><i class="fas fa-clock"></i> Pending</span>
+        </div>
+        <p class="text-gray-500 text-sm mb-4">Join a growing marketplace. We handle payments, delivery support, and customer trust so you can focus on selling.</p>
+        <div class="flex gap-2 mb-4">
+          <span class="text-xs bg-gray-200 text-gray-500 px-2 py-1 rounded">Any Category</span>
+        </div>
+        <a href="vendor-application.html" class="w-full bg-velora-blue hover:bg-red-700 text-white py-2.5 rounded-lg text-sm font-semibold transition flex items-center justify-center gap-2">
+          <i class="fas fa-handshake"></i> Apply Now
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
 
-          <!-- Best Seller 2: Blender -->
-          <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 flex gap-4 hover:shadow-md transition-shadow">
-            <div class="w-32 h-32 bg-gray-100 rounded-xl overflow-hidden flex-shrink-0">
-              <img 
-                src="images/blender.webp" 
-                alt="Electric Blender" 
-                class="w-full h-full object-cover" 
-                loading="lazy"
-                width="128"
-                height="128"
-                decoding="async"
-              />
+<!-- ==========================================
+     SECTION 6: TRENDING PRODUCTS
+     Products from Vendor #1 (Velora Electronics)
+     ========================================== -->
+<section id="trending" class="py-16 bg-velora-light">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-end mb-10">
+      <div>
+        <span class="text-velora-blue font-bold text-sm uppercase tracking-wider">From Velora Electronics</span>
+        <h2 class="text-3xl font-bold text-gray-900 mt-2">Popular Products</h2>
+        <p class="text-gray-500 mt-1">Top picks from our featured vendor</p>
+      </div>
+      <a href="velora-electronics.html" class="hidden sm:flex items-center gap-2 text-velora-blue font-semibold hover:text-red-700 transition">
+        View All <i class="fas fa-arrow-right"></i>
+      </a>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+      <!-- Product 1: iPhone 15 Pro Max -->
+      <div class="product-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition duration-300">
+        <div class="relative">
+          <img src="images/iphone15-promax.webp" alt="iPhone 15 Pro Max" class="w-full h-48 object-cover">
+          <div class="absolute top-3 left-3 bg-velora-blue text-white text-xs font-bold px-2 py-1 rounded">HOT</div>
+          <button class="absolute top-3 right-3 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-red-50 transition group">
+            <i class="fas fa-heart text-gray-400 group-hover:text-red-500 transition"></i>
+          </button>
+        </div>
+        <div class="p-4">
+          <div class="flex items-center gap-2 mb-2">
+            <div class="w-5 h-5 bg-gray-900 rounded flex items-center justify-center">
+              <i class="fas fa-bolt text-white text-[8px]"></i>
             </div>
-            <div class="flex-1 flex flex-col justify-between py-1">
-              <div>
-                <div class="flex items-center gap-2 mb-1">
-                  <span class="bg-green-100 text-green-600 text-xs font-bold px-2 py-0.5 rounded">DEAL</span>
-                  <span class="text-gray-400 text-xs">856 sold</span>
-                </div>
-                <h3 class="font-semibold text-lg text-gray-900 mb-1">Electric Blender</h3>
-                <p class="text-gray-500 text-sm">Special discount this week only!</p>
-              </div>
-              <div class="flex items-center justify-between">
-                <div>
-                  <span class="text-xl font-bold text-gray-900">ZMW 1,200</span>
-                  <span class="text-sm text-gray-400 line-through ml-2">ZMW 1,500</span>
-                </div>
-                <button class="add-cart bg-primary hover:bg-blue-800 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors" 
-                        data-name="Electric Blender" 
-                        data-price="1200">
-                  Add to Cart
-                </button>
-              </div>
+            <span class="text-xs text-gray-500">Velora Electronics</span>
+            <i class="fas fa-check-circle text-purple-500 text-xs"></i>
+          </div>
+          <h3 class="font-bold text-gray-900 mb-1">iPhone 15 Pro Max</h3>
+          <p class="text-sm text-gray-500 mb-3">256GB - Natural Titanium</p>
+          <div class="flex items-center justify-between">
+            <div>
+              <span class="text-xl font-bold text-velora-blue">ZMW 18,500</span>
             </div>
+            <a href="velora-electronics.html" class="w-10 h-10 bg-velora-blue text-white rounded-full flex items-center justify-center hover:bg-red-700 transition">
+              <i class="fas fa-arrow-right"></i>
+            </a>
+          </div>
+          <div class="mt-2 flex items-center gap-2">
+            <span class="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full font-medium">In Stock</span>
+            <span class="text-xs text-gray-400"><i class="fas fa-truck mr-1"></i>2-5 days</span>
           </div>
         </div>
       </div>
-    </section>
 
-  </main>
-
-  <!-- Sticky Mobile CTA -->
-  <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 shadow-lg md:hidden z-40 safe-bottom hidden" id="sticky-cta">
-    <div class="flex items-center justify-between gap-4">
-      <div class="flex items-center gap-3">
-        <div class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center">
-          <i data-lucide="shopping-bag" class="w-6 h-6 text-white"></i>
+      <!-- Product 2: Samsung Galaxy S24 Ultra -->
+      <div class="product-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition duration-300">
+        <div class="relative">
+          <img src="images/galaxy-s24-ultra.webp" alt="Samsung Galaxy S24 Ultra" class="w-full h-48 object-cover">
+          <div class="absolute top-3 left-3 bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded">NEW</div>
+          <button class="absolute top-3 right-3 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-red-50 transition group">
+            <i class="fas fa-heart text-gray-400 group-hover:text-red-500 transition"></i>
+          </button>
         </div>
-        <div>
-          <p class="text-xs text-gray-500">Total (<span id="sticky-count">0</span> items)</p>
-          <p class="font-bold text-lg" id="sticky-total">ZMW 0</p>
+        <div class="p-4">
+          <div class="flex items-center gap-2 mb-2">
+            <div class="w-5 h-5 bg-gray-900 rounded flex items-center justify-center">
+              <i class="fas fa-bolt text-white text-[8px]"></i>
+            </div>
+            <span class="text-xs text-gray-500">Velora Electronics</span>
+            <i class="fas fa-check-circle text-purple-500 text-xs"></i>
+          </div>
+          <h3 class="font-bold text-gray-900 mb-1">Samsung Galaxy S24 Ultra</h3>
+          <p class="text-sm text-gray-500 mb-3">256GB - Phantom Black</p>
+          <div class="flex items-center justify-between">
+            <div>
+              <span class="text-xl font-bold text-velora-blue">ZMW 14,780</span>
+            </div>
+            <a href="velora-electronics.html" class="w-10 h-10 bg-velora-blue text-white rounded-full flex items-center justify-center hover:bg-red-700 transition">
+              <i class="fas fa-arrow-right"></i>
+            </a>
+          </div>
+          <div class="mt-2 flex items-center gap-2">
+            <span class="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full font-medium">In Stock</span>
+            <span class="text-xs text-gray-400"><i class="fas fa-truck mr-1"></i>2-5 days</span>
+          </div>
         </div>
       </div>
-      <a href="checkout.html" class="bg-accent hover:bg-amber-500 text-white px-6 py-3 rounded-xl font-semibold shadow-lg shadow-amber-500/30 transition-colors">
-        Checkout
+
+      <!-- Product 3: Google Pixel 9 Pro -->
+      <div class="product-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition duration-300">
+        <div class="relative">
+          <img src="images/pixel9-pro.webp" alt="Google Pixel 9 Pro" class="w-full h-48 object-cover">
+          <button class="absolute top-3 right-3 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-red-50 transition group">
+            <i class="fas fa-heart text-gray-400 group-hover:text-red-500 transition"></i>
+          </button>
+        </div>
+        <div class="p-4">
+          <div class="flex items-center gap-2 mb-2">
+            <div class="w-5 h-5 bg-gray-900 rounded flex items-center justify-center">
+              <i class="fas fa-bolt text-white text-[8px]"></i>
+            </div>
+            <span class="text-xs text-gray-500">Velora Electronics</span>
+            <i class="fas fa-check-circle text-purple-500 text-xs"></i>
+          </div>
+          <h3 class="font-bold text-gray-900 mb-1">Google Pixel 9 Pro</h3>
+          <p class="text-sm text-gray-500 mb-3">256GB - Obsidian</p>
+          <div class="flex items-center justify-between">
+            <div>
+              <span class="text-xl font-bold text-velora-blue">ZMW 13,600</span>
+            </div>
+            <a href="velora-electronics.html" class="w-10 h-10 bg-velora-blue text-white rounded-full flex items-center justify-center hover:bg-red-700 transition">
+              <i class="fas fa-arrow-right"></i>
+            </a>
+          </div>
+          <div class="mt-2 flex items-center gap-2">
+            <span class="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full font-medium">In Stock</span>
+            <span class="text-xs text-gray-400"><i class="fas fa-truck mr-1"></i>2-5 days</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product 4: JBL T520BT Wireless -->
+      <div class="product-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition duration-300">
+        <div class="relative">
+          <img src="images/headphones.webp" alt="JBL T520BT Wireless" class="w-full h-48 object-cover">
+          <div class="absolute top-3 left-3 bg-orange-500 text-white text-xs font-bold px-2 py-1 rounded">-15%</div>
+          <button class="absolute top-3 right-3 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-red-50 transition group">
+            <i class="fas fa-heart text-gray-400 group-hover:text-red-500 transition"></i>
+          </button>
+        </div>
+        <div class="p-4">
+          <div class="flex items-center gap-2 mb-2">
+            <div class="w-5 h-5 bg-gray-900 rounded flex items-center justify-center">
+              <i class="fas fa-bolt text-white text-[8px]"></i>
+            </div>
+            <span class="text-xs text-gray-500">Velora Electronics</span>
+            <i class="fas fa-check-circle text-purple-500 text-xs"></i>
+          </div>
+          <h3 class="font-bold text-gray-900 mb-1">JBL T520BT Wireless</h3>
+          <p class="text-sm text-gray-500 mb-3">Bluetooth - 57hr Battery</p>
+          <div class="flex items-center justify-between">
+            <div>
+              <span class="text-xl font-bold text-velora-blue">ZMW 1,200</span>
+            </div>
+            <a href="velora-electronics.html" class="w-10 h-10 bg-velora-blue text-white rounded-full flex items-center justify-center hover:bg-red-700 transition">
+              <i class="fas fa-arrow-right"></i>
+            </a>
+          </div>
+          <div class="mt-2 flex items-center gap-2">
+            <span class="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full font-medium">In Stock</span>
+            <span class="text-xs text-gray-400"><i class="fas fa-truck mr-1"></i>2-5 days</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="mt-8 text-center sm:hidden">
+      <a href="velora-electronics.html" class="inline-flex items-center gap-2 text-velora-blue font-semibold hover:text-red-700 transition">
+        View All Products <i class="fas fa-arrow-right"></i>
       </a>
     </div>
   </div>
+</section>
 
-  <!-- Footer -->
-  <footer class="bg-dark text-gray-300 pt-16 pb-8">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-        <div>
-          <div class="flex items-center gap-2 mb-4">
-            <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-              <i data-lucide="shopping-bag" class="w-5 h-5 text-white"></i>
-            </div>
-            <span class="font-display font-bold text-xl text-white">Nova Nest</span>
+<!-- ==========================================
+     SECTION 7: VENDOR RECRUITMENT (UPDATED)
+     ========================================== -->
+<section id="vendor-section" class="gradient-vendor py-20 relative overflow-hidden">
+  <div class="absolute inset-0 opacity-10">
+    <div class="absolute top-10 right-20 w-64 h-64 bg-white rounded-full blur-3xl"></div>
+    <div class="absolute bottom-10 left-20 w-48 h-48 bg-velora-blue rounded-full blur-3xl"></div>
+  </div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="grid lg:grid-cols-2 gap-12 items-center">
+      <!-- Left: Info -->
+      <div class="text-white">
+        <span class="inline-block bg-white/20 backdrop-blur-sm px-4 py-1 rounded-full text-sm font-medium mb-6">Vendor Opportunity</span>
+        <h2 class="text-4xl font-bold mb-6">Sell on Velora.<br>Grow Your Business.</h2>
+        <p class="text-lg text-blue-100 mb-8">Join Zambia's fastest-growing online marketplace. Reach thousands of customers, manage orders easily, and scale your business.</p>
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center flex-shrink-0"><i class="fas fa-rocket text-white"></i></div>
+            <div><h4 class="font-bold text-lg">Fast Onboarding</h4><p class="text-blue-200 text-sm">Get your store live in under 48 hours. No technical skills needed.</p></div>
           </div>
-          <p class="text-sm leading-relaxed mb-4">Zambia's trusted marketplace connecting buyers with quality sellers. Fast delivery, secure payments.</p>
-          <div class="flex gap-4">
-            <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors">
-              <i data-lucide="facebook" class="w-5 h-5"></i>
-            </a>
-            <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors">
-              <i data-lucide="instagram" class="w-5 h-5"></i>
-            </a>
-            <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors">
-              <i data-lucide="twitter" class="w-5 h-5"></i>
-            </a>
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center flex-shrink-0"><i class="fas fa-percentage text-white"></i></div>
+            <div><h4 class="font-bold text-lg">Low Commission</h4><p class="text-blue-200 text-sm">Only 5-8% per sale. Keep more of your earnings.</p></div>
+          </div>
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center flex-shrink-0"><i class="fas fa-chart-line text-white"></i></div>
+            <div><h4 class="font-bold text-lg">Growth Support</h4><p class="text-blue-200 text-sm">Marketing tools, analytics, and dedicated support.</p></div>
+          </div>
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center flex-shrink-0"><i class="fas fa-hand-holding-usd text-white"></i></div>
+            <div><h4 class="font-bold text-lg">Fast Payouts</h4><p class="text-blue-200 text-sm">Paid to bank or mobile money within 3 business days.</p></div>
           </div>
         </div>
-        
-        <div>
-          <h4 class="text-white font-semibold mb-4">Quick Links</h4>
-          <ul class="space-y-2 text-sm">
-            <li><a href="electronics.html" class="hover:text-white transition-colors">Electronics</a></li>
-            <li><a href="fashion.html" class="hover:text-white transition-colors">Fashion</a></li>
-            <li><a href="home-kitchen.html" class="hover:text-white transition-colors">Home & Kitchen</a></li>
-            <li><a href="wholesale.html" class="hover:text-white transition-colors">Wholesale</a></li>
-          </ul>
-        </div>
-        
-        <div>
-          <h4 class="text-white font-semibold mb-4">Customer Service</h4>
-          <ul class="space-y-2 text-sm">
-            <li><a href="#" class="hover:text-white transition-colors">Track Order</a></li>
-            <li><a href="#" class="hover:text-white transition-colors">FAQ</a></li>
-            <li><a href="contact.html" class="hover:text-white transition-colors">Contact Us</a></li>
-          </ul>
-        </div>
-        
-        <div>
-          <h4 class="text-white font-semibold mb-4">Contact</h4>
-          <ul class="space-y-3 text-sm">
-            <li class="flex items-center gap-2">
-              <i data-lucide="phone" class="w-4 h-4 text-primary"></i>
-              <span>WhatsApp: +260 966172411</span>
-            </li>
-            <li class="flex items-center gap-2">
-              <i data-lucide="mail" class="w-4 h-4 text-primary"></i>
-              <span>support@novanest.zm</span>
-            </li>
-            <li class="flex items-center gap-2">
-              <i data-lucide="map-pin" class="w-4 h-4 text-primary"></i>
-              <span>Lusaka, Zambia</span>
-            </li>
-          </ul>
-          <div class="mt-4 p-3 bg-white/5 rounded-lg">
-            <p class="text-xs text-gray-400 mb-2">Payment Methods</p>
-            <div class="flex gap-2">
-              <span class="bg-white/10 px-2 py-1 rounded text-xs">MTN</span>
-              <span class="bg-white/10 px-2 py-1 rounded text-xs">Airtel</span>
-              <span class="bg-white/10 px-2 py-1 rounded text-xs">Bank</span>
-            </div>
-          </div>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="vendor-application.html" class="pulse-glow bg-white text-blue-900 px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-100 transition flex items-center justify-center gap-2">
+            <i class="fas fa-store"></i> Start Selling Today
+          </a>
+          <button class="bg-white/10 backdrop-blur-sm text-white border-2 border-white/30 px-8 py-4 rounded-full font-bold text-lg hover:bg-white/20 transition flex items-center justify-center gap-2">
+            <i class="fas fa-info-circle"></i> Learn More
+          </button>
         </div>
       </div>
-      
-      <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-400">
-        <p>&copy; 2026 Nova Nest. All rights reserved.</p>
-        <div class="flex gap-6">
-          <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
-          <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
-        </div>
-      </div>
-    </div>
-  </footer>
+      <!-- Right: CTA Card (replaced old form) -->
+      <div class="hidden lg:block">
+        <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 text-center">
+          <div class="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-5">
+            <i class="fas fa-store text-white text-3xl"></i>
+          </div>
+          <h3 class="text-white font-bold text-2xl mb-2">Become a Vendor</h3>
+          <p class="text-blue-200 text-sm mb-6">Join Zambia's fastest growing marketplace. Free to apply, no setup fees.</p>
 
-  <!-- Cart Drawer (Slide-out) -->
-  <div id="cart-drawer" class="fixed inset-0 z-50 hidden">
-    <div class="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity" id="cart-overlay"></div>
-    <div class="absolute right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl transform transition-transform duration-300 translate-x-full flex flex-col" id="cart-panel">
-      <div class="p-6 border-b border-gray-100 flex items-center justify-between">
-        <h2 class="font-display text-xl font-bold">Your Cart</h2>
-        <button id="close-cart" class="p-2 hover:bg-gray-100 rounded-full transition-colors">
-          <i data-lucide="x" class="w-6 h-6"></i>
-        </button>
-      </div>
-      
-      <div class="flex-1 overflow-y-auto p-6" id="cart-items-container">
-        <div class="text-center text-gray-500 py-12">
-          <i data-lucide="shopping-cart" class="w-16 h-16 mx-auto mb-4 text-gray-300"></i>
-          <p>Your cart is empty</p>
-          <button onclick="closeCart()" class="mt-4 text-primary font-medium hover:underline">Continue Shopping</button>
+          <div class="space-y-3 text-left mb-6">
+            <div class="flex items-center gap-3 text-sm text-blue-100">
+              <i class="fas fa-check-circle text-velora-market"></i>
+              <span>Free application, no setup fees</span>
+            </div>
+            <div class="flex items-center gap-3 text-sm text-blue-100">
+              <i class="fas fa-check-circle text-velora-market"></i>
+              <span>Approval within 24-48 hours</span>
+            </div>
+            <div class="flex items-center gap-3 text-sm text-blue-100">
+              <i class="fas fa-check-circle text-velora-market"></i>
+              <span>Reach 10,000+ monthly shoppers</span>
+            </div>
+            <div class="flex items-center gap-3 text-sm text-blue-100">
+              <i class="fas fa-check-circle text-velora-market"></i>
+              <span>Only 5-8% commission per sale</span>
+            </div>
+            <div class="flex items-center gap-3 text-sm text-blue-100">
+              <i class="fas fa-check-circle text-velora-market"></i>
+              <span>Fast payouts to your bank</span>
+            </div>
+          </div>
+
+          <a href="vendor-application.html" class="block w-full bg-velora-blue hover:bg-red-700 text-white py-3.5 rounded-full font-bold transition flex items-center justify-center gap-2 mb-3">
+            <i class="fas fa-paper-plane"></i> Apply Now
+          </a>
+          <p class="text-blue-300/70 text-xs">Early vendors get featured placement + 3% commission for 6 months!</p>
         </div>
-      </div>
-      
-      <div class="border-t border-gray-100 p-6 space-y-4 bg-gray-50">
-        <div class="flex justify-between text-lg font-bold">
-          <span>Total</span>
-          <span id="cart-total">ZMW 0</span>
-        </div>
-        <button onclick="window.location.href='checkout.html'" class="w-full bg-primary hover:bg-blue-800 text-white py-4 rounded-xl font-semibold shadow-lg shadow-primary/30 transition-all transform active:scale-95">
-          Proceed to Checkout
-        </button>
-        <button id="clear-cart" class="w-full bg-white border border-gray-300 text-gray-700 py-3 rounded-xl font-medium hover:bg-gray-50 transition-colors">
-          Clear Cart
-        </button>
       </div>
     </div>
   </div>
+</section>
 
-  <!-- Toast Notification -->
-  <div id="toast" class="fixed top-24 right-4 bg-green-500 text-white px-6 py-4 rounded-xl shadow-2xl transform translate-x-full transition-transform duration-300 z-50 flex items-center gap-3">
-    <i data-lucide="check-circle" class="w-6 h-6"></i>
-    <div>
-      <p class="font-semibold">Added to cart!</p>
-      <p class="text-sm text-green-100" id="toast-message">Product Name</p>
+<!-- ==========================================
+     SECTION 8: HOW IT WORKS
+     ========================================== -->
+<section class="py-16 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <span class="text-velora-blue font-bold text-sm uppercase tracking-wider">Simple Process</span>
+      <h2 class="text-3xl font-bold text-gray-900 mt-2">How Velora Works</h2>
+      <p class="text-gray-500 mt-2">Easy for shoppers. Easy for sellers.</p>
+    </div>
+    <div class="grid md:grid-cols-2 gap-12">
+      <div class="bg-velora-light rounded-2xl p-8">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-10 h-10 bg-velora-blue rounded-lg flex items-center justify-center"><i class="fas fa-shopping-bag text-white"></i></div>
+          <h3 class="text-xl font-bold text-gray-900">For Shoppers</h3>
+        </div>
+        <div class="space-y-6">
+          <div class="flex items-start gap-4">
+            <div class="w-8 h-8 bg-velora-blue text-white rounded-full flex items-center justify-center font-bold flex-shrink-0">1</div>
+            <div><h4 class="font-bold text-gray-900">Browse & Discover</h4><p class="text-gray-500 text-sm">Explore products from multiple verified vendors in one place.</p></div>
+          </div>
+          <div class="flex items-start gap-4">
+            <div class="w-8 h-8 bg-velora-blue text-white rounded-full flex items-center justify-center font-bold flex-shrink-0">2</div>
+            <div><h4 class="font-bold text-gray-900">Order Securely</h4><p class="text-gray-500 text-sm">Pay with Mobile Money, bank transfer, or cash on delivery.</p></div>
+          </div>
+          <div class="flex items-start gap-4">
+            <div class="w-8 h-8 bg-velora-blue text-white rounded-full flex items-center justify-center font-bold flex-shrink-0">3</div>
+            <div><h4 class="font-bold text-gray-900">Fast Delivery</h4><p class="text-gray-500 text-sm">Receive your order within 2-5 days anywhere in Zambia.</p></div>
+          </div>
+        </div>
+      </div>
+      <div class="bg-velora-light rounded-2xl p-8">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-10 h-10 bg-velora-market rounded-lg flex items-center justify-center"><i class="fas fa-store text-white"></i></div>
+          <h3 class="text-xl font-bold text-gray-900">For Vendors</h3>
+        </div>
+        <div class="space-y-6">
+          <div class="flex items-start gap-4">
+            <div class="w-8 h-8 bg-velora-market text-white rounded-full flex items-center justify-center font-bold flex-shrink-0">1</div>
+            <div><h4 class="font-bold text-gray-900">Apply & Get Verified</h4><p class="text-gray-500 text-sm">Submit your application. We review and verify within 24 hours.</p></div>
+          </div>
+          <div class="flex items-start gap-4">
+            <div class="w-8 h-8 bg-velora-market text-white rounded-full flex items-center justify-center font-bold flex-shrink-0">2</div>
+            <div><h4 class="font-bold text-gray-900">Upload Products</h4><p class="text-gray-500 text-sm">Add your products with images, prices, and descriptions easily.</p></div>
+          </div>
+          <div class="flex items-start gap-4">
+            <div class="w-8 h-8 bg-velora-market text-white rounded-full flex items-center justify-center font-bold flex-shrink-0">3</div>
+            <div><h4 class="font-bold text-gray-900">Start Selling</h4><p class="text-gray-500 text-sm">Receive orders, manage deliveries, and get paid fast.</p></div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
+</section>
 
-  <script>
-    // Initialize Lucide icons when DOM is ready
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initApp);
-    } else {
-      initApp();
+<!-- ==========================================
+     SECTION 9: STATS
+     ========================================== -->
+<section class="py-16 bg-velora-dark text-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+      <div><div class="text-4xl font-bold text-velora-blue mb-2">1</div><p class="text-gray-400 text-sm">Verified Vendor</p><p class="text-gray-600 text-xs mt-1">More joining soon</p></div>
+      <div><div class="text-4xl font-bold text-velora-blue mb-2">24+</div><p class="text-gray-400 text-sm">Products Available</p><p class="text-gray-600 text-xs mt-1">Across all stores</p></div>
+      <div><div class="text-4xl font-bold text-velora-blue mb-2">Lusaka</div><p class="text-gray-400 text-sm">Nationwide Delivery</p><p class="text-gray-600 text-xs mt-1">2-5 business days</p></div>
+      <div><div class="text-4xl font-bold text-velora-blue mb-2">0%</div><p class="text-gray-400 text-sm">Setup Fee</p><p class="text-gray-600 text-xs mt-1">Free for vendors to join</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================
+     SECTION 10: FUTURE EXPANSION
+     ========================================== -->
+<section class="py-16 bg-velora-light">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <span class="text-velora-blue font-bold text-sm uppercase tracking-wider">Growing Ecosystem</span>
+      <h2 class="text-3xl font-bold text-gray-900 mt-2">More Businesses Joining Soon</h2>
+      <p class="text-gray-500 mt-2 max-w-2xl mx-auto">Velora is just getting started. We are onboarding vendors from different industries.</p>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="bg-white rounded-xl p-6 text-center shadow-sm hover:shadow-md transition">
+        <div class="w-14 h-14 bg-red-100 rounded-xl flex items-center justify-center mx-auto mb-3"><i class="fas fa-plug text-red-600 text-xl"></i></div>
+        <h3 class="font-bold text-gray-900 text-sm">Electronics</h3>
+        <span class="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full mt-2 inline-block font-medium">Live Now</span>
+        <p class="text-xs text-gray-400 mt-2">Velora Electronics</p>
+      </div>
+      <div class="bg-white rounded-xl p-6 text-center shadow-sm hover:shadow-md transition opacity-60">
+        <div class="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center mx-auto mb-3"><i class="fas fa-tshirt text-blue-600 text-xl"></i></div>
+        <h3 class="font-bold text-gray-900 text-sm">Fashion</h3>
+        <span class="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full mt-2 inline-block font-medium">Q3 2026</span>
+        <p class="text-xs text-gray-400 mt-2">Applications open</p>
+      </div>
+      <div class="bg-white rounded-xl p-6 text-center shadow-sm hover:shadow-md transition opacity-60">
+        <div class="w-14 h-14 bg-purple-100 rounded-xl flex items-center justify-center mx-auto mb-3"><i class="fas fa-utensils text-purple-600 text-xl"></i></div>
+        <h3 class="font-bold text-gray-900 text-sm">Food & Groceries</h3>
+        <span class="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full mt-2 inline-block font-medium">Q4 2026</span>
+        <p class="text-xs text-gray-400 mt-2">Applications open</p>
+      </div>
+      <div class="bg-white rounded-xl p-6 text-center shadow-sm hover:shadow-md transition opacity-60">
+        <div class="w-14 h-14 bg-purple-100 rounded-xl flex items-center justify-center mx-auto mb-3"><i class="fas fa-spa text-purple-600 text-xl"></i></div>
+        <h3 class="font-bold text-gray-900 text-sm">Beauty & Health</h3>
+        <span class="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full mt-2 inline-block font-medium">2027</span>
+        <p class="text-xs text-gray-400 mt-2">Coming soon</p>
+      </div>
+    </div>
+    <div class="mt-8 bg-blue-50 rounded-xl p-6 text-center">
+      <p class="text-blue-800 text-sm"><i class="fas fa-star text-yellow-500 mr-2"></i><strong>Early Vendor Bonus:</strong> First 20 vendors get featured placement and 3% commission rate for 6 months.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================
+     SECTION 11: TESTIMONIALS
+     ========================================== -->
+<section class="py-16 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <span class="text-velora-blue font-bold text-sm uppercase tracking-wider">Community Voices</span>
+      <h2 class="text-3xl font-bold text-gray-900 mt-2">What People Say</h2>
+    </div>
+    <div class="grid md:grid-cols-3 gap-8">
+      <div class="bg-velora-light rounded-2xl p-6 hover:shadow-lg transition">
+        <div class="flex items-center gap-1 mb-4">
+          <i class="fas fa-star text-yellow-400 text-sm"></i><i class="fas fa-star text-yellow-400 text-sm"></i><i class="fas fa-star text-yellow-400 text-sm"></i><i class="fas fa-star text-yellow-400 text-sm"></i><i class="fas fa-star text-yellow-400 text-sm"></i>
+        </div>
+        <p class="text-gray-700 text-sm leading-relaxed mb-5">"Got my iPhone delivered in 3 days to Kitwe. Love that I can see which store I am buying from. The vendor was very responsive!"</p>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center"><span class="text-velora-blue font-bold text-sm">MK</span></div>
+          <div><p class="font-bold text-gray-900 text-sm">Michael K.</p><p class="text-gray-500 text-xs">Shopper - Kitwe</p></div>
+        </div>
+      </div>
+      <div class="bg-velora-light rounded-2xl p-6 hover:shadow-lg transition">
+        <div class="flex items-center gap-1 mb-4">
+          <i class="fas fa-star text-yellow-400 text-sm"></i><i class="fas fa-star text-yellow-400 text-sm"></i><i class="fas fa-star text-yellow-400 text-sm"></i><i class="fas fa-star text-yellow-400 text-sm"></i><i class="fas fa-star text-yellow-400 text-sm"></i>
+        </div>
+        <p class="text-gray-700 text-sm leading-relaxed mb-5">"Finally a Zambian marketplace that feels professional. I like seeing the vendor name on each product. Paid with MTN Mobile Money, very smooth!"</p>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center"><span class="text-blue-700 font-bold text-sm">SN</span></div>
+          <div><p class="font-bold text-gray-900 text-sm">Sarah N.</p><p class="text-gray-500 text-xs">Shopper - Lusaka</p></div>
+        </div>
+      </div>
+      <div class="bg-velora-light rounded-2xl p-6 hover:shadow-lg transition border-2 border-velora-blue/20">
+        <div class="flex items-center gap-1 mb-4">
+          <i class="fas fa-star text-yellow-400 text-sm"></i><i class="fas fa-star text-yellow-400 text-sm"></i><i class="fas fa-star text-yellow-400 text-sm"></i><i class="fas fa-star text-yellow-400 text-sm"></i><i class="fas fa-star-half-alt text-yellow-400 text-sm"></i>
+        </div>
+        <p class="text-gray-700 text-sm leading-relaxed mb-5">"I am a fashion boutique owner in Ndola and excited to join as a vendor. The commission rates are fair and the vendor-first approach is exactly what we need."</p>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center"><span class="text-purple-700 font-bold text-sm">JC</span></div>
+          <div><p class="font-bold text-gray-900 text-sm">James C.</p><p class="text-gray-500 text-xs">Future Vendor - Ndola</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================
+     SECTION 12: FINAL CTA
+     ========================================== -->
+<section class="py-16 bg-velora-blue">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <h2 class="text-3xl font-bold text-white mb-4">Ready to Shop or Sell?</h2>
+    <p class="text-red-100 text-lg mb-8 max-w-2xl mx-auto">Join thousands of Zambians who trust Velora. Whether you are buying or selling, we are here to help you succeed.</p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <a href="#trending" class="bg-white text-velora-blue px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-100 transition flex items-center justify-center gap-2 shadow-lg"><i class="fas fa-shopping-bag"></i> Start Shopping</a>
+      <a href="vendor-application.html" class="bg-red-800 text-white border-2 border-white/30 px-8 py-4 rounded-full font-bold text-lg hover:bg-red-900 transition flex items-center justify-center gap-2"><i class="fas fa-store"></i> Become a Vendor</a>
+    </div>
+    <p class="text-red-200 text-sm mt-6"><i class="fas fa-mobile-alt mr-1"></i> Mobile app coming soon <span class="mx-2">|</span> <i class="fas fa-globe mr-1"></i> Web marketplace live now</p>
+  </div>
+</section>
+
+<!-- ==========================================
+     SECTION 13: FOOTER
+     ========================================== -->
+<footer class="bg-velora-dark text-gray-300 py-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid md:grid-cols-4 gap-12 mb-12">
+      <div>
+        <div class="flex items-center gap-2 mb-4">
+          <div class="w-10 h-10 bg-gradient-to-br from-velora-blue to-blue-800 rounded-xl flex items-center justify-center"><i class="fas fa-v text-white text-lg"></i></div>
+          <div><h3 class="text-xl font-bold text-white">Velora</h3><p class="text-[10px] text-velora-blue font-bold tracking-wider">MARKETPLACE</p></div>
+        </div>
+        <p class="text-sm text-gray-400 mb-5 leading-relaxed">Zambia's trusted multi-vendor marketplace. Connecting buyers with verified vendors across the country.</p>
+        <div class="flex gap-3">
+          <a href="#" class="w-9 h-9 bg-gray-800 rounded-full flex items-center justify-center hover:bg-velora-blue transition"><i class="fab fa-facebook-f text-sm"></i></a>
+          <a href="#" class="w-9 h-9 bg-gray-800 rounded-full flex items-center justify-center hover:bg-velora-blue transition"><i class="fab fa-twitter text-sm"></i></a>
+          <a href="#" class="w-9 h-9 bg-gray-800 rounded-full flex items-center justify-center hover:bg-velora-blue transition"><i class="fab fa-instagram text-sm"></i></a>
+          <a href="#" class="w-9 h-9 bg-gray-800 rounded-full flex items-center justify-center hover:bg-velora-blue transition"><i class="fab fa-whatsapp text-sm"></i></a>
+        </div>
+      </div>
+      <div>
+        <h4 class="text-white font-bold mb-4">Shop</h4>
+        <ul class="space-y-2.5 text-sm">
+          <li><a href="velora-electronics.html" class="hover:text-white transition">All Products</a></li>
+          <li><a href="velora-electronics.html" class="hover:text-white transition">Trending Now</a></li>
+          <li><a href="velora-electronics.html" class="hover:text-white transition">New Arrivals</a></li>
+          <li><a href="velora-electronics.html" class="hover:text-white transition">Deals & Offers</a></li>
+          <li><a href="velora-electronics.html" class="hover:text-white transition">Browse by Vendor</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="text-white font-bold mb-4">Sell on Velora</h4>
+        <ul class="space-y-2.5 text-sm">
+          <li><a href="vendor-application.html" class="hover:text-white transition">Become a Vendor</a></li>
+          <li><a href="#" class="hover:text-white transition">Vendor Portal</a></li>
+          <li><a href="#" class="hover:text-white transition">Commission Rates</a></li>
+          <li><a href="#" class="hover:text-white transition">Seller Guidelines</a></li>
+          <li><a href="#" class="hover:text-white transition">Vendor Support</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="text-white font-bold mb-4">Support</h4>
+        <ul class="space-y-2.5 text-sm">
+          <li><a href="#" class="hover:text-white transition">Help Center</a></li>
+          <li><a href="#" class="hover:text-white transition">Track Your Order</a></li>
+          <li><a href="#" class="hover:text-white transition">Returns & Refunds</a></li>
+          <li><a href="#" class="hover:text-white transition">Shipping Info</a></li>
+          <li><a href="#" class="hover:text-white transition">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+      <p class="text-sm text-gray-500">2026 Velora Market. All rights reserved. Made in Zambia.</p>
+      <div class="flex gap-6 text-sm">
+        <a href="#" class="hover:text-white transition">Privacy Policy</a>
+        <a href="#" class="hover:text-white transition">Terms of Service</a>
+        <a href="#" class="hover:text-white transition">Vendor Agreement</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ==========================================
+     JAVASCRIPT
+     ========================================== -->
+<!-- Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL = 'https://qlvransrclmziwibhgog.supabase.co';
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFsdnJhbnNyY2xteml3aWJoZ29nIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwNjE0MzYsImV4cCI6MjA4ODYzNzQzNn0.a-s7JLEI8ShwknOWJ0VF7TxedbaiI1b8WPSfpWDm84g';
+  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
+    auth: { persistSession: true, storageKey: 'velora-auth', autoRefreshToken: true, detectSessionInUrl: false }
+  });
+
+  // Detect login state and update nav
+  async function initAuth() {
+    var result = await supabaseClient.auth.getSession();
+    if (result.data && result.data.session) {
+      var user = result.data.session.user;
+      var pResult = await supabaseClient.from('customer_profiles').select('full_name, phone').eq('id', user.id).maybeSingle();
+      var profile = pResult.data || {};
+      var name = profile.full_name || 'Account';
+      document.getElementById('navAccount').innerHTML =
+        '<div class="w-8 h-8 bg-gradient-to-br from-velora-blue to-blue-800 rounded-full flex items-center justify-center text-white text-xs font-bold">' +
+          (name.split(' ').map(function(n){return n[0]}).join('').toUpperCase().substring(0,2)) +
+        '</div><span class="text-sm font-medium">' + name + '</span>';
     }
-    
-    function initApp() {
-      lucide.createIcons();
-      initMobileMenu();
-      initCart();
-      initIntersectionObserver();
-    }
-    
-    // Mobile menu toggle
-    function initMobileMenu() {
-      const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-      const mobileMenu = document.getElementById('mobile-menu');
-      const mobileMenuPanel = document.getElementById('mobile-menu-panel');
-      const closeMobileMenu = document.getElementById('close-mobile-menu');
-      const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
-      
-      function openMobileMenu() {
-        mobileMenu.classList.remove('hidden');
-        requestAnimationFrame(() => mobileMenuPanel.classList.remove('translate-x-full'));
-      }
-      
-      function closeMobileMenuFn() {
-        mobileMenuPanel.classList.add('translate-x-full');
-        setTimeout(() => mobileMenu.classList.add('hidden'), 300);
-      }
-      
-      mobileMenuBtn?.addEventListener('click', openMobileMenu);
-      closeMobileMenu?.addEventListener('click', closeMobileMenuFn);
-      mobileMenuOverlay?.addEventListener('click', closeMobileMenuFn);
-      
-      // Mobile search toggle
-      const mobileSearchToggle = document.getElementById('mobile-search-toggle');
-      const mobileSearch = document.getElementById('mobile-search');
-      mobileSearchToggle?.addEventListener('click', () => {
-        mobileSearch.classList.toggle('hidden');
-      });
-    }
-    
-    // Intersection Observer for Lazy Loading Heavy Elements
-    function initIntersectionObserver() {
-      const imageObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const img = entry.target;
-            img.src = img.dataset.src || img.src;
-            observer.unobserve(img);
-          }
-        });
-      }, {
-        rootMargin: '50px 0px',
-        threshold: 0.01
-      });
-      
-      // Observe all lazy images
-      document.querySelectorAll('img[loading="lazy"]').forEach(img => {
-        imageObserver.observe(img);
-      });
-    }
-    
-    // ==========================================
-    // CART FUNCTIONALITY - WITH ADJUSTABLE USD RATE
-    // ==========================================
-    
-    // 🔧 ADJUST THIS RATE AS NEEDED (change this value to adjust USD display)
-    const USD_RATE = 0.0522;
-    
-    let cart = JSON.parse(localStorage.getItem('novanest_cart')) || [];
-    
-    function updateCartUI() {
-      const count = cart.length;
-      const countBadge = document.getElementById('cart-count');
-      countBadge.textContent = count;
-      countBadge.classList.toggle('scale-0', count === 0);
-      
-      // Update cart drawer - TEXT ONLY WITH USD CONVERSION
-      const container = document.getElementById('cart-items-container');
-      const totalEl = document.getElementById('cart-total');
-      
-      if (cart.length === 0) {
-        container.innerHTML = `
-          <div class="text-center text-gray-500 py-12">
-            <i data-lucide="shopping-cart" class="w-16 h-16 mx-auto mb-4 text-gray-300"></i>
-            <p>Your cart is empty</p>
-            <button onclick="closeCart()" class="mt-4 text-primary font-medium hover:underline">Continue Shopping</button>
-          </div>
-        `;
-        totalEl.textContent = 'ZMW 0';
-      } else {
-        let total = 0;
-        container.innerHTML = cart.map((item, idx) => {
-          total += item.price;
-          const itemUsd = (item.price * USD_RATE).toFixed(2);
-          return `
-            <div class="flex items-center justify-between mb-4 bg-gray-50 p-4 rounded-xl">
-              <div class="flex-1">
-                <h4 class="font-semibold text-gray-900">${item.name}</h4>
-                <p class="text-primary font-bold mt-1">ZMW ${item.price.toLocaleString()}</p>
-                <p class="text-xs text-gray-500">≈ $${itemUsd}</p>
-              </div>
-              <button onclick="removeFromCart(${idx})" class="text-red-500 text-sm hover:underline ml-4">Remove</button>
-            </div>
-          `;
-        }).join('');
-        
-        const totalUsd = (total * USD_RATE).toFixed(2);
-        totalEl.innerHTML = `ZMW ${total.toLocaleString()} <span class="text-sm text-gray-500 font-normal block text-right">(≈ $${totalUsd})</span>`;
-      }
-      lucide.createIcons();
-      
-      // Update sticky CTA for mobile
-      updateStickyCTA();
-    }
-    
-    // ADD TO CART - SIMPLE, NO IMAGES
-    function addToCart(name, price) {
-      cart.push({ 
-        name, 
-        price,
-        id: Date.now() 
-      });
-      localStorage.setItem('novanest_cart', JSON.stringify(cart));
-      updateCartUI();
-      showToast(name);
-    }
-    
-    function removeFromCart(index) {
-      cart.splice(index, 1);
-      localStorage.setItem('novanest_cart', JSON.stringify(cart));
-      updateCartUI();
-    }
-    
-    function clearCart() {
-      cart = [];
-      localStorage.setItem('novanest_cart', JSON.stringify(cart));
-      updateCartUI();
-    }
-    
-    // Cart drawer controls
-    function initCart() {
-      const cartLink = document.getElementById('cart-link');
-      const cartDrawer = document.getElementById('cart-drawer');
-      const cartPanel = document.getElementById('cart-panel');
-      const closeCartBtn = document.getElementById('close-cart');
-      const cartOverlay = document.getElementById('cart-overlay');
-      
-      window.openCart = function() {
-        cartDrawer.classList.remove('hidden');
-        requestAnimationFrame(() => cartPanel.classList.remove('translate-x-full'));
-        updateCartUI();
-      }
-      
-      window.closeCart = function() {
-        cartPanel.classList.add('translate-x-full');
-        setTimeout(() => cartDrawer.classList.add('hidden'), 300);
-      }
-      
-      cartLink?.addEventListener('click', (e) => { e.preventDefault(); window.openCart(); });
-      closeCartBtn?.addEventListener('click', window.closeCart);
-      cartOverlay?.addEventListener('click', window.closeCart);
-      document.getElementById('clear-cart')?.addEventListener('click', clearCart);
-      
-      // Add to cart buttons - SIMPLE VERSION
-      document.querySelectorAll('.add-cart').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const name = btn.dataset.name;
-          const price = parseInt(btn.dataset.price);
-          addToCart(name, price);
-        });
-      });
-    }
-    
-    // Toast notification
-    function showToast(productName) {
-      const toast = document.getElementById('toast');
-      document.getElementById('toast-message').textContent = productName;
-      toast.classList.remove('translate-x-full');
-      setTimeout(() => toast.classList.add('translate-x-full'), 3000);
-    }
-    
-    // Sticky CTA for mobile
-    function updateStickyCTA() {
-      const sticky = document.getElementById('sticky-cta');
-      if (cart.length > 0 && window.innerWidth < 768) {
-        sticky.classList.remove('hidden');
-        let total = cart.reduce((sum, item) => sum + item.price, 0);
-        document.getElementById('sticky-total').textContent = `ZMW ${total.toLocaleString()}`;
-        document.getElementById('sticky-count').textContent = cart.length;
-      } else {
-        sticky.classList.add('hidden');
-      }
-    }
-    
-    // Promo rotation
-    const messages = [
-      "🎉 First-time buyers get 5% OFF",
-    ];
-    let msgIdx = 0;
-    setInterval(() => {
-      msgIdx = (msgIdx + 1) % messages.length;
-      const el = document.getElementById('promo-message');
-      if (el) {
-        el.style.opacity = '0';
-        setTimeout(() => {
-          el.textContent = messages[msgIdx];
-          el.style.opacity = '1';
-        }, 300);
-      }
-    }, 5000);
-    
-    // Initialize
-    updateCartUI();
-    
-    // Handle resize
-    window.addEventListener('resize', updateStickyCTA);
-  </script>
+  }
+
+  // Redirect to universal search page
+  function goToSearch(e) {
+    if (e) e.preventDefault();
+    var q = document.getElementById('heroSearchInput').value.trim();
+    window.location.href = 'search.html' + (q ? '?q=' + encodeURIComponent(q) : '');
+    return false;
+  }
+
+  initAuth();
+</script>
+
+<script src="cart.js"></script>
 </body>
 </html>
